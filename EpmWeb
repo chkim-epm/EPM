@@ -1,32 +1,12 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="google-site-verification" content="_uFCyAsokKxryNb0eWebOdlDKu_x1NxwMo7zO-QWtk8"><meta name="description" content="파이썬 프로그래밍 기초를 배우고 연습할 수 있는 블로그입니다."><title>파이썬 기초 배우기</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파이썬 기초 배우기</title>
 </head>
 <body>
-    <header>
-        <h1>파이썬 기초 배우기</h1>
-        <p>파이썬 프로그래밍을 처음 시작하는 분들을 위한 블로그입니다.</p>
-    </header>
-    
-    <main>
-        <section>
-            <h2>블로그 소개</h2>
-            <p>이 블로그에서는 파이썬 기초 문법, 데이터 타입, 제어문, 함수, 라이브러리 사용법 등 단계별로 학습할 수 있습니다.</p>
-        </section>
-
-        <section>
-            <h2>최근 글</h2>
-            <ul>
-                <li><a href="#">파이썬 변수와 자료형 배우기</a></li>
-                <li><a href="#">조건문과 반복문 기초</a></li>
-                <li><a href="#">함수 만들기와 활용</a></li>
-            </ul>
-        </section>
-    </main>
-    
-    <footer>
-        <p>&copy; 2025 파이썬 기초 배우기 블로그. 모든 권리 보유.</p>
-    </footer>
+    <h1>파이썬 기초 배우기</h1>
+    <p>이 블로그는 파이썬 프로그래밍 기초를 배우기 위한 간단한 예제 페이지입니다.</p>
 </body>
 </html>
