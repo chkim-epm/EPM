@@ -1,12 +1,245 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>파이썬 기초 배우기</title>
-</head>
-<body>
-    <h1>파이썬 기초 배우기</h1>
-    <p>이 블로그는 파이썬 프로그래밍 기초를 배우기 위한 간단한 예제 페이지입니다.</p>
-</body>
+
+<!doctype html>
+<html>
+  <head>
+    <title>기술 기업  템플릿 | WIX</title>
+    
+    <!-- BEGIN SENTRY -->
+    <script id="sentry">
+  (function(c,u,v,n,p,e,z,A,w){function k(a){if(!x){x=!0;var l=u.getElementsByTagName(v)[0],d=u.createElement(v);d.src=A;d.crossorigin="anonymous";d.addEventListener("load",function(){try{c[n]=r;c[p]=t;var b=c[e],d=b.init;b.init=function(a){for(var b in a)Object.prototype.hasOwnProperty.call(a,b)&&(w[b]=a[b]);d(w)};B(a,b)}catch(g){console.error(g)}});l.parentNode.insertBefore(d,l)}}function B(a,l){try{for(var d=m.data,b=0;b<a.length;b++)if("function"===typeof a[b])a[b]();var e=!1,g=c.__SENTRY__;"undefined"!==
+  typeof g&&g.hub&&g.hub.getClient()&&(e=!0);g=!1;for(b=0;b<d.length;b++)if(d[b].f){g=!0;var f=d[b];!1===e&&"init"!==f.f&&l.init();e=!0;l[f.f].apply(l,f.a)}!1===e&&!1===g&&l.init();var h=c[n],k=c[p];for(b=0;b<d.length;b++)d[b].e&&h?h.apply(c,d[b].e):d[b].p&&k&&k.apply(c,[d[b].p])}catch(C){console.error(C)}}for(var f=!0,y=!1,q=0;q<document.scripts.length;q++)if(-1<document.scripts[q].src.indexOf(z)){f="no"!==document.scripts[q].getAttribute("data-lazy");break}var x=!1,h=[],m=function(a){(a.e||a.p||a.f&&
+  -1<a.f.indexOf("capture")||a.f&&-1<a.f.indexOf("showReportDialog"))&&f&&k(h);m.data.push(a)};m.data=[];c[e]=c[e]||{};c[e].onLoad=function(a){h.push(a);f&&!y||k(h)};c[e].forceLoad=function(){y=!0;f&&setTimeout(function(){k(h)})};"init addBreadcrumb captureMessage captureException captureEvent configureScope withScope showReportDialog".split(" ").forEach(function(a){c[e][a]=function(){m({f:a,a:arguments})}});var r=c[n];c[n]=function(a,e,d,b,f){m({e:[].slice.call(arguments)});r&&r.apply(c,arguments)};
+  var t=c[p];c[p]=function(a){m({p:a.reason});t&&t.apply(c,arguments)};f||setTimeout(function(){k(h)})})(window,document,"script","onerror","onunhandledrejection","Sentry","b4e7a2b423b54000ac2058644c76f718","https://static.parastorage.com/unpkg/@sentry/browser@5.27.4/build/bundle.min.js",{"dsn":"https://b4e7a2b423b54000ac2058644c76f718@sentry.wixpress.com/217"});
+  </script>
+
+    <script type="text/javascript">
+    window.Sentry.onLoad(function () {
+      window.Sentry.init({
+        "release": "marketing-template-viewer@1.2589.0",
+        "environment": "production",
+        "allowUrls": undefined,
+        "denyUrls": undefined
+});
+      window.Sentry.configureScope(function (scope) {
+        scope.setUser({
+          id: "165657505|2e40e88b-5865-40c6-8bea-994205a19d29",
+          clientId: "8b7237a3-4cc6-40f9-a359-95f4aac9eba5",
+        });
+        scope.setExtra("user.authenticated", true);
+        scope.setExtra("sessionId", "2cf26183-f743-4057-91f6-dda840e05adc");
+      });
+    });
+    </script>
+    <!-- END SENTRY -->
+    <script src="https://static.parastorage.com/polyfill/v3/polyfill.min.js?features=default,es6,es7,es2017,es2018,es2019,fetch&flags=gated&unknown=polyfill"></script>
+
+    <script>
+        window.onWixFedopsLoggerLoaded = function () {
+            window.fedopsLogger && window.fedopsLogger.reportAppLoadStarted('marketing-template-viewer');
+        }
+    </script>
+    <script onload="onWixFedopsLoggerLoaded()" src="//static.parastorage.com/unpkg/@wix/fedops-logger@5.514.0/dist/statics/fedops-logger.bundle.min.js" crossorigin></script>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    
+
+    <link rel="icon" sizes="192x192" href="https://www.wix.com/favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="https://www.wix.com/favicon.ico" type="image/x-icon"/>
+    <link rel="apple-touch-icon" href="https://www.wix.com/favicon.ico" type="image/x-icon"/>
+
+    <link rel="stylesheet" href="https://static.parastorage.com/services/third-party/fonts/Helvetica/fontFace.css">
+    <link rel="stylesheet" href="https://static.parastorage.com/unpkg/@wix/wix-fonts@1.14.0/madefor.min.css">
+    <link rel="stylesheet" href="https://static.parastorage.com/unpkg/@wix/wix-fonts@1.14.0/madeforDisplay.min.css">
+    <link rel="stylesheet" href="//static.parastorage.com/services/marketing-template-viewer/1.2589.0/app.min.css">
+
+    <meta name="description" content="강렬한 분위기로 시선을 사로잡는 인상적인 템플릿으로 최신 기술을 소개하세요. Wix 블로그로 업계를 선도하는 우수한 전문성을 홍보하고, 연락처 및 구독 양식을 사용하여 손쉽게 구독자 수를 늘릴 수 있습니다. 비즈니스를 한 단계 더 높이 끌어올리고 싶다면 &#34;편집&#34; 버튼을 클릭하고 사이트 제작을 시작하세요!">
+    <meta name="author" content="Wixpress">
+    <meta http-equiv="content-language" content="ko"/>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+
+    <meta property="og:title" content="기술 기업  템플릿 | WIX"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://ko.wix.com/website-template/view/html/2855"/>
+    <meta property="og:image" content="//static.wixstatic.com/media//templates/image/c03cf60bf9bb496d6666c51da1ce069f5f48d3cfc4cd40a3e912c26e6d1194be1656512060745.jpg"/>
+    <meta content="Wix" property="og:site_name">
+    <meta property="og:description" content="강렬한 분위기로 시선을 사로잡는 인상적인 템플릿으로 최신 기술을 소개하세요. Wix 블로그로 업계를 선도하는 우수한 전문성을 홍보하고, 연락처 및 구독 양식을 사용하여 손쉽게 구독자 수를 늘릴 수 있습니다. 비즈니스를 한 단계 더 높이 끌어올리고 싶다면 &#34;편집&#34; 버튼을 클릭하고 사이트 제작을 시작하세요!"/>
+    <meta property="fb:admins" content="731184828"/>
+    <meta name="fb:app_id" content="236335823061286"/>
+    <meta name="google-site-verification" content="QXhlrY-V2PWOmnGUb8no0L-fKzG48uJ5ozW0ukU7Rpo"/>
+
+    <link rel="canonical" href="https://ko.wix.com/website-template/view/html/2855"/>
+
+    
+      <link
+              rel="alternate"
+              hreflang="cs"
+              href="https://cs.wix.com/website-template/view/html/2855"
+      />
+    
+      <link
+              rel="alternate"
+              hreflang="da"
+              href="https://da.wix.com/website-template/view/html/2855"
+      />
+    
+      <link
+              rel="alternate"
+              hreflang="de"
+              href="https://de.wix.com/website-template/view/html/2855"
+      />
+    
+      <link
+              rel="alternate"
+              hreflang="en"
+              href="https://www.wix.com/website-template/view/html/2855"
+      />
+    
+      <link
+              rel="alternate"
+              hreflang="es"
+              href="https://es.wix.com/website-template/view/html/2855"
+      />
+    
+      <link
+              rel="alternate"
+              hreflang="fr"
+              href="https://fr.wix.com/website-template/view/html/2855"
+      />
+    
+      <link
+              rel="alternate"
+              hreflang="hi"
+              href="https://hi.wix.com/website-template/view/html/2855"
+      />
+    
+      <link
+              rel="alternate"
+              hreflang="id"
+              href="https://id.wix.com/website-template/view/html/2855"
+      />
+    
+      <link
+              rel="alternate"
+              hreflang="it"
+              href="https://it.wix.com/website-template/view/html/2855"
+      />
+    
+      <link
+              rel="alternate"
+              hreflang="ja"
+              href="https://ja.wix.com/website-template/view/html/2855"
+      />
+    
+      <link
+              rel="alternate"
+              hreflang="ko"
+              href="https://ko.wix.com/website-template/view/html/2855"
+      />
+    
+      <link
+              rel="alternate"
+              hreflang="nl"
+              href="https://nl.wix.com/website-template/view/html/2855"
+      />
+    
+      <link
+              rel="alternate"
+              hreflang="no"
+              href="https://no.wix.com/website-template/view/html/2855"
+      />
+    
+      <link
+              rel="alternate"
+              hreflang="pl"
+              href="https://pl.wix.com/website-template/view/html/2855"
+      />
+    
+      <link
+              rel="alternate"
+              hreflang="pt"
+              href="https://pt.wix.com/website-template/view/html/2855"
+      />
+    
+      <link
+              rel="alternate"
+              hreflang="ru"
+              href="https://ru.wix.com/website-template/view/html/2855"
+      />
+    
+      <link
+              rel="alternate"
+              hreflang="sv"
+              href="https://sv.wix.com/website-template/view/html/2855"
+      />
+    
+      <link
+              rel="alternate"
+              hreflang="th"
+              href="https://th.wix.com/website-template/view/html/2855"
+      />
+    
+      <link
+              rel="alternate"
+              hreflang="tr"
+              href="https://tr.wix.com/website-template/view/html/2855"
+      />
+    
+      <link
+              rel="alternate"
+              hreflang="uk"
+              href="https://uk.wix.com/website-template/view/html/2855"
+      />
+    
+      <link
+              rel="alternate"
+              hreflang="vi"
+              href="https://vi.wix.com/website-template/view/html/2855"
+      />
+    
+      <link
+              rel="alternate"
+              hreflang="zh"
+              href="https://zh.wix.com/website-template/view/html/2855"
+      />
+    
+    
+      <link rel="alternate" hreflang="x-default" href="https://www.wix.com/website-template/view/html/2855" />
+    
+
+    
+  </head>
+  <body>
+    <script>
+        window.onWixRecorderLoaded = function () {
+            window.dispatchEvent(new Event('wixRecorderReady'));
+        };
+    </script>
+
+    <script async src="//static.parastorage.com/unpkg-semver/wix-recorder/app.bundle.min.js"
+            crossorigin onload="onWixRecorderLoaded()"></script>
+
+    <script src="//static.parastorage.com/services/cookie-sync-service/1.347.20/embed-cidx.bundle.min.js"></script>
+    <script src="//static.parastorage.com/services/tag-manager-client/1.1028.0/hostTags.bundle.min.js"></script>
+    <div id="root"><span data-newcolorsbranding="true" class="wds_1_186_1_newColorsBranding__root wds_1_186_1_madefor__madefor"><div data-hook="app"><div data-hook="tool-bar" class="sbWfkE"><div class="Mn4893"><div class="bZOLNF"><a data-hook="logo" href="/" class="nHuSJZ"><span class="AV8G6s">wix.com</span></a></div><div class="wKSaYa"><button class="oOZ5cH FrcaLY"><svg viewBox="0 0 25 23" xmlns="http://www.w3.org/2000/svg" class="NSqhIv"><path d="M22.444 18H2.558A1.56 1.56 0 0 1 1 16.441V15h23v1.444c0 .858-.698 1.556-1.556 1.556ZM10 22h5v-3h-5v3ZM2.558 1h19.886C23.302 1 24 1.698 24 2.556V14H1V2.559C1 1.699 1.7 1 2.558 1Zm19.886-1H2.558A2.562 2.562 0 0 0 0 2.559v13.882A2.562 2.562 0 0 0 2.558 19H9v3H7v1h11v-1h-2v-3h6.444A2.559 2.559 0 0 0 25 16.444V2.556A2.559 2.559 0 0 0 22.444 0Z" fill="currentColor" fill-rule="evenodd"></path></svg><span class="XFdFwl">데스크톱뷰 보기</span></button><hr class="VZdZnK"/><button class="oOZ5cH"><svg id="mobile-new-ui_svg__Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 15 26" style="enable-background:new 0 0 15 26" xml:space="preserve" class="lDC7OW"><style>.mobile-new-ui_svg__st1{fill:currentColor}</style><path d="M12 1H3c-1.1 0-2 .9-2 2v20c0 1.1.9 2 2 2h9c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zM9 23H6v-1h3v1zm4-4c0 .6-.4 1-1 1H3c-.6 0-1-.4-1-1V4c0-.6.4-1 1-1h9c.6 0 1 .4 1 1v15z" style="fill:none"></path><path class="mobile-new-ui_svg__st1" d="M6 22h3v1H6zM12 3H3c-.6 0-1 .4-1 1v15c0 .6.4 1 1 1h9c.6 0 1-.4 1-1V4c0-.6-.4-1-1-1zm0 16H3V4h9v15z"></path><path class="mobile-new-ui_svg__st1" d="M12 0H3C1.3 0 0 1.3 0 3v20c0 1.7 1.3 3 3 3h9c1.7 0 3-1.3 3-3V3c0-1.7-1.3-3-3-3zm2 23c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h9c1.1 0 2 .9 2 2v20z"></path></svg><span class="XFdFwl">모바일뷰 보기</span></button></div></div><div class="TYXuEX"><div class="RyxoSg"><p data-hook="tool-bar-title" class="VaexPL">사이트 편집을 클릭해 맞춤형 홈페이지를 직접 제작해보세요.</p><a data-hook="info-view" class="bggdgE LCjeiB" tabindex="0" role="dialog" href="#">자세히 보기</a><a class="Ydu4WK Y_xMZ5" data-hook="editor-link" href="https://manage.wix.com/edit-template/from-intro?originTemplateId=dff8d0c4-7536-423b-a36e-21c42d06d5c3&amp;editorSessionId=cf933082-900d-46c3-bd4d-dd01e2d514d7" target="_blank" tabindex="0">시작하기</a></div></div></div><div data-hook="template-demo" class="CJ4D6R _TGeKT"><div data-hook="desktop-view" class="Woz8P7"><iframe data-hook="desktop-iframe" src="https://www.wix.com/templatesko/2855-tech-company-v" title="기술 기업 " width="100%" height="100%" class="eZTjsa"></iframe></div></div><div data-hook="info-pop-up" class="M05QSQ gDaLU4"><div class="E0wHmq gsBZch"><button data-hook="card-close" class="gVJ7eC"><svg viewBox="0 0 19 20" xmlns="http://www.w3.org/2000/svg"><g stroke="currentColor" fill="none" fill-rule="evenodd"><path d="m0 1 18.584 17.606M0 18.606 18.584 1"></path></g></svg><span class="ydbrSa">정보 닫기</span></button><div class="qLnKwP"><h1 data-hook="card-title" class="PHJvhr gVsOUG">기술 기업  - 웹사이트 템플릿</h1><div class="CEjC4K _lzLfK"><h3 data-hook="card-good-for-title" class="xqspyG">용도:</h3><p data-hook="card-good-for" class="gsbPc5">스타트업, 애플리케이션, 첨단기술 회사, 최신 기술 회사, IT 회사 등</p></div><div class="CEjC4K ZkSmOj"><h3 class="xqspyG">설명</h3><p data-hook="card-description" class="gsbPc5">강렬한 분위기로 시선을 사로잡는 인상적인 템플릿으로 최신 기술을 소개하세요. Wix 블로그로 업계를 선도하는 우수한 전문성을 홍보하고, 연락처 및 구독 양식을 사용하여 손쉽게 구독자 수를 늘릴 수 있습니다. 비즈니스를 한 단계 더 높이 끌어올리고 싶다면 &quot;편집&quot; 버튼을 클릭하고 사이트 제작을 시작하세요!</p></div></div><div class="KiqsRq"><a data-hook="card-editor-url" class="XpwCp3 sKD7vO kX8CZg" target="_blank" href="https://manage.wix.com/edit-template/from-intro?originTemplateId=dff8d0c4-7536-423b-a36e-21c42d06d5c3&amp;editorSessionId=cf933082-900d-46c3-bd4d-dd01e2d514d7">편집하기</a></div></div></div></div></span></div>
+    <script>
+        window.__BASEURL__ = "https:\u002F\u002Fko.wix.com\u002Fwebsite-template\u002Fview\u002Fhtml\u002F";
+        window.__INITIAL_I18N__ = {"locale":"ko","resources":{"errorPage.templatesLinkText":"템플릿","template.viewer.page.title":"{{- title}} 템플릿 | WIX","template.viewer.studio.page.title":"{{- title}} 반응형 템플릿 | Wix Studio","template.viewer.studio.page.description":"해당 {{- title}}의 경우, 필요에 따라 자유롭게 사용자 지정할 수 있습니다. \"템플릿 편집\" 버튼을 클릭하고 사용 중인 기기에서 자유롭게 둘러보세요.","template_button_label":"편집하기","template_seeFeatures_label":"전체 기능 보기","template_expand_examples_text":"용도","template_expand_header":"템플릿 기능","template.viewer.title":"사이트 편집을 클릭해 맞춤형 홈페이지를 직접 제작해보세요.","template.viewer.title.chooseTemplate":"Choose template and create your amazing website","template.viewer.saveTemplate.button":"템플릿 저장","template.viewer.choose.button":"Choose Template","template.viewer.edit.button":"시작하기","template.viewer.read.more":"자세히 보기","template.viewer.back":"뒤로","template.viewer.info.edit.button":"편집하기","template.viewer.price":"요금:","template.viewer.info.title":"{{- title}} - 웹사이트 템플릿","template.viewer.info.goodFor":"용도:","template.viewer.info.description":"설명","template.viewer.info.desktop.only.notice":"해당 템플릿을 편집하려며 데스크톱 PC에서 Wix.com으로 이동하세요. 모든 템플릿은 자유자재로 편집하실 수 있습니다.","template.viewer.see.all.templates":"전체 템플릿 보기","template.viewer.seeAllExpressions":"See all expressions","template.viewer.goToBiggerScreen":"디자인 작업을 시작하려면 데스크톱으로 이동하세요.","template.viewer.getStarted":"시작하기","template.viewer.startNow":"시작하기","template.viewer.features":"기능","template.viewer.allFeatures":"전체 기능","template.viewer.expressions":"Expressions","template.viewer.tutorials":"튜토리얼","template.viewer.updatesAndReleases":"업데이트 및 출시","template.viewer.comingSoon":"출시 예정","template.viewer.academy":"아카데미","template.viewer.editTemplate":"템플릿 편집","template.viewer.header.backToTemplates":"템플릿으로 돌아가기","template.viewer.hint.copyPaste.title":"팁: ","template.viewer.hint.copyPaste.text":"원하는 템플릿 섹션을 저장해 Studio 사이트에서 재사용할 수 있습니다. ","template.viewer.hint.copyPaste.urlTitle":"자세히 보기","a11y.desktop.button":"데스크톱뷰 보기","a11y.mobile.button":"모바일뷰 보기","a11y.close.popup.button":"정보 닫기","toolbar.tooltip.desktop":"1001px 이상","toolbar.tooltip.tablet":"751-1000px","toolbar.tooltip.mobile":"320-750px","errorPage.4xx.title":"검색한 템플릿을 찾을 수 없습니다.","errorPage.5xx.title":"템플릿을 불러올 수 없습니다.","errorPage.subTitle":"오류 {{- code }}","errorPage.4xx.details":"\u003Clink\u003E여기\u003C\u002Flink\u003E서 다른 템플릿을 검색 해 보세요. ","errorPage.5xx.details":"당사 측의 일시적인 기술 문제로 인해 현재 페이지를 로드하지 못했습니다.  잠시 후에 다시 시도해주세요.","errorPage.5xx.action":"새로고침","seo.breadcrumbs.home":"Wix.com","seo.breadcrumbs.websiteTemplates":"웹사이트 템플릿","seo.breadcrumbs.studioTemplates":"Studio 템플릿","seo.breadcrumbs.template":"{{- title}} 사이트 템플릿","template.viewer.v2.choose.button":"Choose Template","template.viewer.v2.edit.button":"에디터로 이동","template.viewer.v2.demo.button":"데모 사이트 보기","template.viewer.v2.template.info":"템플릿 용도","template.viewer.v2.template.details":"템플릿 소개","template.viewer.v2.template.apps":"메인 앱","template.viewer.v2.template.apps.description":"템플릿에 다음과 같은 주요 기능이 제공됩니다.","template.viewer.v2.demo.template.name":"{{name}} - 웹사이트 템플릿","template.viewer.v2.template.likeThis.title":"유사한 템플릿","template.viewer.v2.template.button.edit":"편집","template.viewer.v2.template.button.view":"조회","template.viewer.v2.template.button.view_details":"View Details","template.viewer.v2.header.description":"사이트 편집을 클릭해 직접 맞춤형 홈페이지를 제작해보세요.","template.viewer.v2.header.chooseTemplate":"Choose template and create your amazing website","template.viewer.v2.demo.template.view":"전체 화면으로 보기","APP_PORTFOLIO":"Wix 포트폴리오","APP_PORTFOLIO_DESCRIPTION":"작업물 소개 및 전시 포트폴리오","APP_DONATIONS":"Wix 도네이션","APP_DONATIONS_DESCRIPTION":"온라인 기부금 모금 및 관리","APP_EVENTS":"Wix 이벤트","APP_EVENTS_DESCRIPTION":"이벤트 추가, 티켓 판매, 회신 관리","APP_BOOKINGS":"Wix 예약","APP_BOOKINGS_DESCRIPTION":"고객 일정 및 예약 관리","APP_BLOG":"Wix 블로그","APP_BLOG_DESCRIPTION":"트래픽 유도를 위한 게시물 작성 및 아이디어 공유","APP_MENUS":"Wix 레스토랑 메뉴","APP_MENUS_DESCRIPTION":"온라인 메뉴 디자인 및 표시","APP_ORDERS":"Wix 레스토랑 주문","APP_ORDERS_DESCRIPTION":"온라인을 통한 포장 및 배달 주문 접수","APP_RESERVATIONS":"Wix 테이블 예약","APP_RESERVATIONS_DESCRIPTION":"사이트를 통한 24시간 연중무휴 예약 접수","APP_STORES":"Wix 쇼핑몰","APP_STORES_DESCRIPTION":"제품 판매 또는 판매할 제품 검색","APP_PLANS":"Wix 유료 플랜","APP_PLANS_DESCRIPTION":"구독 및 멤버십 플랜 판매","APP_PROGRAMS":"Wix 온라인 프로그램","APP_PROGRAMS_DESCRIPTION":"여러 단계로 구성된 프로그램 설정 및 판매","APP_HOTELS":"Wix 호텔","APP_HOTELS_DESCRIPTION":"숙박 서비스 관리 및 성장","APP_CHAT":"Wix Chat","APP_CHAT_DESCRIPTION":"사이트 방문자를 위한 24시간 문의 접수","APP_FORMS":"Wix 양식","APP_FORMS_DESCRIPTION":"잠재 고객 모집 및 간편한 결제 지원","APP_INSTAGRAM":"Instagram 피드(신규)","APP_INSTAGRAM_DESCRIPTION":"Instagram 이미지 및 동영상 표시","APP_VIDEO":"Wix 동영상","APP_VIDEO_DESCRIPTION":"동영상 공유, 스트리밍 및 판매","APP_MUSIC":"Wix 뮤직","APP_MUSIC_DESCRIPTION":"수수료 없는 음원 유통","APP_GROUPS":"Wix 그룹","APP_GROUPS_DESCRIPTION":"커뮤니티 운영 관리 및 수익 창출","APP_FILE_SHARE":"Wix 파일 공유","APP_FILE_SHARE_DESCRIPTION":"사이트 회원을 위한 공유 사이트 라이브러리","thankYou.error.title":"오류가 발생하였습니다.","thankYou.error.description":"Wix에 기술적인 문제가 발생하였습니다. 템플릿을 다시 선택한 후 저장해 보세요.","thankYou.error.cta":"템플릿 보기","thankYou.wixOwnerAppBanner.cta":"설치","thankYou.wixOwnerAppBanner.description":"Wix 앱을 다운로드하고, 사이트를 간편하게 구축 및 관리해보세요.","thankYou.success.title":"저장한 템플릿이 이메일로 전송되었습니다.","thankYou.success.alternativeTitle":"템플릿이 곧 사용자님의 이메일로 발송됩니다.","thankYou.success.description":"사이트 제작 작업을 시작하려면 데스크톱에서 확인하세요.","template.newMobileFlow.preview.saveTemplate":"템플릿 저장"}};
+        window.__INITIAL_STATE__ = {"viewMode":"desktop","isInfoShown":false,"isEditButtonHidden":false,"template":{"title":"기술 기업 ","description":"강렬한 분위기로 시선을 사로잡는 인상적인 템플릿으로 최신 기술을 소개하세요. Wix 블로그로 업계를 선도하는 우수한 전문성을 홍보하고, 연락처 및 구독 양식을 사용하여 손쉽게 구독자 수를 늘릴 수 있습니다. 비즈니스를 한 단계 더 높이 끌어올리고 싶다면 \"편집\" 버튼을 클릭하고 사이트 제작을 시작하세요!","image":"\u002Ftemplates\u002Fimage\u002Fc03cf60bf9bb496d6666c51da1ce069f5f48d3cfc4cd40a3e912c26e6d1194be1656512060745.jpg","slug":"2855","lng":"ko","languages":["cs","da","de","en","es","fr","hi","id","it","ja","ko","nl","no","pl","pt","ru","sv","th","tr","uk","vi","zh"],"templatePrice":"FREE","docUrl":"https:\u002F\u002Fwww.wix.com\u002Ftemplatesko\u002F2855-tech-company-v","editorUrl":"https:\u002F\u002Fmanage.wix.com\u002Fedit-template\u002Ffrom-intro?originTemplateId=dff8d0c4-7536-423b-a36e-21c42d06d5c3&editorSessionId=cf933082-900d-46c3-bd4d-dd01e2d514d7","goodFor":"스타트업, 애플리케이션, 첨단기술 회사, 최신 기술 회사, IT 회사 등","siteId":"39562438-7225-4075-a37a-85696c0221df","mobileImage":{"type":"MOBILE","url":"\u002Ftemplates\u002Fimage\u002F1708fe5211283a68b68a5bc5f3ec59946bc5b99b0176edbaa800c2e027463abf1656512095826.jpg","absoluteUrl":"https:\u002F\u002Fimages-wixmp-530a50041672c69d335ba4cf.wixmp.com\u002Ftemplates\u002Fimage\u002F1708fe5211283a68b68a5bc5f3ec59946bc5b99b0176edbaa800c2e027463abf1656512095826.jpg","alt":""},"desktopImage":{"type":"DESKTOP","url":"\u002Ftemplates\u002Fimage\u002Fc03cf60bf9bb496d6666c51da1ce069f5f48d3cfc4cd40a3e912c26e6d1194be1656512060745.jpg","absoluteUrl":"https:\u002F\u002Fimages-wixmp-530a50041672c69d335ba4cf.wixmp.com\u002Ftemplates\u002Fimage\u002Fc03cf60bf9bb496d6666c51da1ce069f5f48d3cfc4cd40a3e912c26e6d1194be1656512060745.jpg","alt":""},"metaSiteId":"dff8d0c4-7536-423b-a36e-21c42d06d5c3","editorSessionId":"cf933082-900d-46c3-bd4d-dd01e2d514d7","isResponsive":false,"isStudio":false,"templateId":"a22d481a-920d-45d8-960a-b0f316d11857","url":"https:\u002F\u002Fwww.wix.com\u002Ftemplatesko\u002F2855-tech-company-v","apps":[{"appDefId":"ProvidedMailingService"},{"appDefId":"14517e1a-3ff0-af98-408e-2bd6953c36a2"},{"appDefId":"Contacts"},{"appDefId":"14ce1214-b278-a7e4-1373-00cebd1bef7c"},{"appDefId":"HtmlWeb"},{"appDefId":"CloudSiteExtension"},{"appDefId":"14bcded7-0066-7c35-14d7-466cb3f09103"},{"appDefId":"4b10fcce-732d-4be3-9d46-801d271acda9"},{"appDefId":"SiteMembers"},{"appDefId":"Clubs"}]},"activeExperiments":["templatePageUiV2Fixes"],"config":{"locale":"ko","dealerCmsTranslationsUrl":"\u002F\u002Fstatic.parastorage.com\u002Fservices\u002Fdealer-cms-translations\u002F1.7275.0\u002F","dealerLightboxUrl":"\u002F\u002Fstatic.parastorage.com\u002Fservices\u002Fdealer-lightbox\u002F2.0.260\u002F"},"userData":{"isLoggedIn":true,"profile":{"id":"2e40e88b-5865-40c6-8bea-994205a19d29"}}};
+        window.__BI__ = {"siteId":"39562438-7225-4075-a37a-85696c0221df","originUrl":"https:\u002F\u002Fko.wix.com\u002Fwebsite\u002Ftemplates","editorSessionId":"cf933082-900d-46c3-bd4d-dd01e2d514d7"};
+        window.__DEVICE__ = "desktop";
+        window.__CONSENT_POLICY__ = {"essential":true,"functional":true,"analytics":true,"advertising":true,"dataToThirdParty":true};
+    </script>
+
+    <script src="//static.parastorage.com/unpkg/react@18.2.0/umd/react.production.min.js" crossorigin></script>
+    <script src="//static.parastorage.com/unpkg/react-dom@18.2.0/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="//static.parastorage.com/services/cookie-consent-policy-client/1.966.0/app.bundle.min.js"></script>
+
+    
+      <script src="//static.parastorage.com/services/dealer-lightbox/2.0.260/dealer-lightbox.bundle.min.js"></script>
+    
+
+    <script src="//static.parastorage.com/services/marketing-template-viewer/1.2589.0/app.bundle.min.js"></script>
+  </body>
 </html>
