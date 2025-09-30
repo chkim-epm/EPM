@@ -46,11 +46,32 @@ nav .nav-item span, nav .nav-item a { color:#fff; font-weight:bold; text-decorat
    모바일 반응형
 =============================== */
 @media (max-width: 768px) {
-  .section { height:auto; padding:3rem 1rem; } /* 섹션 높이 자동 */
-  .section img { position: relative; height:auto; } /* 이미지 높이 자동 */
-  .text-area { padding:1rem; max-width:90%; }
-  .text-area h1 { font-size:1.5rem; }
-  .text-area p { font-size:1rem; }
+  nav {
+    flex-direction: column;       /* 메뉴 세로 정렬 */
+    align-items: center;
+    padding:1rem 0.5rem;
+  }
+  nav .nav-item {
+    margin:0.3rem 0;
+  }
+  .section {
+    min-height:auto;             /* 모바일에서 섹션 높이 자동 */
+    padding:3rem 1rem;
+  }
+  .section img {
+    position: relative;          /* 이미지 잘림 방지 */
+    height:auto;
+  }
+  .text-area {
+    padding:1rem;                /* 텍스트 패딩 축소 */
+    max-width:90%;
+  }
+  .text-area h1 {
+    font-size:1.5rem;            /* 폰트 크기 축소 */
+  }
+  .text-area p {
+    font-size:1rem;              /* 폰트 크기 축소 */
+  }
 }
 </style>
 </head>
