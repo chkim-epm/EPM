@@ -1,15 +1,148 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>오시는 길 - (주)이스트파워메탈</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>(주)이스트파워메탈</title>
+
+<!-- 구글 폰트 -->
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Nanum+Myeongjo:wght@700&display=swap" rel="stylesheet">
+
+<style>
+  body, html {
+    margin:0;
+    padding:0;
+    font-family:'Nanum Gothic', sans-serif;
+  }
+
+  /* 네비게이션 */
+  nav {
+    background:#212529;
+    color:#fff;
+    padding:1rem;
+    display:flex;
+    justify-content:center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  nav .nav-item {
+    margin:0 1rem;
+  }
+  nav .nav-item a {
+    text-decoration:none;
+    color:#fff;
+    font-weight:bold;
+  }
+
+  /* 섹션 기본 스타일 */
+  .section {
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    text-align:center;
+  }
+  .section img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:1;
+  }
+  .text-area {
+    position:relative;
+    z-index:2;
+    color:#fff;
+    background: rgba(0,0,0,0.5);
+    padding:2rem;
+    border-radius:10px;
+    max-width:600px;
+  }
+  .text-area h1 { font-size:2rem; margin-bottom:1rem; }
+  .text-area p { font-size:1.2rem; }
+
+  /* 오시는 길 섹션 별도 스타일 */
+  #s5 {
+    background: url('background.jpg') no-repeat center center fixed;
+    background-size: cover;
+  }
+  #s5 .container {
+    background: rgba(0,0,0,0.6);
+    padding:2rem;
+    border-radius:10px;
+    max-width:1000px;
+    width:90%;
+    margin:0 auto;
+  }
+  #s5 iframe {
+    width:100%;
+    height:450px;
+    border:0;
+    border-radius:10px;
+  }
+</style>
 </head>
+
 <body>
-  <h1>오시는 길</h1>
-	<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3157.999313429958!2d126.59444037620432!3d37.67272391803144!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357c7dedc1623cd3%3A0xa690a16b0633a971!2z6rK96riw64-EIOq5gO2PrOyLnCDthrXsp4TsnY0g7Jyo66eI66GcMjIz67KI6ri4IDQy!5e0!3m2!1sko!2skr!4v1759217401007!5m2!1sko!2skr" 
-		width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" 
-		referrerpolicy="no-referrer-when-downgrade">
-	</iframe>
+
+<!-- 네비게이션 바 -->
+<nav>
+  <div class="nav-item"><a href="#s1">HOME</a></div>
+  <div class="nav-item"><a href="#s2">부스바</a></div>
+  <div class="nav-item"><a href="#s3">무감전</a></div>
+  <div class="nav-item"><a href="#s4">제품목록</a></div>
+  <div class="nav-item"><a href="#s5">오시는 길</a></div>
+</nav>
+
+<!-- 기존 섹션들 -->
+<div class="section" id="s1">
+  <img src="스크린샷 2025-09-29 110709.png" alt="화성공장">
+  <div class="text-area">
+    <h1>저희 (주)이스트파워메탈은</h1>
+    <h1>동버스바 임가공, 분전반, 수배전반, 부스덕트, 통신접지, 중전기기 부품 등을</h1>
+    <h1>전문적으로 납품하는 전력·통신 솔루션 기업입니다.</h1>
+  </div>
+</div>
+
+<div class="section" id="s2">
+  <img src="Busbar.png" alt="부스바">
+  <div class="text-area">
+    <h1>동버스바 임가공</h1>
+  </div>
+</div>
+
+<div class="section" id="s3">
+  <img src="무감전.png" alt="절단 이미지">
+  <div class="text-area">
+    <h1>무감전 경기남부 총판</h1>
+    <h1>누설전류 통제장치 생산기지</h1>
+  </div>
+</div>
+
+<div class="section" id="s4">
+  <img src="Busbar2.png" alt="부스바2">
+  <div class="text-area">
+    <h1>제품 및 연락 안내</h1>
+    <h1>031-985-6037</h1>
+  </div>
+</div>
+
+<!-- 오시는 길 섹션 -->
+<div class="section" id="s5">
+  <div class="container">
+    <h1>오시는 길</h1>
+    <p>저희 (주)이스트파워메탈 본사 위치 안내입니다.<br>
+       경기도 김포시 양촌읍 학운리 123-45</p>
+    <iframe 
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3157.999313429958!2d126.59444037620432!3d37.67272391803144!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357c7dedc1623cd3%3A0xa690a16b0633a971!2z6rK96riw64-EIOq5gO2PrOyLnCDthrXsp4TsnY0g7Jyo66eI66GcMjIz67KI6ri4IDQy!5e0!3m2!1sko!2skr!4v1759217401007!5m2!1sko!2skr" 
+      allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+</div>
+
 </body>
 </html>
-
