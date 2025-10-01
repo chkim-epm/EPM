@@ -44,27 +44,32 @@
   .text-area p { font-size:1.2rem; }
 
   /*네비게이션 CSS*/
-  nav {
-        background: #212529;
-        color: #fff;
-        padding: 1rem;
-        display: flex;
-        align-items: center;   /* 세로 가운데 정렬 */
-      }
+nav {
+  background: #212529;
+  color: #fff;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;       /* 세로 가운데 정렬 */
+  justify-content: space-between;  /* 왼쪽 로고, 오른쪽 메뉴 */
+}
 
 .nav-logo {
-            margin-right: 2rem;   /* 로고 오른쪽 여백 */
-            font-size: 1.5rem;
-            font-weight: bold;
-          }
+  font-size: 1.5rem;
+  font-weight: bold;
+}
 
 .logo-e { color: green; }
 .logo-p { color: red; }
 .logo-m { color: blue; }
 
+.nav-items {
+  display: flex;    /* 메뉴들을 가로 정렬 */
+}
+
 .nav-item {
-            margin: 0 1rem;
-          }
+  margin: 0 1rem;
+}
+
   /*네비게이션 CSS끝*/  
 </style>
 </head>
@@ -77,6 +82,7 @@
     <span class="logo-e">E</span>
     <span class="logo-p">P</span>
     <span class="logo-m">M</span>
+    <span class="nav-item">(주)이스트파워메탈</span>
   </div>
   <div class="nav-item"><span>HOME</span></div>
   <div class="nav-item"><span>부스바</span></div>
