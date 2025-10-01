@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>제품 목록 : 이스트파워메탈</title>
+
+
+<!-- SEO -->
+<meta name="description" content="EAST POWER METAL의 동버스바, 부스바, 무감전 등 제품 목록을 확인하세요.">
+<meta name="keywords" content="부스바, 동부스바, 무감전, 전력 솔루션">
+<meta name="author" content="이스트파워메탈">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph (SNS 공유용) -->
+<meta property="og:title" content="제품 목록 - EAST POWER METAL">
+<meta property="og:description" content="EAST POWER METAL의 동버스바, 무감전 등 제품 목록을 확인하세요.">
+<!--<meta property="og:image" content="https://chkim-epm.github.io/EPM/product-thumbnail.png">-->
+<meta property="og:url" content="https://chkim-epm.github.io/EPM/Product.html">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="제품 목록 - EAST POWER METAL">
+<meta name="twitter:description" content="EAST POWER METAL의 동버스바, 무감전 등 제품 목록을 확인하세요.">
+<!--<meta name="twitter:image" content="https://chkim-epm.github.io/EPM/product-thumbnail.png">-->
+
+
+<style>
+  body {
+    margin: 0;
+    font-family: 'NanumGothic', sans-serif;
+    background: #f4f4f4;
+  }
+
+  h1 {
+    text-align: center;
+    margin: 2rem 0;
+    font-size: 2rem;
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .product-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  }
+
+  .product-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+
+  .product-info {
+    padding: 1rem;
+  }
+
+  .product-info h2 {
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+  }
+
+  .product-info p {
+    font-size: 0.9rem;
+    color: #555;
+  }
+
+  .product-info a {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    background-color: #3498db;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+
+  .product-info a:hover {
+    background-color: #2980b9;
+  }
+</style>
+</head>
+<body>
+
+<h1>제품 목록</h1>
+
+<div class="product-grid">
+  <div class="product-card">
+    <img src="busbar1.jpg" alt="부스바 1">
+    <div class="product-info">
+      <h2>부스바 A형</h2>
+      <p>전력용 동부스바, 맞춤 절단 가능</p>
+      <a href="#">자세히 보기</a>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <img src="busbar2.jpg" alt="부스바 2">
+    <div class="product-info">
+      <h2>부스바 B형</h2>
+      <p>고전류용 부스바, 절곡 가능</p>
+      <a href="#">자세히 보기</a>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <img src="busbar3.jpg" alt="부스바 3">
+    <div class="product-info">
+      <h2>무감전 장치</h2>
+      <p>누설전류 통제 장치, 안전 규격 준수</p>
+      <a href="#">자세히 보기</a>
+    </div>
+  </div>
+
+  <!-- 필요하면 카드 더 추가 -->
+</div>
+
+</body>
+</html>
