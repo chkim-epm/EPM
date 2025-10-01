@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+  <channel>
+    <title>이스트파워메탈</title>
+    <link>http://www.eastpowermetal.com/</link>
+    <description>버스바 가공&납품 동버스바, 부스바, 비철금속을 전문적으로 가공&납품 하는 전력 통신 솔루션 기업입니다.</description>
+    
+    <!-- 샘플 게시글 1개 -->
+    <item>
+      <title>동버스바 가공 제품 안내</title>
+      <link>http://www.eastpowermetal.com/news/post1.html</link>
+      <description>전력 통신용 동버스바 가공 제품을 소개합니다. 고품질 가공으로 안정적인 전력 공급을 제공합니다.</description>
+      <pubDate>Wed, 01 Oct 2025 12:00:00 +0900</pubDate>
+      <guid>http://www.eastpowermetal.com/news/post1.html</guid>
+    </item>
+
+  </channel>
+</rss>
