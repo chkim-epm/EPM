@@ -40,6 +40,16 @@
 				  font-size: 1.4rem;
 				  font-weight: bold;
 				}
+
+	nav .nav-item a {
+		color: #fff;            /* 글자 색상 흰색 유지 */
+		text-decoration: none;   /* 밑줄 제거 */
+		font-weight: bold;       /* 원하면 글자 굵게 */
+	}
+	
+	nav .nav-item a:hover {
+		color: #27ae60;             /* 마우스 올리면 색상 변경 가능 */
+	}
   nav.nav-item span { cursor:default; color:#fff; }
   .section { height:100vh; display:flex; align-items:center; justify-content:center; position:relative; text-align:center; }
   .section img { width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0; z-index:1; }
@@ -94,12 +104,12 @@
     <span class="logo-m">M</span>
     (주)이스트파워메탈
   </div>
-  <div class="nav-item"><span>HOME</span></div>
-  <div class="nav-item"><span>부스바</span></div>
-  <div class="nav-item"><span>제품목록</span></div>
-  <div class="nav-item"><span>무감전</span></div>
-  <div class="nav-item"><span>연락처</span></div>
-  <div class="nav-item"><a href="map.html">오시는 길</a></div>
+	<div class="nav-item"><a href="index.html">HOME</a></div>
+	<div class="nav-item"><a href="Product.html">부스바</a></div>
+	<div class="nav-item"><a href="index.html">제품목록</a></div>
+	<div class="nav-item"><a href="index.html">무감전</a></div>
+	<div class="nav-item"><a href="index.html">연락처</a></div>
+    <div class="nav-item"><a href="map.html">오시는 길</a></div>
 </nav>
 
 <!-- 메인 섹션 -->
