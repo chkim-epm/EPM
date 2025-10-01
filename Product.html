@@ -96,15 +96,70 @@
   .product-info a:hover {
     background-color: #2980b9;
   }
+
+
+/* 네비게이션 CSS */
+ nav { background:#212529; color:#fff; padding:2rem; display:flex; justify-content:center; }
+  nav .nav-item { margin:0 1rem; 
+				  font-size: 1.4rem;
+				  font-weight: bold;
+				}
+
+	nav .nav-item a {
+		color: #fff;            /* 글자 색상 흰색 유지 */
+		text-decoration: none;   /* 밑줄 제거 */
+		font-weight: bold;       /* 원하면 글자 굵게 */
+	}
+	
+	nav .nav-item a:hover {
+		color: #27ae60;             /* 마우스 올리면 색상 변경 가능 */
+	}
+  nav.nav-item span { cursor:default; color:#fff; }
+
+
+.nav-logo {
+  position: absolute;
+  left: 2rem;
+  top : 1.5rem;
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: bold;
+  }
+
+.logo-e { color: green; }
+.logo-p { color: red; }
+.logo-m { color: blue; }
+
+/* 네비게이션 CSS 끝 */
+
+
 </style>
 </head>
 <body>
+
+<!-- 네비게이션 바 -->
+<nav>
+  <div class="nav-logo">
+    <span class="logo-e">E</span>
+    <span class="logo-p">P</span>
+    <span class="logo-m">M</span>
+    (주)이스트파워메탈
+  </div>
+	<div class="nav-item"><a href="index.html">HOME</a></div>
+	<div class="nav-item"><a href="Product.html">부스바</a></div>
+	<div class="nav-item"><a href="index.html">제품목록</a></div>
+	<div class="nav-item"><a href="index.html">무감전</a></div>
+	<div class="nav-item"><a href="index.html">연락처</a></div>
+    <div class="nav-item"><a href="map.html">오시는 길</a></div>
+</nav>
+
 
 <h1>제품 목록</h1>
 
 <div class="product-grid">
   <div class="product-card">
-    <img src="busbar1.jpg" alt="부스바 1">
+    <img src="Busbar1.jpg" alt="부스바 1">
     <div class="product-info">
       <h2>부스바 A형</h2>
       <p>전력용 동부스바, 맞춤 절단 가능</p>
@@ -113,7 +168,7 @@
   </div>
 
   <div class="product-card">
-    <img src="busbar2.jpg" alt="부스바 2">
+    <img src="Busbar2.jpg" alt="부스바 2">
     <div class="product-info">
       <h2>부스바 B형</h2>
       <p>고전류용 부스바, 절곡 가능</p>
@@ -122,9 +177,72 @@
   </div>
 
   <div class="product-card">
-    <img src="busbar3.jpg" alt="부스바 3">
+    <img src="Busbar3.jpg" alt="부스바 3">
     <div class="product-info">
-      <h2>무감전 장치</h2>
+      <h2>부스바 C형</h2>
+      <p>누설전류 통제 장치, 안전 규격 준수</p>
+      <a href="#">자세히 보기</a>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <img src="Busbar4.jpg" alt="부스바 4">
+    <div class="product-info">
+      <h2>부스바 D형</h2>
+      <p>누설전류 통제 장치, 안전 규격 준수</p>
+      <a href="#">자세히 보기</a>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <img src="Busbar5.jpg" alt="부스바 5">
+    <div class="product-info">
+      <h2>부스바 E형</h2>
+      <p>누설전류 통제 장치, 안전 규격 준수</p>
+      <a href="#">자세히 보기</a>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <img src="Busbar6.jpg" alt="부스바 6">
+    <div class="product-info">
+      <h2>부스바 F형</h2>
+      <p>누설전류 통제 장치, 안전 규격 준수</p>
+      <a href="#">자세히 보기</a>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <img src="Busbar7.jpg" alt="부스바 7">
+    <div class="product-info">
+      <h2>부스바 G형</h2>
+      <p>누설전류 통제 장치, 안전 규격 준수</p>
+      <a href="#">자세히 보기</a>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <img src="Busbar8.jpg" alt="부스바 8">
+    <div class="product-info">
+      <h2>부스바 H형</h2>
+      <p>누설전류 통제 장치, 안전 규격 준수</p>
+      <a href="#">자세히 보기</a>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <img src="Busbar1.jpg" alt="부스바 9">
+    <div class="product-info">
+      <h2>부스바 I형</h2>
+      <p>누설전류 통제 장치, 안전 규격 준수</p>
+      <a href="#">자세히 보기</a>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <img src="Busbar2.jpg" alt="부스바 10">
+    <div class="product-info">
+      <h2>부스바 J형</h2>
       <p>누설전류 통제 장치, 안전 규격 준수</p>
       <a href="#">자세히 보기</a>
     </div>
@@ -132,6 +250,12 @@
 
   <!-- 필요하면 카드 더 추가 -->
 </div>
+
+<!-- 푸터 (회사 정보) -->
+<footer style="background:#212529; color:#fff; text-align:center; padding:1rem; font-size:0.9rem;">
+  <p>(주)이스트파워메탈 | 주소: 경기도 김포시 통진읍 율마로 223번길 42| 전화: 031-985-6037 | 이메일: chkim.epm@gmailcom</p>
+  <p>© 2025 EAST POWER METAL. All Rights Reserved.</p>
+</footer>
 
 </body>
 </html>
