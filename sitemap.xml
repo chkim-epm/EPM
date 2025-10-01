@@ -11,7 +11,7 @@
 
   <!-- 제품 소개 -->
   <url>
-    <loc>http://www.eastpowermetal.com#s2</loc>
+    <loc>http://www.eastpowermetal.com/Product.html</loc>
     <lastmod>2025-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -35,11 +35,12 @@
 
   <!-- 오시는 길 (map.html) -->
   <url>
-    <loc>http://www.eastpowermetal.commap.html</loc>
+    <loc>http://www.eastpowermetal.com/map.html</loc>
     <lastmod>2025-10-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
 
 </urlset>
+
 
