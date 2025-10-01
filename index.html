@@ -2,24 +2,24 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>(주)이스트파워메탈 : EAST POWER METAL</title>
+<title>이스트파워메탈 : EAST POWER METAL</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ✅ SEO 기본 메타태그 -->
-<meta name="keywords" content="이스트파워메탈, 동버스바, 비철금속, 금속 절단, 화성공장, 김포공장, 김포, 화성, 부스바, 동부스바, 무감전, 누설전류 통제장치, 누설전류">
-<meta name="description" content="(주)이스트파워메탈 동버스바, 비철금속 전문 기업입니다. 다양한 품종과 맞춤 절단 서비스를 제공합니다.">
+<meta name="keywords" content="이스트파워메탈, 동버스바, 부스바, 비철금속, 금속 절단, 화성공장, 김포공장, 김포, 화성, 동부스바, 무감전, 누설전류 통제장치, 누설전류">
+<meta name="description" content="이스트파워메탈 동버스바, 부스바, 비철금속 전문 기업입니다. 다양한 품종과 맞춤 절단 서비스를 제공합니다.">
 <meta name="author" content="이스트파워메탈">
 <meta name="robots" content="index, follow">
 
 <!-- ✅ Open Graph (SNS 공유용) -->
-<meta property="og:title" content="(주)이스트파워메탈 - 동버스바, 비철금속 전문">
+<meta property="og:title" content="이스트파워메탈 : EAST POWER METAL">
 <meta property="og:image" content="https://chkim-epm.github.io/EPM/factory.png">
 <meta property="og:url" content="https://chkim-epm.github.io/EPM/">
 <meta property="og:type" content="website">
 
 <!-- ✅ 트위터 카드 -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="(주)이스트파워메탈 - 동버스바, 비철금속 전문">
-<meta name="twitter:description" content="동버스바 및 다양한 비철금속 전문 기업, 맞춤 절단 가능">
+<meta name="twitter:title" content="이스트파워메탈 : EAST POWER METAL">
+<meta name="twitter:description" content="이스트파워메탈 동버스바, 부스바, 비철금속 전문 기업입니다. 다양한 품종과 맞춤 절단 서비스를 제공합니다.">
 <meta name="twitter:image" content="https://chkim-epm.github.io/EPM/factory.png">
 
 <!-- ✅ 구글 사이트 소유권 확인 -->
@@ -40,12 +40,28 @@
 				  font-size: 1.4rem;
 				  font-weight: bold;
 				}
-  nav .nav-item span { cursor:default; color:#fff; }
+  nav.nav-item span { cursor:default; color:#fff; }
   .section { height:100vh; display:flex; align-items:center; justify-content:center; position:relative; text-align:center; }
   .section img { width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0; z-index:1; }
-  .text-area { position:relative; z-index:2; color:#fff; background: rgba(0,0,0,0.5); padding:2rem; border-radius:10px; max-width:600px; }
-  .text-area h1 { font-size:2rem; margin-bottom:1rem; }
-  .text-area p { font-size:1.2rem; }
+  <--!.text-area { position:relative; z-index:2; color:#fff; background: rgba(0,0,0,0.5); padding:2rem; border-radius:10px; max-width:600px; } -->
+.text-area { position:relative; z-index:2; color:#fff; padding:2rem; border-radius:10px; 
+			font-size: 1.4rem;
+			
+}
+    .bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 화면 비율 유지하며 꽉 채우기 */
+  z-index: 1;
+}
+.text-area {
+  position: relative;
+  z-index: 2; /* 글자가 동영상 위에 표시되도록 */
+}
+
 
 /* 네비게이션 CSS */
 
@@ -87,30 +103,31 @@
 </nav>
 
 <!-- 메인 섹션 -->
+
 <div class="section" id="s1">
-  <!-- 여기에 메인 이미지 넣기 -->
-  <img src="스크린샷 2025-09-29 110709.png" alt="화성공장">
+  <!-- 배경 동영상 -->
+  <video autoplay muted loop playsinline class="bg-video">
+    <source src="홈페이지_공장영상.mp4" type="video/mp4">
+    브라우저가 동영상을 지원하지 않습니다.
+  </video>
+
   <div class="text-area">
-    <h1>저희 (주)이스트파워메탈은</h1>
-    <h1>동버스바 임가공, 분전반, 수배전반, 부스덕트, 통신접지, 중전기기 부품 등을</h1>
-    <h1>전문적으로 납품하는 전력·통신 솔루션 기업입니다.</h1>
+    <h1>버스바 가공&납품 - (주)이스트파워메탈</h1>
+    <h5>비철금속을 전문적으로 가공&납품하는 전력·통신 솔루션 기업입니다.</h5>
   </div>
 </div>
+
 
 <div class="section" id="s2">
-  <!-- 여기에 제품 이미지 넣기 -->
-  <img src="Busbar.png" alt="부스바">
+  <!-- 배경 동영상 -->
+  <video autoplay muted loop playsinline class="bg-video">
+    <source src="홈페이지_기계영상.mp4" type="video/mp4">
+    브라우저가 동영상을 지원하지 않습니다.
+  </video>
   <div class="text-area">
     <h1>동버스바 임가공</h1>
-  </div>
-</div>
-
-<div class="section" id="s3">
-  <!-- 여기에 무감전 이미지 넣기 -->
-  <img src="무감전.png" alt="절단 이미지">
-  <div class="text-area">
-    <h1>무감전 경기남부 총판</h1>
-    <h1>누설전류 통제장치 생산기지</h1>
+	<h1>무감전 경기남부 총판</h1>
+    <h5>누설전류 통제장치 생산기지</h5>
   </div>
 </div>
 
