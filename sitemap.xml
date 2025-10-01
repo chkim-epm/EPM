@@ -3,7 +3,7 @@
 
   <!-- 메인 페이지 -->
   <url>
-    <loc>https://chkim-epm.github.io/EPM/</loc>
+    <loc>http://www.eastpowermetal.com</loc>
     <lastmod>2025-10-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -11,7 +11,7 @@
 
   <!-- 제품 소개 -->
   <url>
-    <loc>https://chkim-epm.github.io/EPM/#s2</loc>
+    <loc>http://www.eastpowermetal.com#s2</loc>
     <lastmod>2025-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -19,7 +19,7 @@
 
   <!-- 무감전 -->
   <url>
-    <loc>https://chkim-epm.github.io/EPM/#s3</loc>
+    <loc>http://www.eastpowermetal.com#s3</loc>
     <lastmod>2025-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -27,7 +27,7 @@
 
   <!-- 연락처 -->
   <url>
-    <loc>https://chkim-epm.github.io/EPM/#s4</loc>
+    <loc>http://www.eastpowermetal.com#s4</loc>
     <lastmod>2025-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -35,10 +35,11 @@
 
   <!-- 오시는 길 (map.html) -->
   <url>
-    <loc>https://chkim-epm.github.io/EPM/map.html</loc>
+    <loc>http://www.eastpowermetal.commap.html</loc>
     <lastmod>2025-10-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
 
 </urlset>
+
