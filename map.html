@@ -3,68 +3,96 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>(주)이스트파워메탈</title>
+<title>오시는길 : 이스트파워메탈</title>
+
+<!-- SEO -->
+<meta name="description" content="이스트파워메탈 김포/화성 공장 위치 및 오시는 길 안내.">
+<meta name="keywords" content="EAST POWER METAL, 오시는 길, 김포공장, 화성공장, 지도">
+<meta name="author" content="이스트파워메탈">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph (SNS 공유용) -->
+<meta property="og:title" content="오시는 길 - 이스트파워메탈">
+<meta property="og:description" content="EAST POWER METAL 김포/화성 공장 위치 및 오시는 길 안내.">
+<!--<meta property="og:image" content="https://chkim-epm.github.io/EPM/map-thumbnail.png">-->
+<meta property="og:url" content="https://chkim-epm.github.io/EPM/map.html">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="오시는 길 - EAST POWER METAL">
+<meta name="twitter:description" content="EAST POWER METAL 김포/화성 공장 위치 및 오시는 길 안내.">
+<!--<meta name="twitter:image" content="https://chkim-epm.github.io/EPM/map-thumbnail.png">-->
+
 
 <!-- 구글 폰트 -->
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Nanum+Myeongjo:wght@700&display=swap" rel="stylesheet">
 
 <style>
-  body, html {
-    margin:0;
-    padding:0;
-    font-family:'Nanum Gothic', sans-serif;
+
+<style>
+  /* 기본 스타일 */
+  body, html { margin:0; padding:0; font-family:'NanumGothic', sans-serif; }
+  nav { background:#212529; color:#fff; padding:2rem; display:flex; justify-content:center; }
+  nav .nav-item { margin:0 1rem; 
+				  font-size: 1.4rem;
+				  font-weight: bold;
+				}
+
+	nav .nav-item a {
+		color: #fff;            /* 글자 색상 흰색 유지 */
+		text-decoration: none;   /* 밑줄 제거 */
+		font-weight: bold;       /* 원하면 글자 굵게 */
+	}
+	
+	nav .nav-item a:hover {
+		color: #27ae60;             /* 마우스 올리면 색상 변경 가능 */
+	}
+  nav.nav-item span { cursor:default; color:#fff; }
+  .section { height:100vh; display:flex; align-items:center; justify-content:center; position:relative; text-align:center; }
+  .section img { width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0; z-index:1; }
+  <--!.text-area { position:relative; z-index:2; color:#fff; background: rgba(0,0,0,0.5); padding:2rem; border-radius:10px; max-width:600px; } -->
+.text-area { position:relative; z-index:2; color:#fff; padding:2rem; border-radius:10px; 
+			font-size: 1.4rem;
+			
+}
+
+
+/* 동영상 CSS */
+    .bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 화면 비율 유지하며 꽉 채우기 */
+  z-index: 1;
+}
+.text-area {
+  position: relative;
+  z-index: 2; /* 글자가 동영상 위에 표시되도록 */
+}
+
+/* 동영상 CSS끝 */
+
+
+/* 네비게이션 CSS */
+
+.nav-logo {
+  position: absolute;
+  left: 2rem;
+  top : 1.5rem;
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: bold;
   }
 
-  /* 네비게이션 */
-  nav {
-    background:#212529;
-    color:#fff;
-    padding:1rem;
-    display:flex;
-    justify-content:center;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-  nav .nav-item {
-    margin:0 1rem;
-  }
-  nav .nav-item a {
-    text-decoration:none;
-    color:#fff;
-    font-weight:bold;
-  }
+.logo-e { color: green; }
+.logo-p { color: red; }
+.logo-m { color: blue; }
 
-  /* 섹션 기본 스타일 */
-  .section {
-    height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    position:relative;
-    text-align:center;
-  }
-  .section img {
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    position:absolute;
-    top:0;
-    left:0;
-    z-index:1;
-  }
-  .text-area {
-    position:relative;
-    z-index:2;
-    color:#fff;
-    background: rgba(0,0,0,0.5);
-    padding:2rem;
-    border-radius:10px;
-    max-width:600px;
-  }
-  .text-area h1 { font-size:2rem; margin-bottom:1rem; }
-  .text-area p { font-size:1.2rem; }
-
+/* 네비게이션 CSS 끝 */
   /* 오시는 길 섹션 별도 스타일 */
   #s5 {
     background: url('background.jpg') no-repeat center center fixed;
@@ -91,11 +119,17 @@
 
 <!-- 네비게이션 바 -->
 <nav>
+ <div class="nav-logo">
+    <span class="logo-e">E</span>
+    <span class="logo-p">P</span>
+    <span class="logo-m">M</span>
+    (주)이스트파워메탈
+  </div>
   <div class="nav-item"><a href="index.html">HOME</a></div>
   <div class="nav-item"><a href="#s2">부스바</a></div>
   <div class="nav-item"><a href="#s3">무감전</a></div>
   <div class="nav-item"><a href="#s4">제품목록</a></div>
-  <div class="nav-item"><a href="#s5">오시는 길</a></div>
+  <div class="nav-item"><a href="map.html">오시는 길</a></div>
 </nav>
 
 
@@ -126,9 +160,15 @@
   </div>
 </div>
 
+
+<!-- 푸터 (회사 정보) -->
+<footer style="background:#212529; color:#fff; text-align:center; padding:1rem; font-size:0.9rem;">
+  <p>(주)이스트파워메탈 | 주소: 경기도 김포시 통진읍 율마로 223번길 42| 전화: 031-985-6037 | 이메일: chkim.epm@gmailcom</p>
+  <p>© 2025 EAST POWER METAL. All Rights Reserved.</p>
+</footer>
+
 </body>
 </html>
-
 
 
 
