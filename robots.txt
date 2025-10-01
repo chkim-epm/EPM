@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://chkim-epm.github.io/EPM/sitemap.xml
+
+Sitemap: http://www.eastpowermetal.com/sitemap.xml
