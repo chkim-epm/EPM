@@ -29,70 +29,271 @@
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Nanum+Myeongjo:wght@700&display=swap" rel="stylesheet">
 
 <style>
-  /* 기본 스타일 */
+/* ===========================================PC 기본 스타일====================================================*/
+
+/*큰 테두리 둥글게*/
   body, html { margin:0; padding:0; font-family:'NanumGothic', sans-serif; }
-  nav { background:#212529; color:#fff; padding:2rem; display:flex; justify-content:center; }
-  nav .nav-item { margin:0 1rem; 
-				  font-size: 1.4rem;
-				  font-weight: bold;
+   
+/* 네비게이션 바(네모)*/
+	nav {	background:#212529; 
+			/* background:#212529; 검정색*/
+			color:#fff; 
+			padding:2rem; 
+			display:flex; 
+			flex-wrap: wrap; /* 모바일에서 메뉴 줄바꿈 */
+			justify-content:center; 
+		}
+		
+/*네비게이션 바 메뉴 가로로(HOME, 부스바..)*/	
+	.nav-menu {
+				display: flex;           		/* 가로 배열 */
+				flex-wrap: nowrap;       		/* 한 줄 고정 */
+				justify-content: flex-start; 	/* 왼쪽 정렬 */
+				width: auto;             		/* 메뉴 폭에 맞춤 */
 				}
 
+/*네비게이션 메뉴 가로로(HOME, 부스바..)*/	
+	nav .nav-item { 
+					margin:0 1rem; 
+					font-size: 1.4rem;
+					font-weight: bold;
+					}
+					
+/*네비게이션 메뉴 글씨 크기 간격(HOME, 부스바..)*/		
 	nav .nav-item a {
-		color: #fff;            /* 글자 색상 흰색 유지 */
-		text-decoration: none;   /* 밑줄 제거 */
-		font-weight: bold;       /* 원하면 글자 굵게 */
-	}
-	
+					color: #fff;            /* 글자 색상 흰색 유지 */
+					text-decoration: none;   /* 밑줄 제거 */
+					font-weight: bold;       /* 원하면 글자 굵게 */
+					}		
+					
+/*네비게이션 메뉴 마우스호버(HOME, 부스바..)*/			
 	nav .nav-item a:hover {
-		color: #27ae60;             /* 마우스 올리면 색상 변경 가능 */
-	}
-  nav.nav-item span { cursor:default; color:#fff; }
-  .section { height:100vh; display:flex; align-items:center; justify-content:center; position:relative; text-align:center; }
-  .section img { width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0; z-index:1; }
-  <--!.text-area { position:relative; z-index:2; color:#fff; background: rgba(0,0,0,0.5); padding:2rem; border-radius:10px; max-width:600px; } -->
-.text-area { position:relative; z-index:2; color:#fff; padding:2rem; border-radius:10px; 
-			font-size: 1.4rem;
-			
-}
+							color: #27ae60;   /* 마우스 올리면 색상 변경 가능 */
+							}
+							
+/*네비게이션 회사명 CSS */
+	.nav-logo {
+			  position: absolute;
+			  left: 2rem;
+			  top : 1.5rem;
+			  display: flex;
+			  align-items: center;
+			  font-size: 2rem;
+			  font-weight: bold;
+			  } 
+			  
+/*네비게이션 EPM CSS */
+	.logo-e {
+			color: green;
+			}
+	.logo-p {
+			color: red;
+			}
+	.logo-m {
+			color: blue;
+			}
+
+/*오시는 길 섹션 별도 스타일(적용안됨) */
+	#s5 {
+		background: url('background.jpg') no-repeat center center fixed;
+		background-size: cover;
+		}
+
+/*오시는 길 배경 회색박스*/
+	#s5 .container {
+					background:  rgba(128, 128, 128, 0.5);
+					padding:2rem;
+					border-radius:10px;
+					max-width:1000px;
+					width:90%;
+					margin:0 auto;
+				  }
+
+/*오시는 길 지도*/
+	#s5 iframe {
+				width:100%;
+				height:450px;
+				border:0;
+				border-radius:10px;
+			  }
+
+/*오시는 길 지도 간격*/	
+	.section {
+				height:70vh; 
+				display:flex;
+				align-items:center;
+				justify-content:center;
+				position:relative; 
+				text-align:center;
+				}
+
+/*오시는 길 지도 배경..?(적용안됨)*/
+	.section img {
+					width:100%;
+					height:100%;
+					object-fit:cover;
+					position:absolute;
+					top:0;
+					left:0;
+					z-index:1;
+					}
+
+/*지도 2분할 Flexbox로 좌우 배치 */
+	.container.flex-row {
+						  display: flex;
+						  gap: 2rem;          /* 좌우 간격 */
+						  flex-wrap: wrap;    /* 모바일에서 세로로 쌓이게 */
+						}
+
+/*지도 2분할 왼쪽/오른쪽 각각 비율 */
+	.info, .map {
+				  flex: 1 1 45%;      /* 화면이 충분하면 45%씩 차지 */
+				}
+
+/*지도 왼쪽 설명 큰제목*/
+	.info p {
+			  text-align: left;   /* 왼쪽 정렬 */
+			  margin: 0;          /* 기본 여백 제거 */
+			  line-height: 3;   /* 줄 간격 조절 */
+			}
+/*지도 왼쪽 설명 내용*/
+	.info h1 {
+			  text-align: left;   /* 왼쪽 정렬 */
+			  margin: 0;          /* 기본 여백 제거 */
+			  line-height: 3;   /* 줄 간격 조절 */
+			}
+
+	.map iframe {
+				  width: 100%;
+				  height: 300px;      /* 지도 높이 */
+				  border: 0;
+				}
+
+/*footer*/
+	footer p {
+				line-height: 1.1;            /* 줄간격 줄이기 */
+				}
+    footer p span {
+					line-height: 1.1;
+					}
+
+/* ===========================================PC 기본 스타일 끝.================================================*/
 
 
+/* ========================================== 모바일 전용 CSS ================================================= */
 
-/* 네비게이션 CSS */
+@media screen and (max-width: 768px) {
 
-.nav-logo {
-  position: absolute;
-  left: 2rem;
-  top : 1.5rem;
-  display: flex;
-  align-items: center;
-  font-size: 2rem;
-  font-weight: bold;
+/*네비게이션 바 위치 글자 */
+	nav {
+        flex-direction: row;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 1rem;
+        width: 100%;
+		}
+
+/*네비게이션 메뉴 가로로(HOME, 부스바..)*/
+    nav .nav-item { 
+					flex: 0 0 auto;  /* 한 줄 고정 */
+					font-size: 1rem; 
+					margin: 0 0.3rem; 
+					white-space: nowrap;    /* 아이템 내부 줄바꿈 방지 */
+		
+					}
+
+/*네비게이션 메뉴 길면 가로 스크롤 생기게(현재 글자크기 맞춰놔서 필요없음)*/
+	.nav-menu {
+				display: flex;
+				flex-wrap: nowrap;       /* 한 줄 고정 */
+				justify-content: center; /* 가운데 정렬 */
+				overflow-x: auto;        /* 화면 좁으면 가로 스크롤 */
+				}			
+
+/*네비게이션 회사명 CSS*/
+    .nav-logo {
+				position: relative;
+				font-size: 1rem; /* 로고 전체 크기 축소 */
+				left: 0;
+				top: 0;
+				margin-bottom: 0.5rem;
+				}
+
+/*네비게이션 로고(E,P,M)글자 크기 */
+    .nav-logo span {
+					font-size: 1rem; /* E,P,M 개별 글자 크기 */
+					}
+
+
+/* 컨테이너 세로 배치 */
+	.container.flex-row {
+						flex-direction: column;       /* 좌우 -> 세로 */
+						gap: 1.2rem;                  /* 내부 좌우 요소 간격 조금 줄임 */
+					  }
+
+/* 좌우 요소 폭 100% */
+	.info, .map {
+				flex: 1 1 100%;
+			  }
+
+/* 컨테이너 자체 크기 축소 */
+	#s5 .container {
+					max-width: 75%;               /* 이전 90% -> 85%로 살짝 줄임 */
+					padding: 1rem;                /* 내부 여백 줄임 */
+					margin: 1.5rem auto;          /* 섹션 상하 간격 약간 증가 */
+					background: rgba(128, 128, 128, 0.5);
+					border-radius: 10px;
+				  }
+
+/*지도 높이 조금 줄임 */
+	.map iframe {
+				height: 360px !important;                /* 이전 350px -> 320px */
+			  }
+
+/*글씨 크기 h1태그*/
+	.info h1 {
+				font-size: 1.5rem;            /* 이전 1.6rem -> 1.5rem */
+				line-height: 2;
+				}
+/*글씨 크기 p태그 */
+	.info p {
+			font-size: 0.75rem;           /* 이전 0.8rem -> 0.75rem */
+			line-height: 1.7;
+		  }
+
+/*두 섹션 사이 간격 추가 */
+	.section {
+				margin-bottom: 0rem;        /* 이전 2rem -> 2.5rem */
+			  }
+
+/*첫 번째 섹션 위쪽 간격 */
+	#s5:first-of-type {
+						margin-top: 1rem; /* 네비게이션바와 간격 조정, 필요하면 숫자 변경 */
+						}
+
+/*컨테이너 내부 패딩 */
+#s5 .container {
+				padding: 1.5rem;       /* 이전 설정 유지 */
+			  }
+
+
+ 
+/*footer(모바일) 크기 */    
+    footer p {
+				margin: 0.1rem 0;           /* 문단 간격 줄이기 */
+				padding: 0;                  /* 불필요한 패딩 제거 */
+				font-size: 0.7rem;          /* 글자 크기 축소 */
+				line-height: 1.1;            /* 줄간격 줄이기 */
+				}
+		
+
   }
 
-.logo-e { color: green; }
-.logo-p { color: red; }
-.logo-m { color: blue; }
+/* =========================================== 모바일 전용 CSS ==================================== */
+ 
 
-/* 네비게이션 CSS 끝 */
-  /* 오시는 길 섹션 별도 스타일 */
-  #s5 {
-    background: url('background.jpg') no-repeat center center fixed;
-    background-size: cover;
-  }
-  #s5 .container {
-    background: rgba(0,0,0,0.6);
-    padding:2rem;
-    border-radius:10px;
-    max-width:1000px;
-    width:90%;
-    margin:0 auto;
-  }
-  #s5 iframe {
-    width:100%;
-    height:450px;
-    border:0;
-    border-radius:10px;
-  }
 </style>
 </head>
 
@@ -106,52 +307,78 @@
     <span class="logo-m">M</span>
     (주)이스트파워메탈
   </div>
+ <div class="nav-menu">
 	<div class="nav-item"><a href="index.html">HOME</a></div>
 	<div class="nav-item"><a href="Product.html">부스바</a></div>
 	<div class="nav-item"><a href="index.html">제품목록</a></div>
 	<div class="nav-item"><a href="index.html">무감전</a></div>
 	<div class="nav-item"><a href="index.html">연락처</a></div>
     <div class="nav-item"><a href="map.html">오시는 길</a></div>
+</div>
 </nav>
 
 
 <!-- 김포 오시는 길 섹션 -->
 <div class="section" id="s5">
-  <div class="container">
-    <h1>오시는 길</h1>
-    <p>저희 (주)이스트파워메탈 본사 위치 안내입니다.<br>
-       경기도 김포시 통진읍 율마로 223번길 42</p>
-    <iframe 
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3157.999313429958!2d126.59444037620432!3d37.67272391803144!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357c7dedc1623cd3%3A0xa690a16b0633a971!2z6rK96riw64-EIOq5gO2PrOyLnCDthrXsp4TsnY0g7Jyo66eI66GcMjIz67KI6ri4IDQy!5e0!3m2!1sko!2skr!4v1759217401007!5m2!1sko!2skr" 
-      allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
+  <div class="container flex-row">
+    <!-- 왼쪽: 설명 -->
+    <div class="info">
+      <h1>본사/김포공장</h1>
+      <p> ▷ 주소			경기도 김포시 통진읍 율마로 223번길 42 <br>
+		  ▷ 전화번호		031-985-6037<br>
+		  ▷ 팩스번호		031-985-6038<br>
+		  ▷ 이메일		chkim.epm@gmail.com
+	  </p>
+    </div>
+
+    <!-- 오른쪽: 지도 -->
+    <div class="map">
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3157.999313429958!2d126.59444037620432!3d37.67272391803144!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357c7dedc1623cd3%3A0xa690a16b0633a971!2z6rK96riw64-EIOq5gO2PrOyLnCDthrXsp4TsnY0g7Jyo66eI66GcMjIz67KI6ri4IDQy!5e0!3m2!1sko!2skr!4v1759217401007!5m2!1sko!2skr" 
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
   </div>
 </div>
 
-
-  <!-- 화성 오시는 길 섹션 -->
+<!-- 화성 오시는 길 섹션 -->
 <div class="section" id="s5">
-  <div class="container">
-    <h1>오시는 길</h1>
-    <p>저희 (주)이스트파워메탈 화성공장 위치 안내입니다.<br>
-       경기도 화성시 우정읍 버들로 953-11</p>
-    <iframe 
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3181.4680191403854!2d126.81932817628088!3d37.11777894973271!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357b119e846d9941%3A0x757f175f5afeb598!2z6rK96riw64-EIO2ZlOyEseyLnCDsmrDsoJXsnY0g67KE65Ok66GcIDk1My0xMQ!5e0!3m2!1sko!2skr!4v1759219582175!5m2!1sko!2skr" 
-		  allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-	</iframe>
+  <div class="container flex-row">
+    <!-- 왼쪽: 설명 -->
+    <div class="info">
+      <h1>화성공장</h1>
+		<p> ▷ 주소		경기도 화성시 우정읍 버들로 953-11 <br>
+			▷ 전화번호		031-985-6037<br>
+			▷ 팩스번호		031-985-6038<br>
+			▷ 이메일		chkim.epm@gmail.com
+	  </p>
+    </div>
+
+    <!-- 오른쪽: 지도 -->
+    <div class="map">
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3181.4680191403854!2d126.81932817628088!3d37.11777894973271!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357b119e846d9941%3A0x757f175f5afeb598!2z6rK96riw64-EIO2ZlOyEseyLnCDsmrDsoJXsnY0g67KE65Ok66GcIDk1My0xMQ!5e0!3m2!1sko!2skr!4v1759219582175!5m2!1sko!2skr" 
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
   </div>
 </div>
-
 
 <!-- 푸터 (회사 정보) -->
-<footer style="background:#212529; color:#fff; text-align:center; padding:1rem; font-size:0.9rem;">
-  <p>(주)이스트파워메탈 | 주소: 경기도 김포시 통진읍 율마로 223번길 42| 전화: 031-985-6037 | 이메일: chkim.epm@gmailcom</p>
+<footer style="background:#212529; color:#fff; text-align:center; padding:0.1rem 1rem; font-size:1rem; line-height:1.2;">
+  
+  <p>
+	<span class="logo-e" style="color:green;">E</span>
+	<span class="logo-p" style="color:red; ">P</span>
+	<span class="logo-m" style="color:blue;">M</span>
+   (주)이스트파워메탈 | 주소: 경기도 김포시 통진읍 율마로 223번길 42 | 전화: 031-985-6037 | 이메일: chkim.epm@gmail.com</p>
   <p>© 2025 EAST POWER METAL. All Rights Reserved.</p>
+    <!-- 왼쪽 로고 -->
+  
 </footer>
 
 </body>
 </html>
-
 
 
 
