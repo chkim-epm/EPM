@@ -2,28 +2,40 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<title>이스트파워메탈 : 버스바, 부스바, 동버스바, 분전반, 수배전반,부스닥트,무감전 분전반, 무감전 배전반, 무감전 변압기, 임가공, 절곡, 가공, 금속, 절단, 김포, 화성, 무감전: EAST POWER METAL</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>제품 목록 : 이스트파워메탈</title>
 
-
-<!-- SEO -->
-<meta name="description" content="EAST POWER METAL의 동버스바, 부스바, 무감전 등 제품 목록을 확인하세요.">
-<meta name="keywords" content="부스바, 동부스바, 무감전, 전력 솔루션">
+<!-- ✅ SEO 기본 메타태그 -->
+<meta name="keywords" content="이스트파워메탈, 동버스바, 부스바, 분전반, 배전반, 수배전반, 무감전 분전반, 무감전 배전반, 무감전 변압기, 임가공, 절곡, 가공, 비철금속, 금속, 절단, 화성공장, 김포공장, 김포, 화성, 동부스바, 무감전, 누설전류 통제장치, 누설전류">
+<meta name="description" content="이스트파워메탈 버스바, 부스바, 동버스바, 분전반, 수배전반,부스닥트,무감전 분전반, 무감전 배전반, 무감전 변압기, 임가공, 절곡, 가공, 금속, 절단, 김포, 화성, 무감전 전문 기업입니다. 다양한 품종과 맞춤 절단 서비스를 제공합니다.">
 <meta name="author" content="이스트파워메탈">
 <meta name="robots" content="index, follow">
 
-<!-- Open Graph (SNS 공유용) -->
-<meta property="og:title" content="제품 목록 - EAST POWER METAL">
-<meta property="og:description" content="EAST POWER METAL의 동버스바, 무감전 등 제품 목록을 확인하세요.">
-<!--<meta property="og:image" content="https://chkim-epm.github.io/EPM/product-thumbnail.png">-->
-<meta property="og:url" content="https://chkim-epm.github.io/EPM/Product.html">
+<!-- ✅ Open Graph (SNS 공유용) -->
+<meta property="og:title" content="이스트파워메탈 : EAST POWER METAL">
+<meta property="og:image" content="https://chkim-epm.github.io/EPM/factory.png">
+<meta property="og:url" content="https://chkim-epm.github.io/EPM/">
 <meta property="og:type" content="website">
 
-<!-- Twitter Card -->
+<!-- ✅ 트위터 카드 -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="제품 목록 - EAST POWER METAL">
-<meta name="twitter:description" content="EAST POWER METAL의 동버스바, 무감전 등 제품 목록을 확인하세요.">
-<!--<meta name="twitter:image" content="https://chkim-epm.github.io/EPM/product-thumbnail.png">-->
+<meta name="twitter:title" content="이스트파워메탈 : EAST POWER METAL">
+<meta name="twitter:description" content="이스트파워메탈 버스바, 부스바, 동버스바, 분전반, 수배전반,부스닥트,무감전 분전반, 무감전 배전반, 무감전 변압기, 임가공, 절곡, 가공, 금속, 절단, 김포, 화성, 무감전 전문 기업입니다. 다양한 품종과 맞춤 절단 서비스를 제공합니다.">
+<meta name="twitter:image" content="https://chkim-epm.github.io/EPM/factory.png">
+
+<!-- ✅ 네이버 -->
+<meta property="og:title" content="이스트파워메탈 : EAST POWER METAL">
+<meta property="og:description" content="이스트파워메탈 버스바, 부스바, 동버스바, 분전반, 수배전반,부스닥트,무감전 분전반, 무감전 배전반, 무감전 변압기, 임가공, 절곡, 가공, 금속, 절단, 김포, 화성, 무감전 전문 기업입니다. 다양한 품종과 맞춤 절단 서비스를 제공합니다.">
+<meta property="og:image" content="https://www.eastpowermetal.com/logo.png">
+<meta property="og:url" content="https://www.eastpowermetal.com/">
+<meta property="og:type" content="website">
+	
+<!-- ✅ 구글 사이트 소유권 확인 -->
+<meta name="google-site-verification" content="google444cc8347990b8a8"/>
+<!-- ✅ 네이버 사이트 소유권 확인 -->
+<meta name="naver-site-verification" content="c2165f2b265182c8668d9374095a8bdcd78bf2c1" />
+<!-- 구글 폰트 예시 -->
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&family=Nanum+Gothic&display=swap" rel="stylesheet">
 
 
 <style>
@@ -41,11 +53,11 @@
 
   .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* 320px 카드 크기 */
+	gap: 1.5rem;
     padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 1200px;	/* 양옆 여백 크기 */
+	margin: 0 auto;
   }
 
   .product-card {
@@ -55,6 +67,10 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     text-align: center;
     transition: transform 0.3s, box-shadow 0.3s;
+	display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+	
   }
 
   .product-card:hover {
@@ -64,7 +80,7 @@
 
   .product-card img {
     width: 100%;
-    height: 180px;
+    height: 280px;
     object-fit: cover;
   }
 
@@ -96,7 +112,34 @@
   .product-info a:hover {
     background-color: #2980b9;
   }
+  
+  
+ /* 카드 안 표 스타일 추가 */
+  .product-table {
+    margin-top: 1rem;
+    text-align: left;
+  }
 
+  .product-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .product-table th, .product-table td {
+    padding: 0.4rem 0.6rem;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .product-table th {
+    background-color: #f9f9f9;
+    font-weight: bold;
+  }
+
+  .product-table td {
+    color: #555;
+  }
+   /* 카드 안 표 스타일 추가 끝*/
+  
 
 /* 네비게이션 CSS */
  nav { background:#212529; color:#fff; padding:2rem; display:flex; justify-content:center; }
@@ -158,95 +201,217 @@
 <h1>제품 목록</h1>
 
 <div class="product-grid">
+
+  <!-- 카드 1 -->
   <div class="product-card">
     <img src="image/Busbar1.webp" alt="부스바 1">
     <div class="product-info">
       <h2>부스바 A형</h2>
       <p>전력용 동부스바, 맞춤 절단 가능</p>
+      <div class="product-table">
+        <table>
+          <colgroup><col width="30%"><col width="70%"></colgroup>
+          <tbody>
+            <tr><th>품목명</th><td>분기고리</td></tr>
+            <tr><th>재질</th><td>CU + AL</td></tr>
+            <tr><th>용도</th><td>가공배전용</td></tr>
+            <tr><th>종류</th><td>T2 ~ T4</td></tr>
+          </tbody>
+        </table>
+      </div>
       <a href="#">자세히 보기</a>
     </div>
   </div>
 
+  <!-- 카드 2 -->
   <div class="product-card">
     <img src="image/Busbar2.webp" alt="부스바 2">
     <div class="product-info">
       <h2>부스바 B형</h2>
       <p>고전류용 부스바, 절곡 가능</p>
+      <div class="product-table">
+        <table>
+          <colgroup><col width="30%"><col width="70%"></colgroup>
+          <tbody>
+            <tr><th>품목명</th><td>분기고리</td></tr>
+            <tr><th>재질</th><td>CU + AL</td></tr>
+            <tr><th>용도</th><td>고전류 배전용</td></tr>
+            <tr><th>종류</th><td>T2 ~ T5</td></tr>
+          </tbody>
+        </table>
+      </div>
       <a href="#">자세히 보기</a>
     </div>
   </div>
 
+  <!-- 카드 3 -->
   <div class="product-card">
     <img src="image/Busbar3.webp" alt="부스바 3">
     <div class="product-info">
       <h2>부스바 C형</h2>
       <p>누설전류 통제 장치, 안전 규격 준수</p>
+      <div class="product-table">
+        <table>
+          <colgroup><col width="30%"><col width="70%"></colgroup>
+          <tbody>
+            <tr><th>품목명</th><td>분기고리</td></tr>
+            <tr><th>재질</th><td>CU + AL</td></tr>
+            <tr><th>용도</th><td>안전 배전용</td></tr>
+            <tr><th>종류</th><td>T3 ~ T6</td></tr>
+          </tbody>
+        </table>
+      </div>
       <a href="#">자세히 보기</a>
     </div>
   </div>
+  
+<!-- 카드 4 -->
+<div class="product-card">
+  <img src="image/Busbar4.webp" alt="부스바 4">
+  <div class="product-info">
+    <h2>부스바 D형</h2>
+    <p>누설전류 통제 장치, 안전 규격 준수</p>
+    <div class="product-table">
+      <table>
+        <colgroup><col width="30%"><col width="70%"></colgroup>
+        <tbody>
+          <tr><th>품목명</th><td>분기고리</td></tr>
+          <tr><th>재질</th><td>CU + AL</td></tr>
+          <tr><th>용도</th><td>배전용</td></tr>
+          <tr><th>종류</th><td>T2 ~ T4</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <a href="#">자세히 보기</a>
+  </div>
+</div>
 
-  <div class="product-card">
-    <img src="image/Busbar4.webp" alt="부스바 4">
-    <div class="product-info">
-      <h2>부스바 D형</h2>
-      <p>누설전류 통제 장치, 안전 규격 준수</p>
-      <a href="#">자세히 보기</a>
+<!-- 카드 5 -->
+<div class="product-card">
+  <img src="image/Busbar5.webp" alt="부스바 5">
+  <div class="product-info">
+    <h2>부스바 E형</h2>
+    <p>누설전류 통제 장치, 안전 규격 준수</p>
+    <div class="product-table">
+      <table>
+        <colgroup><col width="30%"><col width="70%"></colgroup>
+        <tbody>
+          <tr><th>품목명</th><td>분기고리</td></tr>
+          <tr><th>재질</th><td>CU + AL</td></tr>
+          <tr><th>용도</th><td>배전용</td></tr>
+          <tr><th>종류</th><td>T3 ~ T5</td></tr>
+        </tbody>
+      </table>
     </div>
+    <a href="#">자세히 보기</a>
   </div>
+</div>
 
-  <div class="product-card">
-    <img src="image/Busbar5.webp" alt="부스바 5">
-    <div class="product-info">
-      <h2>부스바 E형</h2>
-      <p>누설전류 통제 장치, 안전 규격 준수</p>
-      <a href="#">자세히 보기</a>
+<!-- 카드 6 -->
+<div class="product-card">
+  <img src="image/Busbar6.webp" alt="부스바 6">
+  <div class="product-info">
+    <h2>부스바 F형</h2>
+    <p>누설전류 통제 장치, 안전 규격 준수</p>
+    <div class="product-table">
+      <table>
+        <colgroup><col width="30%"><col width="70%"></colgroup>
+        <tbody>
+          <tr><th>품목명</th><td>분기고리</td></tr>
+          <tr><th>재질</th><td>CU + AL</td></tr>
+          <tr><th>용도</th><td>배전용</td></tr>
+          <tr><th>종류</th><td>T4 ~ T6</td></tr>
+        </tbody>
+      </table>
     </div>
+    <a href="#">자세히 보기</a>
   </div>
+</div>
 
-  <div class="product-card">
-    <img src="image/Busbar6.webp" alt="부스바 6">
-    <div class="product-info">
-      <h2>부스바 F형</h2>
-      <p>누설전류 통제 장치, 안전 규격 준수</p>
-      <a href="#">자세히 보기</a>
+<!-- 카드 7 -->
+<div class="product-card">
+  <img src="image/Busbar7.webp" alt="부스바 7">
+  <div class="product-info">
+    <h2>부스바 G형</h2>
+    <p>누설전류 통제 장치, 안전 규격 준수</p>
+    <div class="product-table">
+      <table>
+        <colgroup><col width="30%"><col width="70%"></colgroup>
+        <tbody>
+          <tr><th>품목명</th><td>분기고리</td></tr>
+          <tr><th>재질</th><td>CU + AL</td></tr>
+          <tr><th>용도</th><td>배전용</td></tr>
+          <tr><th>종류</th><td>T2 ~ T4</td></tr>
+        </tbody>
+      </table>
     </div>
+    <a href="#">자세히 보기</a>
   </div>
+</div>
 
-  <div class="product-card">
-    <img src="image/Busbar7.webp" alt="부스바 7">
-    <div class="product-info">
-      <h2>부스바 G형</h2>
-      <p>누설전류 통제 장치, 안전 규격 준수</p>
-      <a href="#">자세히 보기</a>
+<!-- 카드 8 -->
+<div class="product-card">
+  <img src="image/Busbar8.webp" alt="부스바 8">
+  <div class="product-info">
+    <h2>부스바 H형</h2>
+    <p>누설전류 통제 장치, 안전 규격 준수</p>
+    <div class="product-table">
+      <table>
+        <colgroup><col width="30%"><col width="70%"></colgroup>
+        <tbody>
+          <tr><th>품목명</th><td>분기고리</td></tr>
+          <tr><th>재질</th><td>CU + AL</td></tr>
+          <tr><th>용도</th><td>배전용</td></tr>
+          <tr><th>종류</th><td>T3 ~ T5</td></tr>
+        </tbody>
+      </table>
     </div>
+    <a href="#">자세히 보기</a>
   </div>
+</div>
 
-  <div class="product-card">
-    <img src="image/Busbar8.webp" alt="부스바 8">
-    <div class="product-info">
-      <h2>부스바 H형</h2>
-      <p>누설전류 통제 장치, 안전 규격 준수</p>
-      <a href="#">자세히 보기</a>
+<!-- 카드 9 -->
+<div class="product-card">
+  <img src="image/Busbar1.webp" alt="부스바 9">
+  <div class="product-info">
+    <h2>부스바 I형</h2>
+    <p>누설전류 통제 장치, 안전 규격 준수</p>
+    <div class="product-table">
+      <table>
+        <colgroup><col width="30%"><col width="70%"></colgroup>
+        <tbody>
+          <tr><th>품목명</th><td>분기고리</td></tr>
+          <tr><th>재질</th><td>CU + AL</td></tr>
+          <tr><th>용도</th><td>배전용</td></tr>
+          <tr><th>종류</th><td>T4 ~ T6</td></tr>
+        </tbody>
+      </table>
     </div>
+    <a href="#">자세히 보기</a>
   </div>
+</div>
 
-  <div class="product-card">
-    <img src="image/Busbar1.webp" alt="부스바 9">
-    <div class="product-info">
-      <h2>부스바 I형</h2>
-      <p>누설전류 통제 장치, 안전 규격 준수</p>
-      <a href="#">자세히 보기</a>
+<!-- 카드 10 -->
+<div class="product-card">
+  <img src="image/Busbar2.webp" alt="부스바 10">
+  <div class="product-info">
+    <h2>부스바 J형</h2>
+    <p>누설전류 통제 장치, 안전 규격 준수</p>
+    <div class="product-table">
+      <table>
+        <colgroup><col width="30%"><col width="70%"></colgroup>
+        <tbody>
+          <tr><th>품목명</th><td>분기고리</td></tr>
+          <tr><th>재질</th><td>CU + AL</td></tr>
+          <tr><th>용도</th><td>배전용</td></tr>
+          <tr><th>종류</th><td>T2 ~ T5</td></tr>
+        </tbody>
+      </table>
     </div>
+    <a href="#">자세히 보기</a>
   </div>
+</div>
 
-  <div class="product-card">
-    <img src="image/Busbar2.webp" alt="부스바 10">
-    <div class="product-info">
-      <h2>부스바 J형</h2>
-      <p>누설전류 통제 장치, 안전 규격 준수</p>
-      <a href="#">자세히 보기</a>
-    </div>
-  </div>
 
   <!-- 필요하면 카드 더 추가 -->
 </div>
@@ -259,5 +424,4 @@
 
 </body>
 </html>
-
 
