@@ -122,29 +122,42 @@
   /* =================== 모바일 전용 CSS =================== */
   @media screen and (max-width: 768px) {
     /* 네비게이션: 세로 나열, 글자 축소 */
-    nav { 
-      flex-direction: row; 
-	  overflow-x: auto;
-	  -webkit-overflow-scrolling: touch;
-      padding: 1rem; 
-      
+    nav {
+        flex-direction: row;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 1rem;
+        width: 100%;
     }
+    nav .nav-item { 
+        flex: 0 0 auto;  /* 한 줄 고정 */
+        font-size: 1.4rem; 
+        margin: 0 0.3rem; 
+white-space: nowrap;    /* 아이템 내부 줄바꿈 방지 */
+    }
+/* 메뉴 */
+.nav-menu {
+    display: flex;
+    flex-wrap: nowrap;       /* 한 줄 고정 */
+    justify-content: center; /* 가운데 정렬 */
+    overflow-x: auto;        /* 화면 좁으면 가로 스크롤 */
+    width: 100%;
+}
+
+
     .nav-logo {
       position: relative;
-      font-size: 1.5rem; /* 로고 전체 크기 축소 */
+      font-size: 2rem; /* 로고 전체 크기 축소 */
       left: 0;
       top: 0;
       margin-bottom: 0.5rem;
     }
     .nav-logo span {
-      font-size: 1.5rem; /* E,P,M 개별 글자 크기 */
+      font-size: 2rem; /* E,P,M 개별 글자 크기 */
     }
-    nav .nav-item { 
-      font-size: 1.1rem; 
-      margin: 0.3rem 0; 
-      flex: 0 0 auto; /* 한 줄에 아이템 고정 */
-      margin: 0 0.5rem; 
-    }
+ 
 
     /* 섹션: 높이 자동, 글자 축소, 패딩 조정 */
     .section { 
@@ -184,12 +197,14 @@
     <span class="logo-m">M</span>
     (주)이스트파워메탈
   </div>
+ <div class="nav-menu">
 	<div class="nav-item"><a href="index.html">HOME</a></div>
 	<div class="nav-item"><a href="Product.html">부스바</a></div>
 	<div class="nav-item"><a href="index.html">제품목록</a></div>
 	<div class="nav-item"><a href="index.html">무감전</a></div>
 	<div class="nav-item"><a href="index.html">연락처</a></div>
     <div class="nav-item"><a href="map.html">오시는 길</a></div>
+</div>
 </nav>
 
 <!-- 메인 섹션 -->
