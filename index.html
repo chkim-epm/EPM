@@ -44,6 +44,7 @@
   /* 기본 스타일 */
   body, html { margin:0; padding:0; font-family:'NanumGothic', sans-serif; }
   nav { background:#212529; 
+  /*background:#212529; */
 		color:#fff; 
 		padding:2rem; 
 		display:flex; 
@@ -149,9 +150,10 @@
     }
     nav .nav-item { 
         flex: 0 0 auto;  /* 한 줄 고정 */
-        font-size: 1.4rem; 
+        font-size: 1rem; 
         margin: 0 0.3rem; 
-white-space: nowrap;    /* 아이템 내부 줄바꿈 방지 */
+		white-space: nowrap;    /* 아이템 내부 줄바꿈 방지 */
+		
     }
 /* 메뉴 */
 .nav-menu {
@@ -159,19 +161,20 @@ white-space: nowrap;    /* 아이템 내부 줄바꿈 방지 */
     flex-wrap: nowrap;       /* 한 줄 고정 */
     justify-content: center; /* 가운데 정렬 */
     overflow-x: auto;        /* 화면 좁으면 가로 스크롤 */
-    width: 100%;
+    
+
 }
 
 
     .nav-logo {
       position: relative;
-      font-size: 2rem; /* 로고 전체 크기 축소 */
+      font-size: 1rem; /* 로고 전체 크기 축소 */
       left: 0;
-      top: 0;
+	  top: 0;
       margin-bottom: 0.5rem;
     }
     .nav-logo span {
-      font-size: 2rem; /* E,P,M 개별 글자 크기 */
+      font-size: 1rem; /* E,P,M 개별 글자 크기 */
     }
  
 
