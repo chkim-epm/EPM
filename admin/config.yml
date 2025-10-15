@@ -2,21 +2,21 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "image"   # Folder to store uploaded images
+media_folder: "image"
 public_folder: "/image"
 
 collections:
   - name: "products"
-    label: "상품 목록"
+    label: "Products"
     folder: "products"
     create: true
     slug: "{{slug}}"
     fields:
-      - { label: "상품명", name: "title", widget: "string" }
-      - { label: "가격", name: "price", widget: "number" }
-      - { label: "설명", name: "description", widget: "text" }
-      - { label: "이미지", name: "image", widget: "image" }
-      - { label: "품목명", name: "item_name", widget: "string" }
-      - { label: "재질", name: "material", widget: "string" }
-      - { label: "용도", name: "usage", widget: "string" }
-      - { label: "종류", name: "type", widget: "string" }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Price", name: "price", widget: "number" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Item Name", name: "item_name", widget: "string" }
+      - { label: "Material", name: "material", widget: "string" }
+      - { label: "Usage", name: "usage", widget: "string" }
+      - { label: "Type", name: "type", widget: "string" }
