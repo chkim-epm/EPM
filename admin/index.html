@@ -63,6 +63,7 @@
   const $ = s => document.querySelector(s);
   const setState = s => $('#meta-state').textContent = `상태: ${s}`;
 
+  // ✅ 반드시 Netlify Identity APIUrl (Overview → API endpoint)로 교체해야 합니다.
   const API_URL = 'https://eastpage.netlify.app/.netlify/identity';
 
   if (window.netlifyIdentity) {
@@ -70,9 +71,9 @@
 
     window.netlifyIdentity.on('init', (user) => {
       setState(user ? (user.email || '로그인됨') : '로그아웃됨');
-      $('#btn-login').style.display   = user ? 'none' : 'inline-flex';
-      $('#btn-dashboard').style.display = user ? 'inline-flex' : 'none';
-      $('#btn-logout').style.display = user ? 'inline-flex' : 'none';
+      $('#btn-login').style.display     = user ? 'none'       : 'inline-flex';
+      $('#btn-dashboard').style.display = user ? 'inline-flex': 'none';
+      $('#btn-logout').style.display    = user ? 'inline-flex': 'none';
     });
 
     window.netlifyIdentity.on('login', (user) => {
@@ -88,17 +89,21 @@
     setState('Identity 위젯 로드 실패');
   }
 
-  // 👇 GitHub 로그인 강제 실행
+  // 🔑 GitHub OAuth 직접 실행
   $('#btn-login').addEventListener('click', () => {
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.open('login'); 
-      // 기본 위젯이 아니라 GitHub provider 바로 호출
-      window.netlifyIdentity.authenticate({ provider: "github" });
-    }
+    if (!window.netlifyIdentity) return;
+    window.netlifyIdentity
+      .authenticate({ provider: 'github', scope: 'repo,user' })
+      .then((user) => {
+        setState(user && user.email ? user.email : '로그인됨');
+        location.replace('/admin/');
+      })
+      .catch((err) => setState('로그인 실패: ' + (err && err.message ? err.message : err)));
   });
 
   $('#btn-dashboard').addEventListener('click', () => location.href = '/admin/');
   $('#btn-logout').addEventListener('click', () => window.netlifyIdentity && window.netlifyIdentity.logout());
 </script>
+
 </body>
 </html>
