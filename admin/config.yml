@@ -2,7 +2,7 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "image"   # HTML에서 사용한 이미지 폴더
+media_folder: "image"   # Folder to store uploaded images
 public_folder: "/image"
 
 collections:
