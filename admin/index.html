@@ -59,39 +59,46 @@
   <!-- Netlify CMS -->
   <script src="https://unpkg.com/netlify-cms-app@latest/dist/netlify-cms.js"></script>
 
-  <script>
-    const $ = s => document.querySelector(s);
-    const setState = s => $('#meta-state').textContent = `상태: ${s}`;
+<script>
+  const $ = s => document.querySelector(s);
+  const setState = s => $('#meta-state').textContent = `상태: ${s}`;
 
-    // 1) 반드시 APIUrl을 Netlify 서브도메인 엔드포인트로 지정해야 함
-    //    Identity → Overview에 적힌 API endpoint를 그대로 넣어!
-    const API_URL = 'https://eastpage.netlify.app/.netlify/identity'; // 예: 'https://eastpowermetal.netlify.app/.netlify/identity'
+  const API_URL = 'https://eastpage.netlify.app/.netlify/identity';
 
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.init({ APIUrl: API_URL });
+
+    window.netlifyIdentity.on('init', (user) => {
+      setState(user ? (user.email || '로그인됨') : '로그아웃됨');
+      $('#btn-login').style.display   = user ? 'none' : 'inline-flex';
+      $('#btn-dashboard').style.display = user ? 'inline-flex' : 'none';
+      $('#btn-logout').style.display = user ? 'inline-flex' : 'none';
+    });
+
+    window.netlifyIdentity.on('login', (user) => {
+      setState(user.email || '로그인됨');
+      location.replace('/admin/');
+    });
+
+    window.netlifyIdentity.on('logout', () => {
+      setState('로그아웃됨');
+      location.replace('/admin/');
+    });
+  } else {
+    setState('Identity 위젯 로드 실패');
+  }
+
+  // 👇 GitHub 로그인 강제 실행
+  $('#btn-login').addEventListener('click', () => {
     if (window.netlifyIdentity) {
-      window.netlifyIdentity.init({ APIUrl: API_URL });
-
-      window.netlifyIdentity.on('init', (user) => {
-        setState(user ? (user.email || '로그인됨') : '로그아웃됨');
-        $('#btn-login').style.display   = user ? 'none' : 'inline-flex';
-        $('#btn-dashboard').style.display = user ? 'inline-flex' : 'none';
-        $('#btn-logout').style.display = user ? 'inline-flex' : 'none';
-      });
-
-      window.netlifyIdentity.on('login', (user) => {
-        setState(user.email || '로그인됨');
-        location.replace('/admin/');
-      });
-      window.netlifyIdentity.on('logout', () => {
-        setState('로그아웃됨'); location.replace('/admin/');
-      });
-    } else {
-      setState('Identity 위젯 로드 실패');
+      window.netlifyIdentity.open('login'); 
+      // 기본 위젯이 아니라 GitHub provider 바로 호출
+      window.netlifyIdentity.authenticate({ provider: "github" });
     }
+  });
 
-    // 커스텀 버튼 동작
-    $('#btn-login').addEventListener('click', () => window.netlifyIdentity && window.netlifyIdentity.open('login'));
-    $('#btn-dashboard').addEventListener('click', () => location.href = '/admin/');
-    $('#btn-logout').addEventListener('click', () => window.netlifyIdentity && window.netlifyIdentity.logout());
-  </script>
+  $('#btn-dashboard').addEventListener('click', () => location.href = '/admin/');
+  $('#btn-logout').addEventListener('click', () => window.netlifyIdentity && window.netlifyIdentity.logout());
+</script>
 </body>
 </html>
