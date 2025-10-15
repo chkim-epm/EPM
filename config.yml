@@ -1,0 +1,19 @@
+backend:
+  name: github
+  repo: yourname/my-shop   # 👉 여기에 자신의 GitHub 저장소 경로 입력
+  branch: main
+
+media_folder: "image"   # 이미지 저장 위치
+public_folder: "/image
+
+collections:
+  - name: "products"
+    label: "상품 목록"
+    folder: "products"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "상품명", name: "title", widget: "string" }
+      - { label: "가격", name: "price", widget: "number" }
+      - { label: "설명", name: "description", widget: "text" }
+      - { label: "이미지", name: "image", widget: "image" }
