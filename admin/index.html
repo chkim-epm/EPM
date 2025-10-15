@@ -60,49 +60,38 @@
   <script src="https://unpkg.com/netlify-cms-app@latest/dist/netlify-cms.js"></script>
 
 <script>
-  const $ = s => document.querySelector(s);
-  const setState = s => $('#meta-state').textContent = `상태: ${s}`;
+  const setState = (s) => {
+    const el = document.getElementById("meta-state");
+    if (el) el.textContent = "상태: " + s;
+  };
 
-  // ✅ 반드시 Netlify Identity APIUrl (Overview → API endpoint)로 교체해야 합니다.
-  const API_URL = 'https://eastpage.netlify.app/.netlify/identity';
+  // 반드시 Netlify 기본 도메인(API endpoint) 사용
+  const API_URL = "https://eastpage.netlify.app/.netlify/identity";
 
   if (window.netlifyIdentity) {
     window.netlifyIdentity.init({ APIUrl: API_URL });
 
-    window.netlifyIdentity.on('init', (user) => {
-      setState(user ? (user.email || '로그인됨') : '로그아웃됨');
-      $('#btn-login').style.display     = user ? 'none'       : 'inline-flex';
-      $('#btn-dashboard').style.display = user ? 'inline-flex': 'none';
-      $('#btn-logout').style.display    = user ? 'inline-flex': 'none';
+    // 초기 상태
+    window.netlifyIdentity.on("init", (user) => {
+      setState(user ? "로그인됨" : "로그아웃됨");
     });
 
-    window.netlifyIdentity.on('login', (user) => {
-      setState(user.email || '로그인됨');
-      location.replace('/admin/');
+    // 로그인 성공 → 관리자 이동
+    window.netlifyIdentity.on("login", (user) => {
+      setState("로그인됨: " + (user.email || ""));
+      location.href = "/admin/";
     });
 
-    window.netlifyIdentity.on('logout', () => {
-      setState('로그아웃됨');
-      location.replace('/admin/');
+    // 로그아웃
+    window.netlifyIdentity.on("logout", () => {
+      setState("로그아웃됨");
     });
-  } else {
-    setState('Identity 위젯 로드 실패');
+
+    // 버튼 클릭 → 로그인 팝업 열기
+    document.getElementById("btn-login").addEventListener("click", () => {
+      window.netlifyIdentity.open("login");
+    });
   }
-
-  // 🔑 GitHub OAuth 직접 실행
-  $('#btn-login').addEventListener('click', () => {
-    if (!window.netlifyIdentity) return;
-    window.netlifyIdentity
-      .authenticate({ provider: 'github', scope: 'repo,user' })
-      .then((user) => {
-        setState(user && user.email ? user.email : '로그인됨');
-        location.replace('/admin/');
-      })
-      .catch((err) => setState('로그인 실패: ' + (err && err.message ? err.message : err)));
-  });
-
-  $('#btn-dashboard').addEventListener('click', () => location.href = '/admin/');
-  $('#btn-logout').addEventListener('click', () => window.netlifyIdentity && window.netlifyIdentity.logout());
 </script>
 
 </body>
