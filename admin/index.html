@@ -1,24 +1,30 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <title>상품 등록 관리자 페이지</title>
-  <!-- Netlify Identity 위젯 -->
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <!-- Netlify CMS -->
-  <script src="https://unpkg.com/netlify-cms-app@latest/dist/netlify-cms.js"></script>
-</head>
-<body>
-  <script>
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", user => {
-        if (!user) {
-          window.netlifyIdentity.on("login", () => {
-            document.location.href = "/admin/";
-          });
-        }
-      });
-    }
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>상품 등록 관리자 페이지</title>
+
+    <!-- Netlify Identity 위젯 (로그인용) -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  </head>
+  <body>
+    <h1>상품 등록 관리자</h1>
+    <p>GitHub 계정으로 로그인 후 상품을 등록할 수 있습니다.</p>
+
+    <!-- Netlify CMS -->
+    <script src="https://unpkg.com/netlify-cms-app@latest/dist/netlify-cms.js"></script>
+
+    <script>
+      // Netlify Identity 이벤트 처리
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", (user) => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+      }
+    </script>
+  </body>
 </html>
