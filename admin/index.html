@@ -2,66 +2,96 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>상품 등록 관리자 페이지</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>상품 등록 관리자</title>
 
-  <!-- Netlify Identity (로그인용) -->
+  <!-- Netlify Identity -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+  <style>
+    :root{
+      --bg:#0b1220; --card:#141b2d; --text:#e6ecff; --muted:#9fb0d1;
+      --accent:#49a5ff; --accent-pressed:#3186d7; --border:#243150;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:linear-gradient(180deg,var(--bg),#0f162b 55%, #0b1220);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", Helvetica, Arial;
+      color:var(--text); display:flex; align-items:center; justify-content:center; padding:24px;
+    }
+    .wrap{width:100%; max-width:720px}
+    .card{background:var(--card); border:1px solid var(--border); border-radius:20px; padding:32px;
+          box-shadow:0 10px 40px rgba(0,0,0,.35)}
+    h1{margin:0 0 10px; font-size:26px}
+    p.lead{margin:0 0 24px; color:var(--muted)}
+    .actions{display:flex; gap:12px; flex-wrap:wrap}
+    .btn{appearance:none; border:1px solid transparent; border-radius:12px; padding:12px 18px;
+         font-weight:600; cursor:pointer; transition:.15s transform,.15s background-color,.15s border-color}
+    .btn:hover{transform:translateY(-1px)} .btn:active{transform:translateY(0)}
+    .btn-primary{background:var(--accent); color:#081120}
+    .btn-primary:active{background:var(--accent-pressed)}
+    .btn-ghost{background:transparent; color:var(--text); border-color:var(--border)}
+    .meta{margin-top:18px; font-size:13px; color:var(--muted)}
+    [data-netlify-identity-button],[data-netlify-identity-menu]{display:none!important}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>상품 등록 관리자</h1>
+      <p class="lead">GitHub 계정으로 로그인하면 CMS에서 상품을 등록·수정할 수 있어요.</p>
+
+      <div class="actions">
+        <button id="btn-login" class="btn btn-primary">GitHub으로 로그인</button>
+        <button id="btn-dashboard" class="btn btn-ghost" style="display:none;">관리자 열기</button>
+        <button id="btn-logout" class="btn btn-ghost" style="display:none;">로그아웃</button>
+      </div>
+
+      <p class="meta" id="meta-state">상태: 초기화 중…</p>
+
+      <!-- 숨김: 기본 위젯 -->
+      <div data-netlify-identity-button></div>
+      <div data-netlify-identity-menu></div>
+    </div>
+  </div>
 
   <!-- Netlify CMS -->
   <script src="https://unpkg.com/netlify-cms-app@latest/dist/netlify-cms.js"></script>
 
-  <style>
-    body {
-      background: #0f172a;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 60px;
-    }
-    h1 { font-size: 28px; margin-bottom: 15px; }
-    p { margin-bottom: 25px; font-size: 16px; }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background: #2563eb;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
-  <h1>상품 등록 관리자</h1>
-  <p>GitHub 계정으로 로그인 후 상품을 등록할 수 있습니다.</p>
-
-  <!-- 커스텀 로그인 버튼 -->
-  <button id="btn-login">GitHub 로그인</button>
-
   <script>
-    // Netlify Identity 초기화
+    const $ = s => document.querySelector(s);
+    const setState = s => $('#meta-state').textContent = `상태: ${s}`;
+
+    // 1) 반드시 APIUrl을 Netlify 서브도메인 엔드포인트로 지정해야 함
+    //    Identity → Overview에 적힌 API endpoint를 그대로 넣어!
+    const API_URL = 'https://eastpage.netlify.app/.netlify/identity'; // 예: 'https://eastpowermetal.netlify.app/.netlify/identity'
+
     if (window.netlifyIdentity) {
-      // Identity 준비
-      window.netlifyIdentity.on("init", (user) => {
-        if (user) {
-          // 이미 로그인된 경우 → CMS로 바로 이동
-          document.location.href = "/admin/";
-        }
+      window.netlifyIdentity.init({ APIUrl: API_URL });
+
+      window.netlifyIdentity.on('init', (user) => {
+        setState(user ? (user.email || '로그인됨') : '로그아웃됨');
+        $('#btn-login').style.display   = user ? 'none' : 'inline-flex';
+        $('#btn-dashboard').style.display = user ? 'inline-flex' : 'none';
+        $('#btn-logout').style.display = user ? 'inline-flex' : 'none';
       });
 
-      // 커스텀 로그인 버튼 클릭 시 로그인 팝업 열기
-      document.getElementById("btn-login").addEventListener("click", () => {
-        window.netlifyIdentity.open("login");
+      window.netlifyIdentity.on('login', (user) => {
+        setState(user.email || '로그인됨');
+        location.replace('/admin/');
       });
-
-      // 로그인 성공 이벤트 → CMS로 이동
-      window.netlifyIdentity.on("login", () => {
-        document.location.href = "/admin/";
+      window.netlifyIdentity.on('logout', () => {
+        setState('로그아웃됨'); location.replace('/admin/');
       });
+    } else {
+      setState('Identity 위젯 로드 실패');
     }
 
-    // CMS 초기화
-    CMS.init();
+    // 커스텀 버튼 동작
+    $('#btn-login').addEventListener('click', () => window.netlifyIdentity && window.netlifyIdentity.open('login'));
+    $('#btn-dashboard').addEventListener('click', () => location.href = '/admin/');
+    $('#btn-logout').addEventListener('click', () => window.netlifyIdentity && window.netlifyIdentity.logout());
   </script>
 </body>
 </html>
