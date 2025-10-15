@@ -5,10 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>상품 등록 관리자</title>
 
-  <!-- Netlify Identity (로그인 모달/세션 관리) -->
+  <!-- Netlify Identity -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
-  <!-- ---- 스타일 ---- -->
   <style>
     :root{
       --bg:#0b1220; --card:#141b2d; --text:#e6ecff; --muted:#9fb0d1;
@@ -18,37 +17,23 @@
     html,body{height:100%}
     body{
       margin:0; background:linear-gradient(180deg,var(--bg),#0f162b 55%, #0b1220);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", Helvetica, Arial;
       color:var(--text); display:flex; align-items:center; justify-content:center; padding:24px;
     }
     .wrap{width:100%; max-width:720px}
-    .card{
-      background:var(--card); border:1px solid var(--border); border-radius:20px;
-      padding:32px; box-shadow:0 10px 40px rgba(0,0,0,.35);
-    }
-    h1{margin:0 0 10px; font-size:26px; letter-spacing:.2px}
+    .card{background:var(--card); border:1px solid var(--border); border-radius:20px; padding:32px;
+          box-shadow:0 10px 40px rgba(0,0,0,.35)}
+    h1{margin:0 0 10px; font-size:26px}
     p.lead{margin:0 0 24px; color:var(--muted)}
     .actions{display:flex; gap:12px; flex-wrap:wrap}
-    .btn{
-      appearance:none; border:1px solid transparent; border-radius:12px;
-      padding:12px 18px; font-weight:600; cursor:pointer; transition:.15s transform ease, .15s background-color ease, .15s border-color ease;
-    }
-    .btn:hover{transform:translateY(-1px)}
-    .btn:active{transform:translateY(0)}
-    .btn-primary{
-      background:var(--accent); color:#081120; border-color:transparent;
-    }
+    .btn{appearance:none; border:1px solid transparent; border-radius:12px; padding:12px 18px;
+         font-weight:600; cursor:pointer; transition:.15s transform,.15s background-color,.15s border-color}
+    .btn:hover{transform:translateY(-1px)} .btn:active{transform:translateY(0)}
+    .btn-primary{background:var(--accent); color:#081120}
     .btn-primary:active{background:var(--accent-pressed)}
-    .btn-ghost{
-      background:transparent; color:var(--text); border-color:var(--border)
-    }
-    .meta{
-      margin-top:18px; font-size:13px; color:var(--muted)
-    }
-
-    /* 기본 Identity 위젯 링크는 숨김 (우리는 커스텀 버튼 사용) */
-    [data-netlify-identity-button],
-    [data-netlify-identity-menu] { display:none !important; }
+    .btn-ghost{background:transparent; color:var(--text); border-color:var(--border)}
+    .meta{margin-top:18px; font-size:13px; color:var(--muted)}
+    [data-netlify-identity-button],[data-netlify-identity-menu]{display:none!important}
   </style>
 </head>
 <body>
@@ -65,71 +50,48 @@
 
       <p class="meta" id="meta-state">상태: 초기화 중…</p>
 
-      <!-- 기본 위젯(메뉴/버튼) – 화면에는 보이지 않지만 위 스크립트에서 사용 -->
+      <!-- 숨김: 기본 위젯 -->
       <div data-netlify-identity-button></div>
       <div data-netlify-identity-menu></div>
     </div>
   </div>
 
-  <!-- Netlify CMS (로그인 완료 시 CMS UI가 로드됨) -->
+  <!-- Netlify CMS -->
   <script src="https://unpkg.com/netlify-cms-app@latest/dist/netlify-cms.js"></script>
 
   <script>
-    // 헬퍼
-    const $ = (sel)=>document.querySelector(sel);
-    const setState = (s)=> $('#meta-state').textContent = `상태: ${s}`;
+    const $ = s => document.querySelector(s);
+    const setState = s => $('#meta-state').textContent = `상태: ${s}`;
 
-    // 버튼 핸들러
-    $('#btn-login').addEventListener('click', () => {
-      if (!window.netlifyIdentity) return;
-      // 로그인 모달 열기 (External provider가 GitHub로 설정돼 있으면 GitHub 버튼이 뜸)
-      window.netlifyIdentity.open('login');
-    });
+    // 1) 반드시 APIUrl을 Netlify 서브도메인 엔드포인트로 지정해야 함
+    //    Identity → Overview에 적힌 API endpoint를 그대로 넣어!
+    const API_URL = 'https://eastpage.netlify.app/.netlify/identity'; // 예: 'https://eastpowermetal.netlify.app/.netlify/identity'
 
-    $('#btn-dashboard').addEventListener('click', () => {
-      // 같은 URL 유지해도 CMS가 로드됨. 필요 시 새로고침
-      location.href = '/admin/';
-    });
-
-    $('#btn-logout').addEventListener('click', () => {
-      window.netlifyIdentity && window.netlifyIdentity.logout();
-    });
-
-    // Identity 상태 반영
-    function reflectUser(user){
-      if (user) {
-        setState(`${user.email || '로그인 됨'}`);
-        $('#btn-login').style.display = 'none';
-        $('#btn-dashboard').style.display = 'inline-flex';
-        $('#btn-logout').style.display = 'inline-flex';
-      } else {
-        setState('로그아웃됨');
-        $('#btn-login').style.display = 'inline-flex';
-        $('#btn-dashboard').style.display = 'none';
-        $('#btn-logout').style.display = 'none';
-      }
-    }
-
-    // Identity 이벤트 연결
     if (window.netlifyIdentity) {
-      window.netlifyIdentity.on('init', user => {
-        reflectUser(user);
-        // 로그인/로그아웃 시 상태 갱신 및 화면 유지
-        window.netlifyIdentity.on('login', (u) => {
-          reflectUser(u);
-          // 로그인 직후 CMS가 바로 뜨도록 현재 페이지 유지
-          location.replace('/admin/');
-        });
-        window.netlifyIdentity.on('logout', () => {
-          reflectUser(null);
-          location.replace('/admin/');
-        });
+      window.netlifyIdentity.init({ APIUrl: API_URL });
+
+      window.netlifyIdentity.on('init', (user) => {
+        setState(user ? (user.email || '로그인됨') : '로그아웃됨');
+        $('#btn-login').style.display   = user ? 'none' : 'inline-flex';
+        $('#btn-dashboard').style.display = user ? 'inline-flex' : 'none';
+        $('#btn-logout').style.display = user ? 'inline-flex' : 'none';
       });
-      // 위젯 초기화(없으면 이벤트가 안 붙을 수 있음)
-      window.netlifyIdentity.init();
+
+      window.netlifyIdentity.on('login', (user) => {
+        setState(user.email || '로그인됨');
+        location.replace('/admin/');
+      });
+      window.netlifyIdentity.on('logout', () => {
+        setState('로그아웃됨'); location.replace('/admin/');
+      });
     } else {
-      setState('Identity 위젯을 불러오지 못했습니다.');
+      setState('Identity 위젯 로드 실패');
     }
+
+    // 커스텀 버튼 동작
+    $('#btn-login').addEventListener('click', () => window.netlifyIdentity && window.netlifyIdentity.open('login'));
+    $('#btn-dashboard').addEventListener('click', () => location.href = '/admin/');
+    $('#btn-logout').addEventListener('click', () => window.netlifyIdentity && window.netlifyIdentity.logout());
   </script>
 </body>
 </html>
