@@ -1,19 +1,23 @@
 backend:
   name: github
-  repo: chkim-epm/EPM   <!-- 여기에 자신의 GitHub 저장소 경로 입력 -->
+  repo: chkim-epm/EPM   # 실제 GitHub 저장소 경로
   branch: main
 
-media_folder: "image"   <!-- 이미지 저장 위치 -->
+media_folder: "image"   # HTML에서 사용한 이미지 폴더
 public_folder: "/image"
 
 collections:
-   name: "products"
+  - name: "products"
     label: "상품 목록"
     folder: "products"
     create: true
     slug: "{{slug}}"
     fields:
-       { label: "상품명", name: "title", widget: "string" }
-       { label: "가격", name: "price", widget: "number" }
-       { label: "설명", name: "description", widget: "text" }
-       { label: "이미지", name: "image", widget: "image" }
+      - { label: "상품명", name: "title", widget: "string" }
+      - { label: "가격", name: "price", widget: "number" }
+      - { label: "설명", name: "description", widget: "text" }
+      - { label: "이미지", name: "image", widget: "image" }
+      - { label: "품목명", name: "item_name", widget: "string" }
+      - { label: "재질", name: "material", widget: "string" }
+      - { label: "용도", name: "usage", widget: "string" }
+      - { label: "종류", name: "type", widget: "string" }
