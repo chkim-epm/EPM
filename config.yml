@@ -1,6 +1,5 @@
 backend:
-  name: github
-  repo: chkim-epm/EPM   # 실제 GitHub 저장소 경로
+  name: git-gateway
   branch: main
 
 media_folder: "image"   # HTML에서 사용한 이미지 폴더
