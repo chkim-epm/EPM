@@ -11,11 +11,15 @@
     <h1>상품 등록 관리자</h1>
     <p>GitHub 계정으로 로그인 후 상품을 등록할 수 있습니다.</p>
 
+    <!-- 로그인 버튼 & 메뉴 -->
+    <div data-netlify-identity-button></div>
+    <div data-netlify-identity-menu></div>
+
     <!-- Netlify CMS -->
     <script src="https://unpkg.com/netlify-cms-app@latest/dist/netlify-cms.js"></script>
 
     <script>
-      // Netlify Identity 이벤트 처리
+      // Netlify Identity 초기화
       if (window.netlifyIdentity) {
         window.netlifyIdentity.on("init", (user) => {
           if (!user) {
