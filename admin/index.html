@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <title>상품 등록 관리자 페이지</title>
-    <!-- Netlify Identity 위젯 -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  </head>
-  <body>
-    <!-- Netlify CMS -->
-    <script src="https://unpkg.com/netlify-cms-app@latest/dist/netlify-cms.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <title>상품 등록 관리자 페이지</title>
+  <!-- Netlify Identity 위젯 -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <!-- Netlify CMS -->
+  <script src="https://unpkg.com/netlify-cms-app@latest/dist/netlify-cms.js"></script>
+</head>
+<body>
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
+</body>
 </html>
