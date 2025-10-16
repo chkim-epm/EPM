@@ -1,11 +1,39 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Content Manager</title>
-  </head>
-  <body>
-    <!-- Decap CMS -->
-    <script src="https://unpkg.com/decap-cms@latest/dist/decap-cms.js"></script>
-  </body>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>상품 등록 관리자 페이지</title>
+  <!-- Decap CMS 불러오기 -->
+  <script src="https://unpkg.com/decap-cms@latest/dist/decap-cms.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background: #f8f9fc;
+      color: #333;
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    p {
+      margin-bottom: 20px;
+      color: #666;
+    }
+    .notice {
+      padding: 12px;
+      background: #eaf4ff;
+      border: 1px solid #b6d7ff;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      color: #084298;
+    }
+  </style>
+</head>
+<body>
+  <h1>상품 등록 관리자</h1>
+  <p>GitHub 계정으로 로그인 후 상품을 등록·수정할 수 있습니다.</p>
+  <div class="notice">
+    <b>주의:</b> 로그인 시 GitHub OAuth 창이 열리며, 승인 후 CMS 대시보드로 이동합니다.
+  </div>
+</body>
 </html>
