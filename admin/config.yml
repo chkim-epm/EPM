@@ -8,9 +8,9 @@ media_folder: "image"
 public_folder: "/image"  
 
 collections:
-  - name: "product"
+  - name: "Product"
     label: "Product"
-    folder: "product"
+    folder: "Product"
     create: true
     slug: "{{slug}}"
     fields:
