@@ -2,7 +2,7 @@ backend:
   name: github
   repo: chkim-epm/EPM  
   branch: main
-  
+  base_url: https://decap-cms-oauth.netlify.app     
 
 media_folder: "image"    
 public_folder: "/image"  
