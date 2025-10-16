@@ -37,146 +37,121 @@
 <!-- 구글 폰트 예시 -->
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&family=Nanum+Gothic&display=swap" rel="stylesheet">
 
+<!-- 공통CSS(네비게이션&풋터) -->
+<link rel="stylesheet" href="common.css">
 
 <style>
-  body {
-    margin: 0;
-    font-family: 'NanumGothic', sans-serif;
-    background: #f4f4f4;
-  }
+/* ===========================================PC 기본 스타일====================================================*/
 
-  h1 {
-    text-align: center;
-    margin: 2rem 0;
-    font-size: 2rem;
-  }
+  /* ================= 공통 제목 스타일 ================= */
+h1 {
+  text-align: center;       /* 제목 가운데 정렬 */
+  margin: 2rem 0;           /* 위아래 여백 */
+  font-size: 2rem;          /* 글자 크기 */
+}
 
-  .product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* 320px 카드 크기 */
-	gap: 1.5rem;
-    padding: 2rem;
-    max-width: 1200px;	/* 양옆 여백 크기 */
-	margin: 0 auto;
-  }
+/* ================= 상품 카드 그리드 ================= */
+.product-grid {
+  display: grid;                             /* 카드들을 그리드로 배치 */
+  grid-template-columns: repeat(auto-fill, 
+                        minmax(320px, 1fr)); /* 최소 320px, 자동 줄바꿈 */
+  gap: 1.5rem;                               /* 카드 간격 */
+  padding: 2rem;                             /* 그리드 바깥 여백 */
+  max-width: 1200px;                         /* 전체 너비 제한 */
+  margin: 0 auto;                            /* 가운데 정렬 */
+}
 
-  .product-card {
-    background: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
-	display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-	
-  }
+/* ================= 개별 카드 ================= */
+.product-card {
+  background: #fff;                          /* 카드 배경 흰색 */
+  border-radius: 8px;                        /* 모서리 둥글게 */
+  overflow: hidden;                          /* 넘치는 요소 잘림 */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);     /* 그림자 */
+  text-align: center;                        /* 카드 안 텍스트 가운데 */
+  transition: transform 0.3s, box-shadow 0.3s; /* hover 애니메이션 */
+  display: flex;                             /* 내부 정렬용 flex */
+  flex-direction: column;                    /* 위에서 아래로 정렬 */
+  justify-content: flex-start;               /* 위쪽부터 배치 */
+}
 
-  .product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-  }
+/* ================= 카드 Hover 효과 ================= */
+.product-card:hover {
+  transform: translateY(-5px);               /* 살짝 위로 이동 */
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);    /* 더 강한 그림자 */
+}
 
-  .product-card img {
-    width: 100%;
-    height: 280px;
-    object-fit: cover;
-  }
+/* ================= 카드 안 이미지 ================= */
+.product-card img {
+  width: 100%;                               /* 가로 전체 */
+  height: 280px;                             /* 고정 높이 */
+  object-fit: cover;                         /* 이미지 비율 유지 후 잘림 */
+}
 
-  .product-info {
-    padding: 1rem;
-  }
+/* ================= 카드 정보 영역 ================= */
+.product-info {
+  padding: 1rem;                             /* 내용 여백 */
+}
 
-  .product-info h2 {
-    font-size: 1.2rem;
-    margin: 0.5rem 0;
-  }
+.product-info h2 {
+  font-size: 1.2rem;                         /* 상품명 크기 */
+  margin: 0.5rem 0;                          /* 위아래 여백 */
+}
 
-  .product-info p {
-    font-size: 0.9rem;
-    color: #555;
-  }
+.product-info p {
+  font-size: 0.9rem;                         /* 설명 글자 크기 */
+  color: #555;                               /* 회색 텍스트 */
+}
 
-  .product-info a {
-    display: inline-block;
-    margin-top: 0.5rem;
-    padding: 0.4rem 0.8rem;
-    background-color: #3498db;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-  }
+.product-info a {
+  display: inline-block;                     /* 버튼 형태 */
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  background-color: #3498db;                 /* 파란색 배경 */
+  color: #fff;                               /* 흰색 글자 */
+  text-decoration: none;                     /* 밑줄 제거 */
+  border-radius: 4px;                        /* 모서리 둥글게 */
+  transition: background-color 0.3s;         /* hover 부드럽게 */
+}
 
-  .product-info a:hover {
-    background-color: #2980b9;
-  }
+.product-info a:hover {
+  background-color: #2980b9;                 /* hover 시 더 진한 파란색 */
+}
+
+/* ================= 카드 안 표 ================= */
+.product-table {
+  margin-top: 1rem;                          /* 위쪽 여백 */
+  text-align: left;                          /* 텍스트 왼쪽 정렬 */
+}
+
+.product-table table {
+  width: 100%;                               /* 표 너비 100% */
+  border-collapse: collapse;                 /* 겹치는 선 합치기 */
+}
+
+.product-table th,
+.product-table td {
+  padding: 0.4rem 0.6rem;                    /* 셀 안쪽 여백 */
+  border-bottom: 1px solid #ddd;             /* 밑줄 */
+}
+
+.product-table th {
+  background-color: #f9f9f9;                 /* 헤더 배경 회색 */
+  font-weight: bold;                         /* 글자 굵게 */
+}
+
+.product-table td {
+  color: #555;                               /* 일반 셀 글자색 */
+}
+
+/* ================= 카드 안 표 끝 ================= */
+
+
+/* ========================================== 모바일 전용 CSS ================================================= */
+
+/* =========================================== 모바일 전용 CSS ================================================= */
+ 
+
   
-  
- /* 카드 안 표 스타일 추가 */
-  .product-table {
-    margin-top: 1rem;
-    text-align: left;
-  }
-
-  .product-table table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  .product-table th, .product-table td {
-    padding: 0.4rem 0.6rem;
-    border-bottom: 1px solid #ddd;
-  }
-
-  .product-table th {
-    background-color: #f9f9f9;
-    font-weight: bold;
-  }
-
-  .product-table td {
-    color: #555;
-  }
-   /* 카드 안 표 스타일 추가 끝*/
-  
-
-/* 네비게이션 CSS */
- nav { background:#212529; color:#fff; padding:2rem; display:flex; justify-content:center; }
-  nav .nav-item { margin:0 1rem; 
-				  font-size: 1.4rem;
-				  font-weight: bold;
-				}
-
-	nav .nav-item a {
-		color: #fff;            /* 글자 색상 흰색 유지 */
-		text-decoration: none;   /* 밑줄 제거 */
-		font-weight: bold;       /* 원하면 글자 굵게 */
-	}
-	
-	nav .nav-item a:hover {
-		color: #27ae60;             /* 마우스 올리면 색상 변경 가능 */
-	}
-  nav.nav-item span { cursor:default; color:#fff; }
-
-
-.nav-logo {
-  position: absolute;
-  left: 2rem;
-  top : 1.5rem;
-  display: flex;
-  align-items: center;
-  font-size: 2rem;
-  font-weight: bold;
-  }
-
-.logo-e { color: green; }
-.logo-p { color: red; }
-.logo-m { color: blue; }
-
-/* 네비게이션 CSS 끝 */
-
-
 </style>
 </head>
 <body>
@@ -420,13 +395,20 @@
 </div>
 
 <!-- 푸터 (회사 정보) -->
-<footer style="background:#212529; color:#fff; text-align:center; padding:1rem; font-size:0.9rem;">
-  <p>(주)이스트파워메탈 | 주소: 경기도 김포시 통진읍 율마로 223번길 42| 전화: 031-985-6037 | 이메일: chkim.epm@gmailcom</p>
+<footer>
+  
+  <p>
+	<span class="logo-e" style="color:green;">E</span>
+	<span class="logo-p" style="color:red; ">P</span>
+	<span class="logo-m" style="color:blue;">M</span>
+   (주)이스트파워메탈 | 주소: 경기도 김포시 통진읍 율마로 223번길 42 | 전화: 031-985-6037 | 이메일: chkim.epm@gmail.com</p>
   <p>© 2025 EAST POWER METAL. All Rights Reserved.</p>
+    <!-- 왼쪽 로고 -->
+  
 </footer>
+
 
 </body>
 </html>
-
 
 
