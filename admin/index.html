@@ -2,38 +2,60 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>상품 등록 관리자 페이지</title>
-  <!-- Decap CMS 불러오기 -->
-  <script src="https://unpkg.com/decap-cms@latest/dist/decap-cms.js"></script>
+  <title>관리자 로그인</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 40px;
-      background: #f8f9fc;
-      color: #333;
-    }
-    h1 {
-      margin-bottom: 10px;
-    }
-    p {
-      margin-bottom: 20px;
-      color: #666;
-    }
-    .notice {
-      padding: 12px;
-      background: #eaf4ff;
-      border: 1px solid #b6d7ff;
-      border-radius: 6px;
-      margin-bottom: 20px;
-      color: #084298;
-    }
+    body { font-family: sans-serif; max-width: 420px; margin: 48px auto; }
+    button { padding: 10px 14px; font-size: 14px; cursor: pointer; }
+    pre { background: #f6f6f6; padding: 12px; overflow: auto; }
   </style>
 </head>
 <body>
-  <h1>상품 등록 관리자</h1>
-  <p>GitHub 계정으로 로그인 후 상품을 등록·수정할 수 있습니다.</p>
-  <div class="notice">
-    <b>주의:</b> 로그인 시 GitHub OAuth 창이 열리며, 승인 후 CMS 대시보드로 이동합니다.
-  </div>
+  <h1>관리자 로그인</h1>
+  <p>GitHub로 로그인하면 <code>/admin/</code>으로 돌아옵니다.</p>
+  <button id="login">GitHub 로그인</button>
+  <button id="logout" style="margin-left:8px;">로그아웃</button>
+
+  <h3>세션</h3>
+  <pre id="out">-</pre>
+
+  <script>
+    // 1) 여기 두 값을 Supabase 대시보드(API)에서 복사해 넣으세요.
+    const SUPABASE_URL = "https://xxxxx.supabase.co";       // ← Project URL
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6..."; // ← anon public key
+
+    // 2) 클라이언트 생성 (브라우저에서 사용)
+    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // 현재 세션 표시
+    async function renderSession() {
+      const { data: { session } } = await sb.auth.getSession();
+      document.getElementById('out').textContent = JSON.stringify(session, null, 2) || '-';
+    }
+
+    // 3) GitHub OAuth 로그인
+    document.getElementById('login').onclick = async () => {
+      await sb.auth.signInWithOAuth({
+        provider: 'github',
+        options: {
+          // 성공 후 돌아올 주소 (Authentication → URL Configuration → Redirect URLs에 반드시 등록됨)
+          redirectTo: window.location.origin + '/admin/',
+        }
+      });
+    };
+
+    // 4) 로그아웃
+    document.getElementById('logout').onclick = async () => {
+      await sb.auth.signOut();
+      await renderSession();
+      alert('로그아웃 완료');
+    };
+
+    // 초기 세션 렌더
+    renderSession();
+
+    // 탭 간 세션 변경 감지 (선택)
+    sb.auth.onAuthStateChange((_event, _session) => renderSession());
+  </script>
 </body>
 </html>
