@@ -124,17 +124,17 @@
     // =========================
     // 🔧 TODO(1): Supabase 값
     // =========================
-    const SUPABASE_URL = "https://<PROJECT-REF>.supabase.co";      // 예: https://abcxyz123.supabase.co
-    const SUPABASE_ANON_KEY = "<YOUR-ANON-PUBLIC-KEY>";            // 대시보드 API의 anon key 전체
+    const SUPABASE_URL = "https://cwwnarmrvpvjptytepdo.supabase.co";      // 예: https://abcxyz123.supabase.co
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3d25hcm1ydnB2anB0eXRlcGRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NzU4NTUsImV4cCI6MjA3NzQ1MTg1NX0.5mvgA_gKdlRaebVRSFIUJRKgp51zke_nffQ2jc8Ad1g";            // 대시보드 API의 anon key 전체
     // 🔧 TODO(2): 스토리지 버킷명(미리 생성)
     const BUCKET = "product-images";                                // Supabase Storage 버킷 이름
 
     // 🔧 TODO(3): 관리자 화이트리스트
-    const ADMIN_EMAILS = ["you@eastpowermetal.com"];
+    const ADMIN_EMAILS = ["chkim.epm@gmail.com"];
     const ADMIN_USERNAMES = ["chkim-epm"];
 
     // 🔧 TODO(4): 차단시 이동 경로
-    const KICKOUT_URL = "/"; // 또는 "/admin/"
+    const KICKOUT_URL = "/admin"; // 또는 "/admin/"
 
     // Supabase 초기화
     const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
