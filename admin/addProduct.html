@@ -183,49 +183,63 @@
     updatePreview();
 
     // ===== 제품 등록 =====
-    $("submitBtn").addEventListener("click", async ()=>{
-      const status = $("status");
-      status.className = "status muted";
-      status.textContent = "업로드 중...";
+     $("submitBtn").addEventListener("click", async ()=>{
+    const status = $("status");
+    status.className = "status muted";
+    status.textContent = "업로드 중...";
 
-      // 1) 필수값 체크
-      const title = $("title").value.trim();
-      if (!title){ status.className="status err"; status.textContent="제품명은 필수입니다."; return; }
-      const file = $("image").files?.[0];
-      if (!file){ status.className="status err"; status.textContent="대표 이미지를 선택하세요."; return; }
+    const title = $("title").value.trim();
+    const file  = $("image").files?.[0];
+    if (!title) { status.className="status err"; status.textContent="제품명은 필수입니다."; return; }
+    if (!file)  { status.className="status err"; status.textContent="대표 이미지를 선택하세요."; return; }
 
-      // 2) 이미지 업로드 (스토리지)
-      try{
-        const filename = `${Date.now()}_${file.name.replace(/\\s+/g,'_')}`;
-        const path = `product/${filename}`; // 폴더 구분
-        const { data: up, error: upErr } = await sb.storage.from(BUCKET).upload(path, file, { upsert: false });
-        if (upErr) throw upErr;
+    try {
+      // ✅ 파일명 안전하게 정규화 (ASCII만 허용)
+      const safeBase = file.name
+        .normalize('NFKD')                  // 유니코드 정규화
+        .replace(/[^\w.\-]+/g, '_')         // 영문/숫자/._- 외 모두 _
+        .replace(/^_+|_+$/g, '');           // 앞뒤 _ 제거
+      const filename = `${Date.now()}_${safeBase}`.replace(/_+/g, '_');
 
-        // 공개 URL(버킷이 public-read일 때)
-        const { data: pub } = sb.storage.from(BUCKET).getPublicUrl(path);
-        const image_url = pub.publicUrl;
+      // ✅ 경로(폴더명) — 단수 'product'로 통일
+      const path = `product/${filename}`;
 
-        // 3) DB insert
-        const payload = {
-          title,
-          description: $("desc").value || null,
-          material: $("material").value || null,
-          usage: $("usage").value || null,
-          types: $("types").value || null,
-          price: $("price").value ? Number($("price").value) : null,
-          image_url
-        };
-        const { data: ins, error: insErr } = await sb.from("addProduct").insert(payload).select().single();
-        if (insErr) throw insErr;
+      // ✅ 업로드 (bucket 이름도 정확히 단수!)
+      const { data: up, error: upErr } = await sb.storage
+        .from("product-image")
+        .upload(path, file, {
+          upsert: false,
+          cacheControl: '3600',
+          contentType: file.type || 'application/octet-stream',
+        });
+      if (upErr) throw upErr;
 
-        status.className="status ok";
-        status.textContent="등록 완료!";
-      }catch(e){
-        console.error(e);
-        status.className="status err";
-        status.textContent = "등록 실패: " + (e?.message || e);
-      }
-    });
+      // 공개 URL
+      const { data: pub } = sb.storage.from("product-image").getPublicUrl(path);
+      const image_url = pub.publicUrl;
+
+      // DB insert (테이블 단수 'product')
+      const payload = {
+        title,
+        description: $("desc").value || null,
+        material: $("material").value || null,
+        usage: $("usage").value || null,
+        types: $("types").value || null,
+        price: $("price").value ? Number($("price").value) : null,
+        image_url
+      };
+      const { error: insErr } = await sb.from("product").insert(payload);
+      if (insErr) throw insErr;
+
+      status.className="status ok";
+      status.textContent="등록 완료!";
+    } catch (e) {
+      console.error(e);
+      status.className="status err";
+      status.textContent = "등록 실패: " + (e?.message || e);
+    }
+  });
+</script>;
   </script>
 </body>
 </html>
