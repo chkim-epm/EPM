@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -43,6 +43,9 @@
 
 <!-- 공통CSS(네비게이션&풋터) -->
 <link rel="stylesheet" href="common.css">
+
+<!-- Supabase SDK 추가 -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 /* ===========================================PC 기본 스타일====================================================*/
@@ -182,221 +185,8 @@ h1 {
 
 <h1>제품 목록</h1>
 
-<div class="product-grid">
-
-  <!-- 카드 1 -->
-  <div class="product-card">
-    <img src="image/Busbar1.webp" alt="부스바 1">
-    <div class="product-info">
-      <h2>부스바 A형</h2>
-      <p>전력용 동부스바, 맞춤 절단 가능</p>
-      <div class="product-table">
-        <table>
-          <colgroup><col width="30%"><col width="70%"></colgroup>
-          <tbody>
-            <tr><th>품목명</th><td>분기고리</td></tr>
-            <tr><th>재질</th><td>CU + AL</td></tr>
-            <tr><th>용도</th><td>가공배전용</td></tr>
-            <tr><th>종류</th><td>T2 ~ T4</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <a href="#">자세히 보기</a>
-    </div>
-  </div>
-
-  <!-- 카드 2 -->
-  <div class="product-card">
-    <img src="image/Busbar2.webp" alt="부스바 2">
-    <div class="product-info">
-      <h2>부스바 B형</h2>
-      <p>고전류용 부스바, 절곡 가능</p>
-      <div class="product-table">
-        <table>
-          <colgroup><col width="30%"><col width="70%"></colgroup>
-          <tbody>
-            <tr><th>품목명</th><td>분기고리</td></tr>
-            <tr><th>재질</th><td>CU + AL</td></tr>
-            <tr><th>용도</th><td>고전류 배전용</td></tr>
-            <tr><th>종류</th><td>T2 ~ T5</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <a href="#">자세히 보기</a>
-    </div>
-  </div>
-
-  <!-- 카드 3 -->
-  <div class="product-card">
-    <img src="image/Busbar3.webp" alt="부스바 3">
-    <div class="product-info">
-      <h2>부스바 C형</h2>
-      <p>누설전류 통제 장치, 안전 규격 준수</p>
-      <div class="product-table">
-        <table>
-          <colgroup><col width="30%"><col width="70%"></colgroup>
-          <tbody>
-            <tr><th>품목명</th><td>분기고리</td></tr>
-            <tr><th>재질</th><td>CU + AL</td></tr>
-            <tr><th>용도</th><td>안전 배전용</td></tr>
-            <tr><th>종류</th><td>T3 ~ T6</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <a href="#">자세히 보기</a>
-    </div>
-  </div>
-  
-<!-- 카드 4 -->
-<div class="product-card">
-  <img src="image/Busbar4.webp" alt="부스바 4">
-  <div class="product-info">
-    <h2>부스바 D형</h2>
-    <p>누설전류 통제 장치, 안전 규격 준수</p>
-    <div class="product-table">
-      <table>
-        <colgroup><col width="30%"><col width="70%"></colgroup>
-        <tbody>
-          <tr><th>품목명</th><td>분기고리</td></tr>
-          <tr><th>재질</th><td>CU + AL</td></tr>
-          <tr><th>용도</th><td>배전용</td></tr>
-          <tr><th>종류</th><td>T2 ~ T4</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <a href="#">자세히 보기</a>
-  </div>
-</div>
-
-<!-- 카드 5 -->
-<div class="product-card">
-  <img src="image/Busbar5.webp" alt="부스바 5">
-  <div class="product-info">
-    <h2>부스바 E형</h2>
-    <p>누설전류 통제 장치, 안전 규격 준수</p>
-    <div class="product-table">
-      <table>
-        <colgroup><col width="30%"><col width="70%"></colgroup>
-        <tbody>
-          <tr><th>품목명</th><td>분기고리</td></tr>
-          <tr><th>재질</th><td>CU + AL</td></tr>
-          <tr><th>용도</th><td>배전용</td></tr>
-          <tr><th>종류</th><td>T3 ~ T5</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <a href="#">자세히 보기</a>
-  </div>
-</div>
-
-<!-- 카드 6 -->
-<div class="product-card">
-  <img src="image/Busbar6.webp" alt="부스바 6">
-  <div class="product-info">
-    <h2>부스바 F형</h2>
-    <p>누설전류 통제 장치, 안전 규격 준수</p>
-    <div class="product-table">
-      <table>
-        <colgroup><col width="30%"><col width="70%"></colgroup>
-        <tbody>
-          <tr><th>품목명</th><td>분기고리</td></tr>
-          <tr><th>재질</th><td>CU + AL</td></tr>
-          <tr><th>용도</th><td>배전용</td></tr>
-          <tr><th>종류</th><td>T4 ~ T6</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <a href="#">자세히 보기</a>
-  </div>
-</div>
-
-<!-- 카드 7 -->
-<div class="product-card">
-  <img src="image/Busbar7.webp" alt="부스바 7">
-  <div class="product-info">
-    <h2>부스바 G형</h2>
-    <p>누설전류 통제 장치, 안전 규격 준수</p>
-    <div class="product-table">
-      <table>
-        <colgroup><col width="30%"><col width="70%"></colgroup>
-        <tbody>
-          <tr><th>품목명</th><td>분기고리</td></tr>
-          <tr><th>재질</th><td>CU + AL</td></tr>
-          <tr><th>용도</th><td>배전용</td></tr>
-          <tr><th>종류</th><td>T2 ~ T4</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <a href="#">자세히 보기</a>
-  </div>
-</div>
-
-<!-- 카드 8 -->
-<div class="product-card">
-  <img src="image/Busbar8.webp" alt="부스바 8">
-  <div class="product-info">
-    <h2>부스바 H형</h2>
-    <p>누설전류 통제 장치, 안전 규격 준수</p>
-    <div class="product-table">
-      <table>
-        <colgroup><col width="30%"><col width="70%"></colgroup>
-        <tbody>
-          <tr><th>품목명</th><td>분기고리</td></tr>
-          <tr><th>재질</th><td>CU + AL</td></tr>
-          <tr><th>용도</th><td>배전용</td></tr>
-          <tr><th>종류</th><td>T3 ~ T5</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <a href="#">자세히 보기</a>
-  </div>
-</div>
-
-<!-- 카드 9 -->
-<div class="product-card">
-  <img src="image/Busbar1.webp" alt="부스바 9">
-  <div class="product-info">
-    <h2>부스바 I형</h2>
-    <p>누설전류 통제 장치, 안전 규격 준수</p>
-    <div class="product-table">
-      <table>
-        <colgroup><col width="30%"><col width="70%"></colgroup>
-        <tbody>
-          <tr><th>품목명</th><td>분기고리</td></tr>
-          <tr><th>재질</th><td>CU + AL</td></tr>
-          <tr><th>용도</th><td>배전용</td></tr>
-          <tr><th>종류</th><td>T4 ~ T6</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <a href="#">자세히 보기</a>
-  </div>
-</div>
-
-<!-- 카드 10 -->
-<div class="product-card">
-  <img src="image/Busbar2.webp" alt="부스바 10">
-  <div class="product-info">
-    <h2>부스바 J형</h2>
-    <p>누설전류 통제 장치, 안전 규격 준수</p>
-    <div class="product-table">
-      <table>
-        <colgroup><col width="30%"><col width="70%"></colgroup>
-        <tbody>
-          <tr><th>품목명</th><td>분기고리</td></tr>
-          <tr><th>재질</th><td>CU + AL</td></tr>
-          <tr><th>용도</th><td>배전용</td></tr>
-          <tr><th>종류</th><td>T2 ~ T5</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <a href="#">자세히 보기</a>
-  </div>
-</div>
-
-
-  <!-- 필요하면 카드 더 추가 -->
-</div>
+<!-- 🔄 여기만 비워둡니다: JS가 DB에서 불러와 채움 -->
+<div class="product-grid"></div>
 
 <!-- 푸터 (회사 정보) -->
 <footer>
@@ -411,9 +201,55 @@ h1 {
   
 </footer>
 
+<!-- ✅ Supabase에서 product 테이블을 불러와 카드 렌더 -->
+<script>
+  const SUPABASE_URL = "https://cwwnarmrvpvjptytepdo.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3d25hcm1ydnB2anB0eXRlcGRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NzU4NTUsImV4cCI6MjA3NzQ1MTg1NX0.5mvgA_gKdlRaebVRSFIUJRKgp51zke_nffQ2jc8Ad1g";
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  async function loadProducts(){
+    const grid = document.querySelector(".product-grid");
+    grid.innerHTML = "불러오는 중...";
+
+    const { data, error } = await sb
+      .from("product")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      grid.innerHTML = "데이터 불러오기 실패 : " + error.message;
+      return;
+    }
+
+    if (!data || data.length === 0) {
+      grid.innerHTML = "등록된 제품이 없습니다.";
+      return;
+    }
+
+    // 카드 렌더
+    grid.innerHTML = data.map(p => `
+      <div class="product-card">
+        <img src="${p.image_url || ''}" alt="${(p.title || '').replace(/"/g,'&quot;')}" loading="lazy">
+        <div class="product-info">
+          <h2>${p.title || '-'}</h2>
+          <p>${p.description ? p.description : ''}</p>
+          <div class="product-table">
+            <table>
+              <tbody>
+                <tr><th>재질</th><td>${p.material || '-'}</td></tr>
+                <tr><th>용도</th><td>${p.usage || '-'}</td></tr>
+                <tr><th>종류</th><td>${p.types || '-'}</td></tr>
+                <tr><th>가격</th><td>${p.price ? Number(p.price).toLocaleString() : '-'}</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  loadProducts();
+</script>
 
 </body>
 </html>
-
-
-
