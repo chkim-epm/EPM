@@ -205,51 +205,88 @@ h1 {
 <script>
   const SUPABASE_URL = "https://cwwnarmrvpvjptytepdo.supabase.co";
   const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3d25hcm1ydnB2anB0eXRlcGRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NzU4NTUsImV4cCI6MjA3NzQ1MTg1NX0.5mvgA_gKdlRaebVRSFIUJRKgp51zke_nffQ2jc8Ad1g";
+
+  // SDK 존재 확인
+  if (typeof supabase === "undefined") {
+    document.querySelector(".product-grid").innerHTML = "오류: supabase SDK 로딩 실패";
+    throw new Error("Supabase SDK not loaded");
+  }
+
   const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  async function loadProducts(){
+  async function loadProducts() {
     const grid = document.querySelector(".product-grid");
     grid.innerHTML = "불러오는 중...";
 
-    const { data, error } = await sb
-      .from("product")
-      .select("*")
-      .order("created_at", { ascending: false });
+    try {
+      // 1) 직접 REST 호출로 통신/권한 체크 (문제 있으면 바로 메시지 표시)
+      const restUrl = `${SUPABASE_URL}/rest/v1/product?select=id&limit=1`;
+      const restRes = await fetch(restUrl, {
+        headers: {
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        }
+      });
+      if (!restRes.ok) {
+        const t = await restRes.text();
+        grid.innerHTML = "REST 오류: " + restRes.status + " / " + t;
+        return;
+      }
 
-    if (error) {
-      grid.innerHTML = "데이터 불러오기 실패 : " + error.message;
-      return;
-    }
+      // 2) SDK로 실제 데이터 조회
+      const { data, error } = await sb
+        .from("product")
+        .select("*")
+        .order("created_at", { ascending: false });
 
-    if (!data || data.length === 0) {
-      grid.innerHTML = "등록된 제품이 없습니다.";
-      return;
-    }
+      if (error) {
+        grid.innerHTML = "DB 조회 오류: " + error.message;
+        console.error("Supabase select error:", error);
+        return;
+      }
 
-    // 카드 렌더
-    grid.innerHTML = data.map(p => `
-      <div class="product-card">
-        <img src="${p.image_url || ''}" alt="${(p.title || '').replace(/"/g,'&quot;')}" loading="lazy">
-        <div class="product-info">
-          <h2>${p.title || '-'}</h2>
-          <p>${p.description ? p.description : ''}</p>
-          <div class="product-table">
-            <table>
-              <tbody>
-                <tr><th>재질</th><td>${p.material || '-'}</td></tr>
-                <tr><th>용도</th><td>${p.usage || '-'}</td></tr>
-                <tr><th>종류</th><td>${p.types || '-'}</td></tr>
-                <tr><th>가격</th><td>${p.price ? Number(p.price).toLocaleString() : '-'}</td></tr>
-              </tbody>
-            </table>
+      if (!data || data.length === 0) {
+        grid.innerHTML = "등록된 제품이 없습니다.";
+        return;
+      }
+
+      grid.innerHTML = data.map(p => `
+        <div class="product-card">
+          <img src="${p.image_url || ''}" alt="${(p.title || '').replace(/"/g,'&quot;')}" loading="lazy">
+          <div class="product-info">
+            <h2>${p.title || '-'}</h2>
+            <p>${p.description ? p.description : ''}</p>
+            <div class="product-table">
+              <table>
+                <tbody>
+                  <tr><th>재질</th><td>${p.material || '-'}</td></tr>
+                  <tr><th>용도</th><td>${p.usage || '-'}</td></tr>
+                  <tr><th>종류</th><td>${p.types || '-'}</td></tr>
+                  <tr><th>가격</th><td>${p.price ? Number(p.price).toLocaleString() : '-'}</td></tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-      </div>
-    `).join("");
+      `).join("");
+    } catch (e) {
+      console.error(e);
+      document.querySelector(".product-grid").innerHTML = "예외 오류: " + (e?.message || e);
+    }
   }
 
   loadProducts();
+
+  // 8초가 지나도 그대로면 경고 표시(네트워크 등)
+  setTimeout(() => {
+    const txt = document.querySelector(".product-grid")?.textContent || "";
+    if (txt.includes("불러오는 중")) {
+      document.querySelector(".product-grid").innerHTML =
+        "시간 초과: 네트워크/권한 문제일 수 있습니다. 브라우저 콘솔(F12) → Console/Network 로그 확인해 주세요.";
+    }
+  }, 8000);
 </script>
 
 </body>
 </html>
+
