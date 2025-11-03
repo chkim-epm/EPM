@@ -197,7 +197,7 @@
       // 2) 이미지 업로드 (스토리지)
       try{
         const filename = `${Date.now()}_${file.name.replace(/\\s+/g,'_')}`;
-        const path = `products/${filename}`; // 폴더 구분
+        const path = `product/${filename}`; // 폴더 구분
         const { data: up, error: upErr } = await sb.storage.from(BUCKET).upload(path, file, { upsert: false });
         if (upErr) throw upErr;
 
