@@ -252,9 +252,11 @@ h1 {
 
       grid.innerHTML = data.map(p => `
         <div class="product-card">
-          <img src="${p.image_url || ''}" alt="${(p.title || '').replace(/"/g,'&quot;')}" loading="lazy">
+            <a href="detail.html?id=${p.id}">
+		    <img src="${p.image_url || ''}" alt="${(p.title || '').replace(/"/g,'&quot;')}" loading="lazy">
+		  </a>
           <div class="product-info">
-            <h2>${p.title || '-'}</h2>
+            <h2><a href="detail.html?id=${p.id}" style="text-decoration:none; color:inherit;">${p.title || '-'}</a></h2>
             <p>${p.description ? p.description : ''}</p>
             <div class="product-table">
               <table>
@@ -266,6 +268,8 @@ h1 {
                 </tbody>
               </table>
             </div>
+			<!-- 추가: 상세페이지 이동 버튼 추가 -->
+            <a href="detail.html?id=${p.id}">자세히 보기</a>
           </div>
         </div>
       `).join("");
@@ -289,4 +293,5 @@ h1 {
 
 </body>
 </html>
+
 
