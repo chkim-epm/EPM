@@ -51,6 +51,7 @@
     .ghost{background:#e9ecef;color:#111}
     .muted{color:var(--muted)}
     @media (max-width:900px){.layout{grid-template-columns:1fr}}
+	.danger{ background:#d32f2f; color:#fff; }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -79,7 +80,7 @@
         <div class="actions">
           <button class="btn" onclick="history.back()">이전으로</button>
           <a class="btn ghost" href="/product.html">목록 보기</a>
-		  <button class="btn ghost" id="deleteBtn" style="background:#b00020;color:#fff;">제품 삭제</button>
+		  <button class="btn danger" id="deleteBtn" style="display:none;">삭제</button>
         </div>
         <div id="status" class="muted" style="margin-top:8px;"></div>
       </div>
@@ -87,6 +88,27 @@
   </div>
 
   <script>
+  // 관리자 화이트리스트
+const ADMIN_EMAILS = ["chkim.epm@gmail.com"];
+const ADMIN_USERNAMES = ["chkim-epm"];
+
+async function checkAdmin(){
+  const { data:{session} } = await sb.auth.getSession();
+  const user = session?.user;
+  if(!user) return false;
+  
+  const email = user.email;
+  const ghUser = user.user_metadata?.user_name;
+  return (email && ADMIN_EMAILS.includes(email)) || (ghUser && ADMIN_USERNAMES.includes(ghUser));
+}
+
+(async()=>{
+  const ok = await checkAdmin();
+  if(ok){
+    document.getElementById("deleteBtn").style.display="inline-block";
+  }
+})();
+
     // 🔧 Supabase 프로젝트 값 (네 프로젝트로 채워둠)
     const SUPABASE_URL = "https://cwwnarmrvpvjptytepdo.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3d25hcm1ydnB2anB0eXRlcGRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NzU4NTUsImV4cCI6MjA3NzQ1MTg1NX0.5mvgA_gKdlRaebVRSFIUJRKgp51zke_nffQ2jc8Ad1g";
