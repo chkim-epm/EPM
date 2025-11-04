@@ -87,7 +87,11 @@
         <input id="image" type="file" accept="image/*" />
       </div>
       <div class="hint">이미지는 업로드 후 공개 URL을 제품에 연결합니다.</div>
-      <div class="row">
+		<div class="row">
+        <label for="images">추가 이미지</label>
+        <input id="images" type="file" accept="image/*" multiple />
+      </div>
+      <div class="hint">여러장 선택 가능 (선택옵션)</div>
         <label></label>
         <div>
           <button class="btn" id="submitBtn">등록</button>
@@ -231,6 +235,19 @@
       const { error: insErr } = await sb.from("product").insert(payload);
       if (insErr) throw insErr;
 
+	// ★ ADD 시작 : 추가 이미지 업로드 및 product_image insert
+      const extras = imagesInput?.files ? Array.from(imagesInput.files) : [];
+      const baseDir = `product/${ins.id}`;
+
+      for(const f of extras){
+        const safe = `${Date.now()}_${f.name.normalize('NFKD').replace(/[^\w.\-]+/g, '_')}`;
+        const p = `${baseDir}/${safe}`;
+        await sb.storage.from(BUCKET).upload(p, f, { upsert:false, cacheControl:'3600', contentType:f.type||'application/octet-stream' });
+        const {data:pub2}=sb.storage.from(BUCKET).getPublicUrl(p);
+        await sb.from("product_image").insert({product_id:ins.id,url:pub2.publicUrl});
+      }
+      // ★ ADD 끝
+	  
       status.className="status ok";
       status.textContent="등록 완료!";
     } catch (e) {
