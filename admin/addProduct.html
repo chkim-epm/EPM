@@ -188,6 +188,9 @@
 
     // ===== 제품 등록 =====
      $("submitBtn").addEventListener("click", async ()=>{
+	const imagesInput = document.getElementById("images");
+	const subImages = imagesInput?.files || [];
+
     const status = $("status");
     status.className = "status muted";
     status.textContent = "업로드 중...";
