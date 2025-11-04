@@ -79,6 +79,7 @@
         <div class="actions">
           <button class="btn" onclick="history.back()">이전으로</button>
           <a class="btn ghost" href="/product.html">목록 보기</a>
+		  <button class="btn ghost" id="deleteBtn" style="background:#b00020;color:#fff;">제품 삭제</button>
         </div>
         <div id="status" class="muted" style="margin-top:8px;"></div>
       </div>
@@ -161,6 +162,33 @@
     }
 
     load();
+	// 삭제
+document.getElementById("deleteBtn").addEventListener("click", async () => {
+  if(!confirm("정말 삭제하시겠습니까? 복구 불가합니다.")) return;
+
+  // 1) 모든 서브 이미지 불러오기
+  const { data: imgs } = await sb.from("product_image").select("url").eq("product_id", pid);
+
+  // 2) 스토리지 파일 삭제
+  async function removeByPublicUrl(url){
+    const i = url.indexOf("/product-image/");
+    if(i<0) return;
+    const path = url.substring(i + "/product-image/".length);
+    await sb.storage.from("product-image").remove([path]);
+  }
+
+  if(imgs){
+    for(const im of imgs) await removeByPublicUrl(im.url);
+  }
+  if(product.image_url) await removeByPublicUrl(product.image_url);
+
+  // 3) DB 삭제 (fk cascade 라서 product_image 자동삭제)
+  await sb.from("product").delete().eq("id", pid);
+
+  alert("삭제 완료");
+  location.href="/product.html";
+});
+
   </script>
 </body>
 </html>
