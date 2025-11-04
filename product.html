@@ -206,6 +206,15 @@ h1 {
 
 <h1>제품 목록</h1>
 
+<!-- ★ ADD: 검색바 -->
+<div class="search-bar" style="max-width:1200px;margin:0 auto;padding:0 2rem 0;display:flex;gap:8px;align-items:center;">
+  <input id="q" type="search" placeholder="제품명, 설명, 재질, 용도, 종류 검색" style="flex:1;padding:10px 12px;border:1px solid #d0d7de;border-radius:8px;font-size:14px;">
+  <button id="clearBtn" type="button" style="padding:10px 12px;border:0;border-radius:8px;cursor:pointer;background:#23585C;color:#fff;">초기화</button>
+</div>
+<!-- ★ ADD 끝 -->
+
+
+
 <!-- 🔄 여기만 비워둡니다: JS가 DB에서 불러와 채움 -->
 <div class="product-grid"></div>
 <!-- ★ ADD: 페이지네이션 컨테이너 -->
@@ -238,6 +247,10 @@ h1 {
   /* ★ ADD: 페이지 사이즈 & 현재 페이지 상태 */
   const PAGE_SIZE = 6;     // 한 페이지에 6장
   let currentPage = 1;      // 현재 페이지
+
+// ★ ADD: 검색 상태
+let currentQuery = "";
+
 
   /* ★ CHANGE: 카드 렌더 함수 (기존 map 부분 분리) */
   function renderCards(items){
@@ -316,39 +329,72 @@ h1 {
       if (!t.classList.contains("page-btn")) return;
       const p = Number(t.dataset.p);
       if (!p || p===page) return;
-      loadProducts(p);
+      loadProducts(p, currentQuery); // ★ CHANGE(선택): 검색 유지 페이징
       window.scrollTo({top:0, behavior:'smooth'}); // 페이지 전환 시 상단으로
     };
   }
 
-  /* ★ CHANGE: 목록 로드(카운트 + range 페이징) */
-  async function loadProducts(page=1){
-    currentPage = page;
-    const grid = document.querySelector(".product-grid");
-    grid.innerHTML = "불러오는 중...";
 
-    const from = (page - 1) * PAGE_SIZE;
-    const to   = from + PAGE_SIZE - 1;
+/* ★ CHANGE: 목록 로드(검색어 지원) */
+async function loadProducts(page=1, q=""){
+  currentPage = page;
+  currentQuery = q;
+  const grid = document.querySelector(".product-grid");
+  grid.innerHTML = "불러오는 중...";
 
-    // REST 간단 체크는 생략하고, 바로 SDK 사용 (count: 'exact')
-    const { data, error, count } = await sb
-      .from("product")
-      .select("*", { count: "exact" })
-      .order("created_at", { ascending: false })
-      .range(from, to);
+  const from = (page - 1) * PAGE_SIZE;
+  const to   = from + PAGE_SIZE - 1;
 
-    if (error){
-      grid.innerHTML = "DB 조회 오류: " + error.message;
-      console.error("Supabase select error:", error);
-      return;
-    }
+  // ★ CHANGE: 쿼리를 변수로 만들어 검색어 있을 때 or 필터 추가
+  let query = sb
+    .from("product")
+    .select("*", { count: "exact" })
+    .order("created_at", { ascending: false })
+    .range(from, to);
 
-    renderCards(data);
-    renderPager(count ?? 0, page);
+  if (q && q.trim() !== "") {
+    const term = q.trim();
+    query = query.or(
+      `title.ilike.%${term}%,description.ilike.%${term}%,material.ilike.%${term}%,usage.ilike.%${term}%,types.ilike.%${term}%`
+    );
   }
 
-  // ★ 최초 1페이지 로드
-  loadProducts(1);
+  const { data, error, count } = await query;
+
+  if (error){
+    grid.innerHTML = "DB 조회 오류: " + error.message;
+    console.error("Supabase select error:", error);
+    return;
+  }
+
+  renderCards(data);
+  renderPager(count ?? 0, page);
+}
+
+// ★ ADD: 디바운스 유틸
+function debounce(fn, ms=300){
+  let t; return (...args)=>{ clearTimeout(t); t=setTimeout(()=>fn(...args), ms); };
+}
+
+// ★ ADD: 검색 이벤트
+const qInput  = document.getElementById("q");
+const clearBtn = document.getElementById("clearBtn");
+
+if (qInput) {
+  qInput.addEventListener("input", debounce(()=>{
+    loadProducts(1, qInput.value);
+  }, 300));
+}
+if (clearBtn) {
+  clearBtn.addEventListener("click", ()=>{
+    if (!qInput) return;
+    qInput.value = "";
+    loadProducts(1, "");
+  });
+}
+
+// ★ CHANGE: 최초 로드(검색어 공백으로)
+loadProducts(1, "");
 
   // ★ 안전망: 8초 타임아웃 메시지
   setTimeout(() => {
