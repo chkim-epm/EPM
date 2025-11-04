@@ -252,11 +252,7 @@ h1 {
           <img src="${p.image_url || ''}" alt="${(p.title || '').replace(/"/g,'&quot;')}" loading="lazy">
         </a>
         <div class="product-info">
-          <h2>
-            <a href="detail.html?id=${p.id}">
-              ${p.title || '-'}
-            </a>
-          </h2>
+          <h2>${p.title || '-'}</h2>
           <p>${p.description ? p.description : ''}</p>
           <div class="product-table">
             <table>
@@ -368,7 +364,5 @@ h1 {
 
 </body>
 </html>
-
-
 
 
