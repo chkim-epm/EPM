@@ -152,6 +152,27 @@ h1 {
 
 /* ================= 카드 안 표 끝 ================= */
 
+/* ================= 페이지네이션 ================= */
+
+/* ★ ADD: 페이지네이션 UI */
+.pager{
+  display:flex; gap:8px; justify-content:center; align-items:center;
+  padding: 16px 0 28px;
+}
+.page-btn{
+  min-width: 38px; height: 38px; padding:0 10px; border:1px solid #e3e5e8;
+  background:#fff; border-radius:10px; cursor:pointer; font: 14px/38px system-ui;
+  box-shadow:0 1px 4px rgba(0,0,0,.04);
+}
+.page-btn:hover{ box-shadow:0 2px 10px rgba(0,0,0,.08); }
+.page-btn.active{
+  background:#23585C; color:#fff; border-color:#23585C; font-weight:700;
+}
+.page-btn[disabled]{ opacity:.5; cursor:not-allowed; }
+.page-ellipsis{
+  padding:0 6px; color:#888; user-select:none;
+}
+/* ================= 페이지네이션 끝================= */
 
 /* ========================================== 모바일 전용 CSS ================================================= */
 
@@ -187,6 +208,8 @@ h1 {
 
 <!-- 🔄 여기만 비워둡니다: JS가 DB에서 불러와 채움 -->
 <div class="product-grid"></div>
+<!-- ★ ADD: 페이지네이션 컨테이너 -->
+<div id="pager" class="pager"></div>
 
 <!-- 푸터 (회사 정보) -->
 <footer>
@@ -206,82 +229,132 @@ h1 {
   const SUPABASE_URL = "https://cwwnarmrvpvjptytepdo.supabase.co";
   const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3d25hcm1ydnB2anB0eXRlcGRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NzU4NTUsImV4cCI6MjA3NzQ1MTg1NX0.5mvgA_gKdlRaebVRSFIUJRKgp51zke_nffQ2jc8Ad1g";
 
-  // SDK 존재 확인
   if (typeof supabase === "undefined") {
     document.querySelector(".product-grid").innerHTML = "오류: supabase SDK 로딩 실패";
     throw new Error("Supabase SDK not loaded");
   }
-
   const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  async function loadProducts() {
+  /* ★ ADD: 페이지 사이즈 & 현재 페이지 상태 */
+  const PAGE_SIZE = 12;     // 한 페이지에 12장
+  let currentPage = 1;      // 현재 페이지
+
+  /* ★ CHANGE: 카드 렌더 함수 (기존 map 부분 분리) */
+  function renderCards(items){
+    const grid = document.querySelector(".product-grid");
+    if (!items || items.length === 0){
+      grid.innerHTML = "등록된 제품이 없습니다.";
+      return;
+    }
+    grid.innerHTML = items.map(p => `
+      <div class="product-card">
+        <a href="detail.html?id=${p.id}" style="display:block">
+          <img src="${p.image_url || ''}" alt="${(p.title || '').replace(/"/g,'&quot;')}" loading="lazy">
+        </a>
+        <div class="product-info">
+          <h2>
+            <a href="detail.html?id=${p.id}" style="text-decoration:none;color:inherit;">
+              ${p.title || '-'}
+            </a>
+          </h2>
+          <p>${p.description ? p.description : ''}</p>
+          <div class="product-table">
+            <table>
+              <tbody>
+                <tr><th>재질</th><td>${p.material || '-'}</td></tr>
+                <tr><th>용도</th><td>${p.usage || '-'}</td></tr>
+                <tr><th>종류</th><td>${p.types || '-'}</td></tr>
+                <tr><th>가격</th><td>${p.price ? Number(p.price).toLocaleString() : '-'}</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- ★ CHANGE: 자세히 보기 버튼 유지 -->
+          <a href="detail.html?id=${p.id}">자세히 보기</a>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  /* ★ ADD: 페이지 버튼(이쁘게, … 포함) */
+  function renderPager(totalCount, page){
+    const pager = document.getElementById("pager");
+    const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE));
+
+    // 헬퍼
+    const btn = (p, label = p, {active=false, disabled=false}={}) =>
+      `<button class="page-btn ${active?'active':''}" ${disabled?'disabled':''} data-p="${p}">${label}</button>`;
+    const dots = `<span class="page-ellipsis">…</span>`;
+
+    // 표시할 페이지 그룹 계산 (1, …, p-1, p, p+1, …, last)
+    const pages = [];
+    const push = (x)=>pages.push(x);
+
+    const addRange = (s,e)=>{
+      for(let i=s;i<=e;i++) push(i);
+    };
+
+    const first = 1, last = totalPages;
+    const left = Math.max(first, page-1);
+    const right = Math.min(last, page+1);
+
+    push(first);
+    if (left > first+1) push("dots-left");
+    addRange(Math.max(first+1, left), Math.min(last-1, right));
+    if (right < last-1) push("dots-right");
+    if (last !== first) push(last);
+
+    // HTML 조립
+    let html = '';
+    html += btn(Math.max(first, page-1), "‹", {disabled: page===first});
+    for(const p of pages){
+      if (p==="dots-left" || p==="dots-right"){ html += dots; continue; }
+      html += btn(p, String(p), {active: p===page});
+    }
+    html += btn(Math.min(last, page+1), "›", {disabled: page===last});
+
+    pager.innerHTML = html;
+
+    // 클릭 핸들러(이벤트 위임)
+    pager.onclick = (e)=>{
+      const t = e.target;
+      if (!t.classList.contains("page-btn")) return;
+      const p = Number(t.dataset.p);
+      if (!p || p===page) return;
+      loadProducts(p);
+      window.scrollTo({top:0, behavior:'smooth'}); // 페이지 전환 시 상단으로
+    };
+  }
+
+  /* ★ CHANGE: 목록 로드(카운트 + range 페이징) */
+  async function loadProducts(page=1){
+    currentPage = page;
     const grid = document.querySelector(".product-grid");
     grid.innerHTML = "불러오는 중...";
 
-    try {
-      // 1) 직접 REST 호출로 통신/권한 체크 (문제 있으면 바로 메시지 표시)
-      const restUrl = `${SUPABASE_URL}/rest/v1/product?select=id&limit=1`;
-      const restRes = await fetch(restUrl, {
-        headers: {
-          apikey: SUPABASE_ANON_KEY,
-          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-        }
-      });
-      if (!restRes.ok) {
-        const t = await restRes.text();
-        grid.innerHTML = "REST 오류: " + restRes.status + " / " + t;
-        return;
-      }
+    const from = (page - 1) * PAGE_SIZE;
+    const to   = from + PAGE_SIZE - 1;
 
-      // 2) SDK로 실제 데이터 조회
-      const { data, error } = await sb
-        .from("product")
-        .select("*")
-        .order("created_at", { ascending: false });
+    // REST 간단 체크는 생략하고, 바로 SDK 사용 (count: 'exact')
+    const { data, error, count } = await sb
+      .from("product")
+      .select("*", { count: "exact" })
+      .order("created_at", { ascending: false })
+      .range(from, to);
 
-      if (error) {
-        grid.innerHTML = "DB 조회 오류: " + error.message;
-        console.error("Supabase select error:", error);
-        return;
-      }
-
-      if (!data || data.length === 0) {
-        grid.innerHTML = "등록된 제품이 없습니다.";
-        return;
-      }
-
-      grid.innerHTML = data.map(p => `
-        <div class="product-card">
-            <a href="detail.html?id=${p.id}">
-		    <img src="${p.image_url || ''}" alt="${(p.title || '').replace(/"/g,'&quot;')}" loading="lazy">
-		  </a>
-          <div class="product-info">
-             <h2>${p.title || '-'}</h2>
-            <p>${p.description ? p.description : ''}</p>
-            <div class="product-table">
-              <table>
-                <tbody>
-                  <tr><th>재질</th><td>${p.material || '-'}</td></tr>
-                  <tr><th>용도</th><td>${p.usage || '-'}</td></tr>
-                  <tr><th>종류</th><td>${p.types || '-'}</td></tr>
-                  <tr><th>가격</th><td>${p.price ? Number(p.price).toLocaleString() : '-'}</td></tr>
-                </tbody>
-              </table>
-            </div>
-			<!-- 추가: 상세페이지 이동 버튼 추가 -->
-            <a href="detail.html?id=${p.id}">자세히 보기</a>
-          </div>
-        </div>
-      `).join("");
-    } catch (e) {
-      console.error(e);
-      document.querySelector(".product-grid").innerHTML = "예외 오류: " + (e?.message || e);
+    if (error){
+      grid.innerHTML = "DB 조회 오류: " + error.message;
+      console.error("Supabase select error:", error);
+      return;
     }
+
+    renderCards(data);
+    renderPager(count ?? 0, page);
   }
 
-  loadProducts();
+  // ★ 최초 1페이지 로드
+  loadProducts(1);
 
-  // 8초가 지나도 그대로면 경고 표시(네트워크 등)
+  // ★ 안전망: 8초 타임아웃 메시지
   setTimeout(() => {
     const txt = document.querySelector(".product-grid")?.textContent || "";
     if (txt.includes("불러오는 중")) {
@@ -291,8 +364,9 @@ h1 {
   }, 8000);
 </script>
 
+</script>
+
 </body>
 </html>
-
 
 
