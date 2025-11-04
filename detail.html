@@ -51,7 +51,6 @@
     .ghost{background:#e9ecef;color:#111}
     .muted{color:var(--muted)}
     @media (max-width:900px){.layout{grid-template-columns:1fr}}
-	.danger{ background:#d32f2f; color:#fff; }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -80,7 +79,6 @@
         <div class="actions">
           <button class="btn" onclick="history.back()">이전으로</button>
           <a class="btn ghost" href="/product.html">목록 보기</a>
-		  <button class="btn danger" id="deleteBtn" style="display:none;">삭제</button>
         </div>
         <div id="status" class="muted" style="margin-top:8px;"></div>
       </div>
@@ -88,27 +86,6 @@
   </div>
 
   <script>
-  // 관리자 화이트리스트
-const ADMIN_EMAILS = ["chkim.epm@gmail.com"];
-const ADMIN_USERNAMES = ["chkim-epm"];
-
-async function checkAdmin(){
-  const { data:{session} } = await sb.auth.getSession();
-  const user = session?.user;
-  if(!user) return false;
-  
-  const email = user.email;
-  const ghUser = user.user_metadata?.user_name;
-  return (email && ADMIN_EMAILS.includes(email)) || (ghUser && ADMIN_USERNAMES.includes(ghUser));
-}
-
-(async()=>{
-  const ok = await checkAdmin();
-  if(ok){
-    document.getElementById("deleteBtn").style.display="inline-block";
-  }
-})();
-
     // 🔧 Supabase 프로젝트 값 (네 프로젝트로 채워둠)
     const SUPABASE_URL = "https://cwwnarmrvpvjptytepdo.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3d25hcm1ydnB2anB0eXRlcGRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NzU4NTUsImV4cCI6MjA3NzQ1MTg1NX0.5mvgA_gKdlRaebVRSFIUJRKgp51zke_nffQ2jc8Ad1g";
@@ -184,33 +161,6 @@ async function checkAdmin(){
     }
 
     load();
-	// 삭제
-document.getElementById("deleteBtn").addEventListener("click", async () => {
-  if(!confirm("정말 삭제하시겠습니까? 복구 불가합니다.")) return;
-
-  // 1) 모든 서브 이미지 불러오기
-  const { data: imgs } = await sb.from("product_image").select("url").eq("product_id", pid);
-
-  // 2) 스토리지 파일 삭제
-  async function removeByPublicUrl(url){
-    const i = url.indexOf("/product-image/");
-    if(i<0) return;
-    const path = url.substring(i + "/product-image/".length);
-    await sb.storage.from("product-image").remove([path]);
-  }
-
-  if(imgs){
-    for(const im of imgs) await removeByPublicUrl(im.url);
-  }
-  if(product.image_url) await removeByPublicUrl(product.image_url);
-
-  // 3) DB 삭제 (fk cascade 라서 product_image 자동삭제)
-  await sb.from("product").delete().eq("id", pid);
-
-  alert("삭제 완료");
-  location.href="/product.html";
-});
-
   </script>
 </body>
 </html>
