@@ -78,21 +78,26 @@
 </head>
 <body>
 
-<!-- ✅ 네비게이션 (product.html과 동일 구조로 수정) -->
+<!-- 네비게이션 바 -->
 <nav>
-  <div class="nav-logo">
-    <a href="index.html" style="text-decoration:none; color:inherit;">
-      <span class="logo-e" style="color:green;">E</span>
-      <span class="logo-p" style="color:red;">P</span>
-      <span class="logo-m" style="color:blue;">M</span>
-      (주)이스트파워메탈
-    </a>
-  </div>
-  <div class="nav-item"><a href="companyHistory.html">회사소개</a></div>
-  <div class="nav-item"><a href="product.html">부스바</a></div>
-  <div class="nav-item"><a href="noElectrocution.html">무감전</a></div>
-  <div class="nav-item"><a href="map.html">오시는 길</a></div>
+<div class="nav-logo">
+  <a href="index.html" style="text-decoration:none; color:inherit;">
+  <!-- epm 코드 줄바꿈 하면 간격 생겨서 인라인으로 작성-->
+    <span class="logo-e" style="color:green;">E</span><span class="logo-p" style="color:red;">P</span><span class="logo-m" style="color:blue;">M</span>
+	(주)이스트파워메탈
+  </a>
+</div>
+
+ <div class="nav-menu">
+	<!-- <div class="nav-item"><a href="index.html">HOME</a></div> -->
+	<div class="nav-item"><a href="companyHistory.html">회사소개</a></div>
+	<div class="nav-item"><a href="product.html">부스바</a></div>
+	<!-- <div class="nav-item"><a href="index.html">제품목록</a></div> -->
+	<div class="nav-item"><a href="noElectrocution.html">무감전</a></div>
+    <div class="nav-item"><a href="map.html">오시는 길</a></div>
+</div>
 </nav>
+
 <!-- ✅ 네비게이션 끝 -->
 
 <div class="container">
@@ -125,15 +130,17 @@
   </div>
 </div>
 
-<!-- ✅ 풋터 (기존과 동일) -->
+<!-- 푸터 (회사 정보) -->
 <footer>
+  
   <p>
-    <span class="logo-e" style="color:green;">E</span>
-    <span class="logo-p" style="color:red;">P</span>
-    <span class="logo-m" style="color:blue;">M</span>
-    (주)이스트파워메탈 | 주소: 경기도 김포시 통진읍 율마로 223번길 42 | 전화: 031-985-6037 | 이메일: chkim.epm@gmail.com
-  </p>
+	<span class="logo-e" style="color:green;">E</span>
+	<span class="logo-p" style="color:red; ">P</span>
+	<span class="logo-m" style="color:blue;">M</span>
+   (주)이스트파워메탈 | 주소: 경기도 김포시 통진읍 율마로 223번길 42 | 전화: 031-985-6037 | 이메일: chkim.epm@gmail.com</p>
   <p>© 2025 EAST POWER METAL. All Rights Reserved.</p>
+    <!-- 왼쪽 로고 -->
+  
 </footer>
 
 <script>
