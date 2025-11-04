@@ -187,78 +187,100 @@
     updatePreview();
 
     // ===== 제품 등록 =====
-     $("submitBtn").addEventListener("click", async ()=>{
-	const imagesInput = document.getElementById("images");
-	const subImages = imagesInput?.files || [];
+     // ===== 제품 등록 =====
+$("submitBtn").addEventListener("click", async () => {
+  const imagesInput = document.getElementById("images");
 
-    const status = $("status");
-    status.className = "status muted";
-    status.textContent = "업로드 중...";
+  const status = $("status");
+  status.className = "status muted";
+  status.textContent = "업로드 중...";
 
-    const title = $("title").value.trim();
-    const file  = $("image").files?.[0];
-    if (!title) { status.className="status err"; status.textContent="제품명은 필수입니다."; return; }
-    if (!file)  { status.className="status err"; status.textContent="대표 이미지를 선택하세요."; return; }
+  const title = $("title").value.trim();
+  const file  = $("image").files?.[0];
 
-    try {
-      // ✅ 파일명 안전하게 정규화 (ASCII만 허용)
-      const safeBase = file.name
-        .normalize('NFKD')                  // 유니코드 정규화
-        .replace(/[^\w.\-]+/g, '_')         // 영문/숫자/._- 외 모두 _
-        .replace(/^_+|_+$/g, '');           // 앞뒤 _ 제거
-      const filename = `${Date.now()}_${safeBase}`.replace(/_+/g, '_');
+  if (!title) { status.className="status err"; status.textContent="제품명은 필수입니다."; return; }
+  if (!file)  { status.className="status err"; status.textContent="대표 이미지를 선택하세요."; return; }
 
-      // ✅ 경로(폴더명) — 단수 'product'로 통일
-      const path = `product/${filename}`;
+  try {
+    // 1) 대표 이미지 업로드
+    const safeBase = file.name
+      .normalize("NFKD")
+      .replace(/[^\w.\-]+/g, "_")
+      .replace(/^_+|_+$/g, "");
+    const mainName = `${Date.now()}_${safeBase}`.replace(/_+/g, "_");
+    const mainPath = `product/${mainName}`;
 
-      // ✅ 업로드 (bucket 이름도 정확히 단수!)
-      const { data: up, error: upErr } = await sb.storage
-        .from("product-image")
-        .upload(path, file, {
-          upsert: false,
-          cacheControl: '3600',
-          contentType: file.type || 'application/octet-stream',
+    const { error: upErr } = await sb.storage
+      .from("product-image")
+      .upload(mainPath, file, {
+        upsert: false,
+        cacheControl: "3600",
+        contentType: file.type || "application/octet-stream",
+      });
+    if (upErr) throw upErr;
+
+    const { data: pub } = sb.storage.from("product-image").getPublicUrl(mainPath);
+    const image_url = pub.publicUrl;
+
+    // 2) product row 저장 + id 회수
+    const payload = {
+      title,
+      description: $("desc").value || null,
+      material: $("material").value || null,
+      usage: $("usage").value || null,
+      types: $("types").value || null,
+      price: $("price").value ? Number($("price").value) : null,
+      image_url,
+    };
+
+    const insertResult = await sb
+      .from("product")
+      .insert(payload)
+      .select("id")
+      .single();            // ← 새로 생성된 row 하나
+    if (insertResult.error) throw insertResult.error;
+
+    const productId = insertResult.data.id;
+
+    // 3) 추가 이미지 업로드 + product_image 연결 (선택)
+    const extras = imagesInput?.files ? Array.from(imagesInput.files) : [];
+    if (extras.length) {
+      const baseDir = `product/${productId}`;
+      for (const f of extras) {
+        const safe = f.name
+          .normalize("NFKD")
+          .replace(/[^\w.\-]+/g, "_")
+          .replace(/^_+|_+$/g, "");
+        const name = `${Date.now()}_${safe}`.replace(/_+/g, "_");
+        const p = `${baseDir}/${name}`;
+
+        const { error: upErr2 } = await sb.storage
+          .from(BUCKET) // "product-image"
+          .upload(p, f, {
+            upsert: false,
+            cacheControl: "3600",
+            contentType: f.type || "application/octet-stream",
+          });
+        if (upErr2) throw upErr2;
+
+        const { data: pub2 } = sb.storage.from(BUCKET).getPublicUrl(p);
+        const insImg = await sb.from("product_image").insert({
+          product_id: productId,
+          url: pub2.publicUrl,
         });
-      if (upErr) throw upErr;
-
-      // 공개 URL
-      const { data: pub } = sb.storage.from("product-image").getPublicUrl(path);
-      const image_url = pub.publicUrl;
-
-      // DB insert (테이블 단수 'product')
-      const payload = {
-        title,
-        description: $("desc").value || null,
-        material: $("material").value || null,
-        usage: $("usage").value || null,
-        types: $("types").value || null,
-        price: $("price").value ? Number($("price").value) : null,
-        image_url
-      };
-      const { error: insErr } = await sb.from("product").insert(payload);
-      if (insErr) throw insErr;
-
-	// ★ ADD 시작 : 추가 이미지 업로드 및 product_image insert
-      const extras = imagesInput?.files ? Array.from(imagesInput.files) : [];
-      const baseDir = `product/${ins.id}`;
-
-      for(const f of extras){
-        const safe = `${Date.now()}_${f.name.normalize('NFKD').replace(/[^\w.\-]+/g, '_')}`;
-        const p = `${baseDir}/${safe}`;
-        await sb.storage.from(BUCKET).upload(p, f, { upsert:false, cacheControl:'3600', contentType:f.type||'application/octet-stream' });
-        const {data:pub2}=sb.storage.from(BUCKET).getPublicUrl(p);
-        await sb.from("product_image").insert({product_id:ins.id,url:pub2.publicUrl});
+        if (insImg.error) throw insImg.error;
       }
-      // ★ ADD 끝
-	  
-      status.className="status ok";
-      status.textContent="등록 완료!";
-    } catch (e) {
-      console.error(e);
-      status.className="status err";
-      status.textContent = "등록 실패: " + (e?.message || e);
     }
-  });
+
+    status.className = "status ok";
+    status.textContent = "등록 완료!";
+  } catch (e) {
+    console.error(e);
+    status.className = "status err";
+    status.textContent = "등록 실패: " + (e?.message || e);
+  }
+});
+
 </script>;
   </script>
 </body>
