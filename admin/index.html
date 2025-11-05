@@ -27,6 +27,14 @@
     // 2) 클라이언트 생성 (브라우저에서 사용)
     const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+    // ✅ next 파라미터 지원 (없으면 기본 /admin/product.html)
+    const params = new URLSearchParams(location.search);
+    const nextPath = params.get('next') || '/admin/product.html';
+
+    // ✅ file:// 등 origin이 비정상이면 프로덕션 도메인으로 고정
+    const hasHttpOrigin = /^https?:\/\//i.test(window.location.origin);
+    const baseOrigin = hasHttpOrigin ? window.location.origin : 'https://www.eastpowermetal.com';
+
     // 현재 세션 표시
     async function renderSession() {
       const { data: { session } } = await sb.auth.getSession();
@@ -39,7 +47,7 @@
         provider: 'github',
         options: {
           // 성공 후 돌아올 주소 (Authentication → URL Configuration → Redirect URLs에 반드시 등록됨)
-          redirectTo: window.location.origin + '/admin/product.html',
+          redirectTo: baseOrigin + nextPath,
         }
       });
     };
