@@ -87,16 +87,15 @@
         <input id="image" type="file" accept="image/*" />
       </div>
       <div class="hint">이미지는 업로드 후 공개 URL을 제품에 연결합니다.</div>
-		<div class="row">
+      <div class="row">
         <label for="images">추가 이미지</label>
         <input id="images" type="file" accept="image/*" multiple />
       </div>
       <div class="hint">여러장 선택 가능 (선택옵션)</div>
-        <label></label>
-        <div>
-          <button class="btn" id="submitBtn">등록</button>
-          <span id="status" class="status muted"></span>
-        </div>
+      <label></label>
+      <div>
+        <button class="btn" id="submitBtn">등록</button>
+        <span id="status" class="status muted"></span>
       </div>
     </div>
 
@@ -128,39 +127,63 @@
     // =========================
     // 🔧 TODO(1): Supabase 값
     // =========================
-    const SUPABASE_URL = "https://cwwnarmrvpvjptytepdo.supabase.co";      // 예: https://abcxyz123.supabase.co
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3d25hcm1ydnB2anB0eXRlcGRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NzU4NTUsImV4cCI6MjA3NzQ1MTg1NX0.5mvgA_gKdlRaebVRSFIUJRKgp51zke_nffQ2jc8Ad1g";            // 대시보드 API의 anon key 전체
+    const SUPABASE_URL = "https://cwwnarmrvpvjptytepdo.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3d25hcm1ydnB2anB0eXRlcGRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NzU4NTUsImV4cCI6MjA3NzQ1MTg1NX0.5mvgA_gKdlRaebVRSFIUJRKgp51zke_nffQ2jc8Ad1g";
     // 🔧 TODO(2): 스토리지 버킷명(미리 생성)
-    const BUCKET = "product-image";                                // Supabase Storage 버킷 이름
+    const BUCKET = "product-image";
 
     // 🔧 TODO(3): 관리자 화이트리스트
     const ADMIN_EMAILS = ["chkim.epm@gmail.com"];
     const ADMIN_USERNAMES = ["chkim-epm"];
 
-    // 🔧 TODO(4): 차단시 이동 경로
-    const KICKOUT_URL = "/admin/denied.html"; // 또는 "/admin/"
+    // 🔧 TODO(4): 경로(미로그인/권한없음)
+    const LOGIN_URL  = "/admin/login.html";
+    const DENIED_URL = "/admin/denied.html";
 
     // Supabase 초기화
     const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // OAuth 리다이렉트 세션 교환(있으면)
-    sb.auth.exchangeCodeForSession(window.location.href).catch(() => {});
+    /* URL에 code/access_token이 있을 때만 세션 교환 시도 (OAuth 리턴 대응) */
+    async function ensureSessionFromURL() {
+      if (location.search.includes("code=") || location.hash.includes("access_token")) {
+        try { await sb.auth.exchangeCodeForSession(window.location.href); } catch(e) { /* noop */ }
+      }
+    }
 
     // ===== 관리자 가드 =====
     async function guardAdmin() {
       const { data: { session } } = await sb.auth.getSession();
       const user = session?.user;
-      if (!user) return kick();
+      if (!user) return kickLogin(); // 미로그인 → 로그인 페이지로(next=복귀)
+
       const email = user.email;
       const ghUser = user.user_metadata?.user_name;
       const ok = (email && ADMIN_EMAILS.includes(email)) || (ghUser && ADMIN_USERNAMES.includes(ghUser));
-      if (!ok) return kick();
+      if (!ok) return kickDenied(); // 화이트리스트 미통과 → denied
+
+      // 통과 → 화면 오픈
       document.getElementById("who").textContent = `(${email || ghUser})`;
       document.documentElement.classList.remove("protecting");
     }
-    function kick(){ location.replace(KICKOUT_URL); }
+
+    // 미로그인: next 파라미터로 원래 경로 전달
+    function kickLogin(){
+      const next = encodeURIComponent(location.pathname + location.search);
+      location.replace(`${LOGIN_URL}?next=${next}`);
+    }
+    // 권한없음: denied로
+    function kickDenied(){
+      location.replace(DENIED_URL);
+    }
+
+    // 세션 변경시 재검사
     sb.auth.onAuthStateChange(() => guardAdmin());
-    guardAdmin();
+
+    // 초기 실행: 세션교환 → 가드
+    (async () => {
+      await ensureSessionFromURL();
+      await guardAdmin();
+    })();
 
     // ===== 미리보기 바인딩 =====
     const $ = (id)=>document.getElementById(id);
@@ -187,101 +210,103 @@
     updatePreview();
 
     // ===== 제품 등록 =====
-     // ===== 제품 등록 =====
-$("submitBtn").addEventListener("click", async () => {
-  const imagesInput = document.getElementById("images");
+    document.getElementById("logoutBtn").addEventListener("click", async ()=>{
+      await sb.auth.signOut();
+      kickLogin();
+    });
 
-  const status = $("status");
-  status.className = "status muted";
-  status.textContent = "업로드 중...";
+    document.getElementById("submitBtn").addEventListener("click", async () => {
+      const imagesInput = document.getElementById("images");
 
-  const title = $("title").value.trim();
-  const file  = $("image").files?.[0];
+      const status = $("status");
+      status.className = "status muted";
+      status.textContent = "업로드 중...";
 
-  if (!title) { status.className="status err"; status.textContent="제품명은 필수입니다."; return; }
-  if (!file)  { status.className="status err"; status.textContent="대표 이미지를 선택하세요."; return; }
+      const title = $("title").value.trim();
+      const file  = $("image").files?.[0];
 
-  try {
-    // 1) 대표 이미지 업로드
-    const safeBase = file.name
-      .normalize("NFKD")
-      .replace(/[^\w.\-]+/g, "_")
-      .replace(/^_+|_+$/g, "");
-    const mainName = `${Date.now()}_${safeBase}`.replace(/_+/g, "_");
-    const mainPath = `product/${mainName}`;
+      if (!title) { status.className="status err"; status.textContent="제품명은 필수입니다."; return; }
+      if (!file)  { status.className="status err"; status.textContent="대표 이미지를 선택하세요."; return; }
 
-    const { error: upErr } = await sb.storage
-      .from("product-image")
-      .upload(mainPath, file, {
-        upsert: false,
-        cacheControl: "3600",
-        contentType: file.type || "application/octet-stream",
-      });
-    if (upErr) throw upErr;
-
-    const { data: pub } = sb.storage.from("product-image").getPublicUrl(mainPath);
-    const image_url = pub.publicUrl;
-
-    // 2) product row 저장 + id 회수
-    const payload = {
-      title,
-      description: $("desc").value || null,
-      material: $("material").value || null,
-      usage: $("usage").value || null,
-      types: $("types").value || null,
-      price: $("price").value ? Number($("price").value) : null,
-      image_url,
-    };
-
-    const insertResult = await sb
-      .from("product")
-      .insert(payload)
-      .select("id")
-      .single();            // ← 새로 생성된 row 하나
-    if (insertResult.error) throw insertResult.error;
-
-    const productId = insertResult.data.id;
-
-    // 3) 추가 이미지 업로드 + product_image 연결 (선택)
-    const extras = imagesInput?.files ? Array.from(imagesInput.files) : [];
-    if (extras.length) {
-      const baseDir = `product/${productId}`;
-      for (const f of extras) {
-        const safe = f.name
+      try {
+        // 1) 대표 이미지 업로드
+        const safeBase = file.name
           .normalize("NFKD")
           .replace(/[^\w.\-]+/g, "_")
           .replace(/^_+|_+$/g, "");
-        const name = `${Date.now()}_${safe}`.replace(/_+/g, "_");
-        const p = `${baseDir}/${name}`;
+        const mainName = `${Date.now()}_${safeBase}`.replace(/_+/g, "_");
+        const mainPath = `product/${mainName}`;
 
-        const { error: upErr2 } = await sb.storage
-          .from(BUCKET) // "product-image"
-          .upload(p, f, {
+        const { error: upErr } = await sb.storage
+          .from("product-image")
+          .upload(mainPath, file, {
             upsert: false,
             cacheControl: "3600",
-            contentType: f.type || "application/octet-stream",
+            contentType: file.type || "application/octet-stream",
           });
-        if (upErr2) throw upErr2;
+        if (upErr) throw upErr;
 
-        const { data: pub2 } = sb.storage.from(BUCKET).getPublicUrl(p);
-        const insImg = await sb.from("product_image").insert({
-          product_id: productId,
-          url: pub2.publicUrl,
-        });
-        if (insImg.error) throw insImg.error;
+        const { data: pub } = sb.storage.from("product-image").getPublicUrl(mainPath);
+        const image_url = pub.publicUrl;
+
+        // 2) product row 저장 + id 회수
+        const payload = {
+          title,
+          description: $("desc").value || null,
+          material: $("material").value || null,
+          usage: $("usage").value || null,
+          types: $("types").value || null,
+          price: $("price").value ? Number($("price").value) : null,
+          image_url,
+        };
+
+        const insertResult = await sb
+          .from("product")
+          .insert(payload)
+          .select("id")
+          .single();            // ← 새로 생성된 row 하나
+        if (insertResult.error) throw insertResult.error;
+
+        const productId = insertResult.data.id;
+
+        // 3) 추가 이미지 업로드 + product_image 연결 (선택)
+        const extras = imagesInput?.files ? Array.from(imagesInput.files) : [];
+        if (extras.length) {
+          const baseDir = `product/${productId}`;
+          for (const f of extras) {
+            const safe = f.name
+              .normalize("NFKD")
+              .replace(/[^\w.\-]+/g, "_")
+              .replace(/^_+|_+$/g, "");
+            const name = `${Date.now()}_${safe}`.replace(/_+/g, "_");
+            const p = `${baseDir}/${name}`;
+
+            const { error: upErr2 } = await sb.storage
+              .from(BUCKET) // "product-image"
+              .upload(p, f, {
+                upsert: false,
+                cacheControl: "3600",
+                contentType: f.type || "application/octet-stream",
+              });
+            if (upErr2) throw upErr2;
+
+            const { data: pub2 } = sb.storage.from(BUCKET).getPublicUrl(p);
+            const insImg = await sb.from("product_image").insert({
+              product_id: productId,
+              url: pub2.publicUrl,
+            });
+            if (insImg.error) throw insImg.error;
+          }
+        }
+
+        status.className = "status ok";
+        status.textContent = "등록 완료!";
+      } catch (e) {
+        console.error(e);
+        status.className = "status err";
+        status.textContent = "등록 실패: " + (e?.message || e);
       }
-    }
-
-    status.className = "status ok";
-    status.textContent = "등록 완료!";
-  } catch (e) {
-    console.error(e);
-    status.className = "status err";
-    status.textContent = "등록 실패: " + (e?.message || e);
-  }
-});
-
-</script>;
+    });
   </script>
 </body>
 </html>
