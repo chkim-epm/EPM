@@ -58,7 +58,7 @@
     <span class="who" id="who"></span>
     <span style="flex:1"></span>
     <!-- 관리자 목록으로 -->
-    <button class="ghost" onclick="location.href='https://www.eastpowermetal.com/admin/product.html'">제품 목록 보기</button>
+    <button class="btn" id="addBtn" onclick="location.href='https://www.eastpowermetal.com/admin/product.html'">제품 목록 보기</button>
     <button id="logoutBtn">로그아웃</button>
   </div>
 
@@ -187,7 +187,7 @@
         // 폴백: 로그인으로 보냄
         kickLogin();
       }
-    }, 5000);
+    }, 1500);
 
     sb.auth.onAuthStateChange(() => guardAdmin());
 
