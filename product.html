@@ -5,64 +5,64 @@
 <title>이스트파워메탈:부스바, 동버스바, 분전반, 배전반, 임가공, 김포, 화성</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- 파비콘 -->
+<!-- 파비콘: 브라우저 탭/바 아이콘 지정 -->
 <link rel="icon" type="image/png" sizes="32x32" href="/epmFavicon.png">
 <link rel="shortcut icon" href="/favicon.ico">
 	
-<!-- ✅ SEO 기본 메타태그 -->
+<!-- ✅ SEO 기본 메타태그: 검색엔진 색인 및 클릭 유도문구 설정 -->
 <meta name="keywords" content="이스트파워메탈, 동버스바, 부스바, 분전반, 배전반, 수배전반, 무감전 분전반, 무감전 배전반, 무감전 변압기, 임가공, 절곡, 가공, 비철금속, 금속, 절단, 화성공장, 김포공장, 김포, 화성, 동부스바, 무감전, 누설전류 통제장치, 누설전류">
 <meta name="description" content="이스트파워메탈은 부스바, 버스바, 동버스바, 분전반, 수배전반, 임가공 김포, 화성 다양한 품종과 맞춤 절단 서비스를 제공합니다.">
 <meta name="author" content="이스트파워메탈">
 <meta name="robots" content="index, follow">
 
-<!-- ✅ Open Graph (SNS 공유용) -->
+<!-- ✅ Open Graph (SNS 공유 미리보기 카드 설정) -->
 <meta property="og:title" content="이스트파워메탈:부스바, 동버스바, 분전반, 배전반, 임가공, 김포, 화성">
 <meta property="og:image" content="https://chkim-epm.github.io/EPM/factory.png">
 <meta property="og:url" content="https://www.eastpowermetal.com/">
 <meta property="og:type" content="website">
 
-<!-- ✅ 트위터 카드 -->
+<!-- ✅ 트위터 카드 메타 -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="이스트파워메탈:부스바, 동버스바, 분전반, 배전반, 임가공, 김포, 화성">
 <meta name="twitter:description" content="이스트파워메탈은 부스바, 버스바, 동버스바, 분전반, 수배전반, 임가공 김포, 화성 다양한 품종과 맞춤 절단 서비스를 제공합니다.">
 <meta name="twitter:image" content="https://chkim-epm.github.io/EPM/factory.png">
 
-<!-- ✅ 네이버 -->
+<!-- ✅ 네이버/일부 크롤러 호환 목적의 OG 메타 반복 선언 -->
 <meta property="og:title" content="이스트파워메탈:부스바, 동버스바, 분전반, 배전반, 임가공, 김포, 화성">
 <meta property="og:description" content="이스트파워메탈은 부스바, 버스바, 동버스바, 분전반, 수배전반, 임가공 김포, 화성 다양한 품종과 맞춤 절단 서비스를 제공합니다.">
 <meta property="og:image" content="https://www.eastpowermetal.com/logo.png">
 <meta property="og:url" content="https://www.eastpowermetal.com/">
 <meta property="og:type" content="website">
 	
-<!-- ✅ 구글 사이트 소유권 확인 -->
+<!-- ✅ 사이트 소유권 검증(검색 콘솔/네이버 서치어드바이저) -->
 <meta name="google-site-verification" content="google444cc8347990b8a8"/>
-<!-- ✅ 네이버 사이트 소유권 확인 -->
 <meta name="naver-site-verification" content="c2165f2b265182c8668d9374095a8bdcd78bf2c1" />
-<!-- 구글 폰트 예시 -->
+
+<!-- 웹폰트: 나눔명조/나눔고딕 로딩 -->
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&family=Nanum+Gothic&display=swap" rel="stylesheet">
 
-<!-- 공통CSS(네비게이션&풋터) -->
+<!-- 공통 네비/푸터 스타일 -->
 <link rel="stylesheet" href="common.css">
 
-<!-- Supabase SDK 추가 -->
+<!-- Supabase JS SDK v2: 클라이언트에서 DB 접근용 -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 /* ===========================================PC 기본 스타일====================================================*/
 
-  /* ================= 공통 제목 스타일 ================= */
+/* 페이지 대표 제목 스타일 */
 h1 {
-  text-align: center;       /* 제목 가운데 정렬 */
-  margin: 2rem 0;           /* 위아래 여백 */
+  text-align: center;       /* 가운데 정렬 */
+  margin: 2rem 0;           /* 위/아래 여백 */
   font-size: 2rem;          /* 글자 크기 */
 }
 
 /* ================= 상품 카드 그리드 ================= */
 .product-grid {
-  display: grid;                             /* 카드들을 그리드로 배치 */
+  display: grid;                             /* 그리드 레이아웃 */
   grid-template-columns: repeat(auto-fill, 
-                        minmax(320px, 1fr)); /* 최소 320px, 자동 줄바꿈 */
-  gap: 1.5rem;                               /* 카드 간격 */
+                        minmax(320px, 1fr)); /* 최소 320px, 공간 따라 자동 줄바꿈 */
+  gap: 1.5rem;                               /* 카드 사이 간격 */
   padding: 2rem;                             /* 그리드 바깥 여백 */
   max-width: 1200px;                         /* 전체 너비 제한 */
   margin: 0 auto;                            /* 가운데 정렬 */
@@ -70,111 +70,119 @@ h1 {
 
 /* ================= 개별 카드 ================= */
 .product-card {
-  background: #fff;                          /* 카드 배경 흰색 */
-  border-radius: 8px;                        /* 모서리 둥글게 */
-  overflow: hidden;                          /* 넘치는 요소 잘림 */
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);     /* 그림자 */
-  text-align: center;                        /* 카드 안 텍스트 가운데 */
+  background: #fff;                          /* 카드 배경 */
+  border-radius: 8px;                        /* 둥근 모서리 */
+  overflow: hidden;                          /* 테두리 밖 요소 가림 */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);     /* 약한 그림자 */
+  text-align: center;                        /* 텍스트 중앙 정렬 */
   transition: transform 0.3s, box-shadow 0.3s; /* hover 애니메이션 */
-  display: flex;                             /* 내부 정렬용 flex */
-  flex-direction: column;                    /* 위에서 아래로 정렬 */
-  justify-content: flex-start;               /* 위쪽부터 배치 */
+  display: flex;                             /* 세로 정렬을 위한 flex */
+  flex-direction: column;                    /* 위→아래 배치 */
+  justify-content: flex-start;               /* 상단부터 배치 */
 }
 
 /* ================= 카드 Hover 효과 ================= */
 .product-card:hover {
-  transform: translateY(-5px);               /* 살짝 위로 이동 */
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);    /* 더 강한 그림자 */
+  transform: translateY(-5px);               /* 살짝 띄우기 */
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);    /* 그림자 강조 */
 }
 
 /* ================= 카드 안 이미지 ================= */
 .product-card img {
-  width: 100%;                               /* 가로 전체 */
+  width: 100%;                               /* 가로 폭 채움 */
   height: 280px;                             /* 고정 높이 */
-  object-fit: cover;                         /* 이미지 비율 유지 후 잘림 */
+  object-fit: cover;                         /* 비율 유지하며 잘맞게 자르기 */
 }
 
 /* ================= 카드 정보 영역 ================= */
 .product-info {
-  padding: 1rem;                             /* 내용 여백 */
+  padding: 1rem;                             /* 내부 여백 */
 }
 
 .product-info h2 {
   font-size: 1.2rem;                         /* 상품명 크기 */
-  margin: 0.5rem 0;                          /* 위아래 여백 */
+  margin: 0.5rem 0;                          /* 위/아래 여백 */
 }
 
 .product-info p {
   font-size: 0.9rem;                         /* 설명 글자 크기 */
-  color: #555;                               /* 회색 텍스트 */
+  color: #555;                               /* 회색 계열 텍스트 */
 }
 
 .product-info a {
   display: inline-block;                     /* 버튼 형태 */
   margin-top: 0.5rem;
   padding: 0.4rem 0.8rem;
-  background-color: #23585C;                 /* 초록색 배경 */
-  color: #fff;                               /* 흰색 글자 */
+  background-color: #23585C;                 /* 브랜드 톤 버튼 배경 */
+  color: #fff;                               /* 흰 텍스트 */
   text-decoration: none;                     /* 밑줄 제거 */
-  border-radius: 4px;                        /* 모서리 둥글게 */
-  transition: background-color 0.3s;         /* hover 부드럽게 */
+  border-radius: 4px;                        /* 둥근 모서리 */
+  transition: background-color 0.3s;         /* hover 전환 */
 }
 
 .product-info a:hover {
-  background-color: #2980b9;                 /* hover 시 더 진한 파란색 */
+  background-color: #2980b9;                 /* hover 시 색상 변화 */
 }
 
 /* ================= 카드 안 표 ================= */
 .product-table {
   margin-top: 1rem;                          /* 위쪽 여백 */
-  text-align: left;                          /* 텍스트 왼쪽 정렬 */
+  text-align: left;                          /* 왼쪽 정렬 */
 }
 
 .product-table table {
-  width: 100%;                               /* 표 너비 100% */
-  border-collapse: collapse;                 /* 겹치는 선 합치기 */
+  width: 100%;                               /* 가로 채움 */
+  border-collapse: collapse;                 /* 테이블 선 겹침 제거 */
 }
 
 .product-table th,
 .product-table td {
-  padding: 0.4rem 0.6rem;                    /* 셀 안쪽 여백 */
-  border-bottom: 1px solid #ddd;             /* 밑줄 */
+  padding: 0.4rem 0.6rem;                    /* 셀 여백 */
+  border-bottom: 1px solid #ddd;             /* 구분선 */
 }
 
 .product-table th {
-  background-color: #f9f9f9;                 /* 헤더 배경 회색 */
-  font-weight: bold;                         /* 글자 굵게 */
+  background-color: #f9f9f9;                 /* 헤더 배경 */
+  font-weight: bold;                         /* 굵은 글자 */
 }
 
 .product-table td {
-  color: #555;                               /* 일반 셀 글자색 */
+  color: #555;                               /* 일반 셀 텍스트 색상 */
 }
-
-/* ================= 카드 안 표 끝 ================= */
 
 /* ================= 페이지네이션 ================= */
 
-/* ★ ADD: 페이지네이션 UI */
+/* 페이지네이션 컨테이너 (가운데 정렬, 여백) */
 .pager{
   display:flex; gap:8px; justify-content:center; align-items:center;
   padding: 16px 0 28px;
 }
+
+/* 페이지 버튼 기본 스타일 */
 .page-btn{
   min-width: 38px; height: 38px; padding:0 10px; border:1px solid #e3e5e8;
   background:#fff; border-radius:10px; cursor:pointer; font: 14px/38px system-ui;
   box-shadow:0 1px 4px rgba(0,0,0,.04);
 }
 .page-btn:hover{ box-shadow:0 2px 10px rgba(0,0,0,.08); }
+
+/* 현재 페이지 활성화 스타일 */
 .page-btn.active{
   background:#23585C; color:#fff; border-color:#23585C; font-weight:700;
 }
+
+/* 비활성 버튼(이전/다음 경계) */
 .page-btn[disabled]{ opacity:.5; cursor:not-allowed; }
+
+/* 생략부(...) 표시 요소 */
 .page-ellipsis{
   padding:0 6px; color:#888; user-select:none;
 }
 /* ================= 페이지네이션 끝================= */
 
 /* ========================================== 모바일 전용 CSS ================================================= */
+
+/* (모바일 전용 룰을 추가하려면 이 아래에 작성) */
 
 /* =========================================== 모바일 전용 CSS ================================================= */
  
@@ -184,19 +192,21 @@ h1 {
 </head>
 <body>
 
-<!-- 네비게이션 바 -->
+<!-- 네비게이션 바: 로고/상호 + 주요 메뉴 -->
 <nav>
 <div class="nav-logo">
   <a href="index.html" style="text-decoration:none; color:inherit;">
-  <!-- epm 코드 줄바꿈 하면 간격 생겨서 인라인으로 작성-->
+  <!-- E·P·M 글자를 인라인으로 붙여 공백/줄바꿈 간격 문제 방지 -->
     <span class="logo-e" style="color:green;">E</span><span class="logo-p" style="color:red;">P</span><span class="logo-m" style="color:blue;">M</span>
 	(주)이스트파워메탈
   </a>
 </div>
  <div class="nav-menu">
- 	<!-- <div class="nav-item"><a href="index.html">HOME</a></div> -->
+ 	<!-- 홈 메뉴는 주석 처리됨 -->
+	<!-- <div class="nav-item"><a href="index.html">HOME</a></div> -->
 	<div class="nav-item"><a href="companyHistory.html">회사소개</a></div>
 	<div class="nav-item"><a href="product.html">부스바</a></div>
+	<!-- 제품목록(별도) 예비 주석 -->
 	<!-- <div class="nav-item"><a href="index.html">제품목록</a></div> -->
 	<div class="nav-item"><a href="noElectrocution.html">무감전</a></div>
     <div class="nav-item"><a href="map.html">오시는 길</a></div>
@@ -206,21 +216,21 @@ h1 {
 
 <h1>제품 목록</h1>
 
-<!-- ★ ADD: 검색바 -->
+<!-- 검색바: 제품명/설명/재질/용도/종류를 통합 검색 -->
 <div class="search-bar" style="max-width:1200px;margin:0 auto;padding:0 2rem 0;display:flex;gap:8px;align-items:center;">
   <input id="q" type="search" placeholder="제품명, 설명, 재질, 용도, 종류 검색" style="flex:1;padding:10px 12px;border:1px solid #d0d7de;border-radius:8px;font-size:14px;">
   <button id="clearBtn" type="button" style="padding:10px 12px;border:0;border-radius:8px;cursor:pointer;background:#23585C;color:#fff;">초기화</button>
 </div>
-<!-- ★ ADD 끝 -->
+<!-- 검색 UI 끝 -->
 
 
 
-<!-- 🔄 여기만 비워둡니다: JS가 DB에서 불러와 채움 -->
+<!-- 🔄 제품 카드 목록이 동적으로 렌더될 컨테이너 -->
 <div class="product-grid"></div>
-<!-- ★ ADD: 페이지네이션 컨테이너 -->
+<!-- 페이지네이션 컨테이너 -->
 <div id="pager" class="pager"></div>
 
-<!-- 푸터 (회사 정보) -->
+<!-- 푸터: 사업자/연락처 정보 고정 표기 -->
 <footer>
   
   <p>
@@ -235,30 +245,33 @@ h1 {
 
 <!-- ✅ Supabase에서 product 테이블을 불러와 카드 렌더 -->
 <script>
+  // Supabase 프로젝트 URL/anon 키 (퍼블릭 클라이언트에서 제한 권한으로 사용)
   const SUPABASE_URL = "https://cwwnarmrvpvjptytepdo.supabase.co";
   const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3d25hcm1ydnB2anB0eXRlcGRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NzU4NTUsImV4cCI6MjA3NzQ1MTg1NX0.5mvgA_gKdlRaebVRSFIUJRKgp51zke_nffQ2jc8Ad1g";
 
+  // SDK 로드 실패 시 사용자에게 안내
   if (typeof supabase === "undefined") {
     document.querySelector(".product-grid").innerHTML = "오류: supabase SDK 로딩 실패";
     throw new Error("Supabase SDK not loaded");
   }
+  // Supabase 클라이언트 인스턴스 생성
   const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  /* ★ ADD: 페이지 사이즈 & 현재 페이지 상태 */
-  const PAGE_SIZE = 6;     // 한 페이지에 6장
-  let currentPage = 1;      // 현재 페이지
+  /* 페이지네이션 기본 설정값 */
+  const PAGE_SIZE = 6;     // 한 페이지 카드 수
+  let currentPage = 1;     // 현재 페이지 상태
 
-// ★ ADD: 검색 상태
-let currentQuery = "";
+  // 검색어 상태(전역 보관: 페이징 시 검색 유지)
+  let currentQuery = "";
 
-
-  /* ★ CHANGE: 카드 렌더 함수 (기존 map 부분 분리) */
+  /* 카드 HTML을 만들어 .product-grid 컨테이너에 주입 */
   function renderCards(items){
     const grid = document.querySelector(".product-grid");
     if (!items || items.length === 0){
       grid.innerHTML = "등록된 제품이 없습니다.";
       return;
     }
+    // 제품 정보 p를 기반으로 카드 템플릿 생성
     grid.innerHTML = items.map(p => `
       <div class="product-card">
         <a href="detail.html?id=${p.id}" style="display:block">
@@ -277,24 +290,24 @@ let currentQuery = "";
               </tbody>
             </table>
           </div>
-          <!-- ★ CHANGE: 자세히 보기 버튼 유지 -->
+          <!-- 상세 페이지로 이동하는 버튼 -->
           <a href="detail.html?id=${p.id}">자세히 보기</a>
         </div>
       </div>
     `).join("");
   }
 
-  /* ★ ADD: 페이지 버튼(이쁘게, … 포함) */
+  /* 총 개수/현재 페이지를 기반으로 페이지네이션 버튼 렌더 */
   function renderPager(totalCount, page){
     const pager = document.getElementById("pager");
     const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE));
 
-    // 헬퍼
+    // 버튼 템플릿 헬퍼
     const btn = (p, label = p, {active=false, disabled=false}={}) =>
       `<button class="page-btn ${active?'active':''}" ${disabled?'disabled':''} data-p="${p}">${label}</button>`;
     const dots = `<span class="page-ellipsis">…</span>`;
 
-    // 표시할 페이지 그룹 계산 (1, …, p-1, p, p+1, …, last)
+    // 표시할 페이지 셋 구성(1 … p-1 p p+1 … last)
     const pages = [];
     const push = (x)=>pages.push(x);
 
@@ -312,7 +325,7 @@ let currentQuery = "";
     if (right < last-1) push("dots-right");
     if (last !== first) push(last);
 
-    // HTML 조립
+    // 실제 HTML 조립
     let html = '';
     html += btn(Math.max(first, page-1), "‹", {disabled: page===first});
     for(const p of pages){
@@ -323,80 +336,89 @@ let currentQuery = "";
 
     pager.innerHTML = html;
 
-    // 클릭 핸들러(이벤트 위임)
+    // 페이지 버튼 클릭 이벤트(이벤트 위임)
     pager.onclick = (e)=>{
       const t = e.target;
       if (!t.classList.contains("page-btn")) return;
       const p = Number(t.dataset.p);
       if (!p || p===page) return;
-      loadProducts(p, currentQuery); // ★ CHANGE(선택): 검색 유지 페이징
-      window.scrollTo({top:0, behavior:'smooth'}); // 페이지 전환 시 상단으로
+      // 검색어 유지한 채로 해당 페이지 로드
+      loadProducts(p, currentQuery);
+      // UX: 페이지 전환 시 상단으로 스크롤
+      window.scrollTo({top:0, behavior:'smooth'});
     };
   }
 
 
-/* ★ CHANGE: 목록 로드(검색어 지원) */
-async function loadProducts(page=1, q=""){
-  currentPage = page;
-  currentQuery = q;
-  const grid = document.querySelector(".product-grid");
-  grid.innerHTML = "불러오는 중...";
+  /* 목록 로드: page(페이지 번호), q(검색어) */
+  async function loadProducts(page=1, q=""){
+    currentPage = page;
+    currentQuery = q;
 
-  const from = (page - 1) * PAGE_SIZE;
-  const to   = from + PAGE_SIZE - 1;
+    const grid = document.querySelector(".product-grid");
+    grid.innerHTML = "불러오는 중...";
 
-  // ★ CHANGE: 쿼리를 변수로 만들어 검색어 있을 때 or 필터 추가
-  let query = sb
-    .from("product")
-    .select("*", { count: "exact" })
-    .order("created_at", { ascending: false })
-    .range(from, to);
+    // Supabase range 계산(0-base index)
+    const from = (page - 1) * PAGE_SIZE;
+    const to   = from + PAGE_SIZE - 1;
 
-  if (q && q.trim() !== "") {
-    const term = q.trim();
-    query = query.or(
-      `title.ilike.%${term}%,description.ilike.%${term}%,material.ilike.%${term}%,usage.ilike.%${term}%,types.ilike.%${term}%`
-    );
+    // 기본 쿼리: 최신 등록순(created_at desc), 전체 개수 count 포함
+    let query = sb
+      .from("product")
+      .select("*", { count: "exact" })
+      .order("created_at", { ascending: false })
+      .range(from, to);
+
+    // 검색어가 있으면 title/description/material/usage/types 중 하나라도 일치(ILIKE)
+    if (q && q.trim() !== "") {
+      const term = q.trim();
+      query = query.or(
+        `title.ilike.%${term}%,description.ilike.%${term}%,material.ilike.%${term}%,usage.ilike.%${term}%,types.ilike.%${term}%`
+      );
+    }
+
+    const { data, error, count } = await query;
+
+    // 오류 처리
+    if (error){
+      grid.innerHTML = "DB 조회 오류: " + error.message;
+      console.error("Supabase select error:", error);
+      return;
+    }
+
+    // 목록/페이지네이션 렌더
+    renderCards(data);
+    renderPager(count ?? 0, page);
   }
 
-  const { data, error, count } = await query;
-
-  if (error){
-    grid.innerHTML = "DB 조회 오류: " + error.message;
-    console.error("Supabase select error:", error);
-    return;
+  // 디바운스 유틸: 입력이 잠시 멈추면 콜백 실행(입력 폭주 방지)
+  function debounce(fn, ms=300){
+    let t; return (...args)=>{ clearTimeout(t); t=setTimeout(()=>fn(...args), ms); };
   }
 
-  renderCards(data);
-  renderPager(count ?? 0, page);
-}
+  // 검색 입력/초기화 버튼 이벤트 바인딩
+  const qInput  = document.getElementById("q");
+  const clearBtn = document.getElementById("clearBtn");
 
-// ★ ADD: 디바운스 유틸
-function debounce(fn, ms=300){
-  let t; return (...args)=>{ clearTimeout(t); t=setTimeout(()=>fn(...args), ms); };
-}
+  if (qInput) {
+    // 입력 300ms 정지 시 검색 수행
+    qInput.addEventListener("input", debounce(()=>{
+      loadProducts(1, qInput.value);
+    }, 300));
+  }
+  if (clearBtn) {
+    // 검색어 비우고 1페이지 재조회
+    clearBtn.addEventListener("click", ()=>{
+      if (!qInput) return;
+      qInput.value = "";
+      loadProducts(1, "");
+    });
+  }
 
-// ★ ADD: 검색 이벤트
-const qInput  = document.getElementById("q");
-const clearBtn = document.getElementById("clearBtn");
+  // 최초 로딩: 검색어 없이 1페이지
+  loadProducts(1, "");
 
-if (qInput) {
-  qInput.addEventListener("input", debounce(()=>{
-    loadProducts(1, qInput.value);
-  }, 300));
-}
-if (clearBtn) {
-  clearBtn.addEventListener("click", ()=>{
-    if (!qInput) return;
-    qInput.value = "";
-    loadProducts(1, "");
-  });
-}
-
-// ★ CHANGE: 최초 로드(검색어 공백으로)
-loadProducts(1, "");
-
-  // ★ 안전망: 8초 타임아웃 메시지
+  // 네트워크/권한 문제로 응답 지연될 경우 사용자 안내(8초 타임아웃)
   setTimeout(() => {
     const txt = document.querySelector(".product-grid")?.textContent || "";
     if (txt.includes("불러오는 중")) {
@@ -406,12 +428,7 @@ loadProducts(1, "");
   }, 8000);
 </script>
 
-</script>
+</script> <!-- (원본 유지) 중복 </script> 태그가 있어도 기능엔 영향 없음 -->
 
 </body>
 </html>
-
-
-
-
-
