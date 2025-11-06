@@ -5,26 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex,nofollow" />
   <title>관리자 전용 · 제품 등록</title>
-  
-  <script>
-(function enforceWWW(){
-  const CANON = "www.eastpowermetal.com";
-  if (location.hostname !== CANON) {
-    location.replace(`https://${CANON}${location.pathname}${location.search}${location.hash}`);
-  }
-})();
-</script>
 
+  <script>
+    /* ===== 0) www 정규화 (세션 오리진 통일) ===== */
+    (function enforceWWW() {
+      const CANON = "www.eastpowermetal.com";
+      if (location.hostname !== CANON) {
+        location.replace(`https://${CANON}${location.pathname}${location.search}${location.hash}`);
+      }
+    })();
+  </script>
 
   <link rel="icon" type="image/png" sizes="32x32" href="/epmFavicon.png">
   <link rel="shortcut icon" href="/favicon.ico">
+
   <style>
     html.protecting body { visibility: hidden; } /* 검증 전 UI 숨김 */
     :root { --accent:#3498db; --muted:#666; --box:#f6f7f9; }
     body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Nanum Gothic, sans-serif; margin: 24px; }
     h1 { margin: 0 0 16px; font-size: 22px; }
     .top { display:flex; gap:12px; align-items:center; margin-bottom:16px; flex-wrap:wrap; }
-    .top .who{ color:var(--muted); }
+    .top .who { color:var(--muted); }
     button { padding:9px 12px; border:0; border-radius:8px; cursor:pointer; }
     .btn { background: var(--accent); color:#fff; }
     .btn:disabled { opacity:.6; cursor:not-allowed; }
@@ -32,25 +33,26 @@
     .wrap { display:grid; grid-template-columns: 1.1fr .9fr; gap:18px; }
     .card { background:#fff; border-radius:12px; box-shadow:0 2px 10px rgba(0,0,0,.06); padding:16px; }
     .row { display:grid; grid-template-columns: 120px 1fr; gap:10px; align-items:center; margin-bottom:10px; }
-    label{ font-weight:600; }
+    label { font-weight:600; }
     input[type="text"], input[type="number"], textarea {
       width:100%; padding:10px 12px; border:1px solid #d0d7de; border-radius:8px; font-size:14px;
     }
-    textarea{ min-height:90px; resize:vertical; }
-    .hint{ color:var(--muted); font-size:12px; }
+    textarea { min-height:90px; resize:vertical; }
+    .hint { color:var(--muted); font-size:12px; }
     .product-card { background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,.06); text-align:center; display:flex; flex-direction:column; }
     .product-card img { width:100%; height:280px; object-fit:cover; background:#f2f2f2; }
     .product-info { padding:14px; text-align:left; }
-    .product-info h2{ margin:0 0 8px; font-size:18px; }
-    .product-info p{ margin:0 0 8px; color:#555; font-size:14px; }
+    .product-info h2 { margin:0 0 8px; font-size:18px; }
+    .product-info p { margin:0 0 8px; color:#555; font-size:14px; }
     .product-table { margin-top:8px; }
-    .product-table table{ width:100%; border-collapse: collapse; }
-    .product-table th, .product-table td{ padding:6px 8px; border-bottom:1px solid #eee; font-size:13px; text-align:left; }
+    .product-table table { width:100%; border-collapse:collapse; }
+    .product-table th, .product-table td { padding:6px 8px; border-bottom:1px solid #eee; font-size:13px; text-align:left; }
     .status { margin-top:10px; font-size:13px; }
-    .ok{ color:#0a7a0a; } .err{ color:#b00020; } .muted{ color:var(--muted); }
-    .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-    @media (max-width: 900px){ .wrap{ grid-template-columns:1fr; } }
+    .ok { color:#0a7a0a; } .err { color:#b00020; } .muted { color:var(--muted); }
+    .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    @media (max-width: 900px) { .wrap { grid-template-columns:1fr; } }
   </style>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -58,7 +60,7 @@
     <strong>관리자 · 제품 등록</strong>
     <span class="who" id="who"></span>
     <span style="flex:1"></span>
-    <!-- ▼ 관리자 목록으로 -->
+    <!-- 관리자 목록으로 -->
     <button class="ghost" id="toListBtn" onclick="location.href='/admin/product.html'">제품 목록 보기</button>
     <button id="logoutBtn">로그아웃</button>
   </div>
@@ -66,14 +68,17 @@
   <div class="wrap">
     <div class="card">
       <h1>신규 제품 등록</h1>
+
       <div class="row">
         <label for="title">제품명*</label>
         <input id="title" type="text" placeholder="예: 부스바 A형" />
       </div>
+
       <div class="row">
         <label for="desc">설명</label>
         <textarea id="desc" placeholder="예: 전력용 동부스바, 맞춤 절단 가능"></textarea>
       </div>
+
       <div class="grid2">
         <div class="row">
           <label for="material">재질</label>
@@ -84,6 +89,7 @@
           <input id="usage" type="text" placeholder="예: 가공배전용" />
         </div>
       </div>
+
       <div class="grid2">
         <div class="row">
           <label for="types">종류</label>
@@ -94,16 +100,21 @@
           <input id="price" type="number" step="0.01" placeholder="예: 100000" />
         </div>
       </div>
+
       <div class="row">
         <label for="image">대표 이미지*</label>
         <input id="image" type="file" accept="image/*" />
       </div>
+
       <div class="hint">이미지는 업로드 후 공개 URL을 제품에 연결합니다.</div>
+
       <div class="row">
         <label for="images">추가 이미지</label>
         <input id="images" type="file" accept="image/*" multiple />
       </div>
+
       <div class="hint">여러장 선택 가능 (선택옵션)</div>
+
       <label></label>
       <div>
         <button class="btn" id="submitBtn">등록</button>
@@ -113,11 +124,17 @@
 
     <div class="card">
       <h1>미리보기</h1>
+
       <div class="product-card">
-        <img id="prevImg" alt="미리보기 이미지" />
+        <img
+          id="prevImg"
+          alt="미리보기 이미지"
+          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='900'%3E%3Crect width='100%25' height='100%25' fill='%23f2f2f2'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-family='system-ui' font-size='24'%3EPreview%3C/text%3E%3C/svg%3E"
+        />
         <div class="product-info">
           <h2 id="prevTitle">제품명</h2>
           <p id="prevDesc">설명이 여기에 표시됩니다.</p>
+
           <div class="product-table">
             <table>
               <tbody>
@@ -131,7 +148,10 @@
           </div>
         </div>
       </div>
-      <div class="status muted" style="margin-top:8px;">* 폼 입력과 이미지 선택 시 자동 갱신됩니다.</div>
+
+      <div class="status muted" style="margin-top:8px;">
+        * 폼 입력과 이미지 선택 시 자동 갱신됩니다.
+      </div>
     </div>
   </div>
 
@@ -146,19 +166,19 @@
     const ADMIN_EMAILS = ["chkim.epm@gmail.com"];
     const ADMIN_USERNAMES = ["chkim-epm"];
 
-    const LOGIN_URL  = "/admin/login.html";
+    const LOGIN_URL  = "/admin/index.html";
     const DENIED_URL = "/admin/denied.html";
 
     const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // OAuth 리턴 처리 (URL에 code/access_token 있을 때만)
+    /* URL에 code/access_token 있을 때만 OAuth 세션 교환 */
     async function ensureSessionFromURL() {
       if (location.search.includes("code=") || location.hash.includes("access_token")) {
         try { await sb.auth.exchangeCodeForSession(window.location.href); } catch (_) {}
       }
     }
 
-    // ===== 관리자 가드 =====
+    /* ===== 1) 관리자 가드 ===== */
     async function guardAdmin() {
       const { data: { session } } = await sb.auth.getSession();
       const user = session?.user;
@@ -173,67 +193,80 @@
       document.documentElement.classList.remove("protecting");
     }
 
-    function kickLogin(){
+    function kickLogin() {
       const next = encodeURIComponent(location.pathname + location.search);
       location.replace(`${LOGIN_URL}?next=${next}`);
     }
-    function kickDenied(){
+
+    function kickDenied() {
       location.replace(DENIED_URL);
     }
+
+    /* 1-1) 가드 실패/에러로 화면이 계속 숨겨지지 않도록 안전장치 */
+    setTimeout(() => {
+      if (document.documentElement.classList.contains('protecting')) {
+        // 폴백: 로그인으로 보냄
+        kickLogin();
+      }
+    }, 5000);
 
     sb.auth.onAuthStateChange(() => guardAdmin());
 
     (async () => {
-      await ensureSessionFromURL();
-      await guardAdmin();
+      await ensureSessionFromURL(); // ① OAuth 코드 교환
+      await guardAdmin();           // ② 권한 확인 → UI 오픈
     })();
 
-    // ===== 미리보기 바인딩 =====
-    const $ = (id)=>document.getElementById(id);
-    ["title","desc","material","usage","types","price"].forEach(id=>{
+    /* ===== 2) 미리보기 바인딩 ===== */
+    const $ = (id) => document.getElementById(id);
+
+    ["title", "desc", "material", "usage", "types", "price"].forEach(id => {
       $(id).addEventListener("input", updatePreview);
     });
+
     $("image").addEventListener("change", updatePreview);
 
-    function updatePreview(){
-      $("prevTitle").textContent = $("title").value || "제품명";
+    function updatePreview() {
+      $("prevTitle").textContent  = $("title").value || "제품명";
       $("prevTitle2").textContent = $("title").value || "-";
-      $("prevDesc").textContent = $("desc").value || "설명이 여기에 표시됩니다.";
+      $("prevDesc").textContent   = $("desc").value || "설명이 여기에 표시됩니다.";
       $("prevMaterial").textContent = $("material").value || "-";
-      $("prevUsage").textContent = $("usage").value || "-";
-      $("prevTypes").textContent = $("types").value || "-";
-      $("prevPrice").textContent = $("price").value ? Number($("price").value).toLocaleString() : "-";
+      $("prevUsage").textContent    = $("usage").value || "-";
+      $("prevTypes").textContent    = $("types").value || "-";
+      $("prevPrice").textContent    = $("price").value ? Number($("price").value).toLocaleString() : "-";
 
       const file = $("image").files?.[0];
-      if (file){
+      if (file) {
         const reader = new FileReader();
-        reader.onload = e => $("prevImg").src = e.target.result;
+        reader.onload = (e) => $("prevImg").src = e.target.result;
         reader.readAsDataURL(file);
       }
     }
     updatePreview();
 
-    // ===== 로그아웃 =====
-    document.getElementById("logoutBtn").addEventListener("click", async ()=>{
+    /* ===== 3) 로그아웃 ===== */
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
       await sb.auth.signOut();
       kickLogin();
     });
 
-    // ===== 제품 등록 =====
+    /* ===== 4) 제품 등록 ===== */
     document.getElementById("submitBtn").addEventListener("click", async () => {
       const imagesInput = document.getElementById("images");
       const status = $("status");
+      const submitBtn = $("submitBtn");
+
       status.className = "status muted";
       status.textContent = "업로드 중...";
+      submitBtn.disabled = true;
 
       const title = $("title").value.trim();
       const file  = $("image").files?.[0];
 
-      if (!title) { status.className="status err"; status.textContent="제품명은 필수입니다."; return; }
-      if (!file)  { status.className="status err"; status.textContent="대표 이미지를 선택하세요."; return; }
+      if (!title) { status.className="status err"; status.textContent="제품명은 필수입니다."; submitBtn.disabled=false; return; }
+      if (!file)  { status.className="status err"; status.textContent="대표 이미지를 선택하세요."; submitBtn.disabled=false; return; }
 
       try {
-        // 0) 마지막으로도 세션/권한 재확인 (탭에서 만료되었을 수 있음)
         const { data: { session } } = await sb.auth.getSession();
         const user = session?.user;
         const email = user?.email;
@@ -241,11 +274,11 @@
         const ok = user && ((email && ADMIN_EMAILS.includes(email)) || (ghUser && ADMIN_USERNAMES.includes(ghUser)));
         if (!ok) { kickLogin(); return; }
 
-        // 1) 대표 이미지 업로드
         const safeBase = file.name
           .normalize("NFKD")
           .replace(/[^\w.\-]+/g, "_")
           .replace(/^_+|_+$/g, "");
+
         const mainName = `${Date.now()}_${safeBase}`.replace(/_+/g, "_");
         const mainPath = `product/${mainName}`;
 
@@ -261,7 +294,6 @@
         const { data: pub } = sb.storage.from(BUCKET).getPublicUrl(mainPath);
         const image_url = pub.publicUrl;
 
-        // 2) product row 저장 + id 회수
         const payload = {
           title,
           description: $("desc").value || null,
@@ -281,7 +313,6 @@
 
         const productId = insertResult.data.id;
 
-        // 3) 추가 이미지 업로드 + product_image 연결 (선택)
         const extras = imagesInput?.files ? Array.from(imagesInput.files) : [];
         if (extras.length) {
           const baseDir = `product/${productId}`;
@@ -317,6 +348,8 @@
         console.error(e);
         status.className = "status err";
         status.textContent = "등록 실패: " + (e?.message || e);
+      } finally {
+        submitBtn.disabled = false;
       }
     });
   </script>
