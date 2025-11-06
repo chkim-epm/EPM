@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex,nofollow" />
   <title>관리자 · 제품 목록</title>
+  
+  <script>
+    /* ===== 0) www 정규화 (세션 오리진 통일) ===== */
+    (function enforceWWW() {
+      const CANON = "www.eastpowermetal.com";
+      if (location.hostname !== CANON) {
+        location.replace(`https://${CANON}${location.pathname}${location.search}${location.hash}`);
+      }
+    })();
+  </script>
+  
   <link rel="icon" type="image/png" sizes="32x32" href="/epmFavicon.png">
   <style>
     /* 화면 보호: 인증/화이트리스트 통과 전까지 본문 숨김 */
@@ -247,3 +258,4 @@ $("logoutBtn").addEventListener("click", async ()=>{ await sb.auth.signOut(); lo
 </script>
 </body>
 </html>
+
