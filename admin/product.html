@@ -218,17 +218,91 @@ function renderPager(totalCount, page){
   };
 }
 
+/* ===== 여기만 교체: 대표+추가 이미지까지 모두 삭제 ===== */
 async function deleteProduct(id, image_url){
-  const ok = confirm("정말 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다."); if(!ok) return;
+  const ok = confirm("정말 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.");
+  if(!ok) return;
+
   setStatus("삭제 중…");
-  if (image_url) {
-    const path = extractStoragePath(image_url);
-    if (path) { await sb.storage.from(BUCKET).remove([path]).catch(()=>{}); }
+
+  // 1) product_image 테이블에서 추가 이미지 목록 조회
+  let extraRows = [];
+  try {
+    const { data, error } = await sb
+      .from("product_image")
+      .select("id,url")
+      .eq("product_id", id);
+    if (error) throw error;
+    extraRows = data || [];
+  } catch (e) {
+    console.warn("product_image 조회 오류:", e);
   }
-  // (추가 이미지 쓰는 경우 product_image 정리 로직도 여기서 수행)
-  const { error } = await sb.from("product").delete().eq("id", id);
-  if (error){ setStatus("삭제 실패: " + error.message); return; }
-  setStatus("삭제 완료"); await loadProducts(currentPage, currentQuery);
+
+  // 2) 스토리지에서 삭제할 경로 수집 (대표 + 추가 이미지)
+  const pathsToRemove = [];
+
+  // 대표 이미지
+  if (image_url) {
+    const p = extractStoragePath(image_url);
+    if (p) pathsToRemove.push(p);
+  }
+
+  // 추가 이미지 (URL 기반)
+  for (const row of extraRows) {
+    const p = extractStoragePath(row.url);
+    if (p) pathsToRemove.push(p);
+  }
+
+  // 2-1) 보강: product/{productId} 폴더 내 파일도 함께 쓸어 담기
+  try {
+    const prefix = `product/${id}`;
+    const { data: list1, error: listErr } = await sb.storage
+      .from(BUCKET)
+      .list(prefix, { limit: 100 });
+    if (!listErr && Array.isArray(list1)) {
+      for (const f of list1) {
+        if (f?.name) pathsToRemove.push(`${prefix}/${f.name}`);
+      }
+    }
+  } catch (e) {
+    console.warn("폴더 리스트 실패(무시 가능):", e);
+  }
+
+  // 중복 제거
+  const uniqPaths = [...new Set(pathsToRemove)];
+
+  // 3) 스토리지 객체 삭제
+  if (uniqPaths.length) {
+    try {
+      const { error: remErr } = await sb.storage.from(BUCKET).remove(uniqPaths);
+      if (remErr) console.warn("스토리지 삭제 일부 실패:", remErr);
+    } catch (e) {
+      console.warn("스토리지 삭제 오류(무시 가능):", e);
+    }
+  }
+
+  // 4) product_image 행 삭제
+  try {
+    const { error: delImgRowsErr } = await sb
+      .from("product_image")
+      .delete()
+      .eq("product_id", id);
+    if (delImgRowsErr) console.warn("product_image 행 삭제 일부 실패:", delImgRowsErr);
+  } catch (e) {
+    console.warn("product_image 행 삭제 오류(무시 가능):", e);
+  }
+
+  // 5) product 행 삭제 (마지막)
+  try {
+    const { error: delProdErr } = await sb.from("product").delete().eq("id", id);
+    if (delProdErr) { setStatus("삭제 실패: " + delProdErr.message); return; }
+  } catch (e) {
+    setStatus("삭제 실패: " + (e?.message || e));
+    return;
+  }
+
+  setStatus("삭제 완료");
+  await loadProducts(currentPage, currentQuery);
 }
 
 /* 검색 이벤트 */
@@ -255,4 +329,3 @@ $("logoutBtn").addEventListener("click", async ()=>{ await sb.auth.signOut(); lo
 </script>
 </body>
 </html>
-
