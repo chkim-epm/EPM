@@ -87,16 +87,7 @@ const LOGIN_URL  = "/admin/index.html";   // 미로그인 시
 const DENIED_URL = "/admin/denied.html";  // 권한 없음 시
 
 /* ===== Supabase 초기화 ===== */
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-  auth: {
-    persistSession: true,
-    autoRefreshToken: true,
-    flowType: 'pkce',
-    storage: window.localStorage,
-    storageKey: 'epm-admin-auth' // 세 페이지 모두 같은 키
-  }
-});
-
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 /* URL에 code/access_token이 있을 때만 세션 교환 시도 */
 async function ensureSessionFromURL() {
@@ -267,6 +258,7 @@ $("logoutBtn").addEventListener("click", async ()=>{ await sb.auth.signOut(); lo
 </script>
 </body>
 </html>
+
 
 
 
