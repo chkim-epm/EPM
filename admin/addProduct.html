@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex,nofollow" />
   <title>관리자 전용 · 제품 등록</title>
-    <script>
-	/* ===== 0) www 정규화 (세션 오리진 통일) ===== */
+  <script>
+    /* ===== 0) www 정규화 (세션 오리진 통일) ===== */
     (function enforceWWW(){
       const CANON = "www.eastpowermetal.com";
       if (location.hostname !== CANON) {
@@ -14,7 +14,7 @@
       }
     })();
   </script>
-  
+
   <link rel="icon" type="image/png" sizes="32x32" href="/epmFavicon.png">
   <link rel="shortcut icon" href="/favicon.ico">
   <style>
@@ -51,6 +51,49 @@
     @media (max-width: 900px){ .wrap{ grid-template-columns:1fr; } }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- ✅ 추가: 즉시 가드 (세션 없으면 로그인으로 튕김 + 통과 시 protecting 해제) -->
+  <script>
+    (async () => {
+      const SUPABASE_URL = "https://cwwnarmrvpvjptytepdo.supabase.co";
+      const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3d25hcm1ydnB2anB0eXRlcGRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NzU4NTUsImV4cCI6MjA3NzQ1MTg1NX0.5mvgA_gKdlRaebVRSFIUJRKgp51zke_nffQ2jc8Ad1g";
+      const LOGIN_URL = "/admin/index.html";
+
+      const sbEarly = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      // GitHub에서 돌아온 경우 코드 교환
+      if (location.search.includes("code=") || location.hash.includes("access_token")) {
+        try { await sbEarly.auth.exchangeCodeForSession(window.location.href); } catch (_) {}
+      }
+
+      // 세션 확인
+      const { data: { session } } = await sbEarly.auth.getSession();
+      if (!session) {
+        const next = encodeURIComponent(location.pathname + location.search);
+        location.replace(`${LOGIN_URL}?next=${next}`);
+        return;
+      }
+
+      // 통과 → 즉시 UI 오픈
+      document.documentElement.classList.remove("protecting");
+
+      // 이후 세션 만료 대비
+      sbEarly.auth.onAuthStateChange((_e, s) => {
+        if (!s) {
+          const next = encodeURIComponent(location.pathname + location.search);
+          location.replace(`${LOGIN_URL}?next=${next}`);
+        }
+      });
+
+      // 혹시 막힐 때 폴백
+      setTimeout(() => {
+        if (document.documentElement.classList.contains("protecting")) {
+          const next = encodeURIComponent(location.pathname + location.search);
+          location.replace(`${LOGIN_URL}?next=${next}`);
+        }
+      }, 3000);
+    })();
+  </script>
 </head>
 <body>
   <div class="top">
@@ -58,7 +101,7 @@
     <span class="who" id="who"></span>
     <span style="flex:1"></span>
     <!-- 관리자 목록으로 -->
-    <button class="btn" id="addBtn" onclick="location.href='https://www.eastpowermetal.com/admin/product.html'">제품 목록 보기</button>
+    <button class="ghost" id="toListBtn" onclick="location.href='/admin/product.html'">제품 목록 보기</button>
     <button id="logoutBtn">로그아웃</button>
   </div>
 
@@ -187,7 +230,7 @@
         // 폴백: 로그인으로 보냄
         kickLogin();
       }
-    }, 1500);
+    }, 5000);
 
     sb.auth.onAuthStateChange(() => guardAdmin());
 
