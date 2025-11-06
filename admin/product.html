@@ -80,7 +80,7 @@ const BUCKET = "product-image";
 /* ===== 관리자 화이트리스트 & 경로 ===== */
 const ADMIN_EMAILS = ["chkim.epm@gmail.com"];
 const ADMIN_USERNAMES = ["chkim-epm"];
-const LOGIN_URL  = "/admin/login.html";   // 미로그인 시
+const LOGIN_URL  = "/admin/index.html";   // 미로그인 시
 const DENIED_URL = "/admin/denied.html";  // 권한 없음 시
 
 /* ===== Supabase 초기화 ===== */
@@ -255,3 +255,4 @@ $("logoutBtn").addEventListener("click", async ()=>{ await sb.auth.signOut(); lo
 </script>
 </body>
 </html>
+
