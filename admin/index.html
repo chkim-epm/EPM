@@ -33,7 +33,16 @@
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3d25hcm1ydnB2anB0eXRlcGRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NzU4NTUsImV4cCI6MjA3NzQ1MTg1NX0.5mvgA_gKdlRaebVRSFIUJRKgp51zke_nffQ2jc8Ad1g"; // ← anon public key
 
     // 2) 클라이언트 생성 (브라우저에서 사용)
-    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    flowType: 'pkce',
+    storage: window.localStorage,
+    storageKey: 'epm-admin-auth' // 세 페이지 모두 같은 키
+  }
+});
+
 
     // ✅ next 파라미터 지원 (없으면 기본 /admin/product.html)
     const params = new URLSearchParams(location.search);
