@@ -91,7 +91,7 @@
 /* ===========================================PC 기본 스타일 끝.================================================*/
 
 
-/* ========================================== 모바일 전용 CSS ================================================= */
+/* ========================================== 모바일 전용 CSS(원래 있던 부분) ================================================= */
 
 @media screen and (max-width: 768px) {
 
@@ -122,6 +122,32 @@
 					}
 }
 /* =========================================== 모바일 전용 CSS ==================================== */
+
+
+/* ===== ▼ 추가: 모바일에서 이미지 스트립만 예쁘게 보이도록 오버라이드 ▼ ===== */
+@media screen and (max-width: 768px) {
+  /* 이미지 스트립 타이틀/서브타이틀 약간 컴팩트하게 */
+  #busbar_section h2 { font-size: 1.6rem !important; margin: 0 0 8px !important; }
+  #busbar_section h5 { font-size: 1.1rem !important; margin: 0 0 16px !important; }
+
+  /* 인라인 스타일로 준 gap:100px을 모바일에서 축소 */
+  #busbar_section > div > div {
+    grid-template-columns: 1fr 1fr !important;  /* 2열 유지 */
+    gap: 12px !important;
+    padding: 0 12px;
+  }
+
+  /* 세로 길이를 짧게 고정해서 늘씬해 보이게 */
+  #busbar_section img {
+    height: 220px !important;      /* ← 필요시 200~260px 선에서 취향대로 조절 */
+    width: 100% !important;
+    object-fit: cover !important;   /* 꽉 채우되 중심 잘림 */
+    object-position: center !important;
+    border-radius: 12px !important;
+    display: block !important;
+  }
+}
+/* ===== ▲ 추가 끝 ▲ ===== */
 
 	</style>
 </head>
