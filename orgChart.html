@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <!-- 페이지 기본 문자 인코딩 -->
+  <meta charset="UTF-8">
+  <!-- 브라우저 탭에 표시될 제목 -->
+  <title>조직도 · 이스트파워메탈:부스바, 동버스바, 분전반, 배전반, 임가공, 김포, 화성</title>
+  <!-- 모바일 브라우저에서 반응형 레이아웃 적용 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 파비콘 (브라우저 탭 아이콘) -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/epmFavicon.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+  	
+  <!-- ✅ SEO 기본 메타태그: 검색 키워드 / 설명 / 작성자 / 검색 허용 여부 -->
+  <meta name="keywords" content="이스트파워메탈, 조직도, 회사 조직도, 동버스바, 부스바, 분전반, 배전반, 수배전반, 무감전 분전반, 임가공, 김포, 화성">
+  <meta name="description" content="(주)이스트파워메탈의 조직도 페이지입니다. 대표이사, 총괄상무, 회계/실장, 감사(비상근) 및 영업·가공팀, 신기술 업무 지원팀 등 조직 구조를 한눈에 확인할 수 있습니다.">
+  <meta name="author" content="이스트파워메탈">
+  <meta name="robots" content="index, follow">
+
+  <!-- ✅ Open Graph (SNS 공유용 메타태그) -->
+  <meta property="og:title" content="(주)이스트파워메탈 조직도">
+  <meta property="og:image" content="https://chkim-epm.github.io/EPM/factory.png">
+  <meta property="og:url" content="https://www.eastpowermetal.com/orgChart.html">
+  <meta property="og:type" content="website">
+
+  <!-- ✅ 트위터 카드 메타태그 (트위터 공유 시) -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="(주)이스트파워메탈 조직도">
+  <meta name="twitter:description" content="(주)이스트파워메탈의 조직 구조를 한눈에 볼 수 있는 조직도 페이지입니다.">
+  <meta name="twitter:image" content="https://chkim-epm.github.io/EPM/factory.png">
+
+  <!-- ✅ 네이버 / 기타에서 참조할 수 있는 OG 메타 (설명·이미지 동일 재사용) -->
+  <meta property="og:title" content="(주)이스트파워메탈 조직도">
+  <meta property="og:description" content="부스바·동버스바 가공, 분전반·배전반 제작, 비철금속 임가공을 수행하는 (주)이스트파워메탈의 조직도입니다.">
+  <meta property="og:image" content="https://www.eastpowermetal.com/logo.png">
+  <meta property="og:url" content="https://www.eastpowermetal.com/orgChart.html">
+  <meta property="og:type" content="website">
+  	
+  <!-- ✅ 검색엔진 사이트 소유권 확인용 메타태그 (구글 / 네이버) -->
+  <meta name="google-site-verification" content="google444cc8347990b8a8"/>
+  <meta name="naver-site-verification" content="c2165f2b265182c8668d9374095a8bdcd78bf2c1" />
+
+  <!-- 구글 웹폰트 (나눔명조 / 나눔고딕) 로드 -->
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&family=Nanum+Gothic&display=swap" rel="stylesheet">
+
+  <!-- 공통 네비게이션·푸터 스타일 (다른 페이지와 통일) -->
+  <link rel="stylesheet" href="common.css">
+
+  <style>
+    /* ===== 조직도 섹션 전체 레이아웃 ===== */
+    #org-chart{
+      padding:4rem 1.5rem;   /* 상하 여백 크게, 좌우는 조금 */
+      background:#ffffff;    /* 섹션 배경도 흰색 */
+    }
+
+    /* 조직도 내용을 가운데에 최대 1100px 폭으로 제한 */
+    #org-chart .org-wrap{
+      max-width:1100px;
+      margin:0 auto;
+    }
+
+    /* 상단 제목 영역 (조직도 타이틀) */
+    .org-hero{
+      text-align:center;
+      margin-bottom:3rem;
+	  
+
+    }
+    .org-hero h2{
+      font-size:2.2rem;
+      margin:0 0 .5rem;
+    }
+    .org-hero p{
+      margin:0;
+      color:#4b5563;
+      font-size:0.95rem;
+    }
+
+    /* 조직도 이미지를 감싸는 카드 박스 (테두리/그림자/패딩) */
+    .org-card{
+      background:#fff;            /* 카드 배경 (흰색) */
+      border-radius:16px;         /* 모서리 둥글게 */
+      padding:2rem 1.5rem;        /* 카드 안쪽 여백 */
+      box-shadow:0 8px 24px rgba(0,0,0,0.08); /* 살짝 그림자 */
+      text-align:center;
+
+margin-bottom:6rem;
+    }
+
+    /* 조직도 이미지 스타일 (반응형 대응) */
+    .org-card img{
+      max-width:100%;  /* 부모 폭을 넘지 않게 */
+      height:auto;     /* 비율 유지 */
+      border-radius:10px; /* 이미지도 모서리 약간 둥글게 */
+    }
+
+    /* 반응형 - 화면이 좁을 때 여백·폰트 줄이기 */
+    @media (max-width: 768px){
+      #org-chart{
+        padding:3rem 1rem;
+      }
+      .org-hero h2{
+        font-size:1.8rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 상단 네비게이션 바 (공통 구조) -->
+  <nav>
+    <!-- 왼쪽 로고 영역 -->
+    <div class="nav-logo">
+      <!-- 로고 클릭 시 메인(index.html)으로 이동 -->
+      <a href="index.html" style="text-decoration:none; color:inherit;">
+        <!-- E P M 컬러 로고 텍스트 -->
+        <span class="logo-e" style="color:green;">E</span><span class="logo-p" style="color:red;">P</span><span class="logo-m" style="color:blue;">M</span>
+        (주)이스트파워메탈
+      </a>
+    </div>
+
+    <!-- 오른쪽 메뉴 영역 -->
+    <div class="nav-menu">
+      <!-- 회사소개: 드롭다운 서브메뉴 포함(has-sub) -->
+      <div class="nav-item has-sub">
+        <a href="companyHistory.html">회사소개</a>
+        <!-- 서브 메뉴: 회사 소개 / 조직도 / 인사말 -->
+        <div class="nav-sub">
+          <a href="companyHistory.html">회사 소개</a>
+          <a href="orgChart.html">조직도</a>
+          <a href="greeting.html">인사말</a>
+        </div>
+      </div>
+      <!-- 제품 페이지 링크 -->
+      <div class="nav-item"><a href="product.html">부스바</a></div>
+      <!-- 무감전 기술 페이지 -->
+      <div class="nav-item"><a href="noElectrocution.html">무감전</a></div>
+      <!-- 오시는 길 페이지 -->
+      <div class="nav-item"><a href="map.html">오시는 길</a></div>
+    </div>
+  </nav>
+
+  <!-- =============== 조직도 섹션 시작 =============== -->
+  <section id="org-chart">
+    <div class="org-wrap">
+      <!-- 상단 제목 영역 -->
+      <header class="org-hero">
+        <h2>조직도</h2>
+        <!-- 필요하면 설명 문구 추가 가능. 현재는 제목만 사용 중이라 비워둠 -->
+        <!-- <p>(주)이스트파워메탈의 조직 구조를 한눈에 확인할 수 있습니다.</p> -->
+      </header>
+
+      <!-- 조직도 이미지 카드 -->
+      <article class="org-card">
+        <!-- ⚠ 이미지 경로는 반드시 '웹 기준 경로'로 수정해야 함.
+             C:\로 시작하는 로컬 PC 경로는 실제 웹서버에서 보이지 않음.
+             예시:
+               /image/orgChart.png      (루트 기준)
+               image/orgChart.png       (현재 파일과 같은 위치 기준)
+        -->
+        <img src="\image\orgChart.png"
+             alt="(주)이스트파워메탈 조직도">
+      </article>
+    </div>
+  </section>
+  <!-- =============== 조직도 섹션 끝 =============== -->
+
+  <!-- 하단 푸터 (회사 정보 공통 영역) -->
+  <footer>
+    <p>
+      <span class="logo-e" style="color:green;">E</span>
+      <span class="logo-p" style="color:red;">P</span>
+      <span class="logo-m" style="color:blue;">M</span>
+      (주)이스트파워메탈 | 주소: 경기도 김포시 통진읍 율마로 223번길 42 | 전화: 031-985-6037 | 이메일: chkim.epm@gmail.com
+    </p>
+    <p>© 2025 EAST POWER METAL. All Rights Reserved.</p>
+  </footer>
+
+</body>
+</html>
