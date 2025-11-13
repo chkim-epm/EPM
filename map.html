@@ -47,35 +47,20 @@
 <!-- ✅ 모바일에서 회사소개 클릭 시 드롭다운 토글 스크립트 -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  // ✅ 터치 가능한 기기(iPad, 스마트폰 등)인지 먼저 체크
-  const isTouchDevice = 
-    'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  // 모바일(또는 태블릿)에서만 동작
+  if (window.innerWidth <= 1024) {
+    document.querySelectorAll('.nav-item.has-sub > a').forEach(item => {
+      item.addEventListener('click', function (e) {
+        e.preventDefault(); // 링크 즉시 이동 방지 (드롭다운 먼저 열기)
+        const submenu = this.parentElement.querySelector('.nav-sub');
 
-  if (!isTouchDevice) {
-    // 마우스(PC 환경)에서는 기존처럼 :hover로만 동작하게 두고, JS는 안 건드림
-    return;
-  }
-
-  // 터치 기기에서만 클릭으로 드롭다운 열고 닫기
-  document.querySelectorAll('.nav-item.has-sub > a').forEach(item => {
-    item.addEventListener('click', function (e) {
-      e.preventDefault(); // 바로 페이지 이동 막고
-
-      const submenu = this.parentElement.querySelector('.nav-sub');
-
-      // 나만 열고, 다른 서브메뉴는 닫고 싶으면 이 블록도 같이 사용
-      document.querySelectorAll('.nav-sub').forEach(other => {
-        if (other !== submenu) other.style.display = "none";
+        // 서브메뉴 열기/닫기 토글
+        submenu.style.display =
+          submenu.style.display === "block" ? "none" : "block";
       });
-
-      // 내 서브메뉴 토글
-      submenu.style.display =
-        submenu.style.display === "block" ? "none" : "block";
     });
-  });
+  }
 });
-</script>
-
 </script>
 
 
