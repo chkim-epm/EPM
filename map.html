@@ -5,7 +5,7 @@
 <title>이스트파워메탈:부스바, 동버스바, 분전반, 배전반, 임가공, 김포, 화성</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- 파비콘 -->
+<!-- 파비콘 설정 -->
 <link rel="icon" type="image/png" sizes="32x32" href="/epmFavicon.png">
 <link rel="shortcut icon" href="/favicon.ico">
 	
@@ -27,33 +27,34 @@
 <meta name="twitter:description" content="이스트파워메탈은 부스바, 버스바, 동버스바, 분전반, 수배전반, 임가공 김포, 화성 다양한 품종과 맞춤 절단 서비스를 제공합니다.">
 <meta name="twitter:image" content="https://chkim-epm.github.io/EPM/factory.png">
 
-<!-- ✅ 네이버 -->
+<!-- ✅ 네이버 / 기타에서 공통으로 보는 OG -->
 <meta property="og:title" content="이스트파워메탈:부스바, 동버스바, 분전반, 배전반, 임가공, 김포, 화성">
 <meta property="og:description" content="이스트파워메탈은 부스바, 버스바, 동버스바, 분전반, 수배전반, 임가공 김포, 화성 다양한 품종과 맞춤 절단 서비스를 제공합니다.">
 <meta property="og:image" content="https://www.eastpowermetal.com/logo.png">
 <meta property="og:url" content="https://www.eastpowermetal.com/">
 <meta property="og:type" content="website">
 	
-<!-- ✅ 구글 사이트 소유권 확인 -->
+<!-- ✅ 구글 / 네이버 사이트 소유권 확인 -->
 <meta name="google-site-verification" content="google444cc8347990b8a8"/>
-<!-- ✅ 네이버 사이트 소유권 확인 -->
 <meta name="naver-site-verification" content="c2165f2b265182c8668d9374095a8bdcd78bf2c1" />
-<!-- 구글 폰트 예시 -->
+
+<!-- 구글 폰트 (나눔 계열) -->
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&family=Nanum+Gothic&display=swap" rel="stylesheet">
 
-<!-- 공통CSS(네비게이션&풋터) -->
+<!-- 공통 네비게이션 / 푸터 CSS -->
 <link rel="stylesheet" href="common.css">
 
+<!-- ✅ 모바일에서 회사소개 클릭 시 드롭다운 토글 스크립트 -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  // 모바일에서만 작동하도록 조건
+  // 모바일(또는 태블릿)에서만 동작
   if (window.innerWidth <= 1024) {
     document.querySelectorAll('.nav-item.has-sub > a').forEach(item => {
       item.addEventListener('click', function (e) {
-        e.preventDefault(); // 바로 링크 이동 방지
+        e.preventDefault(); // 링크 즉시 이동 방지 (드롭다운 먼저 열기)
         const submenu = this.parentElement.querySelector('.nav-sub');
 
-        // 펼침/접힘 토글
+        // 서브메뉴 열기/닫기 토글
         submenu.style.display =
           submenu.style.display === "block" ? "none" : "block";
       });
@@ -66,89 +67,92 @@ document.addEventListener("DOMContentLoaded", function () {
 <style>
 /* ===========================================PC 기본 스타일====================================================*/
 
-/*오시는 길 섹션 별도 스타일(적용안됨) */
-	#s5 {
-		background: #f7f8fa;
-		background-size: cover;
-		}
+/* 오시는 길 전체 섹션 배경 (연한 회색) */
+#s5 {
+  background: #f7f8fa;
+  background-size: cover;
+}
 
-/*오시는 길 배경 회색박스*/
-	#s5 .container {
-					background: #fff;
-					padding:2rem;
-					border-radius:10px;
-					max-width:1000px;
-					width:90%;
-					margin:0 auto;
-				  }
+/* 오시는 길 내부 흰색 박스(지도+설명 박스) */
+#s5 .container {
+  background: #fff;
+  padding:2rem;
+  border-radius:10px;
+  max-width:1000px;
+  width:90%;
+  margin:0 auto;
+}
 
-/*오시는 길 지도*/
-	#s5 iframe {
-				width:100%;
-				height:450px;
-				border:0;
-				border-radius:10px;
-			  }
+/* 오시는 길 지도 iframe 공통 스타일 */
+#s5 iframe {
+  width:100%;
+  height:450px;
+  border:0;
+  border-radius:10px;
+}
 
-/*오시는 길 지도 간격*/	
-	.section {
-				height:70vh; 
-				display:flex;
-				align-items:center;
-				justify-content:center;
-				position:relative; 
-				text-align:center;
-				}
+/* 각 섹션(김포/화성) 공통 레이아웃 */
+.section {
+  height:70vh; 
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative; 
+  text-align:center;
+}
 
-/*오시는 길 지도 배경..?(적용안됨)*/
-	.section img {
-					width:100%;
-					height:100%;
-					object-fit:cover;
-					position:absolute;
-					top:0;
-					left:0;
-					z-index:1;
-					}
+/* (필요 시) 배경 이미지 넣을 때 사용 가능 - 현재는 사용 안 함 */
+.section img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  position:absolute;
+  top:0;
+  left:0;
+  z-index:1;
+}
 
-/*지도 2분할 Flexbox로 좌우 배치 */
-	.container.flex-row {
-						  display: flex;
-						  gap: 2rem;          /* 좌우 간격 */
-						  flex-wrap: wrap;    /* 모바일에서 세로로 쌓이게 */
-						}
+/* 좌우 2분할 레이아웃(설명 / 지도) */
+.container.flex-row {
+  display: flex;
+  gap: 2rem;          /* 좌우 간격 */
+  flex-wrap: wrap;    /* 화면 좁을 때는 세로로 쌓이도록 */
+}
 
-/*지도 2분할 왼쪽/오른쪽 각각 비율 */
-	.info, .map {
-				  flex: 1 1 45%;      /* 화면이 충분하면 45%씩 차지 */
-				}
+/* 설명 / 지도 영역 비율 */
+.info, .map {
+  flex: 1 1 45%;      /* 넓으면 45%씩 */
+}
 
-/*지도 왼쪽 설명 큰제목*/
-	.info p {
-			  text-align: left;   /* 왼쪽 정렬 */
-			  margin: 0;          /* 기본 여백 제거 */
-			  line-height: 3;   /* 줄 간격 조절 */
-			}
-/*지도 왼쪽 설명 내용*/
-	.info h1 {
-			  text-align: left;   /* 왼쪽 정렬 */
-			  margin: 0;          /* 기본 여백 제거 */
-			  line-height: 3;   /* 줄 간격 조절 */
-			}
+/* 왼쪽 설명(본문) 스타일 */
+.info p {
+  text-align: left;
+  margin: 0;
+  line-height: 3;     /* 줄 간격 */
+}
 
-	.map iframe {
-				  width: 100%;
-				  height: 300px;      /* 지도 높이 */
-				  border: 0;
-				}
+/* 왼쪽 설명(제목) 스타일 */
+.info h1 {
+  text-align: left;
+  margin: 0;
+  line-height: 3;
+}
+
+/* 오른쪽 지도 iframe 추가 스타일 */
+.map iframe {
+  width: 100%;
+  height: 300px;       /* 기본 높이 */
+  border: 0;
+}
+
+/* 상단 "오시는길" 페이지 타이틀 */
 .page-title{
-  text-align:center;       /* 글자 가운데 */
-  background:#f7f8fa;         /* 배경 검정 */
-  padding:14px 0;          /* 위아래 여백 줘야 더 예쁨 */
-  margin:0;                /* 위/아래 여백 원하면 조절 */
+  text-align:center;
+  background:#f7f8fa;
+  padding:14px 0;
+  margin:0;
   font-size:40px;
 }
-				
 
 /* ===========================================PC 기본 스타일 끝.================================================*/
 
@@ -157,90 +161,92 @@ document.addEventListener("DOMContentLoaded", function () {
 
 @media screen and (max-width: 768px) {
 
-/* 컨테이너 세로 배치 */
-	.container.flex-row {
-						flex-direction: column;       /* 좌우 -> 세로 */
-						gap: 1.2rem;                  /* 내부 좌우 요소 간격 조금 줄임 */
-					  }
+  /* 모바일에서 좌우 → 위아래로 배치 */
+  .container.flex-row {
+    flex-direction: column;       /* 좌우 -> 세로 */
+    gap: 1.2rem;
+  }
 
-/* 좌우 요소 폭 100% */
-	.info, .map {
-				flex: 1 1 100%;
-			  }
+  /* 모바일에서는 전체 폭 100% 사용 */
+  .info, .map {
+    flex: 1 1 100%;
+  }
 
-/* 컨테이너 자체 크기 축소 */
-	#s5 .container {
-					max-width: 75%;               /* 이전 90% -> 85%로 살짝 줄임 */
-					padding: 1rem;                /* 내부 여백 줄임 */
-					margin: 1.5rem auto;          /* 섹션 상하 간격 약간 증가 */
-					background: rgba(128, 128, 128, 0.5);
-					border-radius: 10px;
-				  }
+  /* 모바일에서 컨테이너 크기/배경 조정 */
+  #s5 .container {
+    max-width: 75%;               /* 너비 살짝 축소 */
+    padding: 1rem;
+    margin: 1.5rem auto;
+    background: rgba(128, 128, 128, 0.5);
+    border-radius: 10px;
+  }
 
-/*지도 높이 조금 줄임 */
-	.map iframe {
-				height: 300px !important;                /* 이전 350px -> 320px */
-			  }
+  /* 모바일 지도 높이 조정 */
+  .map iframe {
+    height: 300px !important;
+  }
 
-/*글씨 크기 h1태그*/
-	.info h1 {
-				font-size: 1.5rem;            /* 이전 1.6rem -> 1.5rem */
-				line-height: 2;
-				}
-/*글씨 크기 p태그 */
-	.info p {
-			font-size: 0.75rem;           /* 이전 0.8rem -> 0.75rem */
-			line-height: 1.7;
-		  }
+  /* 모바일에서 제목 글씨 크기 조정 */
+  .info h1 {
+    font-size: 1.5rem;
+    line-height: 2;
+  }
 
-/*두 섹션 사이 간격 추가 */
-	.section {
-				margin-bottom: 0rem;        /* 이전 2rem -> 2.5rem */
-			  }
+  /* 모바일에서 본문 글씨 크기 조정 */
+  .info p {
+    font-size: 0.75rem;
+    line-height: 1.7;
+  }
 
-/*첫 번째 섹션 위쪽 간격 */
-	#s5:first-of-type {
-						margin-top: 1rem; /* 네비게이션바와 간격 조정, 필요하면 숫자 변경 */
-						}
+  /* 섹션 간 간격 조정 */
+  .section {
+    margin-bottom: 0rem;
+  }
 
-/*컨테이너 내부 패딩 */
-#s5 .container {
-				padding: 1.5rem;       /* 이전 설정 유지 */
-			  }
+  /* 첫 번째 섹션과 네비게이션 사이 여백 */
+  #s5:first-of-type {
+    margin-top: 1rem;
+  }
 
-/* 모바일에서는 기본적으로 서브메뉴 숨김 */
+  /* 모바일에서 컨테이너 패딩 재조정 */
+  #s5 .container {
+    padding: 1.5rem;
+  }
+
+/* 아래부터는 1024px 이하(모바일/태블릿) 드롭다운 스타일 -
+   @media 안에 다시 @media 가 들어간 구조라, 그대로 유지하되
+   "모바일 전용 드롭다운" 영역이라는 것만 기억해두면 됨 */
 @media screen and (max-width: 1024px) {
 /* ================= 모바일 드롭다운 정리 ================ */
 
-/* 1) 드롭다운 기본적으로 숨김 */
-.nav-item.has-sub .nav-sub {
-  display: none;                  /* 기본 숨김 */
-  position: static;               /* 모바일에서는 자연스럽게 아래로 */
-  background: #1E293B;            /* 네비게이션 바와 같은 색 */
-  padding: 0.3rem 0 0.3rem 1rem;  /* 네비랑 어울리게 들여쓰기 */
-  width: 100%;                    /* 네비게이션 메뉴 폭과 동일하게 */
-  box-shadow: none;               /* 그림자 제거 */
-  border-radius: 0;               /* 둥근 모서리 제거 */
-}
+  /* 드롭다운 메뉴 영역 기본 숨김 (모바일 기준) */
+  .nav-item.has-sub .nav-sub {
+    display: none;                  /* 기본 숨김 (JS가 block으로 변경) */
+    position: static;               /* 모바일에서는 일반 흐름으로 배치 */
+    background: #1E293B;            /* 네비게이션 바와 같은 색 */
+    padding: 0.3rem 0 0.3rem 1rem;  /* 살짝 들여쓰기 */
+    width: 100%;                    /* 메뉴 폭과 동일 */
+    box-shadow: none;               /* 그림자 제거 */
+    border-radius: 0;               /* 각진 모양 */
+  }
 
-/* 2) 드롭다운 항목 스타일(줄어든 폰트/간격) */
-.nav-item.has-sub .nav-sub a {
-  color: #F1F5F9;          /* 네비와 동일한 밝은 글자색 */
-  font-size: 0.9rem;
-  padding: 0.4rem 0.5rem;
-  display: block;
-  white-space: nowrap;     /* 줄바꿈 방지 */
-}
+  /* 모바일 드롭다운 메뉴 항목 스타일 */
+  .nav-item.has-sub .nav-sub a {
+    color: #F1F5F9;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.5rem;
+    display: block;
+    white-space: nowrap;
+  }
 
-/* 3) 모바일에서 삼각형 아이콘 회전 제거 */
-.nav-item.has-sub > a::after {
-  transform: none !important;
-}
+  /* 모바일에서는 삼각형(▼) 회전 효과 제거 */
+  .nav-item.has-sub > a::after {
+    transform: none !important;
+  }
 
 }
 
 /* =========================================== 모바일 전용 CSS ==================================== */
- 
 
 </style>
 </head>
@@ -249,51 +255,54 @@ document.addEventListener("DOMContentLoaded", function () {
 
 <!-- 네비게이션 바 -->
 <nav>
-<div class="nav-logo">
-  <a href="index.html" style="text-decoration:none; color:inherit;">
-  <!-- epm 코드 줄바꿈 하면 간격 생겨서 인라인으로 작성-->
-    <span class="logo-e" style="color:green;">E</span><span class="logo-p" style="color:red;">P</span><span class="logo-m" style="color:blue;">M</span>
-	(주)이스트파워메탈
-  </a>
-</div>
+  <!-- 왼쪽 로고 영역 -->
+  <div class="nav-logo">
+    <a href="index.html" style="text-decoration:none; color:inherit;">
+      <!-- E P M 로고 텍스트 (한 줄로 배치) -->
+      <span class="logo-e" style="color:green;">E</span><span class="logo-p" style="color:red;">P</span><span class="logo-m" style="color:blue;">M</span>
+      (주)이스트파워메탈
+    </a>
+  </div>
 
-<!-- 오른쪽 메뉴 영역 -->
-    <div class="nav-menu">
-      <!-- 회사소개: 드롭다운 서브메뉴 포함(has-sub) -->
-      <div class="nav-item has-sub">
-        <a href="companyHistory.html">회사소개</a>
-        <!-- 서브 메뉴: 회사 소개 / 조직도 / 인사말 -->
-        <div class="nav-sub">
-          <a href="companyHistory.html">회사 소개</a>
-          <a href="orgChart.html">조직도</a>
-          <a href="greeting.html">인사말</a>
-        </div>
+  <!-- 오른쪽 메뉴 영역 -->
+  <div class="nav-menu">
+    <!-- 회사소개: 드롭다운 서브메뉴 포함 -->
+    <div class="nav-item has-sub">
+      <a href="companyHistory.html">회사소개</a>
+      <!-- 드롭다운 서브 메뉴: 회사 소개 / 조직도 / 인사말 -->
+      <div class="nav-sub">
+        <a href="companyHistory.html">회사 소개</a>
+        <a href="orgChart.html">조직도</a>
+        <a href="greeting.html">인사말</a>
       </div>
-      <!-- 제품 페이지 링크 -->
-      <div class="nav-item"><a href="product.html">부스바</a></div>
-      <!-- 무감전 기술 페이지 -->
-      <div class="nav-item"><a href="noElectrocution.html">무감전</a></div>
-      <!-- 오시는 길 페이지 -->
-      <div class="nav-item"><a href="map.html">오시는 길</a></div>
     </div>
-  </nav>
+    <!-- 부스바 페이지 링크 -->
+    <div class="nav-item"><a href="product.html">부스바</a></div>
+    <!-- 무감전 페이지 링크 -->
+    <div class="nav-item"><a href="noElectrocution.html">무감전</a></div>
+    <!-- 오시는 길 페이지 링크 (현재 페이지) -->
+    <div class="nav-item"><a href="map.html">오시는 길</a></div>
+  </div>
+</nav>
 
-
+<!-- 상단 페이지 제목 -->
 <h1 class="page-title">오시는길</h1>
+
 <!-- 김포 오시는 길 섹션 -->
 <div class="section" id="s5">
   <div class="container flex-row">
-    <!-- 왼쪽: 설명 -->
+    <!-- 왼쪽: 텍스트 정보 -->
     <div class="info">
       <h1>본사/김포공장</h1>
-      <p> ▷ 주소			경기도 김포시 통진읍 율마로 223번길 42 <br>
-		  ▷ 전화번호		031-985-6037<br>
-		  ▷ 팩스번호		031-985-6038<br>
-		  ▷ 이메일		chkim.epm@gmail.com
-	  </p>
+      <p>
+        ▷ 주소&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;경기도 김포시 통진읍 율마로 223번길 42 <br>
+        ▷ 전화번호&nbsp;&nbsp;031-985-6037<br>
+        ▷ 팩스번호&nbsp;&nbsp;031-985-6038<br>
+        ▷ 이메일&nbsp;&nbsp;&nbsp;&nbsp;chkim.epm@gmail.com
+      </p>
     </div>
 
-    <!-- 오른쪽: 지도 -->
+    <!-- 오른쪽: 구글 지도 -->
     <div class="map">
       <iframe 
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3157.999313429958!2d126.59444037620432!3d37.67272391803144!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357c7dedc1623cd3%3A0xa690a16b0633a971!2z6rK96riw64-EIOq5gO2PrOyLnCDthrXsp4TsnY0g7Jyo66eI66GcMjIz67KI6ri4IDQy!5e0!3m2!1sko!2skr!4v1759217401007!5m2!1sko!2skr" 
@@ -306,17 +315,18 @@ document.addEventListener("DOMContentLoaded", function () {
 <!-- 화성 오시는 길 섹션 -->
 <div class="section" id="s5">
   <div class="container flex-row">
-    <!-- 왼쪽: 설명 -->
+    <!-- 왼쪽: 텍스트 정보 -->
     <div class="info">
       <h1>화성공장</h1>
-		<p> ▷ 주소		경기도 화성시 우정읍 버들로 953-11 <br>
-			▷ 전화번호		031-985-6037<br>
-			▷ 팩스번호		031-985-6038<br>
-			▷ 이메일		chkim.epm@gmail.com
-	  </p>
+      <p>
+        ▷ 주소&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;경기도 화성시 우정읍 버들로 953-11 <br>
+        ▷ 전화번호&nbsp;&nbsp;031-985-6037<br>
+        ▷ 팩스번호&nbsp;&nbsp;031-985-6038<br>
+        ▷ 이메일&nbsp;&nbsp;&nbsp;&nbsp;chkim.epm@gmail.com
+      </p>
     </div>
 
-    <!-- 오른쪽: 지도 -->
+    <!-- 오른쪽: 구글 지도 -->
     <div class="map">
       <iframe 
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3181.4680191403854!2d126.81932817628088!3d37.11777894973271!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357b119e846d9941%3A0x757f175f5afeb598!2z6rK96riw64-EIO2ZlOyEseyLnCDsmrDsoJXsnY0g67KE65Ok66GcIDk1My0xMQ!5e0!3m2!1sko!2skr!4v1759219582175!5m2!1sko!2skr" 
@@ -328,19 +338,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 <!-- 푸터 (회사 정보) -->
 <footer>
-  
   <p>
-	<span class="logo-e" style="color:green;">E</span>
-	<span class="logo-p" style="color:red; ">P</span>
-	<span class="logo-m" style="color:blue;">M</span>
-   (주)이스트파워메탈 | 주소: 경기도 김포시 통진읍 율마로 223번길 42 | 전화: 031-985-6037 | 이메일: chkim.epm@gmail.com</p>
+    <span class="logo-e" style="color:green;">E</span>
+    <span class="logo-p" style="color:red;">P</span>
+    <span class="logo-m" style="color:blue;">M</span>
+    (주)이스트파워메탈 | 주소: 경기도 김포시 통진읍 율마로 223번길 42 | 전화: 031-985-6037 | 이메일: chkim.epm@gmail.com
+  </p>
   <p>© 2025 EAST POWER METAL. All Rights Reserved.</p>
-    <!-- 왼쪽 로고 -->
-  
 </footer>
 
 </body>
 </html>
-
-
-
