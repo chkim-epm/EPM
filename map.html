@@ -44,24 +44,6 @@
 <!-- 공통 네비게이션 / 푸터 CSS -->
 <link rel="stylesheet" href="common.css">
 
-<!-- ✅ 모바일에서 회사소개 클릭 시 드롭다운 토글 스크립트 -->
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  // 모바일(또는 태블릿)에서만 동작
-  if (window.innerWidth <= 1024) {
-    document.querySelectorAll('.nav-item.has-sub > a').forEach(item => {
-      item.addEventListener('click', function (e) {
-        e.preventDefault(); // 링크 즉시 이동 방지 (드롭다운 먼저 열기)
-        const submenu = this.parentElement.querySelector('.nav-sub');
-
-        // 서브메뉴 열기/닫기 토글
-        submenu.style.display =
-          submenu.style.display === "block" ? "none" : "block";
-      });
-    });
-  }
-});
-</script>
 
 
 <style>
@@ -213,9 +195,7 @@ document.addEventListener("DOMContentLoaded", function () {
     padding: 1.5rem;
   }
 
-/* 아래부터는 1024px 이하(모바일/태블릿) 드롭다운 스타일 -
-   @media 안에 다시 @media 가 들어간 구조라, 그대로 유지하되
-   "모바일 전용 드롭다운" 영역이라는 것만 기억해두면 됨 */
+
 
 
 /* =========================================== 모바일 전용 CSS ==================================== */
