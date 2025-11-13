@@ -44,6 +44,25 @@
 <!-- 공통CSS(네비게이션&풋터) -->
 <link rel="stylesheet" href="common.css">
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // 모바일에서만 작동하도록 조건
+  if (window.innerWidth <= 1024) {
+    document.querySelectorAll('.nav-item.has-sub > a').forEach(item => {
+      item.addEventListener('click', function (e) {
+        e.preventDefault(); // 바로 링크 이동 방지
+        const submenu = this.parentElement.querySelector('.nav-sub');
+
+        // 펼침/접힘 토글
+        submenu.style.display =
+          submenu.style.display === "block" ? "none" : "block";
+      });
+    });
+  }
+});
+</script>
+
+
 <style>
 /* ===========================================PC 기본 스타일====================================================*/
 
@@ -188,6 +207,37 @@
 #s5 .container {
 				padding: 1.5rem;       /* 이전 설정 유지 */
 			  }
+
+/* 모바일에서는 기본적으로 서브메뉴 숨김 */
+@media screen and (max-width: 1024px) {
+/* ================= 모바일 드롭다운 정리 ================ */
+
+/* 1) 드롭다운 기본적으로 숨김 */
+.nav-item.has-sub .nav-sub {
+  display: none;                  /* 기본 숨김 */
+  position: static;               /* 모바일에서는 자연스럽게 아래로 */
+  background: #1E293B;            /* 네비게이션 바와 같은 색 */
+  padding: 0.3rem 0 0.3rem 1rem;  /* 네비랑 어울리게 들여쓰기 */
+  width: 100%;                    /* 네비게이션 메뉴 폭과 동일하게 */
+  box-shadow: none;               /* 그림자 제거 */
+  border-radius: 0;               /* 둥근 모서리 제거 */
+}
+
+/* 2) 드롭다운 항목 스타일(줄어든 폰트/간격) */
+.nav-item.has-sub .nav-sub a {
+  color: #F1F5F9;          /* 네비와 동일한 밝은 글자색 */
+  font-size: 0.9rem;
+  padding: 0.4rem 0.5rem;
+  display: block;
+  white-space: nowrap;     /* 줄바꿈 방지 */
+}
+
+/* 3) 모바일에서 삼각형 아이콘 회전 제거 */
+.nav-item.has-sub > a::after {
+  transform: none !important;
+}
+
+}
 
 /* =========================================== 모바일 전용 CSS ==================================== */
  
