@@ -51,6 +51,7 @@
 			  font-weight: bold;
 			  } 
 			  
+/*==========================드롭다운=====================*/
 /*네비게이션 EPM CSS */
 	.logo-e {
 			color: green;
@@ -61,6 +62,54 @@
 	.logo-m {
 			color: blue;
 			}
+
+
+/* nav-item 을 드롭다운 기준점으로 */
+.nav-menu .nav-item {
+  position: relative;
+}
+
+/* 서브 메뉴 기본 숨김 */
+.nav-sub {
+  display: none;
+  position: absolute;
+  top: 100%;          /* 부모(nav-item) 바로 아래 */
+  left: 0;
+  min-width: 150px;
+  background: #1E293B;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  border-radius: 8px;
+  padding: 0.4rem 0;
+  z-index: 1000;
+}
+
+/* 서브 메뉴 각 항목 */
+.nav-sub a {
+  display: block;
+  padding: 0.45rem 0.9rem;
+  font-size: 1.2rem;
+  color: #111;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav-sub a:hover {
+  background: #f3f4f6;
+  color: #1E293B !important;   
+}
+
+/* 마우스 올리면 서브메뉴 표시 */
+.nav-item.has-sub:hover .nav-sub {
+  display: block;
+}
+
+/* (선택) 회사소개 옆에 ▼ 표시해 주고 싶을 때 */
+.nav-item.has-sub > a::after {
+  content: "▼";
+  font-size: 0.6rem;
+  margin-left: 0.3rem;
+}
+/*==========================드롭다운 끝=====================*/
 
 
  /*footer*/
@@ -146,4 +195,3 @@ footer {
   
 
 /* =========================================== 모바일 전용 CSS ==================================== */
-
