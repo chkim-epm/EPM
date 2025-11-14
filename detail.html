@@ -81,7 +81,10 @@
     h1{font-size:22px;margin:0 0 8px}
 
     /* 상세 설명 문단 */
-    .desc{color:#444;line-height:1.6;margin:6px 0 16px}
+    .desc{color:#444;
+		  line-height:1.6;
+		  margin:6px 0 16px;
+		  white-space: pre-line;   /* ✅ DB에 저장된 줄바꿈 그대로 보여주기 */}
 
     /* 스펙 테이블 */
     table{width:100%;border-collapse:collapse}
