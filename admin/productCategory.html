@@ -135,17 +135,26 @@
   </form>
 
   <div class="muted" style="margin-top:10px;">
-    연결 API 규격(예시):
-    <span class="mono">GET /api/product-categories</span>,
-    <span class="mono">POST /api/product-categories</span>,
-    <span class="mono">PUT /api/product-categories/{id}</span>,
-    <span class="mono">DELETE /api/product-categories/{id}</span>
+    Supabase REST(PostgREST) 직접 호출 방식(A) 적용 버전.
   </div>
 </div>
 
 <script>
-  // ====== API 엔드포인트(백엔드에 맞게 수정) ======
-  const API_BASE = "/api/product-categories";
+  // =========================
+  // ✅ Supabase REST 설정 (여기만 채우면 됨)
+  // =========================
+  const SUPABASE_URL = "https://<PROJECT_REF>.supabase.co";
+  const SUPABASE_ANON_KEY = "<ANON_KEY>";
+
+  // 테이블명: productCategory
+  const API_BASE = `${SUPABASE_URL}/rest/v1/productCategory`;
+
+  const headers = {
+    "apikey": SUPABASE_ANON_KEY,
+    "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+    "Content-Type": "application/json",
+    "Accept": "application/json"
+  };
 
   // ====== 상태 ======
   let rows = [];
@@ -279,13 +288,30 @@
     }[m]));
   }
 
-  // ====== API Calls ======
+  // =========================
+  // ✅ Supabase REST Calls (A)
+  // =========================
   async function load(){
     $("reloadBtn").disabled = true;
     try {
-      const res = await fetch(API_BASE, { method: "GET" });
+      // select=* 필수, order 정렬
+      const res = await fetch(`${API_BASE}?select=*&order=sort_order.asc,id.desc`, {
+        method: "GET",
+        headers
+      });
       if (!res.ok) throw new Error(`조회 실패 (${res.status})`);
-      rows = await res.json(); // 기대 형태: [{id, categoryKey, categoryName, sortOrder, useYn, remark}, ...]
+      const data = await res.json();
+
+      // DB(snake_case) -> 화면(camelCase) 매핑
+      rows = data.map(x => ({
+        id: x.id,
+        categoryKey: x.category_key,
+        categoryName: x.category_name,
+        sortOrder: x.sort_order,
+        useYn: x.use_yn,
+        remark: x.remark
+      }));
+
       render();
     } catch (e){
       alert(e.message || "조회 중 오류");
@@ -295,11 +321,20 @@
   }
 
   async function createRow(payload){
+    const body = {
+      category_key: payload.categoryKey,
+      category_name: payload.categoryName,
+      sort_order: payload.sortOrder,
+      use_yn: payload.useYn,
+      remark: payload.remark
+    };
+
     const res = await fetch(API_BASE, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
+      headers: { ...headers, "Prefer": "return=minimal" },
+      body: JSON.stringify(body)
     });
+
     if (!res.ok){
       const msg = await safeReadText(res);
       throw new Error(msg || `저장 실패 (${res.status})`);
@@ -307,11 +342,20 @@
   }
 
   async function updateRow(id, payload){
-    const res = await fetch(`${API_BASE}/${encodeURIComponent(id)}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
+    const body = {
+      // category_key는 잠궈놔서 전송 안 해도 됨
+      category_name: payload.categoryName,
+      sort_order: payload.sortOrder,
+      use_yn: payload.useYn,
+      remark: payload.remark
+    };
+
+    const res = await fetch(`${API_BASE}?id=eq.${encodeURIComponent(id)}`, {
+      method: "PATCH",
+      headers: { ...headers, "Prefer": "return=minimal" },
+      body: JSON.stringify(body)
     });
+
     if (!res.ok){
       const msg = await safeReadText(res);
       throw new Error(msg || `수정 실패 (${res.status})`);
@@ -320,7 +364,10 @@
 
   async function deleteRow(id){
     try {
-      const res = await fetch(`${API_BASE}/${encodeURIComponent(id)}`, { method: "DELETE" });
+      const res = await fetch(`${API_BASE}?id=eq.${encodeURIComponent(id)}`, {
+        method: "DELETE",
+        headers: { ...headers, "Prefer": "return=minimal" }
+      });
       if (!res.ok){
         const msg = await safeReadText(res);
         throw new Error(msg || `삭제 실패 (${res.status})`);
@@ -374,7 +421,6 @@
       if (!editingId){
         await createRow(payload);
       } else {
-        // 키는 수정 화면에서 disabled라 payload에 들어가지만, 서버에서는 무시해도 됨
         await updateRow(editingId, payload);
       }
 
