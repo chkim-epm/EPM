@@ -15,9 +15,22 @@
        - www로 접속을 강제해 OAuth redirect, 쿠키/세션, CORS 혼선을 방지
        - 동일한 경로/쿼리/해시를 보존하며 https://www.eastpowermetal.com 으로 이동
        ========================================================================= */
+
+    // [기존 코드 - 보관용]
+    /*
     (function enforceWWW() {
       const CANON = "www.eastpowermetal.com";
       if (location.hostname !== CANON) {
+        location.replace(`https://${CANON}${location.pathname}${location.search}${location.hash}`);
+      }
+    })();
+    */
+
+    // [수정 코드 - 운영 도메인일 때만 www 정규화]
+    (function enforceWWW() {
+      const CANON = "www.eastpowermetal.com";
+      const allowed = [CANON, "eastpowermetal.com"];
+      if (allowed.includes(location.hostname) && location.hostname !== CANON) {
         location.replace(`https://${CANON}${location.pathname}${location.search}${location.hash}`);
       }
     })();
@@ -250,7 +263,13 @@
 
     // 미로그인 시 현재 URL을 next로 붙여 로그인 페이지로 보냄 → 로그인 후 원위치 복귀 가능
     function kickLogin() {
-      const next = encodeURIComponent(location.pathname + location.search);
+
+      // [기존 코드 - 보관용]
+      // const next = encodeURIComponent(location.pathname + location.search);
+
+      // [수정 코드 - hash까지 포함]
+      const next = encodeURIComponent(location.pathname + location.search + location.hash);
+
       location.replace(`${LOGIN_URL}?next=${next}`);
     }
 
@@ -263,12 +282,24 @@
        가드 폴백(안전장치)
        - 네트워크/스크립트 오류로 protecting 해제가 안 되면 5초 후 로그인으로 유도
        ------------------------------------------------------------------------- */
+
+    // [기존 코드 - 보관용]
+    /*
     setTimeout(() => {
       if (document.documentElement.classList.contains('protecting')) {
         // 폴백: 로그인으로 보냄
         kickLogin();
       }
     }, 2000);
+    */
+
+    // [수정 코드 - product.html과 동일하게 5초로(세션 교환/네트워크 지연 대응)]
+    setTimeout(() => {
+      if (document.documentElement.classList.contains('protecting')) {
+        // 폴백: 로그인으로 보냄
+        kickLogin();
+      }
+    }, 5000);
 
     // 탭/창 간 인증 상태 변화에도 가드를 재평가
     sb.auth.onAuthStateChange(() => guardAdmin());
