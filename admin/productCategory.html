@@ -3,7 +3,14 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<!-- 페이지 제목 -->
 <title>상품 카테고리 관리</title>
+
+<!-- =========================
+     전체 화면 스타일 정의
+     테이블, 버튼, 모달 UI 디자인
+========================= -->
 <style>
   :root { --bd:#e5e7eb; --txt:#111827; --mut:#6b7280; }
   body { font-family: Arial,"Malgun Gothic",sans-serif; margin:24px; color:var(--txt);}
@@ -32,10 +39,15 @@
 </head>
 
 <body>
+
+<!-- =========================
+     메인 화면 레이아웃
+========================= -->
 <div class="wrap">
 <h1>상품 카테고리 관리</h1>
 <div class="muted">Supabase 연결 버전</div>
 
+<!-- 검색 / 필터 / 버튼 영역 -->
 <div class="box">
   <div class="row">
     <input id="q" placeholder="검색">
@@ -49,6 +61,7 @@
     <span id="countTxt" class="muted"></span>
   </div>
 
+  <!-- 카테고리 목록 테이블 -->
   <table>
     <thead>
       <tr>
@@ -64,9 +77,13 @@
 </div>
 </div>
 
+<!-- =========================
+     카테고리 추가/수정 모달창
+========================= -->
 <div class="modal-backdrop" id="backdrop"></div>
 <div class="modal" id="modal">
 <h3 id="modalTitle"></h3>
+
 <form id="form">
   <div class="grid">
     <div>
@@ -99,16 +116,22 @@
 </form>
 </div>
 
+<!-- =========================
+     JavaScript 로직
+========================= -->
 <script>
+
 /* =========================
-   ✅ Supabase 설정
+   Supabase 프로젝트 접속 정보
 ========================= */
 const SUPABASE_URL = "https://cwwnarmrvpvjptytepdo.supabase.co";
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3d25hcm1ydnB2anB0eXRlcGRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NzU4NTUsImV4cCI6MjA3NzQ1MTg1NX0.5mvgA_gKdlRaebVRSFIUJRKgp51zke_nffQ2jc8Ad1g";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3d25hcm1ydnB2anB0eXRlcGRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NzU4NTUsImV4cCI6MjA3NzQ1MTg1NX0.5mvgA_gKdlRaebVRSFIUJRKgp51zke_nffQ2jc8Ad1g";
 
-// 실제 테이블명 (스샷 기준)
+/* Supabase REST API 엔드포인트
+   - 연결 테이블명 : productcategory */
 const API_BASE = `${SUPABASE_URL}/rest/v1/productcategory`;
 
+/* Supabase 인증 헤더 */
 const headers = {
   "apikey": SUPABASE_ANON_KEY,
   "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
@@ -116,12 +139,14 @@ const headers = {
   "Accept": "application/json"
 };
 
+/* 전역 상태값 */
 let rows = [];
 let editingId = null;
 const $ = id => document.getElementById(id);
 
-/* ========================= */
-
+/* =========================
+   카테고리 목록 불러오기 (SELECT)
+========================= */
 async function load(){
   $("reloadBtn").disabled = true;
   const res = await fetch(`${API_BASE}?select=*&order=sort_order.asc`, { headers });
@@ -140,6 +165,9 @@ async function load(){
   $("reloadBtn").disabled = false;
 }
 
+/* =========================
+   테이블 화면 출력
+========================= */
 function render(){
   const tbody = $("tbody");
   tbody.innerHTML = "";
@@ -159,6 +187,9 @@ function render(){
   $("countTxt").textContent = rows.length+"건";
 }
 
+/* =========================
+   모달 열기 / 닫기
+========================= */
 function openModal(){
   $("modalTitle").innerText = editingId ? "카테고리 수정" : "카테고리 추가";
   $("backdrop").style.display="block";
@@ -172,14 +203,15 @@ function closeModal(){
   $("form").reset();
 }
 
+/* 신규 추가 버튼 */
 $("addBtn").onclick = ()=>{ editingId=null; openModal(); };
-$("cancelBtn").onclick = closeModal;
 
+/* 수정 버튼 클릭 */
 window.editRow = (id)=>{
   const r = rows.find(x=>x.id==id);
   editingId = id;
   $("CategoryKey").value = r.categoryKey;
-  $("CategoryKey").disabled = true;
+  $("CategoryKey").disabled = false;
   $("CategoryName").value = r.categoryName;
   $("SortOrder").value = r.sortOrder;
   $("UseYn").value = r.useYn;
@@ -187,12 +219,18 @@ window.editRow = (id)=>{
   openModal();
 };
 
+/* 삭제 처리 (DELETE) */
 window.deleteRow = async(id)=>{
   if(!confirm("삭제할까요?")) return;
   await fetch(`${API_BASE}?id=eq.${id}`, { method:"DELETE", headers });
   load();
 };
 
+/* =========================
+   저장 처리
+   - editingId 존재 → 수정(PATCH)
+   - editingId 없음 → 신규추가(POST)
+========================= */
 $("form").onsubmit = async(e)=>{
   e.preventDefault();
 
@@ -208,7 +246,7 @@ $("form").onsubmit = async(e)=>{
     await fetch(`${API_BASE}?id=eq.${editingId}`, {
       method:"PATCH", headers, body:JSON.stringify(body)
     });
-  }else{
+  } else {
     await fetch(API_BASE,{
       method:"POST", headers, body:JSON.stringify(body)
     });
@@ -218,7 +256,12 @@ $("form").onsubmit = async(e)=>{
   load();
 };
 
+/* 취소 버튼 */
+$("cancelBtn").onclick = closeModal;
+
+/* 최초 페이지 진입 시 데이터 로드 */
 load();
+
 </script>
 </body>
 </html>
