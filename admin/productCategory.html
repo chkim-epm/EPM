@@ -171,7 +171,29 @@ async function load(){
 function render(){
   const tbody = $("tbody");
   tbody.innerHTML = "";
-  rows.forEach(r=>{
+
+  // 🔹 검색어 소문자 변환
+  const q = $("q").value.trim().toLowerCase();
+
+  // 🔹 사용여부 필터 값
+  const useFilter = $("useFilter").value;
+
+  // 🔹 rows → 필터링된 목록 생성
+  const filtered = rows.filter(r => {
+    const key = (r.categoryKey || "").toLowerCase();
+    const name = (r.categoryName || "").toLowerCase();
+
+    // 검색어 조건
+    const matchQ = !q || key.includes(q) || name.includes(q);
+
+    // 사용여부 조건
+    const matchUse = !useFilter || r.useYn === useFilter;
+
+    return matchQ && matchUse;
+  });
+
+  // 🔹 필터링된 결과를 테이블에 출력
+  filtered.forEach(r=>{
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td class="mono">${r.categoryKey}</td>
@@ -184,8 +206,16 @@ function render(){
       </td>`;
     tbody.appendChild(tr);
   });
-  $("countTxt").textContent = rows.length+"건";
+
+  // 🔹 건수 표시 (필터된 건 / 전체 건)
+  $("countTxt").textContent = `${filtered.length}건 / 전체 ${rows.length}건`;
 }
+     
+// 🔹 검색어 입력 시 즉시 테이블 다시 렌더링
+$("q").addEventListener("input", render);
+// 🔹 사용여부 선택 변경 시 즉시 테이블 다시 렌더링
+$("useFilter").addEventListener("change", render);
+
 
 /* =========================
    모달 열기 / 닫기
@@ -265,3 +295,4 @@ load();
 </script>
 </body>
 </html>
+
