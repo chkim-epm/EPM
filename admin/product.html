@@ -16,12 +16,14 @@
          https://www.eastpowermetal.com 으로 강제 이동
        - 목적: OAuth Redirect/세션 일관성, CORS 혼선 예방
        ========================================================================= */
-    (function enforceWWW() {
-      const CANON = "www.eastpowermetal.com";
-      if (location.hostname !== CANON) {
-        location.replace(`https://${CANON}${location.pathname}${location.search}${location.hash}`);
-      }
-    })();
+(function enforceWWW() {
+  const CANON = "www.eastpowermetal.com";
+  const allowed = [CANON, "eastpowermetal.com"];
+  if (allowed.includes(location.hostname) && location.hostname !== CANON) {
+    location.replace(`https://${CANON}${location.pathname}${location.search}${location.hash}`);
+  }
+})();
+
   </script>
   
   <!-- 파비콘 (브라우저 탭 아이콘) -->
@@ -171,7 +173,7 @@ async function guardAdmin() {
    - 현재 위치를 next 파라미터로 전달하여 로그인 후 원래 페이지로 복귀 가능
    ============================================================================ */
 function kickLogin(){
-  const next = encodeURIComponent(location.pathname + location.search);
+  const next = encodeURIComponent(location.pathname + location.search + location.hash);
   location.replace(`${LOGIN_URL}?next=${next}`);
 }
 
@@ -373,3 +375,4 @@ $("logoutBtn").addEventListener("click", async ()=>{ await sb.auth.signOut(); lo
 </script>
 </body>
 </html>
+
