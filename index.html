@@ -8,6 +8,23 @@
 <!-- 파비콘 -->
 <link rel="icon" type="image/png" sizes="32x32" href="/epmFavicon.png">
 <link rel="shortcut icon" href="/favicon.ico">
+	
+	<!-- =============================== -->
+<!-- ✅ [추가된 부분 시작] apex → www 강제 리다이렉트 -->
+<!-- =============================== -->
+<script>
+  if (location.hostname === "eastpowermetal.com") {
+    location.replace(
+      "https://www.eastpowermetal.com" +
+      location.pathname +
+      location.search +
+      location.hash
+    );
+  }
+</script>
+<!-- =============================== -->
+<!-- ✅ [추가된 부분 끝] -->
+<!-- =============================== -->
  
 	
 <!-- ✅ SEO 기본 메타태그 -->
