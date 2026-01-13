@@ -284,23 +284,26 @@
        ------------------------------------------------------------------------- */
 
     // [기존 코드 - 보관용]
-    /*
-    setTimeout(() => {
-      if (document.documentElement.classList.contains('protecting')) {
-        // 폴백: 로그인으로 보냄
-        kickLogin();
-      }
-    }, 2000);
+    /* ===================== [추가/수정된 부분 시작] =====================
+       기존 폴백은 5초 후 무조건 kickLogin()이라
+       네트워크/초기화 지연 시 "세션이 있는데도" 튕길 수 있음.
+       -> 폴백에서 한 번 더 세션 확인 후 없을 때만 로그인으로 보냄.
     */
+    // setTimeout(() => {
+    //   if (document.documentElement.classList.contains('protecting')) {
+    //     kickLogin();
+    //   }
+    // }, 5000);
 
-    // [수정 코드 - product.html과 동일하게 5초로(세션 교환/네트워크 지연 대응)]
-    setTimeout(() => {
-      if (document.documentElement.classList.contains('protecting')) {
-        // 폴백: 로그인으로 보냄
-        kickLogin();
-      }
+    setTimeout(async () => {
+      if (!document.documentElement.classList.contains('protecting')) return;
+      const { data: { session } } = await sb.auth.getSession();
+      if (!session) kickLogin();
+      else document.documentElement.classList.remove("protecting");
     }, 5000);
+    /* ===================== [추가/수정된 부분 끝] ===================== */
 
+    
     // 탭/창 간 인증 상태 변화에도 가드를 재평가
     sb.auth.onAuthStateChange(() => guardAdmin());
 
