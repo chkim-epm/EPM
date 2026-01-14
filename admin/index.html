@@ -114,6 +114,7 @@
       const { data: { session } } = await sb.auth.getSession();
       document.getElementById('out').textContent = JSON.stringify(session, null, 2) || '-';
     }
+    
     // ───────────────────────────────────────────────────────────────────────────
     // 이미 로그인 상태면 nextPath로 자동 이동
     // ───────────────────────────────────────────────────────────────────────────
