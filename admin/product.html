@@ -140,15 +140,16 @@ const DENIED_URL = "/admin/denied.html";  // 권한 없음 시
 /* ============================================================================
    Supabase 초기화: 브라우저 클라이언트 인스턴스 생성
    ============================================================================ */
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {          // ✅ 변경: index와 동일하게 세션 저장/공유 옵션 명시
-  auth: {                                                                    // ✅ 변경
-    persistSession: true,                                                    // ✅ 변경
-    autoRefreshToken: true,                                                  // ✅ 변경
-    detectSessionInUrl: false,                                                // ✅ 변경
-    storage: window.localStorage,                                            // ✅ 변경
-    storageKey: 'epm-admin-auth'                                             // ✅ 변경
-  }                                                                          // ✅ 변경
-});                                                                          // ✅ 변경
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  auth: {
+    flowType: 'pkce',
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true,
+    storage: window.localStorage,
+    storageKey: 'epm-admin-auth'
+  }
+});                                                                      
 console.log("test3");
 
 /* ============================================================================
@@ -433,6 +434,7 @@ console.log("test16");
 </script>
 </body>
 </html>
+
 
 
 
