@@ -141,7 +141,7 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
     persistSession: true,
     autoRefreshToken: false,
     detectSessionInUrl: false,
-    storage: window.localStorage,
+    storage: window.sessionStorage,
     storageKey: 'epm-admin-auth'
   }
 });                                                                      
@@ -430,6 +430,7 @@ $("logoutBtn").addEventListener("click", async ()=>{ await sb.auth.signOut(); lo
 </script>
 </body>
 </html>
+
 
 
 
