@@ -135,19 +135,78 @@ const DENIED_URL = "/admin/denied.html";  // 권한 없음 시
 /* ============================================================================
    Supabase 초기화: 브라우저 클라이언트 인스턴스 생성
    ============================================================================ */
-// ⭐ 쿠키 기반 Session Storage
-const cookieStorage = {
-  getItem: (key) => {
-    const match = document.cookie.match(new RegExp('(^| )' + key + '=([^;]+)'));
-    return match ? decodeURIComponent(match[2]) : null;
-  },
-  setItem: (key, value) => {
-    document.cookie = `${key}=${encodeURIComponent(value)}; path=/; SameSite=Lax`;
-  },
-  removeItem: (key) => {
-    document.cookie = `${key}=; Max-Age=0; path=/`;
-  }
-};
+// ⭐ 쿠키 기반 Session Storage (대용량 대응: 쿠키 쪼개서 저장)
+// - 브라우저 종료 시 휘발: Expires/Max-Age 없이 "세션 쿠키"로 저장
+// - 1쿠키 4KB 제한 회피: key를 key.0, key.1 ...로 분할 저장
+const cookieStorage = (() => {
+  const CHUNK_SIZE = 3000; // 안전 여유 (쿠키 오버헤드 고려)
+  const OPTS = "path=/; SameSite=Lax"; // session cookie (Expires/Max-Age 없음)
+
+  const getCookie = (name) => {
+    const m = document.cookie.match(new RegExp("(^| )" + name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "=([^;]+)"));
+    return m ? decodeURIComponent(m[2]) : null;
+  };
+
+  const setCookie = (name, value) => {
+    document.cookie = `${name}=${encodeURIComponent(value)}; ${OPTS}`;
+  };
+
+  const delCookie = (name) => {
+    document.cookie = `${name}=; Max-Age=0; path=/`;
+  };
+
+  return {
+    getItem: (key) => {
+      const meta = getCookie(`${key}.__chunks`);
+      if (!meta) return getCookie(key); // (과거 단일 쿠키 호환)
+      const n = Number(meta);
+      if (!Number.isFinite(n) || n <= 0) return null;
+
+      let out = "";
+      for (let i = 0; i < n; i++) {
+        const part = getCookie(`${key}.${i}`);
+        if (part == null) return null; // 중간 조각 누락
+        out += part;
+      }
+      return out;
+    },
+
+    setItem: (key, value) => {
+      // 기존 조각 제거
+      const old = getCookie(`${key}.__chunks`);
+      if (old) {
+        const nOld = Number(old);
+        if (Number.isFinite(nOld) && nOld > 0) {
+          for (let i = 0; i < nOld; i++) delCookie(`${key}.${i}`);
+        }
+        delCookie(`${key}.__chunks`);
+      }
+      delCookie(key); // 단일 쿠키 쓰던 흔적 제거
+
+      // 분할 저장
+      const str = String(value ?? "");
+      const chunks = [];
+      for (let i = 0; i < str.length; i += CHUNK_SIZE) {
+        chunks.push(str.slice(i, i + CHUNK_SIZE));
+      }
+      setCookie(`${key}.__chunks`, String(chunks.length));
+      chunks.forEach((c, i) => setCookie(`${key}.${i}`, c));
+    },
+
+    removeItem: (key) => {
+      const meta = getCookie(`${key}.__chunks`);
+      if (meta) {
+        const n = Number(meta);
+        if (Number.isFinite(n) && n > 0) {
+          for (let i = 0; i < n; i++) delCookie(`${key}.${i}`);
+        }
+        delCookie(`${key}.__chunks`);
+      }
+      delCookie(key);
+    }
+  };
+})();
+
 
 // 2) Supabase 클라이언트 생성
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
@@ -446,6 +505,7 @@ $("logoutBtn").addEventListener("click", async ()=>{ await sb.auth.signOut(); lo
 </script>
 </body>
 </html>
+
 
 
 
