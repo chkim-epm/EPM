@@ -452,8 +452,7 @@ async function loadForEdit(productId) {
   if (submitBtn) submitBtn.textContent = "수정 저장";
 
   updatePreview();
-}
-    // ✅ 기존 추가 이미지 불러오기
+      // ✅ 기존 추가 이미지 불러오기
 const { data: imgs } = await sb
   .from("product_image")
   .select("id,url")
@@ -466,6 +465,8 @@ if (imgs && imgs.length) {
          style="width:80px;height:80px;object-fit:cover;border-radius:6px;">
   `).join("");
 }
+}
+
 
 
 
