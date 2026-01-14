@@ -370,16 +370,24 @@ $("logoutBtn").addEventListener("click", async ()=>{ await sb.auth.signOut(); lo
    ④ 타임아웃 가드: 8초 내 그리드 텍스트가 비어 있으면 안내 메시지 표기
    ============================================================================ */
 (async function init(){
-  await ensureSessionFromURL();   // ① URL의 code/access_token 처리
-  await guardAdmin();             // ② 통과 시 보호 해제
-  await loadProducts(1, "");      // ③ 목록 로드
-  setTimeout(() => {
-    const grid = $("grid");
-    if (grid && grid.innerText.trim() === "") {
-      setStatus("시간 초과: 네트워크/권한 문제일 수 있습니다. 콘솔/네트워크 로그 확인 바랍니다.");
-    }
-  }, 8000);
+  try { // ✅ 디버그용(흰 화면 방지)
+    await ensureSessionFromURL();
+    await guardAdmin();
+    await loadProducts(1, "");
+    setTimeout(() => {
+      const grid = $("grid");
+      if (grid && grid.innerText.trim() === "") {
+        setStatus("시간 초과: 네트워크/권한 문제일 수 있습니다. 콘솔/네트워크 로그 확인 바랍니다.");
+      }
+    }, 8000);
+  } catch (e) { // ✅ 디버그용
+    console.error(e);
+    document.documentElement.classList.remove("protecting"); // ✅ 화면 열기
+    setStatus("스크립트 오류: " + (e?.message || e));
+  }
 })();
+
 </script>
 </body>
 </html>
+
