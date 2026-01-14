@@ -378,6 +378,7 @@ $("logoutBtn").addEventListener("click", async ()=>{ await sb.auth.signOut(); lo
    ============================================================================ */
 (async function init(){
   try { // ✅ 디버그용(흰 화면 방지)
+    console.log("[init] start"); // ✅ 디버그: init 실행 확인
     await ensureSessionFromURL();
     await guardAdmin();
     await loadProducts(1, "");
@@ -397,6 +398,7 @@ $("logoutBtn").addEventListener("click", async ()=>{ await sb.auth.signOut(); lo
 </script>
 </body>
 </html>
+
 
 
 
