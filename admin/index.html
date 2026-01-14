@@ -61,15 +61,17 @@
     // 2) Supabase 클라이언트 생성
     // - 브라우저 환경에서 인증/세션/스토리지 기능을 사용하기 위해 인스턴스 생성
     // ───────────────────────────────────────────────────────────────────────────
-    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {   // ✅ 변경: auth 옵션 명시(세션 저장/URL 토큰 감지/스토리지키 고정)
-      auth: {                                                            // ✅ 변경
-        persistSession: true,                                            // ✅ 변경
-        autoRefreshToken: true,                                          // ✅ 변경
-        detectSessionInUrl: false,                                        // ✅ 변경
-        storage: window.localStorage,                                    // ✅ 변경
-        storageKey: 'epm-admin-auth'                                     // ✅ 변경
-      }                                                                  // ✅ 변경
-    });                                                                  // ✅ 변경
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  auth: {
+    flowType: 'pkce',          // ⭐⭐⭐ 이거 추가
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true,
+    storage: window.localStorage,
+    storageKey: 'epm-admin-auth'
+  }
+});
+
 
     // ───────────────────────────────────────────────────────────────────────────
     // 로그인 후 복귀 경로(next) 처리
@@ -89,21 +91,7 @@
     const hasHttpOrigin = /^https?:\/\//i.test(window.location.origin);
     const baseOrigin = hasHttpOrigin ? window.location.origin : 'https://www.eastpowermetal.com';
 
-
-    
-    // ✅ OAuth 리디렉션으로 돌아온 직후 code를 세션으로 교환
-(async () => {
-  if (location.search.includes("code=") || location.hash.includes("access_token")) {
-    try {
-      await sb.auth.exchangeCodeForSession(window.location.href);
-      // code 파라미터 제거 (중복 처리 방지)
-      history.replaceState({}, document.title, location.pathname + location.hash);
-    } catch (e) {
-      console.error("exchangeCodeForSession failed:", e);
-    }
-  }
-})();
-
+   
     // ───────────────────────────────────────────────────────────────────────────
     // 현재 세션 정보를 <pre id="out">에 렌더링
     // - sb.auth.getSession()은 현재 탭의 세션(로그인 상태/토큰 등)을 반환
@@ -113,7 +101,13 @@
       const { data: { session } } = await sb.auth.getSession();
       document.getElementById('out').textContent = JSON.stringify(session, null, 2) || '-';
     }
-    
+    // ✅ 이미 로그인 상태면 바로 nextPath로 이동
+(async () => {
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) {
+    location.replace(nextPath);
+  }
+})();
     // ───────────────────────────────────────────────────────────────────────────
     // 이미 로그인 상태면 nextPath로 자동 이동
     // ───────────────────────────────────────────────────────────────────────────
