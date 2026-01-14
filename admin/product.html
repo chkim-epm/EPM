@@ -121,6 +121,7 @@
 const SUPABASE_URL = "https://cwwnarmrvpvjptytepdo.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3d25hcm1ydnB2anB0eXRlcGRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NzU4NTUsImV4cCI6MjA3NzQ1MTg1NX0.5mvgA_gKdlRaebVRSFIUJRKgp51zke_nffQ2jc8Ad1g";
 const BUCKET = "product-image";
+console.log("test1");
 
 /* ============================================================================
    관리자 화이트리스트 & 경로
@@ -132,6 +133,9 @@ const ADMIN_EMAILS = ["chkim.epm@gmail.com"];
 const ADMIN_USERNAMES = ["chkim-epm"];
 const LOGIN_URL  = "/admin/index.html";   // 미로그인 시
 const DENIED_URL = "/admin/denied.html";  // 권한 없음 시
+
+  console.log("test2");
+
 
 /* ============================================================================
    Supabase 초기화: 브라우저 클라이언트 인스턴스 생성
@@ -145,6 +149,7 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {          // 
     storageKey: 'epm-admin-auth'                                             // ✅ 변경
   }                                                                          // ✅ 변경
 });                                                                          // ✅ 변경
+console.log("test3");
 
 /* ============================================================================
    OAuth 리디렉션 직후 세션 교환 처리
@@ -156,6 +161,7 @@ async function ensureSessionFromURL() {
     try { await sb.auth.exchangeCodeForSession(window.location.href); } catch(e) {}
   }
 }
+console.log("test4");
 
 /* ============================================================================
    화면 보호 가드 (인증 + 화이트리스트 확인)
@@ -182,6 +188,8 @@ async function guardAdmin() {
   document.getElementById("who").textContent = `관리자: ${email || ghUser}`;
   document.documentElement.classList.remove("protecting");
 }
+  console.log("test5");
+
 
 /* ============================================================================
    미로그인 처리
@@ -191,6 +199,7 @@ function kickLogin(){
   const next = encodeURIComponent(location.pathname + location.search + location.hash);
   location.replace(`${LOGIN_URL}?next=${next}`);
 }
+console.log("test6");
 
 /* ============================================================================
    권한 없음 처리
@@ -199,12 +208,14 @@ function kickLogin(){
 function kickDenied(){
   location.replace(DENIED_URL);
 }
+console.log("test7");
 
 /* ============================================================================
    세션 상태 변화 대응
    - 다른 탭/창에서 로그인/로그아웃 시에도 현재 페이지 가드 재평가
    ============================================================================ */
 sb.auth.onAuthStateChange(() => guardAdmin());
+console.log("test8");
 
 /* ============================================================================
    목록/검색/페이지네이션 로직
@@ -221,6 +232,7 @@ let currentQuery = "";
 const $ = (id)=>document.getElementById(id);
 function setStatus(msg){ $("status").textContent = msg || ""; }
 function formatPrice(v){ return (v == null || v === "") ? "-" : Number(v).toLocaleString() + " 원"; }
+console.log("test9");
 
 /* ============================================================================
    스토리지 public URL → 내부 경로(path) 추출
@@ -239,6 +251,8 @@ function extractStoragePath(publicUrl){
     return parts.join("/");
   } catch { return null; }
 }
+console.log("test10");
+
 
 /* ============================================================================
    제품 목록 불러오기
@@ -271,6 +285,7 @@ async function loadProducts(page=1, q=""){
   if (error){ setStatus("불러오기 실패: " + error.message); console.error(error); return; }
   setStatus(""); renderCards(data||[]); renderPager(count||0, page);
 }
+  console.log("test11");
 
 /* ============================================================================
    카드 렌더링
@@ -301,7 +316,7 @@ function renderCards(items){
       </div>`;
   }).join("");
 }
-
+console.log("test12");
 /* ============================================================================
    페이지네이션 렌더링
    - 현재 페이지 기준 좌우 한 칸씩 노출 + 처음/끝은 항상 표시
@@ -331,7 +346,7 @@ function renderPager(totalCount, page){
     window.scrollTo({top:0,behavior:'smooth'});
   };
 }
-
+console.log("test13");
 /* ============================================================================
    삭제 처리
    - 1) 확인 다이얼로그
@@ -352,7 +367,7 @@ async function deleteProduct(id, image_url){
   if (error){ setStatus("삭제 실패: " + error.message); return; }
   setStatus("삭제 완료"); await loadProducts(currentPage, currentQuery);
 }
-
+console.log("test14");
 /* ============================================================================
    검색 이벤트
    - 입력 지연(debounce) 300ms 후 조회
@@ -362,13 +377,13 @@ const qInput = $("q"), clearBtn=$("clearBtn");
 function debounce(fn,ms=300){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a),ms); }; }
 if (qInput) qInput.addEventListener("input", debounce(()=>loadProducts(1, qInput.value), 300));
 if (clearBtn) clearBtn.addEventListener("click", ()=>{ if(!qInput) return; qInput.value=""; loadProducts(1,""); });
-
+console.log("test15");
 /* ============================================================================
    로그아웃
    - Supabase 세션 해제 후 로그인 페이지로 이동(복귀 경로는 index에서 처리)
    ============================================================================ */
 $("logoutBtn").addEventListener("click", async ()=>{ await sb.auth.signOut(); location.replace(LOGIN_URL); });
-
+console.log("test16");
 /* ============================================================================
    초기 구동 시퀀스
    ① ensureSessionFromURL: OAuth code/hash → 세션 교환
@@ -398,6 +413,7 @@ $("logoutBtn").addEventListener("click", async ()=>{ await sb.auth.signOut(); lo
 </script>
 </body>
 </html>
+
 
 
 
