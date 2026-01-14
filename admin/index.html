@@ -117,10 +117,12 @@
     // ───────────────────────────────────────────────────────────────────────────
     // 이미 로그인 상태면 nextPath로 자동 이동
     // ───────────────────────────────────────────────────────────────────────────
-    (async () => {
-      const { data: { session } } = await sb.auth.getSession();
-      if (session) location.replace(nextPath);
-    })();
+sb.auth.onAuthStateChange((event, session) => {
+  if (event === 'SIGNED_IN' && session) {
+    location.replace(nextPath);
+  }
+});
+
 
     // ───────────────────────────────────────────────────────────────────────────
     // 3) GitHub OAuth 로그인 트리거
