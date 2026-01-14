@@ -332,19 +332,48 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
        - ② 화이트리스트(email 또는 GitHub user_name) 검증
        - ③ 통과 시 protecting 해제 + 사용자 표기
        ------------------------------------------------------------------------- */
-    async function guardAdmin() {
-      const { data: { session } } = await sb.auth.getSession();
-      const user = session?.user;
-      if (!user) return kickLogin();
+async function guardAdmin() {
+  let session;
 
-      const email = user.email;
-      const ghUser = user.user_metadata?.user_name;
-      const ok = (email && ADMIN_EMAILS.includes(email)) || (ghUser && ADMIN_USERNAMES.includes(ghUser));
-      if (!ok) return kickDenied();
+  try {
+    const timeout = (ms) =>
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("getSession timeout")), ms)
+      );
 
-      document.getElementById("who").textContent = `(${email || ghUser})`;
-      document.documentElement.classList.remove("protecting");
-    }
+    const { data, error } = await Promise.race([
+      sb.auth.getSession(),
+      timeout(2000) // ✅ 2초 타임아웃
+    ]);
+
+    if (error) throw error;
+    session = data?.session;
+  } catch (e) {
+    console.error("[guard] getSession error:", e);
+
+    // ✅ 흰 화면 방지: 일단 화면 열고 안내/로그 확인 가능하게
+    document.documentElement.classList.remove("protecting");
+
+    // 원하면 여기서 로그인으로 보내도 됨:
+    // kickLogin();
+    return;
+  }
+
+  const user = session?.user;
+  if (!user) return kickLogin();
+
+  const email = user.email;
+  const ghUser = user.user_metadata?.user_name;
+  const ok =
+    (email && ADMIN_EMAILS.includes(email)) ||
+    (ghUser && ADMIN_USERNAMES.includes(ghUser));
+
+  if (!ok) return kickDenied();
+
+  document.getElementById("who").textContent = `(${email || ghUser})`;
+  document.documentElement.classList.remove("protecting");
+}
+
 
     // 미로그인 시 현재 URL을 next로 붙여 로그인 페이지로 보냄 → 로그인 후 원위치 복귀 가능
     function kickLogin() {
