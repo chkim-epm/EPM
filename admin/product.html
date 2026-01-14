@@ -143,8 +143,8 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
   auth: {
     flowType: 'pkce',
     persistSession: true,
-    autoRefreshToken: true,
-    detectSessionInUrl: true,
+    autoRefreshToken: false,
+    detectSessionInUrl: false,
     storage: window.localStorage,
     storageKey: 'epm-admin-auth'
   }
@@ -177,19 +177,30 @@ async function guardAdmin() {
   console.log("[guard] entered");
 
   let session;
-  try {
-    console.log("[guard] before getSession");
-    const { data, error } = await sb.auth.getSession();
-    console.log("[guard] after getSession", { data, error });
-    if (error) throw error;
-    session = data?.session;
-  } catch (e) {
-    console.error("[guard] getSession error:", e);
-    // ✅ 흰 화면 방지: 일단 화면은 열어두고 상태 표시
-    document.documentElement.classList.remove("protecting");
-    setStatus("getSession 오류: " + (e?.message || e));
-    return;
-  }
+try {
+  console.log("[guard] before getSession");
+
+  const timeout = (ms) =>
+    new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("getSession timeout")), ms)
+    );
+
+  const { data, error } = await Promise.race([
+    sb.auth.getSession(),
+    timeout(2000) // ✅ 2초 안에 응답 없으면 타임아웃
+  ]);
+
+  console.log("[guard] after getSession", { data, error });
+  if (error) throw error;
+  session = data?.session;
+} catch (e) {
+  console.error("[guard] getSession error:", e);
+  // ✅ 흰 화면 방지: 일단 화면은 열어두고 상태 표시
+  document.documentElement.classList.remove("protecting");
+  setStatus("getSession 오류: " + (e?.message || e));
+  return;
+}
+
 
   const user = session?.user;
   if (!user) {
@@ -440,6 +451,7 @@ console.log("test16");
 </script>
 </body>
 </html>
+
 
 
 
