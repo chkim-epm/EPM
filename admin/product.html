@@ -144,7 +144,7 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {          // 
   auth: {                                                                    // ✅ 변경
     persistSession: true,                                                    // ✅ 변경
     autoRefreshToken: true,                                                  // ✅ 변경
-    detectSessionInUrl: true,                                                // ✅ 변경
+    detectSessionInUrl: false,                                                // ✅ 변경
     storage: window.localStorage,                                            // ✅ 변경
     storageKey: 'epm-admin-auth'                                             // ✅ 변경
   }                                                                          // ✅ 변경
@@ -433,6 +433,7 @@ console.log("test16");
 </script>
 </body>
 </html>
+
 
 
 
