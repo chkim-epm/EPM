@@ -90,6 +90,21 @@
     const hasHttpOrigin = /^https?:\/\//i.test(window.location.origin);
     const baseOrigin = hasHttpOrigin ? window.location.origin : 'https://www.eastpowermetal.com';
 
+
+    
+    // ✅ OAuth 리디렉션으로 돌아온 직후 code를 세션으로 교환
+(async () => {
+  if (location.search.includes("code=") || location.hash.includes("access_token")) {
+    try {
+      await sb.auth.exchangeCodeForSession(window.location.href);
+      // code 파라미터 제거 (중복 처리 방지)
+      history.replaceState({}, document.title, location.pathname + location.hash);
+    } catch (e) {
+      console.error("exchangeCodeForSession failed:", e);
+    }
+  }
+})();
+
     // ───────────────────────────────────────────────────────────────────────────
     // 현재 세션 정보를 <pre id="out">에 렌더링
     // - sb.auth.getSession()은 현재 탭의 세션(로그인 상태/토큰 등)을 반환
