@@ -171,25 +171,29 @@ console.log("test4");
    ============================================================================ */
 async function guardAdmin() {
   console.log("test44");
-  console.log("[guard] entered"); // ✅ 디버그: guard 함수 진입 확인
+  console.log("[guard] entered"); // ✅ 디버그
   const { data: { session } } = await sb.auth.getSession();
-  console.log("[guard] session:", session); // ✅ 변경: 디버그
+  console.log("[guard] session:", session); // ✅ 디버그
   const user = session?.user;
-  if (!user) return kickLogin();  // 로그인 안 되어 있으면 로그인 페이지로
-  console.log("[guard] no user -> kickLogin"); // ✅ 변경: 디버그
-
+  if (!user) {
+    console.log("[guard] no user -> kickLogin"); // ✅ 디버그
+    return kickLogin();
+  }
   const email = user.email;
   const ghUser = user.user_metadata?.user_name;
-  console.log("[guard] email:", email, "ghUser:", ghUser); // ✅ 변경: 디버그
-  const ok = (email && ADMIN_EMAILS.includes(email)) || (ghUser && ADMIN_USERNAMES.includes(ghUser));
-  if (!ok) 
-  console.log("[guard] not allowed -> kickDenied"); // ✅ 변경: 디버그
-  return kickDenied();    // 화이트리스트 미통과면 denied
-
+  console.log("[guard] email:", email, "ghUser:", ghUser); // ✅ 디버그
+  const ok =
+    (email && ADMIN_EMAILS.includes(email)) ||
+    (ghUser && ADMIN_USERNAMES.includes(ghUser));
+  if (!ok) {
+    console.log("[guard] not allowed -> kickDenied"); // ✅ 디버그
+    return kickDenied();
+  }
   // 통과 → 화면 오픈 및 상단에 사용자 표시
   document.getElementById("who").textContent = `관리자: ${email || ghUser}`;
   document.documentElement.classList.remove("protecting");
 }
+
   console.log("test5");
 
 
@@ -415,6 +419,7 @@ console.log("test16");
 </script>
 </body>
 </html>
+
 
 
 
