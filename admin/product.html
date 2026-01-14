@@ -140,7 +140,7 @@ const DENIED_URL = "/admin/denied.html";  // 권한 없음 시
 // - 1쿠키 4KB 제한 회피: key를 key.0, key.1 ...로 분할 저장
 const cookieStorage = (() => {
   const CHUNK_SIZE = 3000; // 안전 여유 (쿠키 오버헤드 고려)
-  const OPTS = "path=/; SameSite=Lax"; // session cookie (Expires/Max-Age 없음)
+   const OPTS = "path=/; SameSite=Lax; Domain=.eastpowermetal.com"; // ✅ 변경: www/non-www 모두에서 쿠키 공유
 
   const getCookie = (name) => {
     const m = document.cookie.match(new RegExp("(^| )" + name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "=([^;]+)"));
@@ -152,7 +152,7 @@ const cookieStorage = (() => {
   };
 
   const delCookie = (name) => {
-    document.cookie = `${name}=; Max-Age=0; path=/`;
+     document.cookie = `${name}=; Max-Age=0; path=/; Domain=.eastpowermetal.com`; // ✅ 변경: 삭제도 동일 도메인 범위로
   };
 
   return {
@@ -505,6 +505,7 @@ $("logoutBtn").addEventListener("click", async ()=>{ await sb.auth.signOut(); lo
 </script>
 </body>
 </html>
+
 
 
 
