@@ -61,7 +61,15 @@
     // 2) Supabase 클라이언트 생성
     // - 브라우저 환경에서 인증/세션/스토리지 기능을 사용하기 위해 인스턴스 생성
     // ───────────────────────────────────────────────────────────────────────────
-    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {   // ✅ 변경: auth 옵션 명시(세션 저장/URL 토큰 감지/스토리지키 고정)
+      auth: {                                                            // ✅ 변경
+        persistSession: true,                                            // ✅ 변경
+        autoRefreshToken: true,                                          // ✅ 변경
+        detectSessionInUrl: true,                                        // ✅ 변경
+        storage: window.localStorage,                                    // ✅ 변경
+        storageKey: 'epm-admin-auth'                                     // ✅ 변경
+      }                                                                  // ✅ 변경
+    });                                                                  // ✅ 변경
 
 
     // ───────────────────────────────────────────────────────────────────────────
@@ -110,7 +118,8 @@
         provider: 'github',
         options: {
           // 성공 후 돌아올 주소 (Authentication → URL Configuration → Redirect URLs에 반드시 등록됨)
-          redirectTo: "https://www.eastpowermetal.com" + nextPath,
+          // ✅ 변경: 콜백을 index로 고정하고, nextPath는 쿼리로 전달(세션 저장 확정 후 이동)
+          redirectTo: `${baseOrigin}/admin/index.html?next=${encodeURIComponent(nextPath)}`, // ✅ 변경
         }
       });
     };
