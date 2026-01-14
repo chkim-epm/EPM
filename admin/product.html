@@ -172,8 +172,22 @@ console.log("test4");
 async function guardAdmin() {
   console.log("test44");
   console.log("[guard] entered"); // ✅ 디버그
-  const { data: { session } } = await sb.auth.getSession();
-  console.log("[guard] session:", session); // ✅ 디버그
+  
+let session;
+  try { // ✅ 변경: getSession 예외/멈춤 확인
+    const res = await sb.auth.getSession();
+    session = res?.data?.session;
+    console.log("[guard] session:", session); // ✅ 변경
+  } catch (e) {
+    console.error("[guard] getSession error:", e); // ✅ 변경
+    // ✅ 변경: 흰 화면 방지(원인 확인용으로 잠깐 화면 열기)
+    document.documentElement.classList.remove("protecting");
+    setStatus("getSession 오류: " + (e?.message || e));
+    return;
+  }
+
+  
+  
   const user = session?.user;
   if (!user) {
     console.log("[guard] no user -> kickLogin"); // ✅ 디버그
@@ -419,6 +433,7 @@ console.log("test16");
 </script>
 </body>
 </html>
+
 
 
 
