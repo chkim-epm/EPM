@@ -313,7 +313,10 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
     storageKey: 'epm-admin-auth'
   }
 });
-
+    
+// ✅ [추가] 수정 모드 판단용: URL ?id= 가 있으면 수정 모드
+const EDIT_ID = new URLSearchParams(location.search).get("id");
+const IS_EDIT = !!EDIT_ID;
 
 
     /* -------------------------------------------------------------------------
@@ -418,17 +421,51 @@ async function guardAdmin() {
     /* ===================== [추가/수정된 부분 끝] ===================== */
 
     
-    // 탭/창 간 인증 상태 변화에도 가드를 재평가
-    sb.auth.onAuthStateChange(() => guardAdmin());
+ // 탭/창 간 인증 상태 변화에도 가드를 재평가
+sb.auth.onAuthStateChange(() => guardAdmin());
 
-    // 초기 진입 시퀀스: OAuth 코드 교환 → 권한 확인/UI 오픈
+
+// ✅ [추가] 수정 모드일 때 기존 제품 정보 로드해서 폼 채우기
+async function loadForEdit(productId) {
+  const { data, error } = await sb
+    .from("product")
+    .select("*")
+    .eq("id", productId)
+    .single();
+
+  if (error) throw error;
+  if (!data) throw new Error("제품을 찾을 수 없습니다.");
+
+  $("title").value = data.title || "";
+  $("desc").value = data.description || "";
+  $("material").value = data.material || "";
+  $("usage").value = data.usage || "";
+  $("types").value = data.types || "";
+  $("price").value = (data.price ?? "");
+
+  if (data.image_url) $("prevImg").src = data.image_url;
+
+  const h1 = document.querySelector(".card h1");
+  if (h1) h1.textContent = "제품 수정";
+  const submitBtn = $("submitBtn");
+  if (submitBtn) submitBtn.textContent = "수정 저장";
+
+  updatePreview();
+}
+
+
+// ✅ [교체된 초기 진입 시퀀스]
 (async () => {
   try {
     await ensureSessionFromURL();
     await guardAdmin();
+
+    // ✅ 수정 모드일 경우 기존 데이터 불러오기
+    if (IS_EDIT) {
+      await loadForEdit(EDIT_ID);
+    }
   } catch (e) {
     console.error(e);
-    // ✅ 흰 화면 방지
     document.documentElement.classList.remove("protecting");
   }
 })();
@@ -483,119 +520,123 @@ async function guardAdmin() {
        - 추가 이미지(여러 장) 업로드 → product_image 테이블에 연결 insert
        - 상태 메시지로 진행/성공/실패 표시
        ------------------------------------------------------------------------- */
-    document.getElementById("submitBtn").addEventListener("click", async () => {
-      const imagesInput = document.getElementById("images");
-      const status = $("status");
-      const submitBtn = $("submitBtn");
+document.getElementById("submitBtn").addEventListener("click", async () => {
+  const imagesInput = document.getElementById("images");
+  const status = $("status");
+  const submitBtn = $("submitBtn");
 
-      // 진행상태 초기화
-      status.className = "status muted";
-      status.textContent = "업로드 중...";
-      submitBtn.disabled = true;
+  status.className = "status muted";
+  status.textContent = IS_EDIT ? "수정 중..." : "업로드 중...";
+  submitBtn.disabled = true;
 
-      // 필수 입력 검사
-      const title = $("title").value.trim();
-      const file  = $("image").files?.[0];
+  const title = $("title").value.trim();
+  const file  = $("image").files?.[0]; // 수정 모드에서는 안 넣어도 될 수 있음
 
-      if (!title) { status.className="status err"; status.textContent="제품명은 필수입니다."; submitBtn.disabled=false; return; }
-      if (!file)  { status.className="status err"; status.textContent="대표 이미지를 선택하세요."; submitBtn.disabled=false; return; }
+  if (!title) { status.className="status err"; status.textContent="제품명은 필수입니다."; submitBtn.disabled=false; return; }
+  if (!IS_EDIT && !file) { status.className="status err"; status.textContent="대표 이미지를 선택하세요."; submitBtn.disabled=false; return; }
 
-      try {
-        // 권한 재검증
-        const { data: { session } } = await sb.auth.getSession();
-        const user = session?.user;
-        const email = user?.email;
-        const ghUser = user?.user_metadata?.user_name;
-        const ok = user && ((email && ADMIN_EMAILS.includes(email)) || (ghUser && ADMIN_USERNAMES.includes(ghUser)));
-        if (!ok) { kickLogin(); return; }
+  try {
+    // 권한 재검증
+    const { data: { session } } = await sb.auth.getSession();
+    const user = session?.user;
+    const email = user?.email;
+    const ghUser = user?.user_metadata?.user_name;
+    const ok = user && ((email && ADMIN_EMAILS.includes(email)) || (ghUser && ADMIN_USERNAMES.includes(ghUser)));
+    if (!ok) { kickLogin(); return; }
 
-        // 파일명 정규화(한글/특수문자 → 안전한 ASCII로), 타임스탬프를 접두로 충돌 방지
-        const safeBase = file.name
+    // ✅ 공통 payload (image_url은 아래에서 조건적으로 추가)
+    const payload = {
+      title,
+      description: $("desc").value || null,
+      material: $("material").value || null,
+      usage: $("usage").value || null,
+      types: $("types").value || null,
+      price: $("price").value ? Number($("price").value) : null,
+    };
+
+    // ✅ 대표 이미지 업로드는 "파일을 새로 선택한 경우에만" 수행
+    if (file) {
+      const safeBase = file.name
+        .normalize("NFKD")
+        .replace(/[^\w.\-]+/g, "_")
+        .replace(/^_+|_+$/g, "");
+
+      const mainName = `${Date.now()}_${safeBase}`.replace(/_+/g, "_");
+      const mainPath = `product/${mainName}`;
+
+      const { error: upErr } = await sb.storage
+        .from(BUCKET)
+        .upload(mainPath, file, {
+          upsert: false,
+          cacheControl: "3600",
+          contentType: file.type || "application/octet-stream",
+        });
+      if (upErr) throw upErr;
+
+      const { data: pub } = sb.storage.from(BUCKET).getPublicUrl(mainPath);
+      payload.image_url = pub.publicUrl;
+    }
+
+    let productId = EDIT_ID;
+
+    // ✅ 신규 vs 수정 분기
+    if (IS_EDIT) {
+      const { error: upErr } = await sb
+        .from("product")
+        .update(payload)
+        .eq("id", EDIT_ID);
+      if (upErr) throw upErr;
+    } else {
+      const insertResult = await sb
+        .from("product")
+        .insert(payload)
+        .select("id")
+        .single();
+      if (insertResult.error) throw insertResult.error;
+      productId = insertResult.data.id;
+    }
+
+    // ✅ 추가 이미지는 "선택된 것만" 업로드해서 product_image에 insert
+    const extras = imagesInput?.files ? Array.from(imagesInput.files) : [];
+    if (extras.length) {
+      const baseDir = `product/${productId}`;
+      for (const f of extras) {
+        const safe = f.name
           .normalize("NFKD")
           .replace(/[^\w.\-]+/g, "_")
           .replace(/^_+|_+$/g, "");
+        const name = `${Date.now()}_${safe}`.replace(/_+/g, "_");
+        const p = `${baseDir}/${name}`;
 
-        const mainName = `${Date.now()}_${safeBase}`.replace(/_+/g, "_");
-        const mainPath = `product/${mainName}`;
-
-        // 대표 이미지 업로드(덮어쓰기 금지, 캐시 1시간, 콘텐츠 타입 지정)
-        const { error: upErr } = await sb.storage
+        const { error: upErr2 } = await sb.storage
           .from(BUCKET)
-          .upload(mainPath, file, {
+          .upload(p, f, {
             upsert: false,
             cacheControl: "3600",
-            contentType: file.type || "application/octet-stream",
+            contentType: f.type || "application/octet-stream",
           });
-        if (upErr) throw upErr;
+        if (upErr2) throw upErr2;
 
-        // 대표 이미지 공개 URL 발급
-        const { data: pub } = sb.storage.from(BUCKET).getPublicUrl(mainPath);
-        const image_url = pub.publicUrl;
-
-        // 제품 메타데이터 작성 payload
-        const payload = {
-          title,
-          description: $("desc").value || null,
-          material: $("material").value || null,
-          usage: $("usage").value || null,
-          types: $("types").value || null,
-          price: $("price").value ? Number($("price").value) : null,
-          image_url,
-        };
-
-        // product 테이블 insert → 생성 id 확보
-        const insertResult = await sb
-          .from("product")
-          .insert(payload)
-          .select("id")
-          .single();
-        if (insertResult.error) throw insertResult.error;
-
-        const productId = insertResult.data.id;
-
-        // 추가 이미지가 있다면 /product/{id}/ 하위에 업로드 후 product_image에 연결 레코드 삽입
-        const extras = imagesInput?.files ? Array.from(imagesInput.files) : [];
-        if (extras.length) {
-          const baseDir = `product/${productId}`;
-          for (const f of extras) {
-            const safe = f.name
-              .normalize("NFKD")
-              .replace(/[^\w.\-]+/g, "_")
-              .replace(/^_+|_+$/g, "");
-            const name = `${Date.now()}_${safe}`.replace(/_+/g, "_");
-            const p = `${baseDir}/${name}`;
-
-            const { error: upErr2 } = await sb.storage
-              .from(BUCKET)
-              .upload(p, f, {
-                upsert: false,
-                cacheControl: "3600",
-                contentType: f.type || "application/octet-stream",
-              });
-            if (upErr2) throw upErr2;
-
-            const { data: pub2 } = sb.storage.from(BUCKET).getPublicUrl(p);
-            const insImg = await sb.from("product_image").insert({
-              product_id: productId,
-              url: pub2.publicUrl,
-            });
-            if (insImg.error) throw insImg.error;
-          }
-        }
-
-        // 성공 메시지
-        status.className = "status ok";
-        status.textContent = "등록 완료!";
-      } catch (e) {
-        // 실패 원인 출력(네트워크/권한/스토리지/DB 에러 등)
-        console.error(e);
-        status.className = "status err";
-        status.textContent = "등록 실패: " + (e?.message || e);
-      } finally {
-        // 버튼 잠금 해제
-        submitBtn.disabled = false;
+        const { data: pub2 } = sb.storage.from(BUCKET).getPublicUrl(p);
+        const insImg = await sb.from("product_image").insert({
+          product_id: productId,
+          url: pub2.publicUrl,
+        });
+        if (insImg.error) throw insImg.error;
       }
-    });
+    }
+
+    status.className = "status ok";
+    status.textContent = IS_EDIT ? "수정 완료!" : "등록 완료!";
+  } catch (e) {
+    console.error(e);
+    status.className = "status err";
+    status.textContent = (IS_EDIT ? "수정 실패: " : "등록 실패: ") + (e?.message || e);
+  } finally {
+    submitBtn.disabled = false;
+  }
+});
+
   </script>
 </body>
 </html>
