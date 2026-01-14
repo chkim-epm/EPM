@@ -175,7 +175,9 @@ async function guardAdmin() {
   
 let session;
   try { // ✅ 변경: getSession 예외/멈춤 확인
+      console.log("[guard] before getSession"); // ✅ 추가
     const res = await sb.auth.getSession();
+    console.log("[guard] after getSession", res); // ✅ 추가
     session = res?.data?.session;
     console.log("[guard] session:", session); // ✅ 변경
   } catch (e) {
@@ -433,6 +435,7 @@ console.log("test16");
 </script>
 </body>
 </html>
+
 
 
 
