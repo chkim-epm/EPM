@@ -228,7 +228,32 @@
     const DENIED_URL = "/admin/denied.html";      // 권한 없음 시 이동
 
     // Supabase 브라우저 클라이언트 인스턴스
-    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+   // ⭐ 쿠키 기반 Session Storage (브라우저 종료 시 로그인 휘발)
+const cookieStorage = {
+  getItem: (key) => {
+    const match = document.cookie.match(new RegExp('(^| )' + key + '=([^;]+)'));
+    return match ? decodeURIComponent(match[2]) : null;
+  },
+  setItem: (key, value) => {
+    document.cookie = `${key}=${encodeURIComponent(value)}; path=/; SameSite=Lax`;
+  },
+  removeItem: (key) => {
+    document.cookie = `${key}=; Max-Age=0; path=/`;
+  }
+};
+
+// Supabase 브라우저 클라이언트 인스턴스
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  auth: {
+    flowType: 'pkce',
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true,
+    storage: cookieStorage,
+    storageKey: 'epm-admin-auth'
+  }
+});
+
 
 
     /* -------------------------------------------------------------------------
