@@ -170,6 +170,8 @@ console.log("test4");
    3) 통과 시 protecting 해제 → 본문 표시
    ============================================================================ */
 async function guardAdmin() {
+  console.log("test44");
+  console.log("[guard] entered"); // ✅ 디버그: guard 함수 진입 확인
   const { data: { session } } = await sb.auth.getSession();
   console.log("[guard] session:", session); // ✅ 변경: 디버그
   const user = session?.user;
@@ -413,6 +415,7 @@ console.log("test16");
 </script>
 </body>
 </html>
+
 
 
 
