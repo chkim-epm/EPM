@@ -174,48 +174,42 @@ console.log("test4");
    ============================================================================ */
 async function guardAdmin() {
   console.log("test44");
-  console.log("[guard] entered"); // ✅ 디버그
-  
-let session;
-  try { // ✅ 변경: getSession 예외/멈춤 확인
-      console.log("[guard] before getSession"); // ✅ 추가
-    const res = await sb.auth.getSession();
-    console.log("[guard] after getSession", res); // ✅ 추가
-    session = res?.data?.session;
-    console.log("[guard] session:", session); // ✅ 변경
+  console.log("[guard] entered");
+  // ✅ 변경: getSession() 대신 getUser() 사용 (pending 우회)
+  let user;
+  try {
+    console.log("[guard] before getUser");
+    const { data, error } = await sb.auth.getUser();
+    console.log("[guard] after getUser", { data, error });
+    if (error) throw error;
+    user = data?.user;
   } catch (e) {
-    console.error("[guard] getSession error:", e); // ✅ 변경
-    // ✅ 변경: 흰 화면 방지(원인 확인용으로 잠깐 화면 열기)
-    document.documentElement.classList.remove("protecting");
-    setStatus("getSession 오류: " + (e?.message || e));
+    console.error("[guard] getUser error:", e);
+    document.documentElement.classList.remove("protecting"); // ✅ 흰 화면 방지(진단용)
+    setStatus("getUser 오류: " + (e?.message || e));
     return;
   }
 
-  
-  
-  const user = session?.user;
   if (!user) {
-    console.log("[guard] no user -> kickLogin"); // ✅ 디버그
+    console.log("[guard] no user -> kickLogin");
     return kickLogin();
   }
   const email = user.email;
   const ghUser = user.user_metadata?.user_name;
-  console.log("[guard] email:", email, "ghUser:", ghUser); // ✅ 디버그
+  console.log("[guard] email:", email, "ghUser:", ghUser);
   const ok =
     (email && ADMIN_EMAILS.includes(email)) ||
     (ghUser && ADMIN_USERNAMES.includes(ghUser));
   if (!ok) {
-    console.log("[guard] not allowed -> kickDenied"); // ✅ 디버그
+    console.log("[guard] not allowed -> kickDenied");
     return kickDenied();
   }
-  // 통과 → 화면 오픈 및 상단에 사용자 표시
   document.getElementById("who").textContent = `관리자: ${email || ghUser}`;
   document.documentElement.classList.remove("protecting");
 }
-
+  
   console.log("test5");
-
-
+  
 /* ============================================================================
    미로그인 처리
    - 현재 위치를 next 파라미터로 전달하여 로그인 후 원래 페이지로 복귀 가능
@@ -438,6 +432,7 @@ console.log("test16");
 </script>
 </body>
 </html>
+
 
 
 
