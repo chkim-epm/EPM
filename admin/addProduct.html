@@ -422,10 +422,17 @@ async function guardAdmin() {
     sb.auth.onAuthStateChange(() => guardAdmin());
 
     // 초기 진입 시퀀스: OAuth 코드 교환 → 권한 확인/UI 오픈
-    (async () => {
-      await ensureSessionFromURL(); // ① OAuth 코드 교환
-      await guardAdmin();           // ② 권한 확인 → UI 오픈
-    })();
+(async () => {
+  try {
+    await ensureSessionFromURL();
+    await guardAdmin();
+  } catch (e) {
+    console.error(e);
+    // ✅ 흰 화면 방지
+    document.documentElement.classList.remove("protecting");
+  }
+})();
+
 
     /* -------------------------------------------------------------------------
        2) 미리보기 바인딩
