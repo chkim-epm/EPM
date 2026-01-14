@@ -157,10 +157,13 @@ console.log("test3");
    - 해당 토큰을 세션으로 교환하여 현재 탭에 로그인 상태를 확립
    ============================================================================ */
 async function ensureSessionFromURL() {
+  // detectSessionInUrl 옵션이 자동으로 세션 교환 처리
+  // 여기서는 URL에 남은 code/access_token 흔적만 제거
   if (location.search.includes("code=") || location.hash.includes("access_token")) {
-    try { await sb.auth.exchangeCodeForSession(window.location.href); } catch(e) {}
+    history.replaceState({}, document.title, location.pathname);
   }
 }
+
 console.log("test4");
 
 /* ============================================================================
@@ -435,6 +438,7 @@ console.log("test16");
 </script>
 </body>
 </html>
+
 
 
 
