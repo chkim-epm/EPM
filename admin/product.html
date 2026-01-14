@@ -135,16 +135,32 @@ const DENIED_URL = "/admin/denied.html";  // 권한 없음 시
 /* ============================================================================
    Supabase 초기화: 브라우저 클라이언트 인스턴스 생성
    ============================================================================ */
+// ⭐ 쿠키 기반 Session Storage
+const cookieStorage = {
+  getItem: (key) => {
+    const match = document.cookie.match(new RegExp('(^| )' + key + '=([^;]+)'));
+    return match ? decodeURIComponent(match[2]) : null;
+  },
+  setItem: (key, value) => {
+    document.cookie = `${key}=${encodeURIComponent(value)}; path=/; SameSite=Lax`;
+  },
+  removeItem: (key) => {
+    document.cookie = `${key}=; Max-Age=0; path=/`;
+  }
+};
+
+// 2) Supabase 클라이언트 생성
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
   auth: {
     flowType: 'pkce',
     persistSession: true,
-    autoRefreshToken: false,
-    detectSessionInUrl: false,
-    storage: window.sessionStorage,
+    autoRefreshToken: true,
+    detectSessionInUrl: true,
+    storage: cookieStorage,   // ✅ 여기만 변경
     storageKey: 'epm-admin-auth'
   }
-});                                                                      
+});
+                                                                    
 
 /* ============================================================================
    OAuth 리디렉션 직후 세션 교환 처리
@@ -430,6 +446,7 @@ $("logoutBtn").addEventListener("click", async ()=>{ await sb.auth.signOut(); lo
 </script>
 </body>
 </html>
+
 
 
 
