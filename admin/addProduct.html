@@ -168,7 +168,8 @@
       </div>
 
       <div class="hint">여러장 선택 가능 (선택옵션)</div>
-
+<div id="extraPreview" style="display:flex; gap:6px; flex-wrap:wrap; margin-top:6px;"></div>
+      
       <!-- 제출 버튼 / 상태 메시지 -->
       <label></label>
       <div>
@@ -452,6 +453,20 @@ async function loadForEdit(productId) {
 
   updatePreview();
 }
+    // ✅ 기존 추가 이미지 불러오기
+const { data: imgs } = await sb
+  .from("product_image")
+  .select("id,url")
+  .eq("product_id", productId);
+
+if (imgs && imgs.length) {
+  const wrap = $("extraPreview");
+  wrap.innerHTML = imgs.map(img => `
+    <img src="${img.url}"
+         style="width:80px;height:80px;object-fit:cover;border-radius:6px;">
+  `).join("");
+}
+
 
 
 // ✅ [교체된 초기 진입 시퀀스]
