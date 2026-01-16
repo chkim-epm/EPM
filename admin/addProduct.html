@@ -119,8 +119,8 @@
       
 <!-- 필수: 제품 카테고리 -->
       <div class="row">
-  <label for="categoryKey">카테고리*</label>
-  <select id="categoryKey" style="width:100%; padding:10px 12px; border:1px solid #d0d7de; border-radius:8px; font-size:14px;">
+  <label for="categoryId">카테고리*</label>
+  <select id="categoryId" style="width:100%; padding:10px 12px; border:1px solid #d0d7de; border-radius:8px; font-size:14px;">
     <option value="">선택하세요</option>
   </select>
 </div>
@@ -331,24 +331,24 @@ const IS_EDIT = !!EDIT_ID;
 const $ = (id) => document.getElementById(id);
 
   const CATEGORY_TABLE = "productCategory"; // ✅ 너 테이블명에 맞게 수정
-const CATEGORY_KEY_COL = "category_key";   // ✅ 컬럼명 맞게
+const CATEGORY_ID_COL = "id";   // ✅ 컬럼명 맞게
 const CATEGORY_NAME_COL = "category_name"; // ✅ 컬럼명 맞게
 const CATEGORY_USE_COL = "use_yn";         // ✅ 컬럼명 맞게 (Y/N)
 
 async function loadCategoryOptions(selectedKey = "") {
-  const sel = $("categoryKey");
+  const sel = $("categoryId");
   if (!sel) return;
 
   const { data, error } = await sb
     .from(CATEGORY_TABLE)
-    .select(`${CATEGORY_KEY_COL}, ${CATEGORY_NAME_COL}, ${CATEGORY_USE_COL}`)
+    .select(`${CATEGORY_ID_COL}, ${CATEGORY_NAME_COL}, ${CATEGORY_USE_COL}`)
     .eq(CATEGORY_USE_COL, "Y")
     .order(CATEGORY_NAME_COL, { ascending: true });
 
   if (error) throw error;
 
   sel.innerHTML = `<option value="">선택하세요</option>` + (data || []).map(r => {
-    const k = r[CATEGORY_KEY_COL];
+    const k = r[CATEGORY_ID_COL];
     const n = r[CATEGORY_NAME_COL] || k;
     const selected = (String(k) === String(selectedKey)) ? "selected" : "";
     return `<option value="${k}" ${selected}>${n} (${k})</option>`;
@@ -484,8 +484,8 @@ async function loadForEdit(productId) {
   if (data.image_url) $("prevImg").src = data.image_url;
   
     // ✅ 수정 모드일 때 카테고리 select 자동 세팅
-  await loadCategoryOptions(data.category_key || "");
-  if ($("categoryKey")) $("categoryKey").value = data.category_key || "";
+  await loadCategoryOptions(data.categoryId || "");
+  if ($("categoryId")) $("categoryId").value = data.categoryId || "";
 
   const h1 = document.querySelector(".card h1");
   if (h1) h1.textContent = "제품 수정";
@@ -626,13 +626,13 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
   status.textContent = IS_EDIT ? "수정 중..." : "업로드 중...";
   submitBtn.disabled = true;
 
-  const categoryKey = $("categoryKey")?.value?.trim() || "";
+  const categoryId = $("categoryId")?.value?.trim() || "";
   const title = $("title").value.trim();
   const file  = $("image").files?.[0]; // 수정 모드에서는 안 넣어도 될 수 있음
 
     // ✅ 카테고리 키 읽기 + 필수 검증
   
-  if (!categoryKey) {
+  if (!categoryId) {
     status.className = "status err";
     status.textContent = "카테고리는 필수입니다.";
     submitBtn.disabled = false;
@@ -653,7 +653,7 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
 
     // ✅ 공통 payload (image_url은 아래에서 조건적으로 추가)
     const payload = {
-      category_key: categoryKey, // ✅ 추가
+      categoryId: categoryId, // ✅ 추가
       title,
       description: $("desc").value || null,
       material: $("material").value || null,
