@@ -320,6 +320,8 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
 // ✅ [추가] 수정 모드 판단용: URL ?id= 가 있으면 수정 모드
 const EDIT_ID = new URLSearchParams(location.search).get("id");
 const IS_EDIT = !!EDIT_ID;
+const $ = (id) => document.getElementById(id);
+
 
 
     /* -------------------------------------------------------------------------
@@ -459,16 +461,23 @@ const { data: imgs } = await sb
   .from("product_image")
   .select("id,url")
   .eq("product_id", productId);
+  
+  const wrap = $("extraPreview");
+
+// ✅ [추가] 삭제 대기열 초기화 (수정 진입 때마다)
+window.__extraDeleteQueue = []; // [{ id, url }]
 
 if (imgs && imgs.length) {
-  const wrap = $("extraPreview");
-  wrap.innerHTML = imgs.map(img => `
-    <div style="position:relative; width:80px; height:80px;">
+ wrap.innerHTML = (imgs && imgs.length)
+  ? imgs.map(img => `
+    <div style="position:relative; width:80px; height:80px;"
+         data-wrap="imgBox"
+         data-img-id="${img.id}"
+         data-img-url="${img.url}">
       <img src="${img.url}"
            style="width:80px;height:80px;object-fit:cover;border-radius:6px; display:block;">
       <button type="button"
-        data-img-id="${img.id}"
-        data-img-url="${img.url}"
+        data-action="mark-delete"
         style="
           position:absolute; top:4px; right:4px;
           width:22px; height:22px; border:0; border-radius:999px;
@@ -476,58 +485,34 @@ if (imgs && imgs.length) {
           font-size:14px; line-height:22px;
         ">×</button>
     </div>
-  `).join("");
+  `).join("")
+  : "";
 
   // ✅ 이벤트 위임: X 버튼 클릭 시 개별 삭제
-  wrap.onclick = async (e) => {
-    const btn = e.target.closest("button[data-img-id]");
-    if (!btn) return;
+wrap.onclick = (e) => {
+  const btn = e.target.closest("button[data-action='mark-delete']");
+  if (!btn) return;
 
-    const imgId = btn.getAttribute("data-img-id");
-    const imgUrl = btn.getAttribute("data-img-url");
-    await deleteExtraImage(imgId, imgUrl, btn);
-  };
-}
+  const box = btn.closest("div[data-wrap='imgBox']");
+  if (!box) return;
 
-// ✅ 추가이미지 1장 삭제: (1) storage 파일 삭제 (2) product_image row 삭제 (3) UI 제거
-async function deleteExtraImage(imgId, imgUrl, btnEl) {
-  const ok = confirm("이 추가 이미지를 삭제할까요?");
-  if (!ok) return;
+  const imgId  = box.getAttribute("data-img-id");
+  const imgUrl = box.getAttribute("data-img-url");
 
-  try {
-    // 1) 스토리지 경로 추출해서 파일 삭제
-    const path = extractStoragePathFromPublicUrl(imgUrl);
-    if (path) {
-      await sb.storage.from(BUCKET).remove([path]).catch(() => {});
-    }
+  // 중복 등록 방지
+  const exists = window.__extraDeleteQueue.some(x => String(x.id) === String(imgId));
+  if (!exists) window.__extraDeleteQueue.push({ id: imgId, url: imgUrl });
 
-    // 2) DB row 삭제
-    const { error } = await sb.from("product_image").delete().eq("id", imgId);
-    if (error) throw error;
-
-    // 3) UI에서 제거
-    const box = btnEl.closest("div");
-    if (box) box.remove();
-  } catch (e) {
-    console.error(e);
-    alert("추가이미지 삭제 실패: " + (e?.message || e));
-  }
-}
-
-// ✅ publicUrl → bucket 내부 경로 추출 (remove()에 넣을 값)
-function extractStoragePathFromPublicUrl(publicUrl) {
-  // 예: .../storage/v1/object/public/product-image/product/{id}/xxxx.jpg
-  try {
-    return publicUrl.split(`/storage/v1/object/public/${BUCKET}/`)[1] || null;
-  } catch {
-    return null;
-  }
-}
-
+  // UI에서만 제거
+  box.remove();
+};
   
 }
 
 
+
+  
+}
 
 
 // ✅ [교체된 초기 진입 시퀀스]
@@ -552,8 +537,7 @@ function extractStoragePathFromPublicUrl(publicUrl) {
        - 입력값 변동, 대표 이미지 선택 시 우측 '미리보기' 카드에 즉시 반영
        - 대표 이미지는 FileReader로 DataURL을 만들어 <img> src로 주입
        ------------------------------------------------------------------------- */
-    const $ = (id) => document.getElementById(id);
-
+    
     ["title", "desc", "material", "usage", "types", "price"].forEach(id => {
       $(id).addEventListener("input", updatePreview);
     });
@@ -763,6 +747,24 @@ if (extras.length) {
   progressBox.textContent = `추가 이미지 업로드 완료 (${total}장)`;
 } else {
   progressBox.textContent = "";
+}
+
+    // ✅ [추가] 수정 모드에서 "삭제 대기열" 실제 삭제 반영 (저장 눌렀을 때만)
+if (IS_EDIT && window.__extraDeleteQueue && window.__extraDeleteQueue.length) {
+  const q = window.__extraDeleteQueue.slice();
+  window.__extraDeleteQueue = []; // 처리 후 비우기
+
+  for (const item of q) {
+    // 1) storage 파일 삭제
+    const path = item.url.split(`/storage/v1/object/public/${BUCKET}/`)[1];
+    if (path) {
+      await sb.storage.from(BUCKET).remove([path]).catch(()=>{});
+    }
+
+    // 2) DB row 삭제
+    const { error } = await sb.from("product_image").delete().eq("id", item.id);
+    if (error) throw error;
+  }
 }
 
     status.className = "status ok";
