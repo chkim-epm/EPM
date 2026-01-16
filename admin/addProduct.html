@@ -783,37 +783,25 @@ if (IS_EDIT && window.__extraDeleteQueue && window.__extraDeleteQueue.length) {
   if (!btn) return;
 
   // ✅ 모드별 버튼 텍스트
+ // ✅ 취소 버튼: 저장/수정 취소 확인 후 목록으로 이동
+(function bindCancel() {
+  const btn = document.getElementById("cancelBtn");
+  if (!btn) return;
+
   btn.textContent = IS_EDIT ? "수정 취소" : "저장 취소";
 
-  btn.addEventListener("click", async () => {
+  btn.addEventListener("click", () => {
     const msg = IS_EDIT
-      ? "수정 취소 시 현재 변경된 내용이 사라집니다.\n취소하시겠습니까?"
-      : "저장 취소 시 현재 입력한 내용이 사라집니다.\n취소하시겠습니까?";
+      ? "수정 취소 시 현재 변경된 내용이 사라집니다.\n상품 목록으로 이동할까요?"
+      : "저장 취소 시 현재 입력한 내용이 사라집니다.\n상품 목록으로 이동할까요?";
 
     if (!confirm(msg)) return;
 
-    // ✅ 신규 등록 모드: 폼 초기화 + 미리보기 초기화
-    if (!IS_EDIT) {
-      ["title", "desc", "material", "usage", "types", "price"].forEach(id => ($(id).value = ""));
-      $("image").value = "";
-      $("images").value = "";
-      $("extraPreview").innerHTML = "";
-      $("extraProgress").textContent = "";
-      $("status").className = "status muted";
-      $("status").textContent = "";
-      updatePreview();
-      return;
-    }
-
-    // ✅ 수정 모드: 원본으로 되돌리기(가장 안전)
-    // - 네가 이미 loadForEdit(EDIT_ID)로 원본 로드 로직을 갖고 있으니 그걸 재사용
-    $("status").className = "status muted";
-    $("status").textContent = "원본으로 되돌리는 중...";
-    await loadForEdit(EDIT_ID);
-    $("status").className = "status muted";
-    $("status").textContent = "원본으로 되돌렸습니다.";
+    // ✅ 목록으로 이동 (네 상단 '제품 목록 보기'와 동일 경로)
+    location.href = "/admin/product.html";
   });
 })();
+
 
   </script>
 </body>
