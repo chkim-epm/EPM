@@ -341,35 +341,46 @@ const $ = (id) => document.getElementById(id);
        - ③ 통과 시 protecting 해제 + 사용자 표기
        ------------------------------------------------------------------------- */
 async function guardAdmin() {
-  console.log("[guard] entered");
-  
   let session;
-try {
-  console.log("[guard] before getSession");
 
-  const timeout = (ms) =>
-    new Promise((_, reject) =>
-      setTimeout(() => reject(new Error("getSession timeout")), ms)
-    );
+  try {
+    const timeout = (ms) =>
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("getSession timeout")), ms)
+      );
 
-  const { data, error } = await Promise.race([
-    sb.auth.getSession(),
-    timeout(2000) // ✅ 2초 안에 응답 없으면 타임아웃
-  ]);
+    const { data, error } = await Promise.race([
+      sb.auth.getSession(),
+      timeout(2000) // ✅ 2초 타임아웃
+    ]);
 
-  console.log("[guard] after getSession", { data, error });
-  if (error) throw error;
-  session = data?.session;
-} catch (e) {
-  console.error("[guard] getSession error:", e);
-  // ✅ 흰 화면 방지: 일단 화면은 열어두고 상태 표시
+    if (error) throw error;
+    session = data?.session;
+  } catch (e) {
+    console.error("[guard] getSession error:", e);
+
+    // ✅ 흰 화면 방지: 일단 화면 열고 안내/로그 확인 가능하게
+    document.documentElement.classList.remove("protecting");
+
+    // 원하면 여기서 로그인으로 보내도 됨:
+    // kickLogin();
+    return;
+  }
+
+  const user = session?.user;
+  if (!user) return kickLogin();
+
+  const email = user.email;
+  const ghUser = user.user_metadata?.user_name;
+  const ok =
+    (email && ADMIN_EMAILS.includes(email)) ||
+    (ghUser && ADMIN_USERNAMES.includes(ghUser));
+
+  if (!ok) return kickDenied();
+
+  document.getElementById("who").textContent = `(${email || ghUser})`;
   document.documentElement.classList.remove("protecting");
-  setStatus("getSession 오류: " + (e?.message || e));
-  return;
 }
-
-
-
 
 
     // 미로그인 시 현재 URL을 next로 붙여 로그인 페이지로 보냄 → 로그인 후 원위치 복귀 가능
@@ -756,14 +767,8 @@ if (IS_EDIT && window.__extraDeleteQueue && window.__extraDeleteQueue.length) {
   }
 }
 
-   status.className = "status ok";
-status.textContent = IS_EDIT ? "수정 완료! (목록으로 이동합니다)" : "등록 완료! (목록으로 이동합니다)";
-
-// ✅ 성공 시 목록으로 이동 (약간 딜레이 주면 사용자도 메시지 확인 가능)
-setTimeout(() => {
-  location.href = "/admin/product.html";
-}, 600);
-
+    status.className = "status ok";
+    status.textContent = IS_EDIT ? "수정 완료!" : "등록 완료!";
   } catch (e) {
     console.error(e);
     status.className = "status err";
@@ -797,3 +802,5 @@ setTimeout(() => {
   </script>
 </body>
 </html>
+
+좋아 그럼 이제 수정완료하고 저장완료시에도 제품목록으로 들어가게 해줘 수정할 부분이랑 수정할 코드줘봐
