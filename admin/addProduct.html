@@ -570,6 +570,19 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
       price: $("price").value ? Number($("price").value) : null,
     };
 
+    // ✅ [추가] 수정 모드에서 대표이미지 교체 시 기존 대표이미지 URL 기억
+let oldMainUrl = null;
+if (IS_EDIT && file) {
+  const { data: oldRow } = await sb
+    .from("product")
+    .select("image_url")
+    .eq("id", EDIT_ID)
+    .single();
+
+  oldMainUrl = oldRow?.image_url || null;
+}
+
+
  // ✅ [변경] 대표 이미지는 productId 폴더에 넣어야 하므로,
 // 신규는 productId 확보 후 업로드/업데이트 해야 함.
 // (여기서는 일단 업로드를 미룸: 아래 신규/수정 분기 이후에 업로드함)
@@ -628,8 +641,18 @@ if (__mainFile) {
     .eq("id", productId);
 
   if (mainUpdErr) throw mainUpdErr;
+// ✅ 완성본: 수정 모드에서 대표이미지 교체 성공 후, 이전 대표 이미지 파일 삭제
+if (oldMainUrl) {
+  // oldMainUrl 예: https://.../storage/v1/object/public/product-image/product/{id}/main_xxx.jpg
+  // remove()에는 버킷 내부 경로만 필요: product/{id}/main_xxx.jpg
+  const oldPath = oldMainUrl.split(`/storage/v1/object/public/${BUCKET}/`)[1];
+  if (oldPath) {
+    await sb.storage.from(BUCKET).remove([oldPath]).catch(() => {});
+  }
+}
 }
 
+    
     // ✅ 추가 이미지는 "선택된 것만" 업로드해서 product_image에 insert
     const extras = imagesInput?.files ? Array.from(imagesInput.files) : [];
     if (extras.length) {
