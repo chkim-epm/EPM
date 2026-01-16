@@ -768,7 +768,7 @@ if (IS_EDIT && window.__extraDeleteQueue && window.__extraDeleteQueue.length) {
 }
 
     status.className = "status ok";
-    status.textContent = IS_EDIT ? "수정 완료!" : "등록 완료!";
+    status.textContent = IS_EDIT ? "수정 완료! 잠시 후 목록으로 이동합니다." : "등록 완료! 잠시 후 목록으로 이동합니다.";
     setTimeout(() => {
                   location.href = "/admin/product.html";
           }, 600);
