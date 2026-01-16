@@ -570,47 +570,65 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
       price: $("price").value ? Number($("price").value) : null,
     };
 
-    // ✅ 대표 이미지 업로드는 "파일을 새로 선택한 경우에만" 수행
-    if (file) {
-      const safeBase = file.name
-        .normalize("NFKD")
-        .replace(/[^\w.\-]+/g, "_")
-        .replace(/^_+|_+$/g, "");
+ // ✅ [변경] 대표 이미지는 productId 폴더에 넣어야 하므로,
+// 신규는 productId 확보 후 업로드/업데이트 해야 함.
+// (여기서는 일단 업로드를 미룸: 아래 신규/수정 분기 이후에 업로드함)
+let __mainFile = file || null;
 
-      const mainName = `${Date.now()}_${safeBase}`.replace(/_+/g, "_");
-      const mainPath = `product/${mainName}`;
+let productId = EDIT_ID;
 
-      const { error: upErr } = await sb.storage
-        .from(BUCKET)
-        .upload(mainPath, file, {
-          upsert: false,
-          cacheControl: "3600",
-          contentType: file.type || "application/octet-stream",
-        });
-      if (upErr) throw upErr;
+// ✅ [변경] 신규/수정 처리 (신규는 먼저 productId 확보)
+if (IS_EDIT) {
+  // 1) 텍스트/가격 등 업데이트
+  const { error: upErr } = await sb
+    .from("product")
+    .update(payload)          // payload에 image_url은 없음
+    .eq("id", EDIT_ID);
+  if (upErr) throw upErr;
 
-      const { data: pub } = sb.storage.from(BUCKET).getPublicUrl(mainPath);
-      payload.image_url = pub.publicUrl;
-    }
+  productId = EDIT_ID;
+} else {
+  // 1) 신규는 먼저 row 생성 (image_url 없이) → id 확보
+  const insertResult = await sb
+    .from("product")
+    .insert(payload)          // payload에 image_url은 없음
+    .select("id")
+    .single();
+  if (insertResult.error) throw insertResult.error;
 
-    let productId = EDIT_ID;
+  productId = insertResult.data.id;
+}
 
-    // ✅ 신규 vs 수정 분기
-    if (IS_EDIT) {
-      const { error: upErr } = await sb
-        .from("product")
-        .update(payload)
-        .eq("id", EDIT_ID);
-      if (upErr) throw upErr;
-    } else {
-      const insertResult = await sb
-        .from("product")
-        .insert(payload)
-        .select("id")
-        .single();
-      if (insertResult.error) throw insertResult.error;
-      productId = insertResult.data.id;
-    }
+// 2) 대표 이미지 업로드 (파일 선택한 경우에만)
+//    ✅ 대표/추가 모두 product/{productId}/ 로 통일
+if (__mainFile) {
+  const safeBase = __mainFile.name
+    .normalize("NFKD")
+    .replace(/[^\w.\-]+/g, "_")
+    .replace(/^_+|_+$/g, "");
+
+  const mainName = `main_${Date.now()}_${safeBase}`.replace(/_+/g, "_");
+  const mainPath = `product/${productId}/${mainName}`;
+
+  const { error: upErr } = await sb.storage
+    .from(BUCKET)
+    .upload(mainPath, __mainFile, {
+      upsert: false,
+      cacheControl: "3600",
+      contentType: __mainFile.type || "application/octet-stream",
+    });
+  if (upErr) throw upErr;
+
+  const { data: pub } = sb.storage.from(BUCKET).getPublicUrl(mainPath);
+
+  // 3) product.image_url 업데이트
+  const { error: mainUpdErr } = await sb
+    .from("product")
+    .update({ image_url: pub.publicUrl })
+    .eq("id", productId);
+
+  if (mainUpdErr) throw mainUpdErr;
+}
 
     // ✅ 추가 이미지는 "선택된 것만" 업로드해서 product_image에 insert
     const extras = imagesInput?.files ? Array.from(imagesInput.files) : [];
