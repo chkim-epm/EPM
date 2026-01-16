@@ -344,26 +344,12 @@ async function guardAdmin() {
   let session;
 
   try {
-    const timeout = (ms) =>
-      new Promise((_, reject) =>
-        setTimeout(() => reject(new Error("getSession timeout")), ms)
-      );
-
-    const { data, error } = await Promise.race([
-      sb.auth.getSession(),
-      timeout(2000) // ✅ 2초 타임아웃
-    ]);
-
+    const { data, error } = await sb.auth.getSession();
     if (error) throw error;
     session = data?.session;
   } catch (e) {
     console.error("[guard] getSession error:", e);
-
-    // ✅ 흰 화면 방지: 일단 화면 열고 안내/로그 확인 가능하게
     document.documentElement.classList.remove("protecting");
-
-    // 원하면 여기서 로그인으로 보내도 됨:
-    // kickLogin();
     return;
   }
 
@@ -381,6 +367,7 @@ async function guardAdmin() {
   document.getElementById("who").textContent = `(${email || ghUser})`;
   document.documentElement.classList.remove("protecting");
 }
+
 
 
     // 미로그인 시 현재 URL을 next로 붙여 로그인 페이지로 보냄 → 로그인 후 원위치 복귀 가능
