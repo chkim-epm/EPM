@@ -767,8 +767,14 @@ if (IS_EDIT && window.__extraDeleteQueue && window.__extraDeleteQueue.length) {
   }
 }
 
-    status.className = "status ok";
-    status.textContent = IS_EDIT ? "수정 완료!" : "등록 완료!";
+   status.className = "status ok";
+status.textContent = IS_EDIT ? "수정 완료! (목록으로 이동합니다)" : "등록 완료! (목록으로 이동합니다)";
+
+// ✅ 성공 시 목록으로 이동 (약간 딜레이 주면 사용자도 메시지 확인 가능)
+setTimeout(() => {
+  location.href = "/admin/product.html";
+}, 600);
+
   } catch (e) {
     console.error(e);
     status.className = "status err";
