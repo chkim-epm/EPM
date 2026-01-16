@@ -777,10 +777,6 @@ if (IS_EDIT && window.__extraDeleteQueue && window.__extraDeleteQueue.length) {
     submitBtn.disabled = false;
   }
 });
-// ✅ 취소 버튼: 저장/수정 중 변경사항 초기화(확인창)
-(function bindCancel() {
-  const btn = document.getElementById("cancelBtn");
-  if (!btn) return;
 
   // ✅ 모드별 버튼 텍스트
  // ✅ 취소 버튼: 저장/수정 취소 확인 후 목록으로 이동
