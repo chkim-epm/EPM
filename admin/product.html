@@ -448,18 +448,63 @@ function renderPager(totalCount, page){
    - 4) 현재 페이지 재조회
    - ※ 추가 이미지가 별도 테이블(product_image 등)로 관리되면 그 정리 로직도 추가
    ============================================================================ */
+  
 async function deleteProduct(id, image_url){
-  const ok = confirm("정말 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다."); if(!ok) return;
+  const ok = confirm("정말 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.");
+  if (!ok) return;
+
   setStatus("삭제 중…");
-  if (image_url) {
-    const path = extractStoragePath(image_url);
-    if (path) { await sb.storage.from(BUCKET).remove([path]).catch(()=>{}); }
+
+  try {
+    // ✅ [추가] 1) 추가 이미지 목록 조회
+    const { data: imgs, error: imgErr } = await sb
+      .from("product_image")
+      .select("url")
+      .eq("product_id", id);
+
+    if (imgErr) throw imgErr;
+
+    // ✅ [추가] 2) 추가 이미지 스토리지 삭제
+    const extraPaths = (imgs || [])
+      .map(x => extractStoragePath(x.url))
+      .filter(Boolean);
+
+    if (extraPaths.length) {
+      await sb.storage.from(BUCKET).remove(extraPaths);
+    }
+
+    // ✅ [추가] 3) 추가 이미지 DB row 삭제
+    if ((imgs || []).length) {
+      const { error: delImgRowErr } = await sb
+        .from("product_image")
+        .delete()
+        .eq("product_id", id);
+
+      if (delImgRowErr) throw delImgRowErr;
+    }
+
+    // ✅ [기존] 4) 대표 이미지 스토리지 삭제
+    if (image_url) {
+      const path = extractStoragePath(image_url);
+      if (path) {
+        await sb.storage.from(BUCKET).remove([path]);
+      }
+    }
+
+    // ✅ [기존] 5) product row 삭제
+    const { error } = await sb.from("product").delete().eq("id", id);
+    if (error) throw error;
+
+    setStatus("삭제 완료");
+    await loadProducts(currentPage, currentQuery);
+
+  } catch (e) {
+    console.error(e);
+    setStatus("삭제 실패: " + (e?.message || e));
   }
-  // (추가 이미지 쓰는 경우 product_image 정리 로직도 여기서 수행)
-  const { error } = await sb.from("product").delete().eq("id", id);
-  if (error){ setStatus("삭제 실패: " + error.message); return; }
-  setStatus("삭제 완료"); await loadProducts(currentPage, currentQuery);
 }
+
+  
 /* ============================================================================
    검색 이벤트
    - 입력 지연(debounce) 300ms 후 조회
@@ -505,6 +550,7 @@ $("logoutBtn").addEventListener("click", async ()=>{ await sb.auth.signOut(); lo
 </script>
 </body>
 </html>
+
 
 
 
