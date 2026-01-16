@@ -166,6 +166,8 @@
         <label for="images">추가 이미지</label>
         <input id="images" type="file" accept="image/*" multiple />
       </div>
+      
+      <div id="extraProgress" class="status muted"></div>
 
       <div class="hint">여러장 선택 가능 (선택옵션)</div>
 <div id="extraPreview" style="display:flex; gap:6px; flex-wrap:wrap; margin-top:6px;"></div>
@@ -461,10 +463,68 @@ const { data: imgs } = await sb
 if (imgs && imgs.length) {
   const wrap = $("extraPreview");
   wrap.innerHTML = imgs.map(img => `
-    <img src="${img.url}"
-         style="width:80px;height:80px;object-fit:cover;border-radius:6px;">
+    <div style="position:relative; width:80px; height:80px;">
+      <img src="${img.url}"
+           style="width:80px;height:80px;object-fit:cover;border-radius:6px; display:block;">
+      <button type="button"
+        data-img-id="${img.id}"
+        data-img-url="${img.url}"
+        style="
+          position:absolute; top:4px; right:4px;
+          width:22px; height:22px; border:0; border-radius:999px;
+          background:rgba(0,0,0,.65); color:#fff; cursor:pointer;
+          font-size:14px; line-height:22px;
+        ">×</button>
+    </div>
   `).join("");
+
+  // ✅ 이벤트 위임: X 버튼 클릭 시 개별 삭제
+  wrap.onclick = async (e) => {
+    const btn = e.target.closest("button[data-img-id]");
+    if (!btn) return;
+
+    const imgId = btn.getAttribute("data-img-id");
+    const imgUrl = btn.getAttribute("data-img-url");
+    await deleteExtraImage(imgId, imgUrl, btn);
+  };
 }
+
+// ✅ 추가이미지 1장 삭제: (1) storage 파일 삭제 (2) product_image row 삭제 (3) UI 제거
+async function deleteExtraImage(imgId, imgUrl, btnEl) {
+  const ok = confirm("이 추가 이미지를 삭제할까요?");
+  if (!ok) return;
+
+  try {
+    // 1) 스토리지 경로 추출해서 파일 삭제
+    const path = extractStoragePathFromPublicUrl(imgUrl);
+    if (path) {
+      await sb.storage.from(BUCKET).remove([path]).catch(() => {});
+    }
+
+    // 2) DB row 삭제
+    const { error } = await sb.from("product_image").delete().eq("id", imgId);
+    if (error) throw error;
+
+    // 3) UI에서 제거
+    const box = btnEl.closest("div");
+    if (box) box.remove();
+  } catch (e) {
+    console.error(e);
+    alert("추가이미지 삭제 실패: " + (e?.message || e));
+  }
+}
+
+// ✅ publicUrl → bucket 내부 경로 추출 (remove()에 넣을 값)
+function extractStoragePathFromPublicUrl(publicUrl) {
+  // 예: .../storage/v1/object/public/product-image/product/{id}/xxxx.jpg
+  try {
+    return publicUrl.split(`/storage/v1/object/public/${BUCKET}/`)[1] || null;
+  } catch {
+    return null;
+  }
+}
+
+  
 }
 
 
@@ -654,34 +714,56 @@ if (oldMainUrl) {
 
     
     // ✅ 추가 이미지는 "선택된 것만" 업로드해서 product_image에 insert
-    const extras = imagesInput?.files ? Array.from(imagesInput.files) : [];
-    if (extras.length) {
-      const baseDir = `product/${productId}`;
-      for (const f of extras) {
-        const safe = f.name
-          .normalize("NFKD")
-          .replace(/[^\w.\-]+/g, "_")
-          .replace(/^_+|_+$/g, "");
-        const name = `${Date.now()}_${safe}`.replace(/_+/g, "_");
-        const p = `${baseDir}/${name}`;
+const extras = imagesInput?.files ? Array.from(imagesInput.files) : [];
+const progressBox = $("extraProgress");
 
-        const { error: upErr2 } = await sb.storage
-          .from(BUCKET)
-          .upload(p, f, {
-            upsert: false,
-            cacheControl: "3600",
-            contentType: f.type || "application/octet-stream",
-          });
-        if (upErr2) throw upErr2;
+if (extras.length) {
+  const baseDir = `product/${productId}`;
+  let done = 0;
+  const total = extras.length;
 
-        const { data: pub2 } = sb.storage.from(BUCKET).getPublicUrl(p);
-        const insImg = await sb.from("product_image").insert({
-          product_id: productId,
-          url: pub2.publicUrl,
-        });
-        if (insImg.error) throw insImg.error;
-      }
-    }
+  progressBox.className = "status muted";
+  progressBox.textContent = `추가 이미지 업로드 시작 (0 / ${total})`;
+
+  for (const f of extras) {
+    done++;
+
+    progressBox.textContent = `추가 이미지 업로드 중... (${done} / ${total})`;
+
+    const safe = f.name
+      .normalize("NFKD")
+      .replace(/[^\w.\-]+/g, "_")
+      .replace(/^_+|_+$/g, "");
+
+    const name = `${Date.now()}_${safe}`.replace(/_+/g, "_");
+    const p = `${baseDir}/${name}`;
+
+    // 1) Storage 업로드
+    const { error: upErr2 } = await sb.storage
+      .from(BUCKET)
+      .upload(p, f, {
+        upsert: false,
+        cacheControl: "3600",
+        contentType: f.type || "application/octet-stream",
+      });
+    if (upErr2) throw upErr2;
+
+    // 2) Public URL 얻기
+    const { data: pub2 } = sb.storage.from(BUCKET).getPublicUrl(p);
+
+    // 3) DB row insert
+    const insImg = await sb.from("product_image").insert({
+      product_id: productId,
+      url: pub2.publicUrl,
+    });
+    if (insImg.error) throw insImg.error;
+  }
+
+  progressBox.className = "status ok";
+  progressBox.textContent = `추가 이미지 업로드 완료 (${total}장)`;
+} else {
+  progressBox.textContent = "";
+}
 
     status.className = "status ok";
     status.textContent = IS_EDIT ? "수정 완료!" : "등록 완료!";
