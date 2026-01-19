@@ -275,7 +275,7 @@ h1 {
                 <tr><th>재질</th><td>${p.material || '-'}</td></tr>
                 <tr><th>용도</th><td>${p.usage || '-'}</td></tr>
                 <tr><th>종류</th><td>${p.types || '-'}</td></tr>
-				<!-- <tr><th>가격</th><td>${p.price ? Number(p.price).toLocaleString() : '-'}</td></tr> -->
+				<tr><th>가격</th><td>${p.price ? Number(p.price).toLocaleString() + '원' : '-'}</td></tr>
               </tbody>
             </table>
           </div>
@@ -422,6 +422,7 @@ h1 {
 
 </body>
 </html>
+
 
 
 
