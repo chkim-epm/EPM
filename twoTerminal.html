@@ -193,41 +193,14 @@ h1 {
 </head>
 <body>
 
-<!-- 네비게이션 바: 로고/상호 + 주요 메뉴 -->
-<nav>
-<div class="nav-logo">
-  <a href="index.html" style="text-decoration:none; color:inherit;">
-  <!-- E·P·M 글자를 인라인으로 붙여 공백/줄바꿈 간격 문제 방지 -->
-    <span class="logo-e" style="color:green;">E</span><span class="logo-p" style="color:red;">P</span><span class="logo-m" style="color:blue;">M</span>
-	(주)이스트파워메탈
-  </a>
-</div>
-
- <!-- 오른쪽 메뉴 영역 -->
-    <div class="nav-menu">
-      <!-- 회사소개: 드롭다운 서브메뉴 포함(has-sub) -->
-      <div class="nav-item has-sub">
-        <a href="companyHistory.html">회사소개</a>
-        <!-- 서브 메뉴: 회사 소개 / 조직도 / 인사말 -->
-        <div class="nav-sub">
-          <a href="companyHistory.html">회사 소개</a>
-          <a href="orgChart.html">조직도</a>
-          <a href="greeting.html">인사말</a>
-        </div>
-      </div>
-      <!-- 제품 페이지 링크 -->
-      <div class="nav-item"><a href="product.html">부스바</a></div>
-      <!-- 무감전 기술 페이지 -->
-      <div class="nav-item"><a href="noElectrocution.html">무감전</a></div>
-      <!-- 오시는 길 페이지 -->
-      <div class="nav-item"><a href="map.html">오시는 길</a></div>
-    </div>
-  </nav>
+	
+<!-- 네비게이션 바 -->
+<div id="nav"></div>
+<script src="/commonNav.js" defer></script>
+<!-- 네비게이션 바 끝 nav.html그리드, commonNav로 끌어오기, common로 CSS-->	
 
 
-
-<h1>제품 목록</h1>
-<div class="nav-item"><a href="/admin/productCategory.html">카테고리</a></div>
+<h1>2단 단자대</h1>
 <!-- 검색바: 제품명/설명/재질/용도/종류를 통합 검색 -->
 <div class="search-bar" style="max-width:1200px;margin:0 auto;padding:0 2rem 0;display:flex;gap:8px;align-items:center;">
   <input id="q" type="search" placeholder="제품명, 설명, 재질, 용도, 종류 검색" style="flex:1;padding:10px 12px;border:1px solid #d0d7de;border-radius:8px;font-size:14px;">
@@ -380,6 +353,7 @@ h1 {
       .select("*", { count: "exact" })
       .order("created_at", { ascending: false })
       .range(from, to);
+	  query = query.eq("categoryId", "3");
 
     // 검색어가 있으면 title/description/material/usage/types 중 하나라도 일치(ILIKE)
     if (q && q.trim() !== "") {
@@ -444,3 +418,4 @@ h1 {
 
 </body>
 </html>
+
