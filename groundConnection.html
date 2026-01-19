@@ -226,7 +226,7 @@ h1 {
 
 
 
-<h1>2단 단자</h1>
+<h1>접지지</h1>
 <div class="nav-item"><a href="/admin/productCategory.html">카테고리</a></div>
 <!-- 검색바: 제품명/설명/재질/용도/종류를 통합 검색 -->
 <div class="search-bar" style="max-width:1200px;margin:0 auto;padding:0 2rem 0;display:flex;gap:8px;align-items:center;">
@@ -380,7 +380,7 @@ h1 {
       .select("*", { count: "exact" })
       .order("created_at", { ascending: false })
       .range(from, to);
-	  query = query.eq("categoryId", "2"); // categoryId - 1:부스바, 2:접지, 3:2단단자대
+	  query = query.eq("categoryId", "3"); // categoryId - 1:부스바, 2:접지, 3:2단단자대
     
 
     // 검색어가 있으면 title/description/material/usage/types 중 하나라도 일치(ILIKE)
@@ -446,4 +446,5 @@ h1 {
 
 </body>
 </html>
+
 
