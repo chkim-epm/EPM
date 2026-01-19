@@ -207,35 +207,44 @@
 
 <!-- 네비게이션 바 -->
 <nav>
-  <!-- 왼쪽 로고 영역 -->
-  <div class="nav-logo">
-    <a href="index.html" style="text-decoration:none; color:inherit;">
-      <!-- E P M 로고 텍스트 (한 줄로 배치) -->
-      <span class="logo-e" style="color:green;">E</span><span class="logo-p" style="color:red;">P</span><span class="logo-m" style="color:blue;">M</span>
-      (주)이스트파워메탈
-    </a>
-  </div>
-
-  <!-- 오른쪽 메뉴 영역 -->
-  <div class="nav-menu">
-    <!-- 회사소개: 드롭다운 서브메뉴 포함 -->
-    <div class="nav-item has-sub">
-      <a href="companyHistory.html">회사소개</a>
-      <!-- 드롭다운 서브 메뉴: 회사 소개 / 조직도 / 인사말 -->
-      <div class="nav-sub">
-        <a href="companyHistory.html">회사 소개</a>
-        <a href="orgChart.html">조직도</a>
-        <a href="greeting.html">인사말</a>
+<div class="nav-logo">
+  <a href="index.html" style="text-decoration:none; color:inherit;">
+  <!-- epm 코드 줄바꿈 하면 간격 생겨서 인라인으로 작성-->
+    <span class="logo-e" style="color:green;">E</span><span class="logo-p" style="color:red;">P</span><span class="logo-m" style="color:blue;">M</span>
+	(주)이스트파워메탈
+  </a>
+</div>
+<!-- 오른쪽 메뉴 영역 -->
+    <div class="nav-menu">
+		
+      <!-- 회사소개: 드롭다운 서브메뉴 포함(has-sub) -->
+      <div class="nav-item has-sub">
+        <a href="companyHistory.html">회사소개</a>
+        <!-- 서브 메뉴: 회사 소개 / 조직도 / 인사말 -->
+        <div class="nav-sub">
+          <a href="companyHistory.html">회사소개</a>
+          <a href="orgChart.html">조직도</a>
+          <a href="greeting.html">인사말</a>
+        </div>
       </div>
+		
+	 <!-- 제품소개: 드롭다운 서브메뉴 포함(has-sub) -->	
+	<div class="nav-item has-sub">	
+      <a href="product.html">제품소개</a>
+        <!-- 서브 메뉴: 제품소개 / 부스바 / 2단단자대 -->
+        <div class="nav-sub">
+          <a href="product.html">부스바</a>
+          <a href="product.html">2단 단자대</a>
+        </div>
+      </div>
+		
+      <!-- 무감전 기술 페이지 -->
+      <div class="nav-item"><a href="noElectrocution.html">무감전</a></div>
+      <!-- 오시는 길 페이지 -->
+      <div class="nav-item"><a href="map.html">오시는 길</a></div>
+		
     </div>
-    <!-- 부스바 페이지 링크 -->
-    <div class="nav-item"><a href="product.html">부스바</a></div>
-    <!-- 무감전 페이지 링크 -->
-    <div class="nav-item"><a href="noElectrocution.html">무감전</a></div>
-    <!-- 오시는 길 페이지 링크 (현재 페이지) -->
-    <div class="nav-item"><a href="map.html">오시는 길</a></div>
-  </div>
-</nav>
+  </nav>
 
 <!-- 상단 페이지 제목 -->
 <h1 class="page-title">오시는길</h1>
@@ -301,3 +310,4 @@
 
 </body>
 </html>
+
