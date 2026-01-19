@@ -197,10 +197,10 @@ h1 {
 <!-- 네비게이션 바 -->
 <div id="nav"></div>
 <script src="/commonNav.js" defer></script>
+<!-- 네비게이션 바 끝 nav.html그리드, commonNav로 끌어오기, common로 CSS-->	
 
 
-<h1>접지지</h1>
-<div class="nav-item"><a href="/admin/productCategory.html">카테고리</a></div>
+<h1>접지</h1>
 <!-- 검색바: 제품명/설명/재질/용도/종류를 통합 검색 -->
 <div class="search-bar" style="max-width:1200px;margin:0 auto;padding:0 2rem 0;display:flex;gap:8px;align-items:center;">
   <input id="q" type="search" placeholder="제품명, 설명, 재질, 용도, 종류 검색" style="flex:1;padding:10px 12px;border:1px solid #d0d7de;border-radius:8px;font-size:14px;">
@@ -348,14 +348,15 @@ h1 {
     const to   = from + PAGE_SIZE - 1;
 
     // 기본 쿼리: 최신 등록순(created_at desc), 전체 개수 count 포함
+	// categoryId - 1:부스바, 2:접지, 3:2단단자대
     let query = sb
       .from("product")
       .select("*", { count: "exact" })
       .order("created_at", { ascending: false })
       .range(from, to);
-	  
-	  query = query.eq("categoryId", 3); 
-	  // categoryId - 1:부스바, 2:접지, 3:2단단자대
+		query = query.eq("categoryId", "2");
+	
+	
     
 
     // 검색어가 있으면 title/description/material/usage/types 중 하나라도 일치(ILIKE)
@@ -421,6 +422,7 @@ h1 {
 
 </body>
 </html>
+
 
 
 
