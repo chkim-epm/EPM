@@ -166,6 +166,174 @@
 }
 /* ===== ▲ 추가 끝 ▲ ===== */
 
+
+
+/* =========================
+   HERO SLIDER
+========================= */
+.hero{
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* 슬라이드 래퍼 */
+.hero-slides{
+  position:absolute;
+  inset:0;
+}
+
+/* 각 슬라이드 */
+.hero-slide{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  transform: scale(1.02);
+  transition: opacity .7s ease, transform .9s ease;
+  pointer-events:none;
+}
+.hero-slide.is-active{
+  opacity:1;
+  transform: scale(1);
+  pointer-events:auto;
+}
+
+/* 배경 미디어(영상/이미지) */
+.hero-media{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:1;
+}
+
+/* 딤(회색/어둡게) */
+.hero-dim{
+  position:absolute;
+  inset:0;
+  background: rgba(0,0,0,.35); /* 여기 숫자 높이면 더 어두워짐 */
+  z-index:2;
+}
+
+/* 중앙 텍스트 */
+.hero-content{
+  position:relative;
+  z-index:3;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding: 0 16px;
+  color:#fff;
+  text-shadow: 0 6px 18px rgba(0,0,0,.45);
+}
+.hero-content h1{
+  margin:0 0 12px;
+  font-size: clamp(24px, 4vw, 52px);
+  font-weight:800;
+  letter-spacing:.5px;
+}
+.hero-content p{
+  margin:0;
+  max-width: 920px;
+  font-size: clamp(14px, 1.6vw, 20px);
+  opacity:.95;
+}
+
+/* 우측 하단 컨트롤 */
+.hero-controls{
+  position:absolute;
+  left: 48px;             /* ✅ 왼쪽 여백 */
+  right: 48px;            /* ✅ 오른쪽 여백 (끝까지 느낌) */
+  bottom: 34px;
+  z-index:4;
+  display:flex;
+  align-items:center;
+  gap: 18px;
+}
+
+
+/* 흰 줄(프로그레스 바) */
+.hero-progress{
+  flex: 1;
+  width: auto;
+  height: 4px;
+  background: rgba(255,255,255,.30);
+  overflow:hidden;
+  border-radius: 999px;
+  position: relative;
+}
+
+.hero-progress-bar{
+  position:absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 200px;                 /* ✅ 네모(짧은 바) 길이: 32~60 추천 */
+  background: #fff;
+  border-radius: 6px;          /* ✅ 네모 느낌이면 4~8, 완전 둥글면 999 */
+  transform: translateX(0);
+  will-change: transform;
+}
+
+
+
+
+/* 01/02/03 */
+.hero-pager{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+}
+.hero-dot{
+  background: transparent;
+  border:0;
+  color: rgba(255,255,255,.7);
+  font-weight:700;
+  font-size: 16px;
+  cursor:pointer;
+  padding: 6px 4px;
+}
+.hero-dot.is-active{
+  color:#fff;
+}
+
+/* 모바일 조정 */
+@media (max-width:768px){
+  .hero{ height: 80vh; }
+  .hero-controls{
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    gap: 12px;
+  }
+  .hero-progress{ height: 4px; }
+  .hero-dot{ font-size: 14px; }
+}
+
+
+/* =========================
+   NAVBAR 투명 오버레이용 (common.css/ nav 구조에 따라 조정 필요)
+   #nav 안에 실제 nav가 들어오니까, 아래처럼 강제로 위에 얹히게
+========================= */
+#nav{
+  position: fixed;
+  top:0; left:0; right:0;
+  z-index: 9999;
+}
+
+/* commonNav.js가 넣는 실제 nav가 nav 태그면 적용됨 */
+#nav nav{
+  background: rgba(0,0,0,.18) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255,255,255,.10);
+}
+
+	
 	</style>
 </head>
 
@@ -179,18 +347,60 @@
 
 <!-- 메인 섹션 -->
 
-<div class="section" id="s1">
-  <!-- 배경 동영상 -->
-  <video autoplay muted loop playsinline class="bg-video">
-    <source src="image\홈페이지_공장.mp4" type="video/mp4">
-    브라우저가 동영상을 지원하지 않습니다.
-  </video>
 
-  <div class="text-area" id="s2">
-    <h1>버스바 가공&납품 - (주)이스트파워메탈</h1>
-    <h5>동버스바, 부스바, 비철금속을 전문적으로 가공&납품하는 전력·통신 솔루션 기업입니다.</h5>
+<!-- 메인 섹션 -->
+<!-- HERO SLIDER (01/02/03) -->
+<section class="hero" id="hero">
+  <div class="hero-slides" id="heroSlides">
+
+    <!-- Slide 1 (video 가능) -->
+    <div class="hero-slide" data-type="image" data-duration="4000">
+	  <img class="hero-media" src="image/1번배경.png" alt="이스트파워메탈 동버스바 가공 설비">
+      <div class="hero-dim"></div>
+
+      <div class="hero-content">
+        <h1>버스바 가공&납품 - (주)이스트파워메탈</h1>
+        <p>동버스바, 부스바, 비철금속을 전문적으로 가공&납품하는 전력·통신 솔루션 기업입니다.</p>
+      </div>
+    </div>
+
+    <!-- Slide 2 (image) -->
+    <div class="hero-slide" data-type="image" data-duration="4000">
+      <img class="hero-media" src="image/2번배경.png" alt="부스바바">
+      <div class="hero-dim"></div>
+
+      <div class="hero-content">
+        <h1>EAST POWER METAL</h1>
+        <p>Performance Built by Engineering Precision</p>
+      </div>
+    </div>
+
+    <!-- Slide 3 (image) -->
+    <div class="hero-slide" data-type="image" data-duration="4000">
+      <img class="hero-media" src="image/3번배경.png" alt="가공 설비">
+      <div class="hero-dim"></div>
+
+      <div class="hero-content">
+        <h1>맞춤 절단 · 절곡 · 타공</h1>
+        <p>품질/납기/정밀도를 기준으로 납품합니다.</p>
+      </div>
+    </div>
+
   </div>
-</div>
+
+  <!-- 우측 하단 컨트롤 (프로그레스 바 + 01/02/03) -->
+  <div class="hero-controls">
+    <div class="hero-progress">
+      <span class="hero-progress-bar" id="heroProgressBar"></span>
+    </div>
+
+    <div class="hero-pager" id="heroPager" aria-label="hero pager">
+      <button class="hero-dot is-active" data-index="0" type="button">01</button>
+      <button class="hero-dot" data-index="1" type="button">02</button>
+      <button class="hero-dot" data-index="2" type="button">03</button>
+    </div>
+  </div>
+</section>
 
 
  <!-- 섹션: Busbar 이미지 스트립 -->
@@ -212,6 +422,8 @@
     margin:0 0 20px;">
     Performance Built by Engineering Precision
 </h5>
+
+	
 
   <!-- 스트립 래퍼 (모서리 둥글게 + 그림자) -->
   <div style="
@@ -259,6 +471,87 @@
     <!-- 왼쪽 로고 -->
   
 </footer>
+<script>
+(function(){
+  const slides = Array.from(document.querySelectorAll(".hero-slide"));
+  const dots   = Array.from(document.querySelectorAll(".hero-dot"));
+  const bar    = document.getElementById("heroProgressBar");
+
+  if (!slides.length || !dots.length || !bar) return;
+
+  let idx = 0;
+  let timer = null;
+
+  function setActive(nextIdx){
+    idx = (nextIdx + slides.length) % slides.length;
+
+    slides.forEach((s,i)=> s.classList.toggle("is-active", i===idx));
+    dots.forEach((d,i)=> d.classList.toggle("is-active", i===idx));
+
+    restartProgress();
+    scheduleNext();
+  }
+
+  function getDuration(){
+    const ms = parseInt(slides[idx].dataset.duration || "7000", 10);
+    return Number.isFinite(ms) ? ms : 7000;
+  }
+
+  // ✅ 이동하는 네모 애니메이션
+  function restartProgress(){
+    const dur = getDuration();
+
+    // 초기 위치로 리셋
+    bar.style.transition = "none";
+    bar.style.transform = "translateX(0px)";
+    void bar.offsetWidth;
+
+    // 이동 거리 계산
+    const track = bar.parentElement;   // .hero-progress
+    const trackW = track.clientWidth;
+    const knobW  = bar.clientWidth;
+    const maxX   = Math.max(0, trackW - knobW);
+
+    // 이동 애니메이션 시작
+    bar.style.transition = `transform ${dur}ms linear`;
+    bar.style.transform  = `translateX(${maxX}px)`;
+  }
+
+  function scheduleNext(){
+    clearTimeout(timer);
+    timer = setTimeout(()=> setActive(idx + 1), getDuration());
+  }
+
+  // 숫자 클릭
+  dots.forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const n = parseInt(btn.dataset.index, 10);
+      if (!Number.isFinite(n)) return;
+      setActive(n);
+    });
+  });
+
+  // 시작
+  setActive(0);
+
+  // 탭 비활성/복귀 시 재시작
+  document.addEventListener("visibilitychange", ()=>{
+    if (document.hidden){
+      clearTimeout(timer);
+    }else{
+      restartProgress();
+      scheduleNext();
+    }
+  });
+
+  // ✅ 창 리사이즈 시 이동거리 재계산
+  window.addEventListener("resize", ()=>{
+    restartProgress();
+    scheduleNext();
+  });
+
+})();
+</script>
 
 
 </body>
