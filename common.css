@@ -180,9 +180,9 @@ nav .nav-item a:hover::after {
 
 footer.site-footer{
   position: relative;
-  background: rgba(10, 15, 28, 0.92);
+  background: #081a2b;  /* ✅ 단색으로 통일 */
   color: rgba(226,232,240,0.92);
-  padding: 42px 18px 18px;   /* ✅ 두껍게 */
+  padding: 42px 18px 18px;
   overflow: hidden;
 }
 
@@ -453,6 +453,7 @@ footer.site-footer a:hover{
   
 
 /* =========================================== 모바일 전용 CSS ==================================== */
+
 
 
 
