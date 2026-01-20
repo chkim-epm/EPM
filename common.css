@@ -96,38 +96,65 @@ nav .nav-item a:hover::after {
 }
 
 /* 서브 메뉴 기본 숨김 */
+/* =========================
+   드롭다운(서브메뉴) - 글래스(반투명) 스타일
+========================= */
+
 .nav-sub {
   display: none;
   position: absolute;
-  top: 100%;          /* 부모(nav-item) 바로 아래 */
+  top: 100%;
   left: 0;
-  min-width: 150px;
-  background: #1E293B;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
-  border-radius: 8px;
-  padding: 0.4rem 0;
+  min-width: 170px;
+
+  /* ✨ 반투명 유리 패널 */
+  background: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 12px;
+
+  box-shadow: 0 14px 40px rgba(0,0,0,0.35);
+  padding: 0.55rem 0;
   z-index: 1000;
+
+  /* ✅ 부드러운 등장(선택) */
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity .22s ease, transform .22s ease;
+  pointer-events: none;
 }
 
 /* 서브 메뉴 각 항목 */
 .nav-sub a {
   display: block;
-  padding: 0.45rem 0.9rem;
-  font-size: 1.2rem;
-  color: #F1F5F9;
+  padding: 0.55rem 1rem;
+  font-size: 1.05rem;
+  color: #E2E8F0;
   text-decoration: none;
   white-space: nowrap;
+  transition: background .2s ease, color .2s ease;
 }
 
+/* Hover 시 은은한 네온 강조 */
 .nav-sub a:hover {
-  background: #f3f4f6;
-  color: #1E293B !important;   
+  background: linear-gradient(
+    90deg,
+    rgba(56,189,248,0.18),
+    rgba(96,165,250,0.06)
+  );
+  color: #7DD3FC;
 }
 
 /* 마우스 올리면 서브메뉴 표시 */
 .nav-item.has-sub:hover .nav-sub {
   display: block;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
+
 
 
 
@@ -273,6 +300,7 @@ footer {
   
 
 /* =========================================== 모바일 전용 CSS ==================================== */
+
 
 
 
