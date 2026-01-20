@@ -197,7 +197,7 @@ footer.site-footer::before{
 
 /* 은은한 빛(배경) */
 footer.site-footer::after{
-  content:"";
+  content:"none";
   position:absolute;
   inset:-80px -120px auto -120px;
   height: 180px;
@@ -453,6 +453,7 @@ footer.site-footer a:hover{
   
 
 /* =========================================== 모바일 전용 CSS ==================================== */
+
 
 
 
