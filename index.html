@@ -313,26 +313,6 @@
   .hero-progress{ height: 4px; }
   .hero-dot{ font-size: 14px; }
 }
-
-
-/* =========================
-   NAVBAR 투명 오버레이용 (common.css/ nav 구조에 따라 조정 필요)
-   #nav 안에 실제 nav가 들어오니까, 아래처럼 강제로 위에 얹히게
-========================= */
-#nav{
-  position: fixed;
-  top:0; left:0; right:0;
-  z-index: 9999;
-}
-
-/* commonNav.js가 넣는 실제 nav가 nav 태그면 적용됨 */
-#nav nav{
-  background: rgba(0,0,0,.18) !important;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(255,255,255,.10);
-}
-
 	
 	</style>
 </head>
