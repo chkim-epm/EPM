@@ -9,17 +9,69 @@
     <priority>1.0</priority>
   </url>
 
-  <!-- 제품 소개 -->
-  <url>
-    <loc>http://www.eastpowermetal.com/Product.html</loc>
-    <lastmod>2025-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
+  <!-- 회사소개 -->
+<url>
+  <loc>https://www.eastpowermetal.com/companyHistory.html</loc>
+  <lastmod>2025-10-01</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.9</priority>
+</url>
+  
+  <!-- 조직도 -->
+<url>
+  <loc>https://www.eastpowermetal.com/orgChart.html</loc>
+  <lastmod>2025-10-01</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.9</priority>
+</url>
 
-  <!-- 무감전 -->
+    <!-- 인사말 -->
+<url>
+  <loc>https://www.eastpowermetal.com/greeting.html</loc>
+  <lastmod>2025-10-01</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.9</priority>
+</url>
+  
+<!-- 전체 제품 소개 -->
+<url>
+  <loc>https://www.eastpowermetal.com/product.html</loc>
+  <lastmod>2025-10-01</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.9</priority>
+</url>
 
-  <!-- 연락처 -->
+<!-- 부스바 제품 -->
+<url>
+  <loc>https://www.eastpowermetal.com/busbar.html</loc>
+  <lastmod>2025-10-01</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.85</priority>
+</url>
+
+<!-- 접지 제품 -->
+<url>
+  <loc>https://www.eastpowermetal.com/groundConnection.html</loc>
+  <lastmod>2025-10-01</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.85</priority>
+</url>
+
+<!-- 2단 단자대 제품 -->
+<url>
+  <loc>https://www.eastpowermetal.com/twoTerminal.html</loc>
+  <lastmod>2025-10-01</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.85</priority>
+</url>
+
+<!-- 무감전 -->
+<url>
+  <loc>https://www.eastpowermetal.com/noElectrocution.html</loc>
+  <lastmod>2025-10-01</lastmod>
+  <changefreq>yearly</changefreq>
+  <priority>0.7</priority>
+</url>
 
   <!-- 오시는 길 (map.html) -->
   <url>
@@ -30,6 +82,7 @@
   </url>
 
 </urlset>
+
 
 
 
