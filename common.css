@@ -130,6 +130,26 @@ footer {
   line-height:1.2;
 }
 
+/* =========================
+   Transparent Navbar Overlay (HERO용)
+   - 기본 nav 배경(#1E293B)을 투명/블러로 덮어씀
+========================= */
+#nav{
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+}
+
+/* commonNav.js가 넣는 nav 태그 */
+#nav nav{
+  background: rgba(0,0,0,.18) !important; /* 투명 */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255,255,255,.10);
+}
+
+/* 기존 common.css의 nav{ background:#1E293B; } 를 덮어쓰려면
+   #nav 안에 들어간 nav에 대해서만 강제 적용하는게 포인트 */
 
 
 
@@ -227,5 +247,6 @@ footer {
   
 
 /* =========================================== 모바일 전용 CSS ==================================== */
+
 
 
