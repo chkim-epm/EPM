@@ -334,8 +334,8 @@
   <div class="hero-slides" id="heroSlides">
 
     <!-- Slide 1 (video 가능) -->
-    <div class="hero-slide" data-type="image" data-duration="4000">
-	  <img class="hero-media" src="image/1번배경.png" alt="이스트파워메탈 동버스바 가공 설비">
+    <div class="hero-slide is-active" data-type="image" data-duration="4000">
+	  <img class="hero-media" src="image\1번배경.png" alt="이스트파워메탈 동버스바 가공 설비">
       <div class="hero-dim"></div>
 
       <div class="hero-content">
@@ -346,7 +346,7 @@
 
     <!-- Slide 2 (image) -->
     <div class="hero-slide" data-type="image" data-duration="4000">
-      <img class="hero-media" src="image/2번배경.png" alt="부스바바">
+      <img class="hero-media" src="image\2번배경.png" alt="부스바바">
       <div class="hero-dim"></div>
 
       <div class="hero-content">
@@ -357,7 +357,7 @@
 
     <!-- Slide 3 (image) -->
     <div class="hero-slide" data-type="image" data-duration="4000">
-      <img class="hero-media" src="image/3번배경.png" alt="가공 설비">
+      <img class="hero-media" src="image\3번배경.png" alt="가공 설비">
       <div class="hero-dim"></div>
 
       <div class="hero-content">
@@ -440,17 +440,43 @@
   </div>
 </div>
 <!-- 푸터 (회사 정보) -->
-<footer>
-  
-  <p>
-	<span class="logo-e" style="color:green;">E</span>
-	<span class="logo-p" style="color:red; ">P</span>
-	<span class="logo-m" style="color:blue;">M</span>
-   (주)이스트파워메탈 | 주소: 경기도 김포시 통진읍 율마로 223번길 42 | 전화: 031-985-6037 | 이메일: chkim.epm@gmail.com</p>
-  <p>© 2025 EAST POWER METAL. All Rights Reserved.</p>
-    <!-- 왼쪽 로고 -->
-  
+<footer class="site-footer">
+  <div class="footer-inner">
+
+    <div>
+      <div class="footer-brand">
+        <span class="logo-e">E</span><span class="logo-p">P</span><span class="logo-m">M</span>
+        (주)이스트파워메탈
+      </div>
+      <p class="footer-desc">
+        동버스바·부스바·비철금속 가공 & 납품 전문<br>
+        전력·통신 솔루션 파트너
+      </p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul class="footer-list">
+        <li>주소: 경기도 김포시 통진읍 율마로 223번길 42</li>
+        <li>화성공장: 경기도 화성시 우정읍 버들로 953-11</li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul class="footer-list">
+        <li>전화: 031-985-6037</li>
+        <li>이메일: chkim.epm@gmail.com</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2025 EAST POWER METAL. All Rights Reserved.</span>
+  </div>
 </footer>
+
 <script>
 (function(){
   const slides = Array.from(document.querySelectorAll(".hero-slide"));
@@ -532,6 +558,28 @@
 
 })();
 </script>
+	<script>
+(function(){
+  const btn = document.getElementById("toTop");
+  if (!btn) return;
+
+  function toggle(){
+    if (window.scrollY > 300) btn.classList.add("is-visible");
+    else btn.classList.remove("is-visible");
+  }
+
+  btn.addEventListener("click", ()=>{
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  window.addEventListener("scroll", toggle, { passive: true });
+  toggle();
+})();
+</script>
+
+<button id="toTop" class="to-top" type="button" aria-label="맨 위로">
+  ↑
+</button>
 
 
 </body>
