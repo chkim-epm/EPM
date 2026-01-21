@@ -285,112 +285,147 @@
 /* =========================================================
    Product Showcase (Blue theme)
 ========================================================= */
-.product-showcase{
-  background: #f7fbff;
-  padding: 70px 18px;
+/* =========================================================
+   Product Showcase (Premium / Blue)
+========================================================= */
+.product-showcase.premium{
+  padding: 78px 18px;
+  background:
+    radial-gradient(1200px 600px at 15% 10%, rgba(47,156,255,0.12), transparent 60%),
+    radial-gradient(1000px 520px at 85% 35%, rgba(29,119,200,0.10), transparent 58%),
+    #f7fbff;
 }
 
-.ps-inner{
+.product-showcase.premium .ps-inner{
   max-width: 1240px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 36px;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 38px;
   align-items: center;
 }
 
-.ps-kicker{
+.product-showcase.premium .ps-kicker{
   font-weight: 900;
-  letter-spacing: .08em;
+  letter-spacing: .12em;
   color: #1d77c8;
-  font-size: 18px;
+  font-size: 16px;
   margin-bottom: 10px;
 }
 
-.ps-title{
+.product-showcase.premium .ps-title{
   margin: 0 0 12px;
-  font-size: clamp(28px, 3.2vw, 46px);
-  font-weight: 900;
+  font-size: clamp(30px, 3.4vw, 48px);
+  font-weight: 950;
   color: #0b3b67;
 }
 
-.ps-desc{
+.product-showcase.premium .ps-desc{
   margin: 0 0 22px;
   color: rgba(11,59,103,0.82);
-  line-height: 1.7;
+  line-height: 1.75;
   font-size: 16px;
 }
 
-/* 좌측 메뉴 */
-.ps-menu{
+.product-showcase.premium .ps-list{
+  border-radius: 18px;
+  padding: 18px;
+  background: rgba(11,59,103,0.06);
+  border: 1px solid rgba(11,59,103,0.10);
+  box-shadow: 0 20px 60px rgba(2,31,66,0.08);
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.ps-item{
+/* 좌측 항목 */
+.product-showcase.premium .ps-row{
   width: 100%;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
 
-  border: 1px solid rgba(11,59,103,0.10);
-  background: rgba(255,255,255,0.75);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(11,59,103,0.12);
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 
   padding: 16px 16px;
-  border-radius: 14px;
+  border-radius: 16px;
   cursor: pointer;
   text-decoration: none;
   color: #0b3b67;
 
-  transition: transform .18s ease, background .18s ease, border-color .18s ease;
+  transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
 }
 
-.ps-item:hover{
+.product-showcase.premium .ps-row:hover{
   transform: translateY(-1px);
-  border-color: rgba(29,119,200,0.28);
-  background: rgba(255,255,255,0.95);
+  border-color: rgba(47,156,255,0.35);
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 18px 48px rgba(2,31,66,0.12);
 }
 
-.ps-item.is-active{
-  border-color: rgba(29,119,200,0.55);
-  box-shadow: 0 18px 45px rgba(2, 31, 66, 0.10);
-  background: linear-gradient(180deg, rgba(29,119,200,0.10), rgba(255,255,255,0.92));
+.product-showcase.premium .ps-row.is-active{
+  border-color: rgba(47,156,255,0.55);
+  background: linear-gradient(180deg, rgba(47,156,255,0.14), rgba(255,255,255,0.92));
+  box-shadow: 0 20px 65px rgba(2,31,66,0.18);
+  position: relative;
 }
 
-.ps-item-text{
-  font-weight: 900;
+.product-showcase.premium .ps-row.is-active::before{
+  content:"";
+  position:absolute;
+  left: 10px;
+  top: 10px;
+  bottom: 10px;
+  width: 4px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #2f9cff, #1d77c8);
+  opacity: .95;
+}
+
+.product-showcase.premium .ps-row-name{
+  font-weight: 950;
   font-size: 16px;
+  padding-left: 10px;
 }
 
-.ps-arrow{
-  font-weight: 900;
-  opacity: .8;
+.product-showcase.premium .ps-row-meta{
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: .06em;
+  color: rgba(11,59,103,0.55);
 }
 
-.ps-item-link{
-  cursor: pointer;
+.product-showcase.premium .ps-row-ico{
+  font-weight: 950;
+  opacity: .85;
+}
+
+.product-showcase.premium .ps-hint{
+  margin-top: 14px;
+  font-size: 12px;
+  color: rgba(11,59,103,0.55);
 }
 
 /* 오른쪽 카드 */
-.ps-card{
-  border-radius: 18px;
+.product-showcase.premium .ps-card{
+  border-radius: 22px;
   overflow: hidden;
-  box-shadow: 0 22px 70px rgba(2, 31, 66, 0.16);
-  background: #ffffff;
-  border: 1px solid rgba(11,59,103,0.10);
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(11,59,103,0.12);
+  box-shadow: 0 26px 90px rgba(2,31,66,0.18);
 }
 
-.ps-media{
+.product-showcase.premium .ps-media{
   position: relative;
-  height: 360px;
+  height: 380px;
   background: #0b3b67;
 }
 
-.ps-media img{
+.product-showcase.premium .ps-media img{
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -398,71 +433,82 @@
 
   opacity: 0;
   transform: scale(1.02);
-  transition: opacity .28s ease, transform .28s ease;
+  transition: opacity .32s ease, transform .32s ease;
 }
 
-.ps-media img.is-ready{
+.product-showcase.premium .ps-media img.is-ready{
   opacity: 1;
   transform: scale(1);
 }
 
-.ps-badge{
+.product-showcase.premium .ps-media-dim{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(600px 260px at 20% 10%, rgba(255,255,255,0.12), transparent 60%),
+    linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.08));
+  pointer-events:none;
+}
+
+.product-showcase.premium .ps-badge{
   position: absolute;
   left: 14px;
   top: 14px;
   padding: 8px 12px;
   border-radius: 999px;
-  font-weight: 900;
+  font-weight: 950;
   font-size: 12px;
-  letter-spacing: .08em;
+  letter-spacing: .10em;
   color: #fff;
   background: rgba(13, 64, 118, 0.78);
   border: 1px solid rgba(255,255,255,0.22);
 }
 
-.ps-body{
-  padding: 18px 18px 20px;
+.product-showcase.premium .ps-body{
+  padding: 18px 18px 22px;
 }
 
-.ps-product-title{
+.product-showcase.premium .ps-product-title{
   margin: 0 0 8px;
   font-size: 22px;
-  font-weight: 900;
+  font-weight: 950;
   color: #0b3b67;
 }
 
-.ps-product-desc{
-  margin: 0 0 14px;
+.product-showcase.premium .ps-product-desc{
+  margin: 0 0 16px;
   color: rgba(11,59,103,0.82);
   line-height: 1.65;
   font-size: 15px;
 }
 
-.ps-actions{
+.product-showcase.premium .ps-actions{
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
 }
 
-.ps-cta{
+.product-showcase.premium .ps-cta{
   display: inline-flex;
   align-items: center;
   justify-content: center;
   height: 44px;
   padding: 0 16px;
   border-radius: 12px;
-  font-weight: 900;
+  font-weight: 950;
   text-decoration: none;
   color: #fff;
   background: linear-gradient(90deg, #1d77c8, #2f9cff);
   border: 1px solid rgba(0,0,0,0);
+  transition: filter .18s ease, transform .18s ease;
 }
 
-.ps-cta:hover{
+.product-showcase.premium .ps-cta:hover{
   filter: brightness(1.03);
+  transform: translateY(-1px);
 }
 
-.ps-cta.ghost{
+.product-showcase.premium .ps-cta.ghost{
   background: rgba(11,59,103,0.06);
   color: #0b3b67;
   border: 1px solid rgba(11,59,103,0.14);
@@ -505,20 +551,22 @@
 
 	
 /* 두번째섹션 */
+
 @media (max-width: 1024px){
-  .ps-inner{
+  .product-showcase.premium .ps-inner{
     grid-template-columns: 1fr;
   }
-  .ps-media{
-    height: 300px;
+  .product-showcase.premium .ps-media{
+    height: 320px;
   }
 }
 
 @media (max-width: 520px){
-  .product-showcase{ padding: 56px 14px; }
-  .ps-item{ padding: 14px 14px; }
-  .ps-media{ height: 240px; }
+  .product-showcase.premium{ padding: 58px 14px; }
+  .product-showcase.premium .ps-list{ padding: 14px; }
+  .product-showcase.premium .ps-media{ height: 240px; }
 }
+
 
 /* =========================================== 모바일 전용 CSS ==================================== */
 
@@ -633,62 +681,70 @@
 </section>
 
 
-<!-- ✅ 제품소개 섹션 (Product Showcase) -->
-<section class="product-showcase" id="product_showcase">
+<!-- ✅ 제품소개 섹션 (고급 버전) -->
+<section class="product-showcase premium" id="product_showcase">
   <div class="ps-inner">
 
-    <!-- 왼쪽: 카피 + 메뉴 -->
+    <!-- 왼쪽: 타이틀 + 메뉴 -->
     <div class="ps-left">
       <div class="ps-kicker">PRODUCT</div>
       <h2 class="ps-title">제품소개</h2>
       <p class="ps-desc">
-        현장 조건에 맞춘 설계와 안정적인 납품 프로세스로
+        현장 조건에 맞춘 설계와 안정적인 납품 프로세스로<br>
         전력·통신 분야의 핵심 부품을 제공합니다.
       </p>
 
-      <!-- 좌측 메뉴(클릭 시 우측 내용/이미지 변경) -->
-      <nav class="ps-menu" aria-label="제품 목록">
-        <button class="ps-item is-active" type="button"
-                data-title="부스바"
-                data-desc="분전반·배전반 등 전력 설비에 사용되는 고전도 동버스바 가공/절곡/타공 맞춤 제작"
-                data-link="busbar.html"
-                data-img="image/부스바.jpg">
-          <span class="ps-item-text">부스바</span>
-          <span class="ps-arrow">→</span>
+      <div class="ps-list" role="navigation" aria-label="제품 목록">
+
+        <button class="ps-row is-active" type="button"
+          data-title="부스바"
+          data-desc="분전반·배전반 등 전력 설비에 사용되는 고전도 동버스바 가공/절곡/타공 맞춤 제작"
+          data-link="busbar.html"
+          data-img="image/부스바.jpg">
+          <span class="ps-row-name">부스바</span>
+          <span class="ps-row-meta">Busbar</span>
+          <span class="ps-row-ico">→</span>
         </button>
 
-        <button class="ps-item" type="button"
-                data-title="2단 단자대"
-                data-desc="배선 연결을 안정적으로 고정·분리하는 단자대 솔루션 (현장 규격 맞춤)"
-                data-link="twoTerminal.html"
-                data-img="image/2단단자대.jpg">
-          <span class="ps-item-text">2단 단자대</span>
-          <span class="ps-arrow">→</span>
+        <button class="ps-row" type="button"
+          data-title="2단 단자대"
+          data-desc="배선 연결을 안정적으로 고정·분리하는 단자대 솔루션 (현장 규격 맞춤)"
+          data-link="twoTerminal.html"
+          data-img="image/2단단자대.jpg">
+          <span class="ps-row-name">2단 단자대</span>
+          <span class="ps-row-meta">Terminal</span>
+          <span class="ps-row-ico">→</span>
         </button>
 
-        <button class="ps-item" type="button"
-                data-title="접지"
-                data-desc="설비 보호·안전 기준을 위한 접지 연결 부품 및 가공품"
-                data-link="groundConnection.html"
-                data-img="image/접지.jpg">
-          <span class="ps-item-text">접지</span>
-          <span class="ps-arrow">→</span>
+        <button class="ps-row" type="button"
+          data-title="접지"
+          data-desc="설비 보호·안전 기준을 위한 접지 연결 부품 및 가공품"
+          data-link="groundConnection.html"
+          data-img="image/접지.jpg">
+          <span class="ps-row-name">접지</span>
+          <span class="ps-row-meta">Ground</span>
+          <span class="ps-row-ico">→</span>
         </button>
 
-        <a class="ps-item ps-item-link" href="product.html">
-          <span class="ps-item-text">전체 제품 보기</span>
-          <span class="ps-arrow">→</span>
+        <a class="ps-row ps-row-link" href="product.html">
+          <span class="ps-row-name">전체 제품 보기</span>
+          <span class="ps-row-meta">All Products</span>
+          <span class="ps-row-ico">→</span>
         </a>
-      </nav>
+
+      </div>
+
+      <div class="ps-hint">* 항목을 선택하면 오른쪽 내용이 변경됩니다.</div>
     </div>
 
-    <!-- 오른쪽: 제품 이미지 + 요약 + 버튼 -->
+    <!-- 오른쪽: 카드 -->
     <div class="ps-right">
-      <div class="ps-card">
-        <div class="ps-media">
+      <article class="ps-card">
+        <header class="ps-media">
           <img id="psImage" src="image/부스바.jpg" alt="부스바">
+          <div class="ps-media-dim"></div>
           <div class="ps-badge">EPM</div>
-        </div>
+        </header>
 
         <div class="ps-body">
           <h3 id="psTitle" class="ps-product-title">부스바</h3>
@@ -701,7 +757,7 @@
             <a class="ps-cta ghost" href="map.html">문의/오시는 길</a>
           </div>
         </div>
-      </div>
+      </article>
     </div>
 
   </div>
@@ -710,7 +766,8 @@
 <!-- ✅ 제품소개 섹션 동작 스크립트 -->
 <script>
 (function(){
-  const items = Array.from(document.querySelectorAll(".ps-item[data-title]"));
+  // ✅ 버튼은 .ps-row 이다 (a 태그 "전체 제품 보기"는 제외)
+  const items = Array.from(document.querySelectorAll(".ps-row[data-title]"));
   const imgEl = document.getElementById("psImage");
   const titleEl = document.getElementById("psTitle");
   const textEl = document.getElementById("psText");
@@ -718,24 +775,30 @@
 
   if(!items.length || !imgEl || !titleEl || !textEl || !linkEl) return;
 
+  // ✅ 이미지가 없을 때도 깨진아이콘 방지
+  imgEl.addEventListener("error", ()=>{
+    imgEl.src = "image/부스바.jpg";   // 필요하면 placeholder 이미지로 바꿔도 됨
+    imgEl.alt = "이미지 준비중";
+  });
+
   function activate(btn){
     items.forEach(b => b.classList.toggle("is-active", b === btn));
 
     const title = btn.dataset.title || "";
-    const desc  = btn.dataset.desc || "";
-    const link  = btn.dataset.link || "#";
-    const img   = btn.dataset.img  || "";
+    const desc  = btn.dataset.desc  || "";
+    const link  = btn.dataset.link  || "#";
+    const img   = btn.dataset.img   || "";
 
     // 텍스트/링크 갱신
     titleEl.textContent = title;
-    textEl.textContent = desc;
+    textEl.textContent  = desc;
     linkEl.setAttribute("href", link);
 
-    // 이미지 전환(부드럽게)
+    // 이미지 전환(페이드)
     imgEl.classList.remove("is-ready");
     requestAnimationFrame(()=>{
-      if(img) imgEl.setAttribute("src", img);
-      imgEl.setAttribute("alt", title);
+      if(img) imgEl.src = img;
+      imgEl.alt = title;
       imgEl.classList.add("is-ready");
     });
   }
@@ -744,10 +807,11 @@
     btn.addEventListener("click", ()=> activate(btn));
   });
 
-  // 초기 활성화(첫 버튼)
+  // 첫 항목 자동 선택
   activate(items[0]);
 })();
 </script>
+
 
 <!-- 푸터 (회사 정보) -->
 <footer class="site-footer">
