@@ -333,6 +333,7 @@
 
 /* ✅ 메뉴(탭) : 기존 #psMenu / .ps-list / .ps-row 그대로 사용 */
 .ps-list{
+	background:#fff;   /* 🔹 흰 */
   display:flex;
   justify-content:center;
   gap: 14px;
@@ -363,7 +364,7 @@
 }
 
 .ps-row.is-active{
-  background:#006b7a;           /* ✅ 너가 올린 이미지 같은 딥 청록 */
+  background:#0b4ea2;           /* 파랑 */
   color:#fff;
   box-shadow: 0 16px 32px rgba(0,0,0,.12);
 }
@@ -415,7 +416,7 @@
 
 #psCards .card img{
   width:100%;
-  height: 240px;
+  height: 500px;
   object-fit: cover;
   display:block;
   background:#f3f4f6;
@@ -607,8 +608,6 @@
 
       <!-- ✅ 여기(psMenu)에 메뉴가 생성됨 -->
       <nav class="ps-list" id="psMenu" aria-label="제품 메뉴"></nav>
-
-      <div class="ps-hint">* 항목을 선택하면 오른쪽 이미지가 변경됩니다.</div>
     </div>
 
     <!-- RIGHT -->
@@ -787,7 +786,7 @@ async function loadCategoryCards(categoryId){
     .select("id, title, image_url, categoryId")
     .eq("categoryId", String(categoryId))
     .order("created_at", { ascending:false })
-    .limit(6); // 3개만 원하면 3으로
+    .limit(3); // 카드 3개만 나오
 
   if(error){
     console.error("카드 로딩 실패:", error);
