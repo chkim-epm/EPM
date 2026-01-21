@@ -289,26 +289,26 @@
    Product Showcase (Blue theme)
 ========================================================= */
 /* =========================================================
-   Product Showcase (Reference-style)
+   Product Showcase (Tab + Card Grid)  ※ 기존 id/class 유지
 ========================================================= */
 
 .product-showcase.premium{
-  padding: 70px 0; /* 섹션 높이 */
-  background:
-    linear-gradient(135deg,#ffffff 0%,#f2f4f8 100%);
+  padding: 80px 0;
+  background: #fff;
 }
 
 .product-showcase.premium .ps-inner{
   max-width: 1400px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1.05fr 1fr;
-  gap: 60px;
-  align-items: center;
+  display: block;              /* ✅ 좌/우 나누기 제거하고 한 줄 구성 */
   padding: 0 24px;
 }
 
-/* LEFT */
+/* LEFT(타이틀 영역) : 중앙정렬 */
+.ps-left{
+  text-align:center;
+}
+
 .ps-kicker{
   color:#00a8a8;
   font-weight:800;
@@ -317,9 +317,9 @@
 }
 
 .ps-title{
-  font-size:56px;
+  font-size:48px;
   font-weight:900;
-  margin: 10px 0 12px;
+  margin: 10px 0 8px;
   color:#111;
 }
 
@@ -327,138 +327,105 @@
   font-size:16px;
   color:#666;
   line-height:1.7;
-  margin-bottom:34px;
+  margin: 0 auto 26px;
+  max-width: 780px;
 }
 
-/* MENU LIST */
+/* ✅ 메뉴(탭) : 기존 #psMenu / .ps-list / .ps-row 그대로 사용 */
 .ps-list{
   display:flex;
-  flex-direction:column;
-  gap: 18px;
-  padding:0;
-  margin:0;
+  justify-content:center;
+  gap: 14px;
+  padding: 0;
+  margin: 26px 0 0;
+  flex-wrap: wrap;
 }
 
-/* 공통 버튼 */
 .ps-row{
-  position:relative;
-  width: 720px;           /* ✅ 왼쪽 바 길이 */
-  max-width: 100%;
+  width: 240px;
   height: 56px;
-  padding: 0 74px 0 28px; /* 오른쪽 화살표 캡 공간 확보 */
-  display:flex;
-  align-items:center;
-
+  padding: 0 18px;
   border: 0;
-  background: transparent;
+  border-radius: 12px;
+  background: #e7e3e3;          /* 비활성 회색 */
+  color:#222;
+  font-weight: 800;
+  font-size: 15px;
   cursor:pointer;
-  text-align:left;
-
-  font-weight:800;
-  font-size:18px;
-  color:#0aa0a0;
-}
-
-/* 기본(비활성) 얇은 라인 느낌 */
-.ps-row::before{
-  content:"";
-  position:absolute;
-  left:0;
-  top:0;
-  height:100%;
-  width:100%;
-  background: rgba(10,160,160,.08);
-  border-radius: 6px;
-  clip-path: polygon(0 0, calc(100% - 70px) 0, 100% 50%, calc(100% - 70px) 100%, 0 100%);
-  opacity:.0; /* 기본은 거의 안 보이게 */
-  transition: .18s ease;
-}
-
-/* hover 시 살짝 */
-.ps-row:hover::before{
-  opacity: 1;
-}
-
-/* ✅ 활성 바 (레퍼런스처럼 긴 컬러 바) */
-.ps-row.is-active{
-  color:#fff;
-}
-
-.ps-row.is-active::before{
-  opacity:1;
-  background: #0aa0a0;
-}
-
-/* ✅ 왼쪽 작은 포인트 바 */
-.ps-row.is-active::after{
-  content:"";
-  position:absolute;
-  left:0;
-  top:0;
-  width:6px;
-  height:100%;
-  background:#0b4ea2; /* 포인트 블루(원하면 #0aa0a0로 통일 가능) */
-  border-radius: 6px 0 0 6px;
-}
-
-/* ✅ 오른쪽 검정 캡 + 화살표 */
-.ps-row .ps-row-ico{
-  position:absolute;
-  right:0;
-  top:0;
-  width: 70px;
-  height:100%;
   display:flex;
   align-items:center;
   justify-content:center;
-
-  background:#111;
-  color:#fff;
-  font-weight:900;
-  font-size:20px;
-
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 18px 100%);
-  border-radius: 0 6px 6px 0;
-
-  opacity: 0; /* 기본 숨김 */
   transition: .18s ease;
 }
 
-.ps-row.is-active .ps-row-ico{
-  opacity: 1;
+.ps-row:hover{
+  transform: translateY(-1px);
 }
 
-/* 전체 제품 보기(링크)도 같은 룩 */
+.ps-row.is-active{
+  background:#006b7a;           /* ✅ 너가 올린 이미지 같은 딥 청록 */
+  color:#fff;
+  box-shadow: 0 16px 32px rgba(0,0,0,.12);
+}
+
+/* 전체 제품 보기 링크도 같은 탭 모양 */
 .ps-row.ps-row-link{
   text-decoration:none;
-  line-height:56px;
-  color:#0aa0a0;
 }
 
-.ps-row.ps-row-link:hover::before{ opacity: 1; }
-
-/* hint */
+/* hint는 탭 아래로 */
 .ps-hint{
   margin-top: 14px;
   font-size:13px;
   color:#888;
 }
 
-/* RIGHT IMAGE */
-.ps-card{ background:none; border:none; box-shadow:none; }
-
-.ps-media{
-  border-radius: 10px;
-  overflow:hidden;
-  background:#fff;
-  box-shadow: 0 24px 60px rgba(0,0,0,.10);
+/* RIGHT 영역: 탭 아래에 카드 그리드가 오도록 */
+.ps-right{
+  margin-top: 34px;
 }
 
-.ps-media img{
+/* 우측 큰 이미지(선택사항): 지금은 숨기고 카드만 강조 */
+.ps-media{
+  display:none;                 /* ✅ 큰 이미지 영역은 안 보이게(원하면 켤 수 있음) */
+}
+
+/* ✅ 카드 3개 그리드 (id만 사용) */
+#psCards{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 26px;
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+/* 카드 스타일(새 클래스 만들지 않고 #psCards 내부 선택자로만) */
+#psCards .card{
+  background:#fff;
+  border-radius: 12px;
+  overflow:hidden;
+  box-shadow: 0 16px 40px rgba(0,0,0,.10);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+#psCards .card:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 22px 56px rgba(0,0,0,.14);
+}
+
+#psCards .card img{
   width:100%;
-  height: 520px;          /* ✅ 우측 이미지 높이 */
+  height: 240px;
   object-fit: cover;
   display:block;
+  background:#f3f4f6;
+}
+
+#psCards .card .cap{
+  padding: 14px 14px 16px;
+  font-weight: 800;
+  color:#111;
+  font-size: 15px;
 }
 
 
@@ -498,14 +465,17 @@
 
 	
 /* 두번째섹션 */
-@media(max-width:1024px){
-  .product-showcase.premium .ps-inner{
-    grid-template-columns:1fr;
-    gap: 28px;
-  }
-  .ps-row{ width: 100%; }
-  .ps-media img{ height: 360px; }
+	
+@media(max-width: 1024px){
+  #psCards{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ps-row{ width: 220px; }
 }
+
+@media(max-width: 640px){
+  #psCards{ grid-template-columns: 1fr; }
+  .ps-row{ width: 100%; max-width: 360px; }
+}
+
 
 
 
@@ -647,6 +617,8 @@
         <header class="ps-media">
           <img id="psImage" src="" alt="">
         </header>
+		      <!-- ✅ 카드 3개씩 보여줄 영역(새 id만 1개 추가) -->
+    <div id="psCards"></div>
       </article>
     </div>
 
@@ -791,79 +763,95 @@ function moveTo(nextIdx){
 
 <script>
 // Supabase 프로젝트 URL/anon 키 (퍼블릭 클라이언트에서 제한 권한으로 사용)
-
-  const SUPABASE_URL = "https://cwwnarmrvpvjptytepdo.supabase.co";
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3d25hcm1ydnB2anB0eXRlcGRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NzU4NTUsImV4cCI6MjA3NzQ1MTg1NX0.5mvgA_gKdlRaebVRSFIUJRKgp51zke_nffQ2jc8Ad1g";
+const SUPABASE_URL = "https://cwwnarmrvpvjptytepdo.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3d25hcm1ydnB2anB0eXRlcGRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NzU4NTUsImV4cCI6MjA3NzQ1MTg1NX0.5mvgA_gKdlRaebVRSFIUJRKgp51zke_nffQ2jc8Ad1g";
 
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-async function loadMainProducts(){
+// 🔹 고정 메뉴 순서
+const menuOrder = [
+  {id:"1", name:"부스바"},
+  {id:"3", name:"2단 단자대"},
+  {id:"2", name:"접지"}
+];
 
-  // 모든 제품 불러오기 (최신순)
+async function loadCategoryCards(categoryId){
+  const cardsWrap = document.getElementById("psCards");
+  const imgEl = document.getElementById("psImage");
+  if(!cardsWrap) return;
+
+  cardsWrap.innerHTML = "";
+
   const { data, error } = await sb
     .from("product")
-    .select("title, image_url, categoryId")
-    .order("created_at", { ascending:false });
+    .select("id, title, image_url, categoryId")
+    .eq("categoryId", String(categoryId))
+    .order("created_at", { ascending:false })
+    .limit(6); // 3개만 원하면 3으로
 
   if(error){
-    console.error("제품 로딩 실패:", error);
+    console.error("카드 로딩 실패:", error);
+    cardsWrap.innerHTML = "<div style='text-align:center;color:#777;padding:40px 0;'>제품을 불러오지 못했습니다.</div>";
     return;
   }
 
-  // 🔹 카테고리별 대표 제품 1개만 추출
-  const 대표 = {};
-  data.forEach(p=>{
-    if(!대표[p.categoryId]) 대표[p.categoryId] = p;
-  });
+  const items = data || [];
 
-  // 🔹 고정 메뉴 순서 정의
-  const menuOrder = [
-    {id:"1", name:"부스바"},
-    {id:"3", name:"2단 단자대"},
-    {id:"2", name:"접지"}
-  ];
+  // ✅ (선택) psImage는 첫 카드 이미지로만 세팅 (지금은 CSS에서 숨겨둠)
+  if(imgEl && items[0]?.image_url){
+    imgEl.src = items[0].image_url;
+    imgEl.alt = items[0].title || "";
+  }
 
-  const finalProducts = menuOrder.map(m => ({
-    ...m,
-    image: 대표[m.id]?.image_url || ""   // DB에 없으면 빈값
-  }));
+  if(!items.length){
+    cardsWrap.innerHTML = "<div style='text-align:center;color:#777;padding:40px 0;'>등록된 제품이 없습니다.</div>";
+    return;
+  }
 
-  const menu = document.getElementById("psMenu");
-  const img  = document.getElementById("psImage");
-
-  // 🔹 메뉴 HTML 생성
-  menu.innerHTML = finalProducts.map((p,i)=>`
-    <button class="ps-row ${i===0?'is-active':''}" 
-            type="button"
-            data-img="${p.image}"
-            data-title="${p.name}">
-      <span class="ps-row-name">${p.name}</span>
-    </button>
-  `).join("") +
-
-  // 🔹 전체 제품 보기 링크 추가
-  `<a class="ps-row ps-row-link" href="product.html">
-      <span class="ps-row-name">전체 제품 보기</span>
-   </a>`;
-
-  // 🔹 첫 이미지 기본 표시
-  img.src = finalProducts[0].image;
-  img.alt = finalProducts[0].name;
-
-  // 🔹 클릭 시 이미지 변경
-  document.querySelectorAll(".ps-row[data-img]").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      document.querySelectorAll(".ps-row").forEach(b=>b.classList.remove("is-active"));
-      btn.classList.add("is-active");
-      img.src = btn.dataset.img;
-      img.alt = btn.dataset.title;
-    });
-  });
+  // ✅ 카드 렌더 (새 클래스 만들지 않고 psCards 내부에서만 사용)
+  cardsWrap.innerHTML = items.map(p=>`
+    <div class="card">
+      <a href="productDetail.html?id=${p.id}" style="display:block">
+        <img src="${p.image_url || ''}" alt="${(p.title||'').replace(/"/g,'&quot;')}" loading="lazy">
+      </a>
+      <div class="cap">${p.title || '-'}</div>
+    </div>
+  `).join("");
 }
 
-// 최초 실행
-loadMainProducts();
+async function initProductTabs(){
+  const menu = document.getElementById("psMenu");
+  if(!menu) return;
+
+  // 탭 생성
+  menu.innerHTML =
+    menuOrder.map((m,i)=>`
+      <button class="ps-row ${i===0?'is-active':''}"
+              type="button"
+              data-cid="${m.id}">
+        <span class="ps-row-name">${m.name}</span>
+      </button>
+    `).join("") +
+    `<a class="ps-row ps-row-link" href="product.html">
+        <span class="ps-row-name">전체 제품 보기</span>
+     </a>`;
+
+  // 클릭 이벤트
+  menu.querySelectorAll(".ps-row[data-cid]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      menu.querySelectorAll(".ps-row[data-cid]").forEach(b=>b.classList.remove("is-active"));
+      btn.classList.add("is-active");
+      loadCategoryCards(btn.dataset.cid);
+    });
+  });
+
+  // 최초 로딩
+  loadCategoryCards(menuOrder[0].id);
+}
+
+initProductTabs();
 </script>
+
 
 
 	
