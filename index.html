@@ -294,7 +294,7 @@
 ========================================================= */
 
 .product-showcase.premium{
-  padding: 90px 0;
+  padding: 60px 0;
   background:
     linear-gradient(135deg,#ffffff 0%,#f2f4f8 100%);
 }
@@ -304,7 +304,7 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1.1fr;
-  gap: 60px;
+  gap: 40px;
   align-items: center;
 }
 
@@ -344,25 +344,36 @@
 
 .ps-row{
   position:relative;
-  padding:18px 22px;
-  font-weight:700;
+  padding:20px 26px;
+  font-weight:800;
   font-size:16px;
-  color:#008b8b;
-  background:#e9f3f3;
+  color:#0b4ea2;                 /* 기본 글자색 – 진한 블루 */
+  background:#eaf1ff;            /* 기본 배경 – 연한 블루 */
   border:none;
   border-radius:0;
-  width:280px;
-  clip-path: polygon(0 0,92% 0,100% 50%,92% 100%,0 100%);
-  transition:.2s;
+  width:340px;                   /* 🔹 길이 늘림 (기존 280px → 340px) */
+  clip-path: polygon(0 0,93% 0,100% 50%,93% 100%,0 100%);
+  transition:.2s ease;
 }
 
 .ps-row:hover{
-  background:#00a8a8;
+  background:#0b4ea2;            /* 진한 블루 */
   color:#fff;
 }
 
 .ps-row.is-active{
-  background:#008b8b;
+  background:#0056c7;            /* 메인 블루 */
+  color:#fff;
+  box-shadow:0 8px 20px rgba(0,86,199,0.35);
+}
+	
+/* 전체 제품 보기 버튼도 동일 톤 */
+.ps-row.ps-row-link{
+  background:#eef4ff;
+  color:#0b4ea2;
+}
+.ps-row.ps-row-link:hover{
+  background:#0b4ea2;
   color:#fff;
 }
 
@@ -403,12 +414,11 @@
   font-size:12px;
 }
 
-/* 제품 이미지 크게 */
+/* 우측 이미지 최대 높이 제한 */
 .ps-media img{
-  width:100%;
-  height:auto;
-  object-fit:cover;
-  filter: drop-shadow(0 25px 40px rgba(0,0,0,0.25));
+  max-height: 420px; /* 원하는 값: 380~450px 사이 추천 */
+  width: 100%;
+  object-fit: cover;
 }
 
 /* 텍스트 영역 */
