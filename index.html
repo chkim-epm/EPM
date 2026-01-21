@@ -288,11 +288,6 @@
 /* =========================================================
    Product Showcase (Blue theme)
 ========================================================= */
-/* =========================================================
-   Product Showcase → 산업용 두번째 이미지 스타일
-   (id / class 그대로 유지)
-========================================================= */
-
 .product-showcase.premium{
   padding: 60px 0;
   background:
@@ -327,58 +322,71 @@
   font-size:17px;
   color:#666;
   line-height:1.7;
-  margin-bottom:50px;
+  margin-bottom:40px;
 }
 
-/* MENU : 대각 강조 바 스타일 */
+/* =================================================
+   ✅ MENU : 클릭된 줄만 활성 바 스타일
+================================================= */
+
 .ps-list{
   display:flex;
   flex-direction:column;
-  gap:18px;
-  background:none;
-  border:none;
+  gap:14px;
   padding:0;
-  box-shadow:none;
-  backdrop-filter:none;
 }
 
+/* 기본 상태 → 텍스트만 */
 .ps-row{
-  position:relative;
-  padding:20px 26px;
-  font-weight:800;
-  font-size:16px;
-  color:#0b4ea2;                 /* 기본 글자색 – 진한 블루 */
-  background:#eaf1ff;            /* 기본 배경 – 연한 블루 */
+  background:none;
   border:none;
-  border-radius:0;
-  width:540px;                   /* 🔹 길이 늘림 (기존 280px → 340px) */
-  clip-path: polygon(0 0,93% 0,100% 50%,93% 100%,0 100%);
+  padding:6px 4px;
+  font-size:17px;
+  font-weight:700;
+  color:#666;
+  cursor:pointer;
+  text-align:left;
+  position:relative;
   transition:.2s ease;
 }
 
+/* Hover 시 글자만 진해짐 */
 .ps-row:hover{
-  background:#0b4ea2;            /* 진한 블루 */
-  color:#fff;
-}
-
-.ps-row.is-active{
-  background:#0056c7;            /* 메인 블루 */
-  color:#fff;
-  box-shadow:0 8px 20px rgba(0,86,199,0.35);
-}
-	
-/* 전체 제품 보기 버튼도 동일 톤 */
-.ps-row.ps-row-link{
-  background:#eef4ff;
   color:#0b4ea2;
 }
-.ps-row.ps-row-link:hover{
-  background:#0b4ea2;
-  color:#fff;
+
+/* ✅ 활성화된 줄 */
+.ps-row.is-active{
+  color:#0b4ea2;
+  font-weight:900;
+  padding-left:18px;
 }
 
-.ps-row-meta{ display:none; }
-.ps-row-ico{ display:none; }
+/* ✅ 왼쪽 활성 바 */
+.ps-row.is-active::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:3px;
+  bottom:3px;
+  width:5px;
+  background:#0b4ea2;
+  border-radius:4px;
+}
+
+/* meta / arrow 숨김 유지 */
+.ps-row-meta,
+.ps-row-ico{
+  display:none;
+}
+
+/* 전체제품보기 동일 톤 */
+.ps-row.ps-row-link{
+  color:#666;
+}
+.ps-row.ps-row-link:hover{
+  color:#0b4ea2;
+}
 
 .ps-hint{
   margin-top:15px;
@@ -386,7 +394,10 @@
   color:#888;
 }
 
-/* RIGHT IMAGE CARD */
+/* =================================================
+   RIGHT IMAGE CARD (기존 그대로 유지)
+================================================= */
+
 .ps-card{
   background:none;
   border:none;
@@ -402,6 +413,7 @@
 
 .ps-media::before{ display:none; }
 .ps-media-dim{ display:none; }
+
 .ps-badge{
   position:absolute;
   right:0;
@@ -413,55 +425,14 @@
   border-radius:20px;
   font-size:12px;
 }
-/* 제품 이미지 크게 */
+
+/* 제품 이미지 */
 .ps-media img{ 
-	width:100%; 
-	height:auto; 
-	object-fit:cover; 
-	filter: drop-shadow(0 25px 40px rgba(0,0,0,0.25));
+  width:100%; 
+  height:auto; 
+  object-fit:cover; 
+  filter: drop-shadow(0 25px 40px rgba(0,0,0,0.25));
 }
-
-/* 텍스트 영역 */
-.ps-body{
-  padding-top:25px;
-}
-
-.ps-product-title{
-  font-size:26px;
-  font-weight:900;
-  margin-bottom:8px;
-}
-
-.ps-product-desc{
-  font-size:15px;
-  color:#666;
-  line-height:1.6;
-  margin-bottom:18px;
-}
-
-/* 버튼 */
-.ps-actions{
-  display:flex;
-  gap:12px;
-}
-
-.ps-cta{
-  background:#00a8a8;
-  color:#fff;
-  font-weight:800;
-  border-radius:8px;
-  height:44px;
-  padding:0 18px;
-  box-shadow:0 8px 20px rgba(0,168,168,0.35);
-}
-
-.ps-cta.ghost{
-  background:#fff;
-  color:#008b8b;
-  border:1px solid #008b8b;
-  box-shadow:none;
-}
-
 
 
 /* ===========================================PC 기본 스타일 끝.================================================*/
