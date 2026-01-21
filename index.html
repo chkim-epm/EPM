@@ -285,13 +285,10 @@
     opacity: 1;
   }
 }
+	
 /* =========================================================
    Product Showcase (Blue theme)
 ========================================================= */
-/* =========================================================
-   Product Showcase (Tab + Card Grid)  ※ 기존 id/class 유지
-========================================================= */
-
 .product-showcase.premium{
   padding: 80px 0;
   background: #fff;
@@ -429,6 +426,17 @@
   font-size: 15px;
 }
 
+/* ===== 2번쨰 섹션 스크롤 동 Scroll Reveal ===== */
+.reveal-on-scroll{
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+.reveal-on-scroll.is-visible{
+  opacity: 1;
+  transform: translateY(0);
+}
 
 /* ===========================================PC 기본 스타일 끝.================================================*/
 
@@ -594,7 +602,8 @@
 </section>
 
 <!-- ✅ 제품소개 섹션 (DB 연동) -->
-<section class="product-showcase premium" id="product_showcase">
+<section class="product-showcase premium reveal-on-scroll" id="product_showcase">
+
   <div class="ps-inner">
 
     <!-- LEFT -->
@@ -850,7 +859,20 @@ async function initProductTabs(){
 
 initProductTabs();
 </script>
+<script>
+/* 제품소개 섹션 스크롤 등장 */
+const scrollObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("is-visible");
+    }
+  });
+},{ threshold: 0.2 });
 
+document.querySelectorAll(".reveal-on-scroll").forEach(el=>{
+  scrollObserver.observe(el);
+});
+</script>
 
 
 	
