@@ -405,6 +405,36 @@
   opacity:1;
 }
 
+/* ===============================
+   ✅ 탭 전환 시 카드 부드러운 모션
+=============================== */
+
+/* 카드 컨테이너 전환 */
+#psCards.is-switching{
+  pointer-events: none; /* 전환 중 클릭 방지 */
+}
+
+/* 카드 기본 등장 상태 */
+#psCards .card{
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity .35s ease, transform .35s ease, box-shadow .18s ease;
+  will-change: opacity, transform;
+}
+
+
+
+/* 새로 넣은 카드들: 등장 애니메이션 */
+#psCards .card.enter{
+  opacity: 0;
+  transform: translateY(18px);
+}
+#psCards .card.enter.is-in{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+	
 
 .ps-row.is-active{
   background:#0b4ea2;           /* 파랑 */
@@ -449,7 +479,11 @@
   border-radius: 12px;
   overflow:hidden;
   box-shadow: 0 16px 40px rgba(0,0,0,.10);
-  transition: transform .18s ease, box-shadow .18s ease;
+  transition: opacity .35s ease,
+              transform .35s ease,
+              box-shadow .18s ease;
+
+  will-change: opacity, transform;
 }
 
 #psCards .card:hover{
@@ -834,24 +868,35 @@ async function loadCategoryCards(categoryId){
   const imgEl = document.getElementById("psImage");
   if(!cardsWrap) return;
 
-  cardsWrap.innerHTML = "";
+  // ✅ 1) 기존 카드가 있으면 "살짝 사라지는" 모션 먼저
+  const hasOld = cardsWrap.children.length > 0;
 
+  // 전환 중 상태
+  cardsWrap.classList.add("is-switching");
+
+  // 기존 카드가 있으면 잠깐 기다렸다가(사라지는 시간) 교체
+  if (hasOld) {
+    await new Promise(r => setTimeout(r, 220));
+  }
+
+  // ✅ 2) 데이터 로드
   const { data, error } = await sb
     .from("product")
     .select("id, title, image_url, categoryId")
     .eq("categoryId", String(categoryId))
     .order("created_at", { ascending:false })
-    .limit(3); // 카드 3개만 나오
+    .limit(3);
 
   if(error){
     console.error("카드 로딩 실패:", error);
     cardsWrap.innerHTML = "<div style='text-align:center;color:#777;padding:40px 0;'>제품을 불러오지 못했습니다.</div>";
+    cardsWrap.classList.remove("is-switching");
     return;
   }
 
   const items = data || [];
 
-  // ✅ (선택) psImage는 첫 카드 이미지로만 세팅 (지금은 CSS에서 숨겨둠)
+  // (선택) psImage
   if(imgEl && items[0]?.image_url){
     imgEl.src = items[0].image_url;
     imgEl.alt = items[0].title || "";
@@ -859,19 +904,35 @@ async function loadCategoryCards(categoryId){
 
   if(!items.length){
     cardsWrap.innerHTML = "<div style='text-align:center;color:#777;padding:40px 0;'>등록된 제품이 없습니다.</div>";
+    cardsWrap.classList.remove("is-switching");
     return;
   }
 
-  // ✅ 카드 렌더 (새 클래스 만들지 않고 psCards 내부에서만 사용)
+  // ✅ 3) 새 카드 렌더 (enter 클래스 포함)
   cardsWrap.innerHTML = items.map(p=>`
-    <div class="card">
+    <div class="card enter">
       <a href="productDetail.html?id=${p.id}" style="display:block">
         <img src="${p.image_url || ''}" alt="${(p.title||'').replace(/"/g,'&quot;')}" loading="lazy">
       </a>
       <div class="cap">${p.title || '-'}</div>
     </div>
   `).join("");
+
+  // ✅ 4) 새 카드들 순차 등장(스태거)
+  const cards = Array.from(cardsWrap.querySelectorAll(".card.enter"));
+  requestAnimationFrame(()=>{
+    cards.forEach((card, i)=>{
+      setTimeout(()=> card.classList.add("is-in"), i * 90); // 0.09s 간격
+    });
+  });
+
+  // 전환 상태 해제(약간 여유)
+  setTimeout(()=>{
+    cardsWrap.classList.remove("is-switching");
+    cardsWrap.querySelectorAll(".card.enter").forEach(c=>c.classList.remove("enter"));
+  }, 450);
 }
+
 
 async function initProductTabs(){
   const menu = document.getElementById("psMenu");
