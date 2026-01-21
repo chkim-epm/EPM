@@ -287,16 +287,16 @@ footer.site-footer a:hover{
   position: fixed;
   right: 18px;
   bottom: 18px;
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
+  width: 64px;              /* 버튼 크기 키움 */
+  height: 64px;
+  border-radius: 16px;      /* 모서리 조금 더 부드럽게 */
   border: 1px solid rgba(255,255,255,0.12);
   background: rgba(15, 23, 42, 0.75);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   color: #E2E8F0;
   font-size: 18px;
-  font-weight: 800;
+  font-weight: 600;         /* 전체 기본 굵기 중간 */
   box-shadow: 0 16px 40px rgba(0,0,0,0.35);
   cursor: pointer;
   opacity: 0;
@@ -306,6 +306,12 @@ footer.site-footer a:hover{
               transform .2s ease,
               background .2s ease;
   z-index: 99999;
+
+  /* 내부 정렬 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .to-top:hover {
@@ -317,6 +323,21 @@ footer.site-footer a:hover{
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
+}
+
+/* 화살표 */
+.to-top .top-arrow {
+  font-size: 24px;
+  line-height: 22px;
+  font-weight: 600;
+}
+
+/* TOP 글자 */
+.to-top .top-text {
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 3px;
+  letter-spacing: 0.5px;
 }
 
 /* =========================================================
@@ -452,4 +473,5 @@ footer.site-footer a:hover{
   
 
 /* =========================================== 모바일 전용 CSS ==================================== */
+
 
