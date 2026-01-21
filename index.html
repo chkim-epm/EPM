@@ -61,6 +61,9 @@
 
 <!-- 공통CSS(네비게이션&풋터) -->
 <link rel="stylesheet" href="common.css">
+	
+<!-- Supabase JS SDK v2: 클라이언트에서 DB 접근용 -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 /* ===========================================PC 기본 스타일====================================================*/
@@ -382,6 +385,8 @@
 .ps-media{
   height:auto;
   background:none;
+  border-radius:14px;
+  overflow:hidden;
 }
 
 .ps-media::before{ display:none; }
@@ -402,10 +407,8 @@
 .ps-media img{
   width:100%;
   height:auto;
-  object-fit:contain;
-  filter: drop-shadow(0 30px 40px rgba(0,0,0,0.25));
-  opacity:1;
-  transform:none;
+  object-fit:cover;
+  filter: drop-shadow(0 25px 40px rgba(0,0,0,0.25));
 }
 
 /* 텍스트 영역 */
@@ -616,88 +619,36 @@
   </div>
 </section>
 
-
-<!-- ✅ 제품소개 섹션 (고급 버전) -->
+<!-- ✅ 제품소개 섹션 (DB 연동 최종본) -->
 <section class="product-showcase premium" id="product_showcase">
   <div class="ps-inner">
 
-    <!-- LEFT -->
-    <div class="ps-left">
-      <div class="ps-kicker">PRODUCT</div>
-      <h2 class="ps-title">제품소개</h2>
-      <p class="ps-desc">
-        현장 조건에 맞춘 설계와 안정적인 납품 프로세스로<br>
-        전력·통신 분야의 핵심 부품을 제공합니다.
-      </p>
+<!-- LEFT -->
+<div class="ps-left">
+  <div class="ps-kicker">PRODUCT</div>
+  <h2 class="ps-title">제품소개</h2>
+  <p class="ps-desc">
+    현장 조건에 맞춘 설계와 안정적인 납품 프로세스로<br>
+    전력·통신 분야의 핵심 부품을 제공합니다.
+  </p>
 
-      <!-- Menu -->
-      <nav class="ps-list" aria-label="제품 메뉴">
+  <nav class="ps-list" id="psMenu">
+    <!-- DB에서 자동 생성 -->
+  </nav>
 
-        <button class="ps-row is-active" type="button"
-          data-title="부스바"
-          data-desc="분전반·배전반 등 전력 설비에 사용되는 고전도 동버스바 가공/절곡/타공 맞춤 제작"
-          data-link="busbar.html"
-          data-img="image/부스바.jpg">
-          <span class="ps-row-name">부스바</span>
-          <span class="ps-row-meta">Busbar</span>
-          <span class="ps-row-ico">→</span>
-        </button>
+  <div class="ps-hint">* 항목을 선택하면 오른쪽 이미지가 변경됩니다.</div>
+</div>
 
-        <button class="ps-row" type="button"
-          data-title="2단 단자대"
-          data-desc="배선 연결을 안정적으로 고정·분리하는 단자대 솔루션 (현장 규격 맞춤)"
-          data-link="twoTerminal.html"
-          data-img="image/2단단자대.jpg">
-          <span class="ps-row-name">2단 단자대</span>
-          <span class="ps-row-meta">Terminal</span>
-          <span class="ps-row-ico">→</span>
-        </button>
+<!-- RIGHT -->
+<div class="ps-right">
+  <article class="ps-card">
+    <header class="ps-media">
+      <img id="psImage" src="" alt="">
+      <div class="ps-badge">EPM</div>
+    </header>
+  </article>
+</div>
 
-        <button class="ps-row" type="button"
-          data-title="접지"
-          data-desc="설비 보호·안전 기준을 위한 접지 연결 부품 및 가공품"
-          data-link="groundConnection.html"
-          data-img="image/접지.jpg">
-          <span class="ps-row-name">접지</span>
-          <span class="ps-row-meta">Ground</span>
-          <span class="ps-row-ico">→</span>
-        </button>
-
-        <a class="ps-row ps-row-link" href="product.html">
-          <span class="ps-row-name">전체 제품 보기</span>
-          <span class="ps-row-meta">All Products</span>
-          <span class="ps-row-ico">→</span>
-        </a>
-
-      </nav>
-
-      <div class="ps-hint">* 항목을 선택하면 오른쪽 내용이 변경됩니다.</div>
-    </div>
-
-    <!-- RIGHT -->
-    <div class="ps-right">
-      <article class="ps-card">
-
-        <header class="ps-media">
-          <img id="psImage" class="is-ready" src="image/부스바.jpg" alt="부스바">
-          <div class="ps-media-dim"></div>
-          <div class="ps-badge">EPM</div>
-        </header>
-
-        <div class="ps-body">
-          <h3 id="psTitle" class="ps-product-title">부스바</h3>
-          <p id="psText" class="ps-product-desc">
-            분전반·배전반 등 전력 설비에 사용되는 고전도 동버스바 가공/절곡/타공 맞춤 제작
-          </p>
-
-          <div class="ps-actions">
-            <a id="psLink" class="ps-cta" href="busbar.html">자세히 보기</a>
-            <a class="ps-cta ghost" href="map.html">문의/오시는 길</a>
-          </div>
-        </div>
-
-      </article>
-    </div>
 
   </div>
 </section>
@@ -705,43 +656,7 @@
 
 
 <!-- ✅ 제품소개 섹션 동작 스크립트 -->
-<script>
-(function(){
-  const items = Array.from(document.querySelectorAll(".ps-row[data-title]"));
-  const imgEl = document.getElementById("psImage");
-  const titleEl = document.getElementById("psTitle");
-  const textEl = document.getElementById("psText");
-  const linkEl = document.getElementById("psLink");
 
-  if(!items.length || !imgEl || !titleEl || !textEl || !linkEl) return;
-
-  function activate(btn){
-    items.forEach(b => b.classList.toggle("is-active", b === btn));
-
-    const title = btn.dataset.title;
-    const desc  = btn.dataset.desc;
-    const link  = btn.dataset.link;
-    const img   = btn.dataset.img;
-
-    titleEl.textContent = title;
-    textEl.textContent = desc;
-    linkEl.href = link;
-
-    imgEl.classList.remove("is-ready");
-    requestAnimationFrame(()=>{
-      imgEl.src = img;
-      imgEl.alt = title;
-      imgEl.classList.add("is-ready");
-    });
-  }
-
-  items.forEach(btn=>{
-    btn.addEventListener("click", ()=> activate(btn));
-  });
-
-  activate(items[0]);
-})();
-</script>
 
 
 
@@ -783,46 +698,7 @@
   </div>
 </footer>
 
-	<script>
-(function(){
-  const items = Array.from(document.querySelectorAll(".ps-item[data-title]"));
-  const imgEl = document.getElementById("psImage");
-  const titleEl = document.getElementById("psTitle");
-  const textEl = document.getElementById("psText");
-  const linkEl = document.getElementById("psLink");
 
-  if(!items.length || !imgEl || !titleEl || !textEl || !linkEl) return;
-
-  function activate(btn){
-    items.forEach(b => b.classList.toggle("is-active", b === btn));
-
-    const title = btn.dataset.title || "";
-    const desc  = btn.dataset.desc || "";
-    const link  = btn.dataset.link || "#";
-    const img   = btn.dataset.img  || "";
-
-    // 텍스트/링크 갱신
-    titleEl.textContent = title;
-    textEl.textContent = desc;
-    linkEl.setAttribute("href", link);
-
-    // 이미지 전환(부드럽게)
-    imgEl.classList.remove("is-ready");
-    requestAnimationFrame(()=>{
-      if(img) imgEl.setAttribute("src", img);
-      imgEl.setAttribute("alt", title);
-      imgEl.classList.add("is-ready");
-    });
-  }
-
-  items.forEach(btn=>{
-    btn.addEventListener("click", ()=> activate(btn));
-  });
-
-  // 초기 활성화(첫 버튼)
-  activate(items[0]);
-})();
-</script>
 	
 <script>
 (function(){
@@ -915,5 +791,84 @@ function moveTo(nextIdx){
 })();
 </script>
 
+
+<script>
+// Supabase 프로젝트 URL/anon 키 (퍼블릭 클라이언트에서 제한 권한으로 사용)
+
+  const SUPABASE_URL = "https://cwwnarmrvpvjptytepdo.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3d25hcm1ydnB2anB0eXRlcGRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NzU4NTUsImV4cCI6MjA3NzQ1MTg1NX0.5mvgA_gKdlRaebVRSFIUJRKgp51zke_nffQ2jc8Ad1g";
+
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+async function loadMainProducts(){
+
+  // 모든 제품 불러오기 (최신순)
+  const { data, error } = await sb
+    .from("product")
+    .select("title, image_url, categoryId")
+    .order("created_at", { ascending:false });
+
+  if(error){
+    console.error("제품 로딩 실패:", error);
+    return;
+  }
+
+  // 🔹 카테고리별 대표 제품 1개만 추출
+  const 대표 = {};
+  data.forEach(p=>{
+    if(!대표[p.categoryId]) 대표[p.categoryId] = p;
+  });
+
+  // 🔹 고정 메뉴 순서 정의
+  const menuOrder = [
+    {id:"1", name:"부스바"},
+    {id:"2", name:"2단 단자대"},
+    {id:"3", name:"접지"}
+  ];
+
+  const finalProducts = menuOrder.map(m => ({
+    ...m,
+    image: 대표[m.id]?.image_url || ""   // DB에 없으면 빈값
+  }));
+
+  const menu = document.getElementById("psMenu");
+  const img  = document.getElementById("psImage");
+
+  // 🔹 메뉴 HTML 생성
+  menu.innerHTML = finalProducts.map((p,i)=>`
+    <button class="ps-row ${i===0?'is-active':''}" 
+            type="button"
+            data-img="${p.image}"
+            data-title="${p.name}">
+      <span class="ps-row-name">${p.name}</span>
+    </button>
+  `).join("") +
+
+  // 🔹 전체 제품 보기 링크 추가
+  `<a class="ps-row ps-row-link" href="product.html">
+      <span class="ps-row-name">전체 제품 보기</span>
+   </a>`;
+
+  // 🔹 첫 이미지 기본 표시
+  img.src = finalProducts[0].image;
+  img.alt = finalProducts[0].name;
+
+  // 🔹 클릭 시 이미지 변경
+  document.querySelectorAll(".ps-row[data-img]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      document.querySelectorAll(".ps-row").forEach(b=>b.classList.remove("is-active"));
+      btn.classList.add("is-active");
+      img.src = btn.dataset.img;
+      img.alt = btn.dataset.title;
+    });
+  });
+}
+
+// 최초 실행
+loadMainProducts();
+</script>
+
+
+	
 </body>
 </html>
