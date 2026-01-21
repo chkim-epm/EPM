@@ -478,10 +478,13 @@
 </footer>
 
 <!-- 스크롤 HTML -->	
-<button id="toTop" class="to-top" type="button" aria-label="맨 위로">
-  ↑
+<button id="topBtn" onclick="scrollToTop()">
+  <span class="top-arrow">▲</span>
+  <span class="top-text">TOP</span>
 </button>
+<!-- 스크롤 HTML -->	
 
+	
 <script>
 (function(){
   const slides = Array.from(document.querySelectorAll(".hero-slide"));
