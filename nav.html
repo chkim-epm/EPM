@@ -65,35 +65,44 @@
     <button class="nav-drawer-close" id="navDrawerClose" type="button" aria-label="메뉴 닫기">×</button>
 
     <!-- ✅ 여기 메뉴는 “현재 네비게이션에 있는 메뉴”를 그대로 복제(링크 동일) -->
-    <div class="nav-drawer-list">
+<div class="nav-drawer-list">
 
-      <!-- 회사소개 -->
-      <div class="drawer-group">
-        <a class="drawer-link" href="companyHistory.html">회사소개</a>
-        <div class="drawer-sub">
-          <a href="companyHistory.html">회사소개</a>
-          <a href="orgChart.html">조직도</a>
-          <a href="greeting.html">인사말</a>
-        </div>
-      </div>
-
-      <!-- 제품소개 -->
-      <div class="drawer-group">
-        <a class="drawer-link" href="product.html">제품소개</a>
-        <div class="drawer-sub">
-          <a href="busbar.html">부스바</a>
-          <a href="twoTerminal.html">2단 단자대</a>
-          <a href="groundConnection.html">접지</a>
-        </div>
-      </div>
-
-      <!-- 무감전 / 오시는 길 -->
-      <a class="drawer-link" href="noElectrocution.html">무감전</a>
-      <a class="drawer-link" href="map.html">오시는 길</a>
-
+  <!-- 회사소개 -->
+  <div class="drawer-acc">
+    <button class="drawer-acc-head" type="button" aria-expanded="false">
+      <span>회사소개</span>
+      <span class="drawer-chev">▾</span>
+    </button>
+    <div class="drawer-acc-body">
+      <a class="drawer-sub-link" href="companyHistory.html">회사소개</a>
+      <a class="drawer-sub-link" href="orgChart.html">조직도</a>
+      <a class="drawer-sub-link" href="greeting.html">인사말</a>
     </div>
+  </div>
+
+  <!-- 제품소개 -->
+  <div class="drawer-acc">
+    <button class="drawer-acc-head" type="button" aria-expanded="false">
+      <span>제품소개</span>
+      <span class="drawer-chev">▾</span>
+    </button>
+    <div class="drawer-acc-body">
+      <a class="drawer-sub-link" href="busbar.html">부스바</a>
+      <a class="drawer-sub-link" href="twoTerminal.html">2단 단자대</a>
+      <a class="drawer-sub-link" href="groundConnection.html">접지</a>
+    </div>
+  </div>
+
+  <!-- 단일 메뉴 -->
+  <a class="drawer-link" href="noElectrocution.html">무감전</a>
+  <a class="drawer-link" href="map.html">오시는 길</a>
+
+</div>
+
+	  
   </aside>
 </div>
+
 
 
 
