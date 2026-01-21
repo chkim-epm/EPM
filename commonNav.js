@@ -10,71 +10,82 @@
     return;
   }
 
-  // ✅ TOP 버튼 동작 연결
+  /* =====================================================
+     TOP 버튼
+  ===================================================== */
   const btn = document.getElementById("toTop");
-  if (!btn) return;
+  if (btn){
+    const onScroll = () => {
+      if (window.scrollY > 200) btn.classList.add("is-visible");
+      else btn.classList.remove("is-visible");
+    };
+    window.addEventListener("scroll", onScroll, { passive:true });
+    onScroll();
 
-  const onScroll = () => {
-    if (window.scrollY > 200) btn.classList.add("is-visible");
-    else btn.classList.remove("is-visible");
-  };
+    btn.addEventListener("click", ()=>{
+      window.scrollTo({ top:0, behavior:"smooth" });
+    });
+  }
 
-  window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
+  /* =====================================================
+     햄버거 + 오른쪽 드로어 메뉴
+  ===================================================== */
+  const burger   = document.getElementById("navBurger");
+  const drawer   = document.getElementById("navDrawer");
+  const backdrop = document.getElementById("navDrawerBackdrop");
+  const closeBtn = document.getElementById("navDrawerClose");
 
-  btn.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
+  if (burger && drawer){
 
-
-  // ✅ 햄버거 메뉴(Drawer) 초기화
-(function(){
-  function initDrawer(){
-    const burger = document.getElementById("navBurger");
-    const drawer = document.getElementById("navDrawer");
-    const backdrop = document.getElementById("navDrawerBackdrop");
-    const closeBtn = document.getElementById("navDrawerClose");
-
-    if(!burger || !drawer) return;
-
-    const open = () => {
+    const openDrawer = () => {
       drawer.classList.add("is-open");
       drawer.setAttribute("aria-hidden","false");
       document.body.style.overflow = "hidden";
     };
 
-    const close = () => {
+    const closeDrawer = () => {
       drawer.classList.remove("is-open");
       drawer.setAttribute("aria-hidden","true");
       document.body.style.overflow = "";
     };
 
-    burger.addEventListener("click", open);
-    backdrop && backdrop.addEventListener("click", close);
-    closeBtn && closeBtn.addEventListener("click", close);
+    burger.addEventListener("click", openDrawer);
+    backdrop && backdrop.addEventListener("click", closeDrawer);
+    closeBtn && closeBtn.addEventListener("click", closeDrawer);
 
-    // ESC로 닫기
+    // ESC 닫기
     window.addEventListener("keydown", (e)=>{
-      if(e.key === "Escape") close();
+      if(e.key === "Escape") closeDrawer();
     });
 
-    // 메뉴 클릭하면 닫기(원치 않으면 지워도 됨)
+    // 링크 클릭 시 닫기
     drawer.querySelectorAll("a").forEach(a=>{
-      a.addEventListener("click", close);
+      a.addEventListener("click", closeDrawer);
     });
   }
 
-  // nav.html fetch가 완료된 뒤에 실행되도록 약간 기다림
-  let retry = 0;
-  const t = setInterval(()=>{
-    if(document.getElementById("navDrawer") && document.getElementById("navBurger")){
-      clearInterval(t);
-      initDrawer();
-    }
-    if(retry++ > 60) clearInterval(t);
-  }, 50);
-})();
+  /* =====================================================
+     드로어 내부 아코디언 (회사소개 / 제품소개)
+  ===================================================== */
+  document.querySelectorAll(".drawer-acc").forEach((group)=>{
+    const head = group.querySelector(".drawer-acc-head");
+    if(!head) return;
 
-  
-})();
+    head.addEventListener("click", ()=>{
+      const isOpen = group.classList.contains("is-open");
 
+      // 하나만 열기
+      document.querySelectorAll(".drawer-acc").forEach(g=>{
+        g.classList.remove("is-open");
+        const h = g.querySelector(".drawer-acc-head");
+        if(h) h.setAttribute("aria-expanded","false");
+      });
+
+      if(!isOpen){
+        group.classList.add("is-open");
+        head.setAttribute("aria-expanded","true");
+      }
+    });
+  });
+
+})();
