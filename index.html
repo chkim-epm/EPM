@@ -282,6 +282,191 @@
     opacity: 1;
   }
 }
+/* =========================================================
+   Product Showcase (Blue theme)
+========================================================= */
+.product-showcase{
+  background: #f7fbff;
+  padding: 70px 18px;
+}
+
+.ps-inner{
+  max-width: 1240px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 36px;
+  align-items: center;
+}
+
+.ps-kicker{
+  font-weight: 900;
+  letter-spacing: .08em;
+  color: #1d77c8;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.ps-title{
+  margin: 0 0 12px;
+  font-size: clamp(28px, 3.2vw, 46px);
+  font-weight: 900;
+  color: #0b3b67;
+}
+
+.ps-desc{
+  margin: 0 0 22px;
+  color: rgba(11,59,103,0.82);
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+/* 좌측 메뉴 */
+.ps-menu{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ps-item{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+
+  border: 1px solid rgba(11,59,103,0.10);
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  padding: 16px 16px;
+  border-radius: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #0b3b67;
+
+  transition: transform .18s ease, background .18s ease, border-color .18s ease;
+}
+
+.ps-item:hover{
+  transform: translateY(-1px);
+  border-color: rgba(29,119,200,0.28);
+  background: rgba(255,255,255,0.95);
+}
+
+.ps-item.is-active{
+  border-color: rgba(29,119,200,0.55);
+  box-shadow: 0 18px 45px rgba(2, 31, 66, 0.10);
+  background: linear-gradient(180deg, rgba(29,119,200,0.10), rgba(255,255,255,0.92));
+}
+
+.ps-item-text{
+  font-weight: 900;
+  font-size: 16px;
+}
+
+.ps-arrow{
+  font-weight: 900;
+  opacity: .8;
+}
+
+.ps-item-link{
+  cursor: pointer;
+}
+
+/* 오른쪽 카드 */
+.ps-card{
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 22px 70px rgba(2, 31, 66, 0.16);
+  background: #ffffff;
+  border: 1px solid rgba(11,59,103,0.10);
+}
+
+.ps-media{
+  position: relative;
+  height: 360px;
+  background: #0b3b67;
+}
+
+.ps-media img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+
+  opacity: 0;
+  transform: scale(1.02);
+  transition: opacity .28s ease, transform .28s ease;
+}
+
+.ps-media img.is-ready{
+  opacity: 1;
+  transform: scale(1);
+}
+
+.ps-badge{
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-weight: 900;
+  font-size: 12px;
+  letter-spacing: .08em;
+  color: #fff;
+  background: rgba(13, 64, 118, 0.78);
+  border: 1px solid rgba(255,255,255,0.22);
+}
+
+.ps-body{
+  padding: 18px 18px 20px;
+}
+
+.ps-product-title{
+  margin: 0 0 8px;
+  font-size: 22px;
+  font-weight: 900;
+  color: #0b3b67;
+}
+
+.ps-product-desc{
+  margin: 0 0 14px;
+  color: rgba(11,59,103,0.82);
+  line-height: 1.65;
+  font-size: 15px;
+}
+
+.ps-actions{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ps-cta{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 16px;
+  border-radius: 12px;
+  font-weight: 900;
+  text-decoration: none;
+  color: #fff;
+  background: linear-gradient(90deg, #1d77c8, #2f9cff);
+  border: 1px solid rgba(0,0,0,0);
+}
+
+.ps-cta:hover{
+  filter: brightness(1.03);
+}
+
+.ps-cta.ghost{
+  background: rgba(11,59,103,0.06);
+  color: #0b3b67;
+  border: 1px solid rgba(11,59,103,0.14);
+}
 
 
 /* ===========================================PC 기본 스타일 끝.================================================*/
@@ -317,6 +502,24 @@
 					line-height: 1.3; 
 					}
 }
+
+	
+/* 두번째섹션 */
+@media (max-width: 1024px){
+  .ps-inner{
+    grid-template-columns: 1fr;
+  }
+  .ps-media{
+    height: 300px;
+  }
+}
+
+@media (max-width: 520px){
+  .product-showcase{ padding: 56px 14px; }
+  .ps-item{ padding: 14px 14px; }
+  .ps-media{ height: 240px; }
+}
+
 /* =========================================== 모바일 전용 CSS ==================================== */
 
 
@@ -430,62 +633,122 @@
 </section>
 
 
- <!-- 섹션: Busbar 이미지 스트립 -->
-<section id="busbar_section" style="padding:48px 0; background:#fff;">
-  <!-- 타이틀 -->
-  <h2 style="
-    text-align:center; 
-    font-size:2.2rem; 
-    font-weight:800; 
-    color:#0B58A5; 
-    margin:0 0 20px;">
-    EAST POWER METAL CO.,LTD.
-  </h2>
-	<h5 style="
-    text-align:center; 
-    font-size:1.8rem; 
-    font-weight:300; 
-    color:#0B58A5; 
-    margin:0 0 20px;">
-    Performance Built by Engineering Precision
-</h5>
+<!-- ✅ 제품소개 섹션 (Product Showcase) -->
+<section class="product-showcase" id="product_showcase">
+  <div class="ps-inner">
 
-	
+    <!-- 왼쪽: 카피 + 메뉴 -->
+    <div class="ps-left">
+      <div class="ps-kicker">PRODUCT</div>
+      <h2 class="ps-title">제품소개</h2>
+      <p class="ps-desc">
+        현장 조건에 맞춘 설계와 안정적인 납품 프로세스로
+        전력·통신 분야의 핵심 부품을 제공합니다.
+      </p>
 
-  <!-- 스트립 래퍼 (모서리 둥글게 + 그림자) -->
-  <div style="
-    max-width:1280px; 
-    margin:0 auto; 
-    border-radius:12px; 
-    overflow:hidden; 
-    box-shadow:0 6px 18px rgba(0,0,0,0.08);">
+      <!-- 좌측 메뉴(클릭 시 우측 내용/이미지 변경) -->
+      <nav class="ps-menu" aria-label="제품 목록">
+        <button class="ps-item is-active" type="button"
+                data-title="부스바"
+                data-desc="분전반·배전반 등 전력 설비에 사용되는 고전도 동버스바 가공/절곡/타공 맞춤 제작"
+                data-link="busbar.html"
+                data-img="image/부스바.jpg">
+          <span class="ps-item-text">부스바</span>
+          <span class="ps-arrow">→</span>
+        </button>
 
-    <!-- 두 장을 한 장처럼 보이게 -->
-    <div style="
-  display:grid; 
-  grid-template-columns:1fr 1fr; 
-  gap:100px;   /* 여기 숫자를 너가 원하는 간격으로 조절 */
-">
-  
-  <img src="image\부스바.jpg" alt="busbar image 1" 
-       style="width:100%; height:500px; object-fit:cover; display:block; border-radius:10px;">
+        <button class="ps-item" type="button"
+                data-title="2단 단자대"
+                data-desc="배선 연결을 안정적으로 고정·분리하는 단자대 솔루션 (현장 규격 맞춤)"
+                data-link="twoTerminal.html"
+                data-img="image/2단단자대.jpg">
+          <span class="ps-item-text">2단 단자대</span>
+          <span class="ps-arrow">→</span>
+        </button>
 
-  <img src="image\머신.jpg" alt="busbar image 2" 
-       style="width:100%; height:500px; object-fit:cover; display:block; border-radius:10px;">
-</div>
+        <button class="ps-item" type="button"
+                data-title="접지"
+                data-desc="설비 보호·안전 기준을 위한 접지 연결 부품 및 가공품"
+                data-link="groundConnection.html"
+                data-img="image/접지.jpg">
+          <span class="ps-item-text">접지</span>
+          <span class="ps-arrow">→</span>
+        </button>
+
+        <a class="ps-item ps-item-link" href="product.html">
+          <span class="ps-item-text">전체 제품 보기</span>
+          <span class="ps-arrow">→</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- 오른쪽: 제품 이미지 + 요약 + 버튼 -->
+    <div class="ps-right">
+      <div class="ps-card">
+        <div class="ps-media">
+          <img id="psImage" src="image/부스바.jpg" alt="부스바">
+          <div class="ps-badge">EPM</div>
+        </div>
+
+        <div class="ps-body">
+          <h3 id="psTitle" class="ps-product-title">부스바</h3>
+          <p id="psText" class="ps-product-desc">
+            분전반·배전반 등 전력 설비에 사용되는 고전도 동버스바 가공/절곡/타공 맞춤 제작
+          </p>
+
+          <div class="ps-actions">
+            <a id="psLink" class="ps-cta" href="busbar.html">자세히 보기</a>
+            <a class="ps-cta ghost" href="map.html">문의/오시는 길</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
-<!-- 메인 섹션 3 -->
+<!-- ✅ 제품소개 섹션 동작 스크립트 -->
+<script>
+(function(){
+  const items = Array.from(document.querySelectorAll(".ps-item[data-title]"));
+  const imgEl = document.getElementById("psImage");
+  const titleEl = document.getElementById("psTitle");
+  const textEl = document.getElementById("psText");
+  const linkEl = document.getElementById("psLink");
 
-<div class="section" id="s3">
-  <img src="image\현장_스크린샷3.png" class="bg-video" alt="제품 및 연락 안내">
+  if(!items.length || !imgEl || !titleEl || !textEl || !linkEl) return;
 
-  <div class="text-area">
-    <h2 style="margin:0;">버스바 가공&납품 - (주)이스트파워메탈 </h2>
-    <h2 style="margin:0;">동버스바, 부스바, 비철금속을 전문적으로 가공&납품하는 전력,통신 솔루션 기업입니다.</h2>
-  </div>
-</div>
+  function activate(btn){
+    items.forEach(b => b.classList.toggle("is-active", b === btn));
+
+    const title = btn.dataset.title || "";
+    const desc  = btn.dataset.desc || "";
+    const link  = btn.dataset.link || "#";
+    const img   = btn.dataset.img  || "";
+
+    // 텍스트/링크 갱신
+    titleEl.textContent = title;
+    textEl.textContent = desc;
+    linkEl.setAttribute("href", link);
+
+    // 이미지 전환(부드럽게)
+    imgEl.classList.remove("is-ready");
+    requestAnimationFrame(()=>{
+      if(img) imgEl.setAttribute("src", img);
+      imgEl.setAttribute("alt", title);
+      imgEl.classList.add("is-ready");
+    });
+  }
+
+  items.forEach(btn=>{
+    btn.addEventListener("click", ()=> activate(btn));
+  });
+
+  // 초기 활성화(첫 버튼)
+  activate(items[0]);
+})();
+</script>
+
 <!-- 푸터 (회사 정보) -->
 <footer class="site-footer">
   <div class="footer-inner">
@@ -523,6 +786,47 @@
     <span>© 2025 EAST POWER METAL. All Rights Reserved.</span>
   </div>
 </footer>
+
+	<script>
+(function(){
+  const items = Array.from(document.querySelectorAll(".ps-item[data-title]"));
+  const imgEl = document.getElementById("psImage");
+  const titleEl = document.getElementById("psTitle");
+  const textEl = document.getElementById("psText");
+  const linkEl = document.getElementById("psLink");
+
+  if(!items.length || !imgEl || !titleEl || !textEl || !linkEl) return;
+
+  function activate(btn){
+    items.forEach(b => b.classList.toggle("is-active", b === btn));
+
+    const title = btn.dataset.title || "";
+    const desc  = btn.dataset.desc || "";
+    const link  = btn.dataset.link || "#";
+    const img   = btn.dataset.img  || "";
+
+    // 텍스트/링크 갱신
+    titleEl.textContent = title;
+    textEl.textContent = desc;
+    linkEl.setAttribute("href", link);
+
+    // 이미지 전환(부드럽게)
+    imgEl.classList.remove("is-ready");
+    requestAnimationFrame(()=>{
+      if(img) imgEl.setAttribute("src", img);
+      imgEl.setAttribute("alt", title);
+      imgEl.classList.add("is-ready");
+    });
+  }
+
+  items.forEach(btn=>{
+    btn.addEventListener("click", ()=> activate(btn));
+  });
+
+  // 초기 활성화(첫 버튼)
+  activate(items[0]);
+})();
+</script>
 	
 <script>
 (function(){
@@ -607,11 +911,7 @@ function moveTo(nextIdx){
 
   // 시작
   moveTo(0);
-setTimeout(()=> {
-  const first = slides[0];
-  first.querySelector("h1").classList.add("text-in");
-  first.querySelector("p").classList.add("text-in");
-}, 800);
+
 
 
   // 리사이즈 시 바 재계산
