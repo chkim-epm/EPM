@@ -712,117 +712,131 @@
 
 
 <!-- ✅ 제품소개 섹션 (고급 버전) -->
-<section class="product-hero" id="product_showcase">
-  <div class="ph-wrap">
+<section class="product-showcase premium" id="product_showcase">
+  <div class="ps-inner">
 
     <!-- LEFT -->
-    <div class="ph-left">
-      <div class="ph-kicker">PRODUCT</div>
-      <h2 class="ph-title">제품소개</h2>
-      <p class="ph-desc">
+    <div class="ps-left">
+      <div class="ps-kicker">PRODUCT</div>
+      <h2 class="ps-title">제품소개</h2>
+      <p class="ps-desc">
         현장 조건에 맞춘 설계와 안정적인 납품 프로세스로<br>
         전력·통신 분야의 핵심 부품을 제공합니다.
       </p>
 
       <!-- Menu -->
-      <nav class="ph-menu" aria-label="제품 메뉴">
-        <button class="ph-item is-active" type="button"
+      <nav class="ps-list" aria-label="제품 메뉴">
+
+        <button class="ps-row is-active" type="button"
           data-title="부스바"
           data-desc="분전반·배전반 등 전력 설비에 사용되는 고전도 동버스바 가공/절곡/타공 맞춤 제작"
           data-link="busbar.html"
           data-img="image/부스바.jpg">
-          <span class="ph-item-label">부스바</span>
-          <span class="ph-item-arrow">→</span>
+          <span class="ps-row-name">부스바</span>
+          <span class="ps-row-meta">Busbar</span>
+          <span class="ps-row-ico">→</span>
         </button>
 
-        <button class="ph-item" type="button"
+        <button class="ps-row" type="button"
           data-title="2단 단자대"
           data-desc="배선 연결을 안정적으로 고정·분리하는 단자대 솔루션 (현장 규격 맞춤)"
           data-link="twoTerminal.html"
           data-img="image/2단단자대.jpg">
-          <span class="ph-item-label">2단 단자대</span>
-          <span class="ph-item-arrow">→</span>
+          <span class="ps-row-name">2단 단자대</span>
+          <span class="ps-row-meta">Terminal</span>
+          <span class="ps-row-ico">→</span>
         </button>
 
-        <button class="ph-item" type="button"
+        <button class="ps-row" type="button"
           data-title="접지"
           data-desc="설비 보호·안전 기준을 위한 접지 연결 부품 및 가공품"
           data-link="groundConnection.html"
           data-img="image/접지.jpg">
-          <span class="ph-item-label">접지</span>
-          <span class="ph-item-arrow">→</span>
+          <span class="ps-row-name">접지</span>
+          <span class="ps-row-meta">Ground</span>
+          <span class="ps-row-ico">→</span>
         </button>
 
-        <a class="ph-item ph-link" href="product.html">
-          <span class="ph-item-label">전체 제품 보기</span>
-          <span class="ph-item-arrow">→</span>
+        <a class="ps-row ps-row-link" href="product.html">
+          <span class="ps-row-name">전체 제품 보기</span>
+          <span class="ps-row-meta">All Products</span>
+          <span class="ps-row-ico">→</span>
         </a>
+
       </nav>
+
+      <div class="ps-hint">* 항목을 선택하면 오른쪽 내용이 변경됩니다.</div>
     </div>
 
     <!-- RIGHT -->
-    <div class="ph-right">
-      <div class="ph-card">
-        <div class="ph-media">
-          <img id="phImg" class="is-ready" src="image/부스바.jpg" alt="부스바">
-        </div>
+    <div class="ps-right">
+      <article class="ps-card">
 
-        <div class="ph-body">
-          <h3 id="phTitle">부스바</h3>
-          <p id="phText">분전반·배전반 등 전력 설비에 사용되는 고전도 동버스바 가공/절곡/타공 맞춤 제작</p>
+        <header class="ps-media">
+          <img id="psImage" class="is-ready" src="image/부스바.jpg" alt="부스바">
+          <div class="ps-media-dim"></div>
+          <div class="ps-badge">EPM</div>
+        </header>
 
-          <div class="ph-actions">
-            <a id="phLink" class="ph-btn primary" href="busbar.html">자세히 보기</a>
-            <a class="ph-btn ghost" href="map.html">문의/오시는 길</a>
+        <div class="ps-body">
+          <h3 id="psTitle" class="ps-product-title">부스바</h3>
+          <p id="psText" class="ps-product-desc">
+            분전반·배전반 등 전력 설비에 사용되는 고전도 동버스바 가공/절곡/타공 맞춤 제작
+          </p>
+
+          <div class="ps-actions">
+            <a id="psLink" class="ps-cta" href="busbar.html">자세히 보기</a>
+            <a class="ps-cta ghost" href="map.html">문의/오시는 길</a>
           </div>
         </div>
-      </div>
+
+      </article>
     </div>
 
   </div>
 </section>
 
 
+
 <!-- ✅ 제품소개 섹션 동작 스크립트 -->
 <script>
 (function(){
-  const items = Array.from(document.querySelectorAll(".ph-item[data-title]"));
-  const imgEl = document.getElementById("phImg");
-  const titleEl = document.getElementById("phTitle");
-  const textEl = document.getElementById("phText");
-  const linkEl = document.getElementById("phLink");
+  const items = Array.from(document.querySelectorAll(".ps-row[data-title]"));
+  const imgEl = document.getElementById("psImage");
+  const titleEl = document.getElementById("psTitle");
+  const textEl = document.getElementById("psText");
+  const linkEl = document.getElementById("psLink");
 
   if(!items.length || !imgEl || !titleEl || !textEl || !linkEl) return;
-
-  imgEl.addEventListener("error", ()=>{
-    imgEl.src = "image/부스바.jpg";
-    imgEl.alt = "이미지 준비중";
-  });
 
   function activate(btn){
     items.forEach(b => b.classList.toggle("is-active", b === btn));
 
-    const title = btn.dataset.title || "";
-    const desc  = btn.dataset.desc  || "";
-    const link  = btn.dataset.link  || "#";
-    const img   = btn.dataset.img   || "";
+    const title = btn.dataset.title;
+    const desc  = btn.dataset.desc;
+    const link  = btn.dataset.link;
+    const img   = btn.dataset.img;
 
     titleEl.textContent = title;
-    textEl.textContent  = desc;
-    linkEl.setAttribute("href", link);
+    textEl.textContent = desc;
+    linkEl.href = link;
 
     imgEl.classList.remove("is-ready");
     requestAnimationFrame(()=>{
-      if(img) imgEl.src = img;
+      imgEl.src = img;
       imgEl.alt = title;
       imgEl.classList.add("is-ready");
     });
   }
 
-  items.forEach(btn=> btn.addEventListener("click", ()=> activate(btn)));
+  items.forEach(btn=>{
+    btn.addEventListener("click", ()=> activate(btn));
+  });
+
   activate(items[0]);
 })();
 </script>
+
 
 
 <!-- 푸터 (회사 정보) -->
