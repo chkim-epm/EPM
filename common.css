@@ -373,6 +373,11 @@ footer.site-footer a:hover{
   -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(255,255,255,.10);
 }
+#nav nav{
+  height: 70px;           /* ✅ 네비게이션 고정 높이 */
+  display: flex;
+  align-items: center;    /* 내부 정렬 안정화 */
+}
 
 /* 기존 common.css의 nav{ background:#1E293B; } 를 덮어쓰려면
    #nav 안에 들어간 nav에 대해서만 강제 적용하는게 포인트 */
@@ -403,15 +408,13 @@ footer.site-footer a:hover{
   position: fixed;
   inset: 0;
   z-index: 100000;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .2s ease;
+  display: none;              /* ✅ 초기 display 완전 차단 */
 }
 
 .nav-drawer.is-open{
-  opacity: 1;
-  pointer-events: auto;
+  display: block;             /* ✅ 열릴 때만 렌더링 */
 }
+
 
 /* 배경 */
 .nav-drawer-backdrop{
@@ -619,6 +622,7 @@ footer.site-footer a:hover{
   
 
 /* =========================================== 모바일 전용 CSS ==================================== */
+
 
 
 
