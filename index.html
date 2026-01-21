@@ -354,11 +354,57 @@
   align-items:center;
   justify-content:center;
   transition: .18s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .ps-row:hover{
   transform: translateY(-1px);
 }
+	/* ===============================
+   ✅ 메뉴 버튼 프리미엄 Hover 효과
+   기존 .ps-row 아래에 이어서 추가
+=============================== */
+
+/* 비활성 버튼 Hover */
+.ps-row:not(.is-active):hover{
+  background: #f4f8ff;
+  box-shadow: 0 14px 28px rgba(11,78,162,.18);
+  transform: translateY(-2px);
+  outline: 2px solid rgba(11,78,162,.22);
+}
+
+/* 활성 버튼 Hover */
+.ps-row.is-active:hover{
+  box-shadow: 0 18px 40px rgba(11,78,162,.28);
+  transform: translateY(-2px);
+}
+
+/* 빛이 스윽 지나가는 효과 */
+.ps-row::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-70%;
+  width:60%;
+  height:100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,.35),
+    transparent
+  );
+  transform: skewX(-18deg);
+  opacity:0;
+  transition: left .45s ease, opacity .25s ease;
+  pointer-events:none;
+}
+
+.ps-row:hover::before{
+  left:130%;
+  opacity:1;
+}
+
 
 .ps-row.is-active{
   background:#0b4ea2;           /* 파랑 */
