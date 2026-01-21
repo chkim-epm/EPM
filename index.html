@@ -416,11 +416,11 @@
 
 /* 카드 기본 등장 상태 */
 #psCards .card{
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity .35s ease, transform .35s ease, box-shadow .18s ease;
-  will-change: opacity, transform;
+  transition: opacity .55s ease,
+              transform .55s ease,
+              box-shadow .18s ease;
 }
+
 
 
 
@@ -918,13 +918,19 @@ async function loadCategoryCards(categoryId){
     </div>
   `).join("");
 
-  // ✅ 4) 새 카드들 순차 등장(스태거)
-  const cards = Array.from(cardsWrap.querySelectorAll(".card.enter"));
-  requestAnimationFrame(()=>{
-    cards.forEach((card, i)=>{
-      setTimeout(()=> card.classList.add("is-in"), i * 90); // 0.09s 간격
-    });
-  });
+  // ✅ 4) 새 카드 등장
+const cards = Array.from(cardsWrap.querySelectorAll(".card.enter"));
+
+requestAnimationFrame(()=>{
+  // ✅ 3개 동시에 붙이기
+  cards.forEach(card => card.classList.add("is-in"));
+});
+
+// ✅ enter 정리 타이밍도 조금 늘림
+setTimeout(()=>{
+  cardsWrap.querySelectorAll(".card.enter").forEach(c=>c.classList.remove("enter"));
+}, 700);
+
 
   // 전환 상태 해제(약간 여유)
   setTimeout(()=>{
