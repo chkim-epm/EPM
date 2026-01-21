@@ -241,43 +241,42 @@
 
 	/* ===== 텍스트 등장 애니메이션 ===== */
 
-/* 기본 상태: 안 보이게 준비 */
+/* ===== 텍스트 등장 (타이핑 + 순서 제어) ===== */
+
+/* 기본 상태: 글자 숨김 */
 .hero-content h1,
-.hero-content p {
+.hero-content p{
   opacity: 0;
 }
 
-/* 제목: 왼쪽 → 오른쪽 */
-.hero-content h1.text-in {
-  animation: titleIn 0.8s ease forwards;
+/* p : 아래 → 위 짧게 등장 */
+.hero-content p.text-in{
+  animation: descIn 0.45s ease forwards;
 }
 
-/* 설명: 아래 → 위 */
-.hero-content p.text-in {
-  animation: descIn 0.8s ease forwards;
+/* 타이핑 중 커서 효과 */
+.hero-content h1.is-typing::after{
+  content: "|";
+  margin-left: 2px;
+  opacity: 1;
+  animation: blink 0.8s steps(2,end) infinite;
 }
 
-/* 키프레임 정의 */
-@keyframes titleIn {
-  from {
-    opacity: 0;
-    transform: translateX(-40px);
+/* 설명문 아래→위 */
+@keyframes descIn{
+  from{
+    opacity:0;
+    transform: translateY(18px);
   }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes descIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
+  to{
+    opacity:1;
     transform: translateY(0);
   }
+}
+
+/* 커서 깜빡임 */
+@keyframes blink{
+  50%{ opacity:0; }
 }
 
 /* ===========================================PC 기본 스타일 끝.================================================*/
@@ -536,28 +535,72 @@
 function moveTo(nextIdx){
   idx = (nextIdx + slides.length) % slides.length;
 
-  // 슬라이드 이동
+  // 슬라이드 컨테이너 이동
   wrap.style.transform = `translateX(-${idx * 100}%)`;
 
-  // 숫자 표시
+  // 숫자 표시 업데이트
   dots.forEach((d,i)=> d.classList.toggle("is-active", i===idx));
 
-  // ===== 텍스트 애니메이션 트리거 =====
+  // ===== 텍스트 초기화 =====
   slides.forEach(s=>{
     const h1 = s.querySelector("h1");
     const p  = s.querySelector("p");
-    if(h1) h1.classList.remove("text-in");
-    if(p)  p.classList.remove("text-in");
+
+    if(h1){
+      h1.classList.remove("is-typing");
+      h1.style.opacity = 0;
+      if(!h1.dataset.fulltext) {
+        h1.dataset.fulltext = h1.textContent.trim();
+      }
+      h1.textContent = "";
+    }
+
+    if(p){
+      p.classList.remove("text-in");
+      p.style.opacity = 0;
+    }
   });
 
-  // 이미지 이동 완료 후 0.8초 뒤 글자 등장
+  // ===== 이미지 전환 후 타이핑 시작 =====
   setTimeout(()=>{
-    const activeSlide = slides[idx];
-    const h1 = activeSlide.querySelector("h1");
-    const p  = activeSlide.querySelector("p");
-    if(h1) h1.classList.add("text-in");
-    if(p)  p.classList.add("text-in");
-  }, 800); // ← 0.8초 (원하면 700~1000 조절)
+    const active = slides[idx];
+    const h1 = active.querySelector("h1");
+    const p  = active.querySelector("p");
+    if(!h1) return;
+
+    const full = h1.dataset.fulltext || "";
+    let i = 0;
+
+    h1.style.opacity = 1;
+    h1.classList.add("is-typing");
+    h1.textContent = "";
+
+    // 타이핑 속도 (작을수록 빠름)
+    const speed = 55;   // 45~80 사이 조절 가능
+
+    const typingTimer = setInterval(()=>{
+      // 슬라이드가 바뀌었으면 타이핑 중단
+      if(slides[idx] !== active){
+        clearInterval(typingTimer);
+        return;
+      }
+
+      h1.textContent += full[i] || "";
+      i++;
+
+      if(i >= full.length){
+        clearInterval(typingTimer);
+        h1.classList.remove("is-typing");
+
+        // ✅ 제목 타이핑 완료 후 설명 등장
+        if(p){
+          p.style.opacity = 1;
+          p.classList.add("text-in");
+        }
+      }
+    }, speed);
+
+  }, 800); // 이미지 전환 후 0.8초 대기
 
   restartProgress();
   scheduleNext();
