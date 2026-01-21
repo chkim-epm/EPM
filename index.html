@@ -513,41 +513,45 @@
 
   let idx = 0;
   let timer = null;
-
+	
 function setActive(nextIdx){
+  const len = slides.length;
   const prevIdx = idx;
-  const next = (nextIdx + slides.length) % slides.length;
+  const next = (nextIdx + len) % len;
   if (next === prevIdx) return;
 
   const prevEl = slides[prevIdx];
   const nextEl = slides[next];
 
-  // ✅ 방향 판정: next가 더 크면 "앞으로(다음)" → 오른쪽에서 들어옴
-  // prev로 가면 "뒤로(이전)" → 왼쪽에서 들어옴
-  const forward = next > prevIdx;
+  // ✅ 방향 판정(랩어라운드까지 자연스럽게)
+  const isNextForward = (next === (prevIdx + 1) % len);
+  const isNextBackward = (next === (prevIdx - 1 + len) % len);
+  const forward = isNextForward ? true : isNextBackward ? false : (next > prevIdx);
 
-  // ✅ 상태 초기화 (중요: enter/exit 클래스 잔상 제거)
-  slides.forEach(s=>{
-    s.classList.remove(
-      "enter-from-right","enter-from-left",
-      "exit-to-left","exit-to-right",
-      "is-active"
-    );
-  });
+  // ✅ 이전/다음 요소만 클래스 정리(전체를 싹 지우면 "공백 프레임" 생김)
+  prevEl.classList.remove("enter-from-right","enter-from-left","exit-to-left","exit-to-right");
+  nextEl.classList.remove("enter-from-right","enter-from-left","exit-to-left","exit-to-right");
 
-  // ✅ 현재 슬라이드: 나가기
-  prevEl.classList.add(forward ? "exit-to-left" : "exit-to-right");
-
-  // ✅ 다음 슬라이드: 들어오기 시작 위치 세팅
+  // ✅ 다음 슬라이드: 들어오는 위치 세팅
   nextEl.classList.add(forward ? "enter-from-right" : "enter-from-left");
 
-  // ✅ 다음 프레임에 active 붙여서 자연스럽게 이동
-  requestAnimationFrame(()=>{
+  // ✅ 이전 슬라이드: 나가기 애니메이션 (하지만 is-active는 바로 빼지 말고 유지!)
+  prevEl.classList.add(forward ? "exit-to-left" : "exit-to-right");
+
+  // 다음 프레임에 next 활성화(transition 정상 작동)
+  requestAnimationFrame(() => {
     nextEl.classList.add("is-active");
   });
 
-  // dot 활성화는 즉시
+  // dot 업데이트는 즉시
   dots.forEach((d,i)=> d.classList.toggle("is-active", i===next));
+
+  // ✅ 애니메이션 끝난 뒤에 prev 비활성 + 잔상 클래스 제거
+  clearTimeout(prevEl._cleanupTimer);
+  prevEl._cleanupTimer = setTimeout(() => {
+    prevEl.classList.remove("is-active", "exit-to-left", "exit-to-right");
+    nextEl.classList.remove("enter-from-right", "enter-from-left");
+  }, 750); // CSS transition 0.7s 보다 약간 여유
 
   idx = next;
 
@@ -556,30 +560,42 @@ function setActive(nextIdx){
 }
 
 
+
   function getDuration(){
     const ms = parseInt(slides[idx].dataset.duration || "7000", 10);
     return Number.isFinite(ms) ? ms : 7000;
   }
 
   // ✅ 이동하는 네모 애니메이션
-  function restartProgress(){
-    const dur = getDuration();
+function restartProgress(){
+  const dur = getDuration();
 
-    // 초기 위치로 리셋
-    bar.style.transition = "none";
-    bar.style.transform = "translateX(0px)";
-    void bar.offsetWidth;
+  // track 사이즈가 아직 0이면(초기 레이아웃 전) 조금 뒤에 재시도
+  const track = bar.parentElement;   // .hero-progress
+  const trackW = track.clientWidth;
+  const knobW  = bar.clientWidth;
 
-    // 이동 거리 계산
-    const track = bar.parentElement;   // .hero-progress
-    const trackW = track.clientWidth;
-    const knobW  = bar.clientWidth;
-    const maxX   = Math.max(0, trackW - knobW);
-
-    // 이동 애니메이션 시작
-    bar.style.transition = `transform ${dur}ms linear`;
-    bar.style.transform  = `translateX(${maxX}px)`;
+  if (trackW === 0 || knobW === 0) {
+    requestAnimationFrame(restartProgress);
+    return;
   }
+
+  const maxX = Math.max(0, trackW - knobW);
+
+  // 1) 리셋(transition 끄고 0으로)
+  bar.style.transition = "none";
+  bar.style.transform  = "translateX(0px)";
+
+  // 2) 브라우저가 "0 상태"를 실제로 그리게 한 프레임 쉬고
+  requestAnimationFrame(() => {
+    // 3) 그 다음 프레임에 transition 켜고 이동 시작 (이렇게 해야 초기 멈춤이 거의 사라짐)
+    requestAnimationFrame(() => {
+      bar.style.transition = `transform ${dur}ms linear`;
+      bar.style.transform  = `translateX(${maxX}px)`;
+    });
+  });
+}
+
 
   function scheduleNext(){
     clearTimeout(timer);
