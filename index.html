@@ -413,22 +413,19 @@
 #psCards.is-switching{
   pointer-events: none; /* 전환 중 클릭 방지 */
 }
-
-/* 카드 기본 등장 상태 */
+/* 카드 기본 상태 + 차분한 전환 */
 #psCards .card{
   transition: opacity .55s ease,
               transform .55s ease,
               box-shadow .18s ease;
 }
 
-
-
-
-/* 새로 넣은 카드들: 등장 애니메이션 */
+/* 새 카드 등장 : 스크롤 reveal 느낌 */
 #psCards .card.enter{
   opacity: 0;
-  transform: translateY(18px);
+  transform: translateY(6px);   /* 거의 안 움직임 */
 }
+
 #psCards .card.enter.is-in{
   opacity: 1;
   transform: translateY(0);
