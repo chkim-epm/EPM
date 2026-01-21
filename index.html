@@ -509,6 +509,12 @@
   transform: translateY(60px);
   transition: opacity 0.9s ease, transform 0.9s ease;
 }
+	
+/* ✅ 메뉴 클릭 수동 트리거용 리셋(스크롤 로직과 분리) */
+.reveal-on-scroll.force-reset{
+  opacity: 0 !important;
+  transform: translateY(60px) !important;
+}
 
 .reveal-on-scroll.is-visible{
   opacity: 1;
@@ -941,7 +947,7 @@ async function initProductTabs(){
   const menu = document.getElementById("psMenu");
   if(!menu) return;
 
-  // 탭 생성
+  // 탭 생성 (그대로 유지)
   menu.innerHTML =
     menuOrder.map((m,i)=>`
       <button class="ps-row ${i===0?'is-active':''}"
@@ -954,18 +960,41 @@ async function initProductTabs(){
         <span class="ps-row-name">전체 제품 보기</span>
      </a>`;
 
-  // 클릭 이벤트
+  // ✅ 클릭 이벤트만 교체
   menu.querySelectorAll(".ps-row[data-cid]").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
+    btn.addEventListener("click", async ()=>{
+      // 1) 메뉴 활성화 처리
       menu.querySelectorAll(".ps-row[data-cid]").forEach(b=>b.classList.remove("is-active"));
       btn.classList.add("is-active");
-      loadCategoryCards(btn.dataset.cid);
+
+      // 2) 카드 교체
+      await loadCategoryCards(btn.dataset.cid);
+
+      // 3) 섹션 리빌 효과를 "수동 호출"
+      const section = document.getElementById("product_showcase");
+      if(section){
+        const rect = section.getBoundingClientRect();
+        const vh = window.innerHeight;
+
+        // 현재 화면에 보일 때만 실행
+        const isOnScreen = rect.top < vh * 0.85 && rect.bottom > vh * 0.15;
+        if(isOnScreen){
+          section.classList.remove("is-visible");
+          section.classList.add("force-reset");
+
+          requestAnimationFrame(()=>{
+            section.classList.remove("force-reset");
+            section.classList.add("is-visible");
+          });
+        }
+      }
     });
   });
 
   // 최초 로딩
   loadCategoryCards(menuOrder[0].id);
 }
+
 
 initProductTabs();
 </script>
