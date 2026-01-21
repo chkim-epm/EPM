@@ -188,14 +188,40 @@
   position:absolute;
   inset:0;
   opacity:0;
-  transform: scale(1.02);
-  transition: opacity .7s ease, transform .9s ease;
+  transform: translateX(0);          /* 기본값 */
+  transition: transform .7s ease, opacity .7s ease;
   pointer-events:none;
+  z-index:1;
 }
+	
+/* 활성 슬라이드 */
 .hero-slide.is-active{
   opacity:1;
-  transform: scale(1);
+  transform: translateX(0);
   pointer-events:auto;
+  z-index:2;
+}
+
+	
+/* ===== 방향 애니메이션 ===== */
+/* 다음 슬라이드: 오른쪽에서 들어오기 */
+.hero-slide.enter-from-right{
+  transform: translateX(100%);
+}
+
+/* 이전 슬라이드: 왼쪽에서 들어오기 */
+.hero-slide.enter-from-left{
+  transform: translateX(-100%);
+}
+
+/* 나가는 슬라이드(선택: 더 자연스럽게) */
+.hero-slide.exit-to-left{
+  transform: translateX(-30%);
+  opacity: 0;
+}
+.hero-slide.exit-to-right{
+  transform: translateX(30%);
+  opacity: 0;
 }
 
 /* 배경 미디어(영상/이미지) */
@@ -488,15 +514,47 @@
   let idx = 0;
   let timer = null;
 
-  function setActive(nextIdx){
-    idx = (nextIdx + slides.length) % slides.length;
+function setActive(nextIdx){
+  const prevIdx = idx;
+  const next = (nextIdx + slides.length) % slides.length;
+  if (next === prevIdx) return;
 
-    slides.forEach((s,i)=> s.classList.toggle("is-active", i===idx));
-    dots.forEach((d,i)=> d.classList.toggle("is-active", i===idx));
+  const prevEl = slides[prevIdx];
+  const nextEl = slides[next];
 
-    restartProgress();
-    scheduleNext();
-  }
+  // ✅ 방향 판정: next가 더 크면 "앞으로(다음)" → 오른쪽에서 들어옴
+  // prev로 가면 "뒤로(이전)" → 왼쪽에서 들어옴
+  const forward = next > prevIdx;
+
+  // ✅ 상태 초기화 (중요: enter/exit 클래스 잔상 제거)
+  slides.forEach(s=>{
+    s.classList.remove(
+      "enter-from-right","enter-from-left",
+      "exit-to-left","exit-to-right",
+      "is-active"
+    );
+  });
+
+  // ✅ 현재 슬라이드: 나가기
+  prevEl.classList.add(forward ? "exit-to-left" : "exit-to-right");
+
+  // ✅ 다음 슬라이드: 들어오기 시작 위치 세팅
+  nextEl.classList.add(forward ? "enter-from-right" : "enter-from-left");
+
+  // ✅ 다음 프레임에 active 붙여서 자연스럽게 이동
+  requestAnimationFrame(()=>{
+    nextEl.classList.add("is-active");
+  });
+
+  // dot 활성화는 즉시
+  dots.forEach((d,i)=> d.classList.toggle("is-active", i===next));
+
+  idx = next;
+
+  restartProgress();
+  scheduleNext();
+}
+
 
   function getDuration(){
     const ms = parseInt(slides[idx].dataset.duration || "7000", 10);
@@ -558,26 +616,5 @@
 
 })();
 </script>
-	<script>
-(function(){
-  const btn = document.getElementById("toTop");
-  if (!btn) return;
-
-  function toggle(){
-    if (window.scrollY > 300) btn.classList.add("is-visible");
-    else btn.classList.remove("is-visible");
-  }
-
-  btn.addEventListener("click", ()=>{
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
-
-  window.addEventListener("scroll", toggle, { passive: true });
-  toggle();
-})();
-</script>
-
-
-
 </body>
 </html>
