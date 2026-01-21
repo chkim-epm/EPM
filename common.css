@@ -23,7 +23,7 @@
 
 /*네비게이션 메뉴 가로로(HOME, 부스바..)*/	
 	nav .nav-item { 
-					margin:0 1rem; 
+					margin:0 1.6rem; 
 					font-size: 1.4rem;
 					font-weight: bold;
 					}
@@ -67,15 +67,15 @@ nav .nav-item a:hover::after {
 
 							
 /*네비게이션 회사명 CSS */
-	.nav-logo {
+.nav-logo {
 			  position: absolute;
 			  left: 2rem;
-			  top : 1.5rem;
+			  top : 1.6rem;        /* 살짝 아래로 균형 */
 			  display: flex;
 			  align-items: center;
-			  font-size: 2rem;
+			  font-size: 1.5rem;   /* 🔹 로고 크기 축소 */
 			  font-weight: bold;
-			  } 
+			}
 			  
 /*==========================드롭다운=====================*/
 /*네비게이션 EPM CSS */
@@ -473,5 +473,6 @@ footer.site-footer a:hover{
   
 
 /* =========================================== 모바일 전용 CSS ==================================== */
+
 
 
