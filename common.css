@@ -396,7 +396,7 @@ footer.site-footer a:hover{
   cursor: pointer;
   padding: 8px 10px;
   z-index: 10001;
-  display: none; /* 기본 숨김 -> 반응형에서 켬 */
+  
 }
 
 /* Drawer 전체(오버레이) */
@@ -622,6 +622,7 @@ footer.site-footer a:hover{
   
 
 /* =========================================== 모바일 전용 CSS ==================================== */
+
 
 
 
