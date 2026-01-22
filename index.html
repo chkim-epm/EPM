@@ -978,10 +978,6 @@ function moveTo(nextIdx){
   if (isAnimating) return;
   isAnimating = true;
 
-  // ✅ transitionend가 안 올 때도 잠금이 풀리도록 안전장치
-  clearTimeout(animFallback);
-  animFallback = setTimeout(()=>{ isAnimating = false; }, speed + 80);
-
   idx = nextIdx;
 
   setTransition(true);
