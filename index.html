@@ -773,66 +773,91 @@
 	
 <script>
 (function(){
-  const wrap = document.querySelector(".hero-slides");
-  const slides = Array.from(document.querySelectorAll(".hero-slide"));
+  const wrap = document.getElementById("heroSlides");      // ✅ 너 HTML에 id="heroSlides" 있음
   const dots = Array.from(document.querySelectorAll(".hero-dot"));
-  const bar = document.getElementById("heroProgressBar");
+  const bar  = document.getElementById("heroProgressBar");
 
-  if (!wrap || !slides.length || !dots.length || !bar) return;
+  if (!wrap || !dots.length || !bar) return;
 
-  let idx = 0;
+  // 원본 슬라이드들(클론 만들기 전)
+  const originals = Array.from(wrap.querySelectorAll(".hero-slide"));
+  const n = originals.length;
+  if (n <= 1) return;
+
+  // ✅ 1) 앞/뒤 클론 생성: [lastClone, ...originals, firstClone]
+  const firstClone = originals[0].cloneNode(true);
+  const lastClone  = originals[n - 1].cloneNode(true);
+
+  firstClone.dataset.clone = "first";
+  lastClone.dataset.clone  = "last";
+
+  wrap.insertBefore(lastClone, originals[0]);
+  wrap.appendChild(firstClone);
+
+  // 클론 포함한 전체 슬라이드 목록
+  const slides = Array.from(wrap.querySelectorAll(".hero-slide"));
+
+  // ✅ 2) 시작 위치는 "진짜 1번" (인덱스 1)
+  let idx = 1;                 // slides 기준 인덱스
   let timer = null;
-  const duration = 4000; // 4초
+  const duration = 4000;       // 4초
+  const speed = 700;           // 기존 너 transition .7s와 동일
+  let isAnimating = false;
 
-function moveTo(nextIdx){
-  idx = (nextIdx + slides.length) % slides.length;
+  // ✅ transition 적용/해제 헬퍼
+  function setTransition(on){
+    wrap.style.transition = on ? `transform ${speed}ms ease` : "none";
+  }
 
-  // 슬라이드 이동
-  wrap.style.transform = `translateX(-${idx * 100}%)`;
+  function setX(i){
+    wrap.style.transform = `translateX(-${i * 100}%)`;
+  }
 
-  // 숫자 업데이트
-  dots.forEach((d,i)=> d.classList.toggle("is-active", i===idx));
+  // ✅ dots는 "원본 기준 인덱스(0..n-1)"로 활성화
+  function setDots(activeOriginalIndex){
+    dots.forEach((d,i)=> d.classList.toggle("is-active", i === activeOriginalIndex));
+  }
 
-  // 모든 텍스트 초기화
-  slides.forEach(s=>{
-    const h1 = s.querySelector("h1");
-    const p  = s.querySelector("p");
-    if(h1) h1.classList.remove("reveal");
-    if(p)  p.classList.remove("reveal");
-  });
+  // ✅ 텍스트 reveal 처리(원본 슬라이드 기준)
+  function resetRevealAll(){
+    slides.forEach(s=>{
+      const h1 = s.querySelector("h1");
+      const p  = s.querySelector("p");
+      if(h1) h1.classList.remove("reveal");
+      if(p)  p.classList.remove("reveal");
+    });
+  }
 
-  // ✅ 이미지 전환 후 0.8초 뒤 글자 등장
-  setTimeout(()=>{
-    const active = slides[idx];
+  function revealCurrent(){
+    // 현재 idx가 클론일 수도 있으니, 원본에 대응되는 슬라이드를 찾아서 사용
+    // idx=0 => lastClone(원본 마지막), idx=n+1 => firstClone(원본 첫번째)
+    let realIdx = idx;
+    if (idx === 0) realIdx = n;
+    if (idx === n + 1) realIdx = 1;
+
+    const active = slides[realIdx];
+    if(!active) return;
+
     const h1 = active.querySelector("h1");
     const p  = active.querySelector("p");
-    if(h1) h1.classList.add("reveal");
 
-    // 제목 애니메이션 끝난 뒤 설명 등장
     setTimeout(()=>{
-      if(p) p.classList.add("reveal");
-    }, 900); // ← 제목 1.1s 중 약간 뒤
-  }, 800);
+      if(h1) h1.classList.add("reveal");
+      setTimeout(()=>{ if(p) p.classList.add("reveal"); }, 900);
+    }, 800);
+  }
 
-  restartProgress();
-  scheduleNext();
-}
-
-
-
-  // ✅ 프로그레스 바 애니메이션
+  // ✅ 프로그레스 바 (기존 로직 유지)
   function restartProgress(){
     const track = bar.parentElement;
     const trackW = track.clientWidth;
     const knobW  = bar.clientWidth;
     const maxX   = trackW - knobW;
 
-    // 리셋
     bar.style.transition = "none";
     bar.style.transform = "translateX(0px)";
-    bar.offsetHeight; // reflow 강제
+    bar.offsetHeight;
 
-    // 다음 프레임에서 이동 시작
     requestAnimationFrame(()=>{
       bar.style.transition = `transform ${duration}ms linear`;
       bar.style.transform  = `translateX(${maxX}px)`;
@@ -841,26 +866,87 @@ function moveTo(nextIdx){
 
   function scheduleNext(){
     clearTimeout(timer);
-    timer = setTimeout(()=> moveTo(idx + 1), duration);
+    timer = setTimeout(()=> moveTo(idx + 1), duration); // ✅ 항상 +1 (오른쪽→왼쪽)
   }
 
-  // 숫자 클릭 이동
+  // ✅ 3) 이동(항상 정방향)
+  function moveTo(nextIdx){
+    if (isAnimating) return;
+    isAnimating = true;
+
+    idx = nextIdx;
+
+    // 이동 시작
+    setTransition(true);
+    setX(idx);
+
+    // dots 업데이트(원본 기준)
+    // idx=1..n => 원본 0..n-1
+    // idx=0 => 원본 마지막(n-1)
+    // idx=n+1 => 원본 첫(0)
+    let activeOriginal = idx - 1;
+    if (idx === 0) activeOriginal = n - 1;
+    if (idx === n + 1) activeOriginal = 0;
+    setDots(activeOriginal);
+
+    // 텍스트 애니메이션
+    resetRevealAll();
+    revealCurrent();
+
+    restartProgress();
+    scheduleNext();
+  }
+
+  // ✅ 4) transition 끝나면 “순환 구간”을 순간이동(transition 없이)
+  wrap.addEventListener("transitionend", (e)=>{
+    if (e.propertyName !== "transform") return;
+
+    // 마지막 클론(n+1)에 도착했으면 -> 진짜 1번(idx=1)로 순간이동
+    if (idx === n + 1){
+      setTransition(false);
+      idx = 1;
+      setX(idx);
+    }
+
+    // 첫 클론(0)에 도착했으면 -> 진짜 마지막(idx=n)으로 순간이동
+    if (idx === 0){
+      setTransition(false);
+      idx = n;
+      setX(idx);
+    }
+
+    isAnimating = false;
+  });
+
+  // ✅ dots 클릭: "해당 원본"으로 이동 (가까운 방향이 아니라, 클릭은 그냥 해당으로)
   dots.forEach(btn=>{
     btn.addEventListener("click", ()=>{
-      const n = parseInt(btn.dataset.index,10);
-      moveTo(n);
+      const targetOriginal = parseInt(btn.dataset.index, 10); // 0..n-1
+      if (Number.isNaN(targetOriginal)) return;
+
+      // 현재 원본 인덱스 계산
+      let currentOriginal = idx - 1;
+      if (idx === 0) currentOriginal = n - 1;
+      if (idx === n + 1) currentOriginal = 0;
+
+      // 클릭은 즉시 해당 슬라이드로 (원본 idx -> slides idx = original+1)
+      moveTo(targetOriginal + 1);
     });
   });
 
-  // 시작
-  moveTo(0);
+  // ✅ 초기 세팅
+  setTransition(false);
+  setX(idx);
+  setDots(0);
+  resetRevealAll();
+  revealCurrent();
+  restartProgress();
+  scheduleNext();
 
-
-
-  // 리사이즈 시 바 재계산
   window.addEventListener("resize", restartProgress);
 })();
 </script>
+
 
 
 <script>
