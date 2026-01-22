@@ -211,18 +211,6 @@ footer.site-footer::before{
 }
 
 
-
-/* 은은한 빛(배경) */
-footer.site-footer::after{
-  content:"none";
-  position:absolute;
-  inset:-80px -120px auto -120px;
-  height: 180px;
-  background: radial-gradient(circle at 30% 30%, rgba(56,189,248,0.12), transparent 55%),
-              radial-gradient(circle at 70% 20%, rgba(96,165,250,0.10), transparent 55%);
-  pointer-events:none;
-}
-
 .footer-inner{
   position: relative;
   max-width: 1200px;
@@ -234,7 +222,7 @@ footer.site-footer::after{
 }
 
 .footer-brand{
-  font-size: 18px;
+  font-size: 35px;
   font-weight: 800;
   letter-spacing: .2px;
   margin: 0 0 10px;
@@ -649,6 +637,7 @@ footer.site-footer a:hover{
   
 
 /* =========================================== 모바일 전용 CSS ==================================== */
+
 
 
 
