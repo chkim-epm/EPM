@@ -65,8 +65,7 @@
 <!-- Supabase JS SDK v2: 클라이언트에서 DB 접근용 -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-	
-<style>
+	<style>
 /* ====================================================================================
                                            PC 기본 스타일
 =================================================================================== */
@@ -875,21 +874,18 @@
 </footer>
 
 
-	
-<script>
+	<script>
 (function(){
-  const wrap = document.getElementById("heroSlides");      // ✅ 너 HTML에 id="heroSlides" 있음
+  const wrap = document.getElementById("heroSlides");
   const dots = Array.from(document.querySelectorAll(".hero-dot"));
   const bar  = document.getElementById("heroProgressBar");
 
   if (!wrap || !dots.length || !bar) return;
 
-  // 원본 슬라이드들(클론 만들기 전)
   const originals = Array.from(wrap.querySelectorAll(".hero-slide"));
   const n = originals.length;
   if (n <= 1) return;
 
-  // ✅ 1) 앞/뒤 클론 생성: [lastClone, ...originals, firstClone]
   const firstClone = originals[0].cloneNode(true);
   const lastClone  = originals[n - 1].cloneNode(true);
 
@@ -899,17 +895,14 @@
   wrap.insertBefore(lastClone, originals[0]);
   wrap.appendChild(firstClone);
 
-  // 클론 포함한 전체 슬라이드 목록
   const slides = Array.from(wrap.querySelectorAll(".hero-slide"));
 
-  // ✅ 2) 시작 위치는 "진짜 1번" (인덱스 1)
-  let idx = 1;                 // slides 기준 인덱스
+  let idx = 1;
   let timer = null;
-  const duration = 4000;       // 4초
-  const speed = 700;           // 기존 너 transition .7s와 동일
+  const duration = 4000;
+  const speed = 700;
   let isAnimating = false;
 
-  // ✅ transition 적용/해제 헬퍼
   function setTransition(on){
     wrap.style.transition = on ? `transform ${speed}ms ease` : "none";
   }
@@ -918,12 +911,10 @@
     wrap.style.transform = `translateX(-${i * 100}%)`;
   }
 
-  // ✅ dots는 "원본 기준 인덱스(0..n-1)"로 활성화
   function setDots(activeOriginalIndex){
     dots.forEach((d,i)=> d.classList.toggle("is-active", i === activeOriginalIndex));
   }
 
-  // ✅ 텍스트 reveal 처리(원본 슬라이드 기준)
   function resetRevealAll(){
     slides.forEach(s=>{
       const h1 = s.querySelector("h1");
@@ -934,8 +925,6 @@
   }
 
   function revealCurrent(){
-    // 현재 idx가 클론일 수도 있으니, 원본에 대응되는 슬라이드를 찾아서 사용
-    // idx=0 => lastClone(원본 마지막), idx=n+1 => firstClone(원본 첫번째)
     let realIdx = idx;
     if (idx === 0) realIdx = n;
     if (idx === n + 1) realIdx = 1;
@@ -952,7 +941,16 @@
     }, 800);
   }
 
-  // ✅ 프로그레스 바 (기존 로직 유지)
+  // ✅✅✅ (A) 바로 여기에 setActiveSlide() 함수를 "추가"하세요 (revealCurrent 아래가 제일 찾기 쉬움)
+  function setActiveSlide(){
+    slides.forEach(s => s.classList.remove("is-active"));
+    // 현재 idx가 클론이면 대응되는 실제 슬라이드에 주기
+    let realIdx = idx;
+    if (idx === 0) realIdx = n;
+    if (idx === n + 1) realIdx = 1;
+    if (slides[realIdx]) slides[realIdx].classList.add("is-active");
+  }
+
   function restartProgress(){
     const track = bar.parentElement;
     const trackW = track.clientWidth;
@@ -971,30 +969,26 @@
 
   function scheduleNext(){
     clearTimeout(timer);
-    timer = setTimeout(()=> moveTo(idx + 1), duration); // ✅ 항상 +1 (오른쪽→왼쪽)
+    timer = setTimeout(()=> moveTo(idx + 1), duration);
   }
 
-  // ✅ 3) 이동(항상 정방향)
   function moveTo(nextIdx){
     if (isAnimating) return;
     isAnimating = true;
 
     idx = nextIdx;
 
-    // 이동 시작
     setTransition(true);
     setX(idx);
 
-    // dots 업데이트(원본 기준)
-    // idx=1..n => 원본 0..n-1
-    // idx=0 => 원본 마지막(n-1)
-    // idx=n+1 => 원본 첫(0)
+    // ✅✅✅ (B) 여기! setX(idx) "바로 다음 줄"에 setActiveSlide() 추가
+    setActiveSlide();
+
     let activeOriginal = idx - 1;
     if (idx === 0) activeOriginal = n - 1;
     if (idx === n + 1) activeOriginal = 0;
     setDots(activeOriginal);
 
-    // 텍스트 애니메이션
     resetRevealAll();
     revealCurrent();
 
@@ -1002,39 +996,34 @@
     scheduleNext();
   }
 
-  // ✅ 4) transition 끝나면 “순환 구간”을 순간이동(transition 없이)
   wrap.addEventListener("transitionend", (e)=>{
     if (e.propertyName !== "transform") return;
 
-    // 마지막 클론(n+1)에 도착했으면 -> 진짜 1번(idx=1)로 순간이동
     if (idx === n + 1){
       setTransition(false);
       idx = 1;
       setX(idx);
+
+      // ✅✅✅ (C) 순간이동 직후에도 active 갱신
+      setActiveSlide();
     }
 
-    // 첫 클론(0)에 도착했으면 -> 진짜 마지막(idx=n)으로 순간이동
     if (idx === 0){
       setTransition(false);
       idx = n;
       setX(idx);
+
+      // ✅✅✅ (C) 순간이동 직후에도 active 갱신
+      setActiveSlide();
     }
 
     isAnimating = false;
   });
 
-  // ✅ dots 클릭: "해당 원본"으로 이동 (가까운 방향이 아니라, 클릭은 그냥 해당으로)
   dots.forEach(btn=>{
     btn.addEventListener("click", ()=>{
-      const targetOriginal = parseInt(btn.dataset.index, 10); // 0..n-1
+      const targetOriginal = parseInt(btn.dataset.index, 10);
       if (Number.isNaN(targetOriginal)) return;
-
-      // 현재 원본 인덱스 계산
-      let currentOriginal = idx - 1;
-      if (idx === 0) currentOriginal = n - 1;
-      if (idx === n + 1) currentOriginal = 0;
-
-      // 클릭은 즉시 해당 슬라이드로 (원본 idx -> slides idx = original+1)
       moveTo(targetOriginal + 1);
     });
   });
@@ -1042,6 +1031,10 @@
   // ✅ 초기 세팅
   setTransition(false);
   setX(idx);
+
+  // ✅✅✅ (D) 초기에도 is-active 지정
+  setActiveSlide();
+
   setDots(0);
   resetRevealAll();
   revealCurrent();
@@ -1051,6 +1044,7 @@
   window.addEventListener("resize", restartProgress);
 })();
 </script>
+
 
 
 
