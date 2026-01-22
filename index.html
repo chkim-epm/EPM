@@ -509,17 +509,15 @@
   opacity:0;
   transform:translateY(60px);
   transition:opacity .9s ease, transform .9s ease;
-  will-change: opacity, transform;
-}
-.reveal-on-scroll.is-visible{
-  opacity:1;
-  transform:translateY(0);
 }
 .reveal-on-scroll.force-reset{
   opacity:0 !important;
   transform:translateY(60px) !important;
 }
-
+.reveal-on-scroll.is-visible{
+  opacity:1;
+  transform:translateY(0);
+}
 
 /* ===========================================
    모바일 전용 CSS
@@ -611,6 +609,20 @@
   #psCards .card img{
     transition:none !important;
   }
+}
+.reveal-on-scroll{
+  opacity:0;
+  transform:translateY(60px);
+  transition:opacity .9s ease, transform .9s ease;
+  will-change: opacity, transform;
+}
+.reveal-on-scroll.is-visible{
+  opacity:1;
+  transform:translateY(0);
+}
+.reveal-on-scroll.force-reset{
+  opacity:0 !important;
+  transform:translateY(60px) !important;
 }
 </style>
 
@@ -1039,8 +1051,6 @@ async function initProductTabs(){
 
 initProductTabs();
 </script>
-
-	
 <script>
 /* ✅ 스크롤 등장 (12시쯤 했던 스타일: 로드시 화면 안에 있으면 즉시 + 스크롤시 1회 등장) */
 (function(){
@@ -1068,6 +1078,8 @@ initProductTabs();
   targets.forEach(el=>io.observe(el));
 })();
 </script>
+
+
 
 	
 </body>
