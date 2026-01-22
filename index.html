@@ -833,12 +833,12 @@ async function loadCategoryCards(categoryId){
   }
 
   // ✅ 2) 데이터 로드
-  const { data, error } = await sb
-    .from("product")
-    .select("id, title, image_url, categoryId")
-    .eq("categoryId", String(categoryId))
-    .order("created_at", { ascending:false })
-    .limit(3);
+const { data, error } = await sb
+  .from("product")
+  .select("id, title, image_url, description, material, usage, types, price, categoryId")
+  .eq("categoryId", String(categoryId))
+  .order("created_at", { ascending:false })
+  .limit(3);
 
   if(error){
     console.error("카드 로딩 실패:", error);
@@ -862,24 +862,24 @@ async function loadCategoryCards(categoryId){
   }
 
   // ✅ 3) 새 카드 렌더 (enter 클래스 포함)
- cardsWrap.innerHTML = items.map(p=>{
+cardsWrap.innerHTML = items.map(p=>{
   const title = (p.title || "-");
-  const displayTitle = title.replace(/_/g, " "); // ✅ 언더바 제거
+  const displayTitle = title.replace(/_/g, " ");
 
-  // 아래 값들은 네 product 테이블 컬럼에 맞춰 바꿔야 함(없으면 빈값 처리)
-  const desc = (p.description || "배선 연결·분기를 깔끔하고 안전하게 처리하는 필수 부품입니다.");
+  const desc = (p.description || "");
   const material = (p.material || "-");
   const usage = (p.usage || "-");
-  const type = (p.spec || "-");
+  const type = (p.types || "-");
   const price = (p.price ? Number(p.price).toLocaleString() + "원" : "-");
 
   return `
     <div class="card enter">
-      <a href="productDetail.html?id=${p.id}">
+      <a href="detail.html?id=${p.id}">
         <img src="${p.image_url || ''}" alt="${displayTitle.replace(/"/g,'&quot;')}" loading="lazy">
 
         <div class="cap">
           ${displayTitle}
+
           <span style="display:block; margin-top:10px; font-size:.9rem; font-weight:600; color:#555; line-height:1.55; white-space:pre-line;">
             ${desc}
           </span>
@@ -913,6 +913,7 @@ async function loadCategoryCards(categoryId){
     </div>
   `;
 }).join("");
+
 
   // ✅ 4) 새 카드 등장
 const cards = Array.from(cardsWrap.querySelectorAll(".card.enter"));
