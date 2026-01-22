@@ -432,7 +432,8 @@
 /* ✅ 캡션(내용) 영역: 버튼 위치 고정용 flex 컬럼 */
 #psCards .card .cap{
   padding: 14px 16px 16px;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
+ font-weight: 700;
   margin: 0;
   color:#111;
   text-align:center;
@@ -445,6 +446,26 @@
   flex-direction:column;
   align-items:center;
   flex:1;                 /* 카드 내에서 남는 공간을 cap이 받게 */
+}
+
+/* ✅ 제목만 굵게 + 크게 */
+#psCards .card .cap .product-title{
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0.5rem 0 0;
+  width:100%;
+  text-align:center;
+}
+
+/* ✅ 설명은 원래대로 */
+#psCards .card .cap .product-desc{
+  margin-top:10px;
+  font-size:0.9rem;
+  font-weight:400;
+  color:#555;
+  line-height:1.55;
+  white-space:pre-line;
+  width:100%;
 }
 
 /* ✅ 설명(span) = 2줄 고정 + 높이 고정 (버튼 들쭉날쭉 방지)
