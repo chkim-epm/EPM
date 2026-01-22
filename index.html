@@ -66,68 +66,68 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-/* ===========================================PC 기본 스타일====================================================*/
+/* ===========================================
+   PC 기본 스타일
+=========================================== */
 
-/*화면 섹션(1,2,3)*/
-	.section {
-				height:100vh; 
-				display:flex; 
-				align-items:center; 
-				justify-content:center;
-				position:relative; 
-				text-align:center; 
-				}
-				
-/*화면 image 현재 동영상으로 대체해서 필요없음.*/				
-	.section img {
-					width:100%; 
-					height:100%; 
-					object-fit:cover; 
-					position:absolute; 
-					top:0; left:0; 
-					z-index:1; 
-					}
-				
-/*동영상 섹션 글자 CSS.*/
-	.text-area {position:relative; 
-				z-index:2; 
-				color:#fff; 
-				padding:2rem; 
-				border-radius:10px; 
-				font-size: 1.4rem;
-				}
-
-/*화면 동영상 CSS */
-    .bg-video {
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				object-fit: cover; /* 화면 비율 유지하며 꽉 채우기 */
-				z-index: 1;
-				}
-
-	
-/* =========================
-   HERO SLIDER
-========================= */
-.hero{
-  position: relative;
-  height: 100vh;
-  overflow: hidden;
+/* -------------------------------------------
+   섹션(영상/이미지) 공통
+------------------------------------------- */
+.section{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  text-align:center;
 }
 
-/* 슬라이드 래퍼 */
+/* ⚠️ 현재 동영상으로 대체라면 이 img 규칙은 사실상 미사용
+   (삭제해도 되지만 혹시 이미지 섹션을 다시 쓸 수 있으니 유지) */
+.section img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  position:absolute;
+  top:0; left:0;
+  z-index:1;
+}
+
+.text-area{
+  position:relative;
+  z-index:2;
+  color:#fff;
+  padding:2rem;
+  border-radius:10px;
+  font-size:1.4rem;
+}
+
+.bg-video{
+  position:absolute;
+  top:0; left:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:1;
+}
+
+/* -------------------------------------------
+   HERO SLIDER
+------------------------------------------- */
+.hero{
+  position:relative;
+  height:100vh;
+  overflow:hidden;
+}
+
 .hero-slides{
   position:absolute;
   inset:0;
   display:flex;
   width:100%;
-  transition: transform .7s ease;
+  transition:transform .7s ease;
 }
 
-/* 각 슬라이드 */
 .hero-slide{
   position:relative;
   width:100%;
@@ -137,9 +137,7 @@
   transform:none;
   pointer-events:auto;
 }
-	
 
-/* 배경 미디어(영상/이미지) */
 .hero-media{
   position:absolute;
   inset:0;
@@ -149,15 +147,13 @@
   z-index:1;
 }
 
-/* 딤(회색/어둡게) */
 .hero-dim{
   position:absolute;
   inset:0;
-  background: rgba(0,0,0,.35); /* 여기 숫자 높이면 더 어두워짐 */
+  background:rgba(0,0,0,.35);
   z-index:2;
 }
 
-/* 중앙 텍스트 */
 .hero-content{
   position:relative;
   z-index:3;
@@ -167,144 +163,121 @@
   align-items:center;
   justify-content:center;
   text-align:center;
-  padding: 0 16px;
+  padding:0 16px;
   color:#fff;
-  text-shadow: 0 6px 18px rgba(0,0,0,.45);
+  text-shadow:0 6px 18px rgba(0,0,0,.45);
 }
+
 .hero-content h1{
   margin:0 0 12px;
-  font-size: clamp(24px, 4vw, 52px);
+  font-size:clamp(24px, 4vw, 52px);
   font-weight:800;
   letter-spacing:.5px;
 }
+
 .hero-content p{
   margin:0;
-  max-width: 920px;
-  font-size: clamp(14px, 1.6vw, 20px);
+  max-width:920px;
+  font-size:clamp(14px, 1.6vw, 20px);
   opacity:.95;
 }
 
 /* 우측 하단 컨트롤 */
 .hero-controls{
   position:absolute;
-  left: 48px;             /* ✅ 왼쪽 여백 */
-  right: 48px;            /* ✅ 오른쪽 여백 (끝까지 느낌) */
-  bottom: 34px;
+  left:48px;
+  right:48px;
+  bottom:34px;
   z-index:4;
   display:flex;
   align-items:center;
-  gap: 18px;
+  gap:18px;
 }
 
-
-/* 흰 줄(프로그레스 바) */
 .hero-progress{
-  flex: 1;
-  width: auto;
-  height: 4px;
-  background: rgba(255,255,255,.30);
+  flex:1;
+  width:auto;
+  height:4px;
+  background:rgba(255,255,255,.30);
   overflow:hidden;
-  border-radius: 999px;
-  position: relative;
+  border-radius:999px;
+  position:relative;
 }
 
 .hero-progress-bar{
   position:absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 200px;                 /* ✅ 네모(짧은 바) 길이: 32~60 추천 */
-  background: #fff;
-  border-radius: 6px;          /* ✅ 네모 느낌이면 4~8, 완전 둥글면 999 */
-  transform: translateX(0);
-  will-change: transform;
+  top:0;
+  left:0;
+  height:100%;
+  width:200px;
+  background:#fff;
+  border-radius:6px;
+  transform:translateX(0);
+  will-change:transform;
 }
 
-
-
-
-/* 01/02/03 */
 .hero-pager{
   display:flex;
   align-items:center;
-  gap: 10px;
+  gap:10px;
 }
+
 .hero-dot{
-  background: transparent;
+  background:transparent;
   border:0;
-  color: rgba(255,255,255,.7);
+  color:rgba(255,255,255,.7);
   font-weight:700;
-  font-size: 30px;
+  font-size:30px;
   cursor:pointer;
-  padding: 6px 4px;
-}
-.hero-dot.is-active{
-  color:#fff;
+  padding:6px 4px;
 }
 
-	/* ===== 텍스트 등장 애니메이션 ===== */
+.hero-dot.is-active{ color:#fff; }
 
-/* ===== 텍스트 기본 숨김 ===== */
+/* 텍스트 등장 애니메이션 */
 .hero-content h1,
-.hero-content p {
-  opacity: 0;
-  overflow: hidden;
-  white-space: nowrap;
+.hero-content p{
+  opacity:0;
+  overflow:hidden;
+  white-space:nowrap;
 }
 
-/* 제목: 왼쪽 → 오른쪽 Reveal */
-.hero-content h1.reveal {
-  opacity: 1;
-  animation: revealLeft 1.1s ease forwards;
+.hero-content h1.reveal{
+  opacity:1;
+  animation:revealLeft 1.1s ease forwards;
 }
 
-/* 설명: 아래 → 위 Reveal */
-.hero-content p.reveal {
-  opacity: 1;
-  animation: revealUp 0.6s ease forwards;
+.hero-content p.reveal{
+  opacity:1;
+  animation:revealUp .6s ease forwards;
 }
 
-/* 왼쪽 → 오른쪽 마스크 오픈 */
-@keyframes revealLeft {
-  from {
-    clip-path: inset(0 100% 0 0);
-  }
-  to {
-    clip-path: inset(0 0 0 0);
-  }
+@keyframes revealLeft{
+  from{ clip-path: inset(0 100% 0 0); }
+  to  { clip-path: inset(0 0 0 0); }
 }
 
-/* 아래 → 위 */
-@keyframes revealUp {
-  from {
-    transform: translateY(22px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+@keyframes revealUp{
+  from{ transform: translateY(22px); opacity:0; }
+  to  { transform: translateY(0); opacity:1; }
 }
-	
-/* =========================================================
+
+/* -------------------------------------------
    Product Showcase (Blue theme)
-========================================================= */
+------------------------------------------- */
 .product-showcase.premium{
-  padding: 80px 0;
-  background: #fff;
+  padding:80px 0;
+  background:#fff;
 }
 
 .product-showcase.premium .ps-inner{
-  max-width: 1400px;
-  margin: 0 auto;
-  display: block;              /* ✅ 좌/우 나누기 제거하고 한 줄 구성 */
-  padding: 0 24px;
+  max-width:1400px;
+  margin:0 auto;
+  display:block;
+  padding:0 24px;
 }
 
-/* LEFT(타이틀 영역) : 중앙정렬 */
-.ps-left{
-  text-align:center;
-}
+.ps-left{ text-align:center; }
 
 .ps-kicker{
   color:#0b4ea2;
@@ -316,7 +289,7 @@
 .ps-title{
   font-size:48px;
   font-weight:900;
-  margin: 10px 0 8px;
+  margin:10px 0 8px;
   color:#111;
 }
 
@@ -324,60 +297,63 @@
   font-size:16px;
   color:#666;
   line-height:1.7;
-  margin: 0 auto 26px;
-  max-width: 780px;
+  margin:0 auto 26px;
+  max-width:780px;
 }
 
-/* ✅ 메뉴(탭) : 기존 #psMenu / .ps-list / .ps-row 그대로 사용 */
+/* 탭 메뉴 */
 .ps-list{
-	background:#fff;   /* 🔹 흰 */
+  background:#fff;
   display:flex;
   justify-content:center;
-  gap: 14px;
-  padding: 0;
-  margin: 26px 0 0;
-  flex-wrap: wrap;
+  gap:14px;
+  padding:0;
+  margin:26px 0 0;
+  flex-wrap:wrap;
 }
 
 .ps-row{
-  width: 240px;
-  height: 56px;
-  padding: 0 18px;
-  border: 0;
-  border-radius: 12px;
-  background: #e7e3e3;          /* 비활성 회색 */
+  width:240px;
+  height:56px;
+  padding:0 18px;
+  border:0;
+  border-radius:12px;
+  background:#e7e3e3;
   color:#222;
-  font-weight: 800;
-  font-size: 15px;
+  font-weight:800;
+  font-size:15px;
   cursor:pointer;
   display:flex;
   align-items:center;
   justify-content:center;
-  transition: .18s ease;
-  position: relative;
-  overflow: hidden;
+  transition:.18s ease;
+  position:relative;
+  overflow:hidden;
 }
 
-.ps-row:hover{
-  transform: translateY(-1px);
-}
-	/* ===============================
-   ✅ 메뉴 버튼 프리미엄 Hover 효과
-   기존 .ps-row 아래에 이어서 추가
-=============================== */
+/* ✅ 중복 정리:
+   기존에 있던 .ps-row:hover { translateY(-1px) } 는
+   아래 hover(비활성/활성)에서 더 강하게 덮어써서 "중복"이었음 → 삭제하고 아래로 통일 */
 
 /* 비활성 버튼 Hover */
 .ps-row:not(.is-active):hover{
-  background: #f4f8ff;
-  box-shadow: 0 14px 28px rgba(11,78,162,.18);
-  transform: translateY(-2px);
-  outline: 2px solid rgba(11,78,162,.22);
+  background:#f4f8ff;
+  box-shadow:0 14px 28px rgba(11,78,162,.18);
+  transform:translateY(-2px);
+  outline:2px solid rgba(11,78,162,.22);
+}
+
+/* 활성 버튼 */
+.ps-row.is-active{
+  background:#0b4ea2;
+  color:#fff;
+  box-shadow:0 16px 32px rgba(0,0,0,.12);
 }
 
 /* 활성 버튼 Hover */
 .ps-row.is-active:hover{
-  box-shadow: 0 18px 40px rgba(11,78,162,.28);
-  transform: translateY(-2px);
+  box-shadow:0 18px 40px rgba(11,78,162,.28);
+  transform:translateY(-2px);
 }
 
 /* 빛이 스윽 지나가는 효과 */
@@ -388,15 +364,10 @@
   left:-70%;
   width:60%;
   height:100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255,255,255,.35),
-    transparent
-  );
-  transform: skewX(-18deg);
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
+  transform:skewX(-18deg);
   opacity:0;
-  transition: left .45s ease, opacity .25s ease;
+  transition:left .45s ease, opacity .25s ease;
   pointer-events:none;
 }
 
@@ -405,218 +376,216 @@
   opacity:1;
 }
 
-/* ===============================
-   ✅ 탭 전환 시 카드 부드러운 모션
-=============================== */
+.ps-row.ps-row-link{ text-decoration:none; }
 
-/* 카드 컨테이너 전환 */
-#psCards.is-switching{
-  pointer-events: none; /* 전환 중 클릭 방지 */
-}
-/* 카드 기본 상태 + 차분한 전환 */
-#psCards .card{
-  transition: opacity 1.2s ease,
-              transform 1.2s ease,
-              box-shadow .18s ease;
-}
-
-/* 새 카드 등장 : 스크롤 reveal 느낌 */
-#psCards .card.enter{
-  opacity: 0;
-  transform: translateY(6px);   /* 거의 안 움직임 */
-}
-
-#psCards .card.enter.is-in{
-  opacity: 1;
-  transform: translateY(0);
-}
-
-	
-
-.ps-row.is-active{
-  background:#0b4ea2;           /* 파랑 */
-  color:#fff;
-  box-shadow: 0 16px 32px rgba(0,0,0,.12);
-}
-
-/* 전체 제품 보기 링크도 같은 탭 모양 */
-.ps-row.ps-row-link{
-  text-decoration:none;
-}
-
-/* hint는 탭 아래로 */
 .ps-hint{
-  margin-top: 14px;
+  margin-top:14px;
   font-size:13px;
   color:#888;
 }
 
-/* RIGHT 영역: 탭 아래에 카드 그리드가 오도록 */
-.ps-right{
-  margin-top: 34px;
-}
+.ps-right{ margin-top:34px; }
 
-/* 우측 큰 이미지(선택사항): 지금은 숨기고 카드만 강조 */
-.ps-media{
-  display:none;                 /* ✅ 큰 이미지 영역은 안 보이게(원하면 켤 수 있음) */
-}
+/* 큰 이미지 영역은 숨김 유지 */
+.ps-media{ display:none; }
 
-/* ✅ 카드 3개 그리드 (id만 사용) */
+/* 카드 그리드 */
 #psCards{
   display:grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 26px;
-  max-width: 1160px;
-  margin: 0 auto;
+  grid-template-columns:repeat(3, minmax(0, 1fr));
+  gap:26px;
+  max-width:1160px;
+  margin:0 auto;
 }
 
-/* 카드 스타일(새 클래스 만들지 않고 #psCards 내부 선택자로만) */
+/* 탭 전환 시 카드 전환(전환 중 클릭 방지) */
+#psCards.is-switching{ pointer-events:none; }
+
+/* ✅ 중복 정리:
+   #psCards .card 가 아래에 2번 정의돼 있었음(transition / base style)
+   → 한 군데로 합쳐서 관리 */
 #psCards .card{
   background:#fff;
-  border-radius: 12px;
+  border-radius:12px;
   overflow:hidden;
-  box-shadow: 0 16px 40px rgba(0,0,0,.10);
-  transition: opacity .35s ease,
-              transform .35s ease,
-              box-shadow .18s ease;
+  box-shadow:0 16px 40px rgba(0,0,0,.10);
+  will-change:opacity, transform;
 
-  will-change: opacity, transform;
+  /* 탭 전환 모션(원래 있던 transition 유지) */
+  transition:
+    opacity 1.2s ease,
+    transform 1.2s ease,
+    box-shadow .18s ease;
 }
 
+/* 새 카드 등장 */
+#psCards .card.enter{
+  opacity:0;
+  transform:translateY(6px);
+}
+
+#psCards .card.enter.is-in{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* hover 강조 */
 #psCards .card:hover{
-  transform: translateY(-4px);
-  box-shadow: 0 22px 56px rgba(0,0,0,.14);
+  transform:translateY(-4px);
+  box-shadow:0 22px 56px rgba(0,0,0,.14);
 }
 
+/* ✅ 이미지 영역
+   (기존 height:500px 고정은 모바일에서 특히 과하게 커 보여서 제거)
+   → PC에서도 보기 좋게 "aspect-ratio" 기반으로 안정화 */
 #psCards .card img{
   width:100%;
-  height: 500px;
-  object-fit: cover;
+  aspect-ratio: 4 / 3;     /* ✅ PC/모바일 모두 안정적 */
+  height:auto;             /* ✅ 기존 500px 고정 제거 */
+  object-fit:cover;
   display:block;
   background:#f3f4f6;
 }
 
+/* 캡션 */
 #psCards .card .cap{
-  padding: 14px 14px 16px;
-  font-weight: 800;
+  padding:14px 14px 16px;
+  font-weight:800;
   color:#111;
-  font-size: 15px;
+  font-size:15px;
 }
 
-/* ===== 2번쨰 섹션 스크롤 동 Scroll Reveal ===== */
+/* -------------------------------------------
+   2번 섹션 스크롤 등장(Scroll Reveal)
+------------------------------------------- */
 .reveal-on-scroll{
-  opacity: 0;
-  transform: translateY(60px);
-  transition: opacity 0.9s ease, transform 0.9s ease;
+  opacity:0;
+  transform:translateY(60px);
+  transition:opacity .9s ease, transform .9s ease;
 }
-	
+
 /* ✅ 메뉴 클릭 수동 트리거용 리셋(스크롤 로직과 분리) */
 .reveal-on-scroll.force-reset{
-  opacity: 0 !important;
-  transform: translateY(60px) !important;
+  opacity:0 !important;
+  transform:translateY(60px) !important;
 }
 
 .reveal-on-scroll.is-visible{
-  opacity: 1;
-  transform: translateY(0);
+  opacity:1;
+  transform:translateY(0);
 }
 
-/* ===========================================PC 기본 스타일 끝.================================================*/
+/* ===========================================
+   모바일 전용 CSS
+   (PC 스타일이 모바일에서도 자연스럽게 유지되도록 보정)
+=========================================== */
+@media screen and (max-width: 768px){
 
-
-/* ========================================== 모바일 전용 CSS(원래 있던 부분) ================================================= */
-
-@media screen and (max-width: 768px) {
-
-/* 동영상 크기(섹션:높이 자동, 글자 축소, 패딩 조정)*/
-	.section { 
-				height: auto; 
-				padding: 3rem 1rem;
-				}			
-
-/* 동영상 글씨 CSS */    
-    .text-area {
-				font-size: 1rem; 
-				padding: 1rem; 
-				max-width: 95%; 
-				text-align: center; 
-				}
-
-/* 동영상 글씨 CSS */    
-    .text-area h1 { 
-					font-size: 1.5rem; 
-					line-height: 1.3; 
-					}
-
-/* 동영상 글씨 CSS */    
-    .text-area h5 { 
-					font-size: 1rem; 
-					line-height: 1.3; 
-					}
-}
-
-	
-/* 두번째섹션 */
-	
-@media(max-width: 1024px){
-  #psCards{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .ps-row{ width: 220px; }
-}
-
-@media(max-width: 640px){
-  #psCards{ grid-template-columns: 1fr; }
-  .ps-row{ width: 100%; max-width: 360px; }
-}
-
-
-
-
-
-/* =========================================== 모바일 전용 CSS ==================================== */
-
-
-/* ===== ▼ 추가: 모바일에서 이미지 스트립만 예쁘게 보이도록 오버라이드 ▼ ===== */
-@media screen and (max-width: 768px) {
-  /* 이미지 스트립 타이틀/서브타이틀 약간 컴팩트하게 */
-  #busbar_section h2 { font-size: 1.6rem !important; margin: 0 0 8px !important; }
-  #busbar_section h5 { font-size: 1.1rem !important; margin: 0 0 16px !important; }
-
-  /* 인라인 스타일로 준 gap:100px을 모바일에서 축소 */
-  #busbar_section > div > div {
-    grid-template-columns: 1fr 1fr !important;  /* 2열 유지 */
-    gap: 12px !important;
-    padding: 0 12px;
+  /* 섹션(영상) */
+  .section{
+    height:auto;
+    padding:3rem 1rem;
   }
 
-  /* 세로 길이를 짧게 고정해서 늘씬해 보이게 */
-  #busbar_section img {
-    height: 220px !important;      /* ← 필요시 200~260px 선에서 취향대로 조절 */
-    width: 100% !important;
-    object-fit: cover !important;   /* 꽉 채우되 중심 잘림 */
-    object-position: center !important;
-    border-radius: 12px !important;
-    display: block !important;
+  .text-area{
+    font-size:1rem;
+    padding:1rem;
+    max-width:95%;
+    text-align:center;
   }
-}
-/* ===== ▲ 추가 끝 ▲ ===== */
 
+  .text-area h1{
+    font-size:1.5rem;
+    line-height:1.3;
+  }
 
+  .text-area h5{
+    font-size:1rem;
+    line-height:1.3;
+  }
 
+  /* HERO 높이/컨트롤 축소 */
+  .hero{ height:80vh; }
 
-/* 모바일 조정 */
-@media (max-width:768px){
-  .hero{ height: 80vh; }
   .hero-controls{
-    left: 16px;
-    right: 16px;
-    bottom: 16px;
-    gap: 12px;
+    left:16px;
+    right:16px;
+    bottom:16px;
+    gap:12px;
   }
-  .hero-progress{ height: 4px; }
-  .hero-dot{ font-size: 14px; }
+
+  .hero-progress{ height:4px; }
+  .hero-dot{ font-size:14px; }
+
+  /* ✅ 제품소개 타이틀/설명 조금 컴팩트하게 */
+  .ps-kicker{ font-size:18px; }
+  .ps-title{ font-size:34px; }
+  .ps-desc{ font-size:14px; padding:0 6px; }
+
+  /* ✅ 탭 버튼 줄바꿈 + 터치 영역 유지 */
+  .ps-row{
+    height:54px;
+    font-size:14px;
+  }
+
+  /* ✅ 카드: 모바일에선 이미지가 너무 커 보이지 않게 */
+  #psCards{
+    gap:14px;          /* ✅ 모바일 간격 좁힘 */
+    padding:0 6px;
+  }
+
+  #psCards .card{
+    border-radius:14px;
+  }
+
+  #psCards .card img{
+    aspect-ratio: 16 / 10;  /* ✅ 모바일에서 더 “배너형”으로 예쁘게 */
+  }
+
+  #psCards .card .cap{
+    padding:12px 12px 14px;
+    font-size:14px;
+  }
 }
-	
-	</style>
+
+/* -------------------------------------------
+   반응형 그리드(기존 유지)
+------------------------------------------- */
+@media (max-width: 1024px){
+  #psCards{ grid-template-columns:repeat(2, minmax(0, 1fr)); }
+  .ps-row{ width:220px; }
+}
+
+@media (max-width: 640px){
+  #psCards{ grid-template-columns:1fr; }
+  .ps-row{ width:100%; max-width:360px; }
+}
+
+/* -------------------------------------------
+   (기존) busbar_section 모바일 스트립 오버라이드
+   ✅ 다른 섹션이라 그대로 유지
+------------------------------------------- */
+@media screen and (max-width: 768px){
+  #busbar_section h2{ font-size:1.6rem !important; margin:0 0 8px !important; }
+  #busbar_section h5{ font-size:1.1rem !important; margin:0 0 16px !important; }
+
+  #busbar_section > div > div{
+    grid-template-columns:1fr 1fr !important;
+    gap:12px !important;
+    padding:0 12px;
+  }
+
+  #busbar_section img{
+    height:220px !important;
+    width:100% !important;
+    object-fit:cover !important;
+    object-position:center !important;
+    border-radius:12px !important;
+    display:block !important;
+  }
+}
+</style>
+
 </head>
 
 <body>
