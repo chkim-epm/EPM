@@ -886,12 +886,11 @@
   const n = originals.length;
   if (n <= 1) return;
 
+  // clone
   const firstClone = originals[0].cloneNode(true);
   const lastClone  = originals[n - 1].cloneNode(true);
-
   firstClone.dataset.clone = "first";
   lastClone.dataset.clone  = "last";
-
   wrap.insertBefore(lastClone, originals[0]);
   wrap.appendChild(firstClone);
 
@@ -902,17 +901,14 @@
   const duration = 4000;
   const speed = 700;
   let isAnimating = false;
-	
-  let animFallback = null; // ✅ transitionend가 씹힐 때 대비
-	
+  let animFallback = null;
+
   function setTransition(on){
     wrap.style.transition = on ? `transform ${speed}ms ease` : "none";
   }
-
   function setX(i){
     wrap.style.transform = `translateX(-${i * 100}%)`;
   }
-
   function setDots(activeOriginalIndex){
     dots.forEach((d,i)=> d.classList.toggle("is-active", i === activeOriginalIndex));
   }
@@ -940,13 +936,11 @@
     setTimeout(()=>{
       if(h1) h1.classList.add("reveal");
       setTimeout(()=>{ if(p) p.classList.add("reveal"); }, 900);
-    }, 800);
+    }, 300);
   }
 
-  // ✅✅✅ (A) 바로 여기에 setActiveSlide() 함수를 "추가"하세요 (revealCurrent 아래가 제일 찾기 쉬움)
   function setActiveSlide(){
     slides.forEach(s => s.classList.remove("is-active"));
-    // 현재 idx가 클론이면 대응되는 실제 슬라이드에 주기
     let realIdx = idx;
     if (idx === 0) realIdx = n;
     if (idx === n + 1) realIdx = 1;
@@ -955,9 +949,11 @@
 
   function restartProgress(){
     const track = bar.parentElement;
+    if (!track) return;
+
     const trackW = track.clientWidth;
     const knobW  = bar.clientWidth;
-    const maxX   = trackW - knobW;
+    const maxX   = Math.max(0, trackW - knobW);
 
     bar.style.transition = "none";
     bar.style.transform = "translateX(0px)";
@@ -971,53 +967,45 @@
 
   function scheduleNext(){
     clearTimeout(timer);
+    // 탭이 숨김 상태면 굳이 예약 안 함(브라우저가 타이머를 멈추거나 꼬이게 만들 수 있음)
+    if (document.hidden) return;
     timer = setTimeout(()=> moveTo(idx + 1), duration);
   }
 
-function moveTo(nextIdx){
-  if (isAnimating) return;
-  isAnimating = true;
+  function moveTo(nextIdx){
+    if (isAnimating) return;
+    isAnimating = true;
 
-// ✅✅✅ [추가] transitionend가 안 와도 풀리게 안전장치
-  clearTimeout(animFallback);
-  animFallback = setTimeout(()=>{
-    isAnimating = false;
-  }, speed + 80);
+    clearTimeout(animFallback);
+    animFallback = setTimeout(()=>{ isAnimating = false; }, speed + 120);
 
+    idx = nextIdx;
 
-  idx = nextIdx;
+    setTransition(true);
+    setX(idx);
 
-  setTransition(true);
-  setX(idx);
+    let activeOriginal = idx - 1;
+    if (idx === 0) activeOriginal = n - 1;
+    if (idx === n + 1) activeOriginal = 0;
+    setDots(activeOriginal);
 
-  let activeOriginal = idx - 1;
-  if (idx === 0) activeOriginal = n - 1;
-  if (idx === n + 1) activeOriginal = 0;
-  setDots(activeOriginal);
+    setActiveSlide();
+    resetRevealAll();
+    revealCurrent();
 
-  resetRevealAll();
-  revealCurrent();
-	
-  // ✅✅✅ [추가] KenBurns가 현재 슬라이드만 적용되게
-  setActiveSlide();
-	
-  restartProgress();
-  scheduleNext();
-}
-
+    restartProgress();
+    scheduleNext();
+  }
 
   wrap.addEventListener("transitionend", (e)=>{
     if (e.propertyName !== "transform") return;
-	  
-  clearTimeout(animFallback);   // ✅ 추가
-  animFallback = null;          // ✅ 추가
+
+    clearTimeout(animFallback);
 
     if (idx === n + 1){
       setTransition(false);
       idx = 1;
       setX(idx);
-
-      // ✅✅✅ (C) 순간이동 직후에도 active 갱신
       setActiveSlide();
     }
 
@@ -1025,8 +1013,6 @@ function moveTo(nextIdx){
       setTransition(false);
       idx = n;
       setX(idx);
-
-      // ✅✅✅ (C) 순간이동 직후에도 active 갱신
       setActiveSlide();
     }
 
@@ -1041,32 +1027,31 @@ function moveTo(nextIdx){
     });
   });
 
-  // ✅ 초기 세팅
+  // ✅ 탭/창 돌아오면 타이머/상태 재가동
+  document.addEventListener("visibilitychange", ()=>{
+    if (!document.hidden){
+      isAnimating = false;
+      restartProgress();
+      scheduleNext();
+    } else {
+      clearTimeout(timer);
+    }
+  });
+
+  // 초기
   setTransition(false);
   setX(idx);
-
-  // ✅✅✅ (D) 초기에도 is-active 지정
   setActiveSlide();
-
   setDots(0);
   resetRevealAll();
   revealCurrent();
   restartProgress();
   scheduleNext();
 
-  // ✅ 탭/창을 다른 데 갔다가 돌아오면(visibilitychange) 슬라이더 재가동
-  document.addEventListener("visibilitychange", ()=>{
-    if (!document.hidden){
-      isAnimating = false;
-      restartProgress();
-      scheduleNext();
-    }
-  });
-
   window.addEventListener("resize", restartProgress);
 })();
-
 </script>
+
 
 
 
