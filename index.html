@@ -902,7 +902,9 @@
   const duration = 4000;
   const speed = 700;
   let isAnimating = false;
-
+	
+  let animFallback = null; // ✅ transitionend가 씹힐 때 대비
+	
   function setTransition(on){
     wrap.style.transition = on ? `transform ${speed}ms ease` : "none";
   }
@@ -973,7 +975,7 @@
   }
 
   function moveTo(nextIdx){
-    //if (isAnimating) return;
+    if (isAnimating) return;
     isAnimating = true;
 
     idx = nextIdx;
