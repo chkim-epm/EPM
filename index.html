@@ -978,6 +978,13 @@ function moveTo(nextIdx){
   if (isAnimating) return;
   isAnimating = true;
 
+// ✅✅✅ [추가] transitionend가 안 와도 풀리게 안전장치
+  clearTimeout(animFallback);
+  animFallback = setTimeout(()=>{
+    isAnimating = false;
+  }, speed + 80);
+
+
   idx = nextIdx;
 
   setTransition(true);
@@ -990,7 +997,10 @@ function moveTo(nextIdx){
 
   resetRevealAll();
   revealCurrent();
-
+	
+  // ✅✅✅ [추가] KenBurns가 현재 슬라이드만 적용되게
+  setActiveSlide();
+	
   restartProgress();
   scheduleNext();
 }
@@ -998,6 +1008,9 @@ function moveTo(nextIdx){
 
   wrap.addEventListener("transitionend", (e)=>{
     if (e.propertyName !== "transform") return;
+	  
+  clearTimeout(animFallback);   // ✅ 추가
+  animFallback = null;          // ✅ 추가
 
     if (idx === n + 1){
       setTransition(false);
@@ -1041,8 +1054,18 @@ function moveTo(nextIdx){
   restartProgress();
   scheduleNext();
 
+  // ✅ 탭/창을 다른 데 갔다가 돌아오면(visibilitychange) 슬라이더 재가동
+  document.addEventListener("visibilitychange", ()=>{
+    if (!document.hidden){
+      isAnimating = false;
+      restartProgress();
+      scheduleNext();
+    }
+  });
+
   window.addEventListener("resize", restartProgress);
 })();
+
 </script>
 
 
