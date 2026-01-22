@@ -467,22 +467,20 @@
   width:100%;
 }
 
-/* ✅ “자세히 보기” 버튼(span 마지막 자식) 위치/크기 통일 */
+/* ✅ “자세히 보기” 버튼(span 마지막 자식)
 #psCards .card .cap > span:last-child{
-  margin-top:auto;          /* ✅ 아래로 밀기(핵심) */
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-
-  height:44px;              /* ✅ 높이 고정 */
-  min-width:140px;          /* ✅ 폭 통일 */
-  padding:0 18px;
-
-  background:#0b4ea2;       /* 섹션2 파란색 */
+  margin-top:auto;              /* ✅ 위치 고정(유지) */
+  display:inline-block;         /* 원래 느낌 */
+  padding:.5rem 1rem;           /* ✅ 네가 HTML에서 쓰던 값 */
+  background:#0b4ea2;
   color:#fff;
   border-radius:6px;
   font-weight:900;
   box-shadow:0 8px 18px rgba(11,78,162,.18);
+
+  /* ✅ 내가 고정해뒀던 크기 제거 */
+  height:auto;
+  min-width:0;
 }
 
 /* -------------------------------------------
@@ -534,26 +532,28 @@
   .ps-row{ height:54px; font-size:14px; }
 
   #psCards{
-    gap: 14px;
-    max-width: 560px;
-    padding: 0 6px;
+    gap:14px;
+    max-width:560px;
+    padding:0 6px;
   }
 
   #psCards .card img{
-    height: 230px;
+    height:230px;
   }
 
   #psCards .card .cap{
-    font-size: 1.05rem;
-    padding: 12px 12px 14px;
+    font-size:1.05rem;
+    padding:12px 12px 14px;
   }
 
-  /* 모바일에서도 버튼 높이 동일 */
+  /* ✅ 모바일에서도 '자세히 보기' 버튼 크기 원래대로 */
   #psCards .card .cap > span:last-child{
-    height:42px;
-    min-width:132px;
+    height:auto;
+    min-width:0;
+    padding:.5rem 1rem;   /* 원래 버튼 크기 유지 */
   }
 }
+
 
 /* 반응형 그리드(기존 유지) */
 @media (max-width: 1024px){
