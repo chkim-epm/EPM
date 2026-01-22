@@ -186,14 +186,6 @@ footer.site-footer{
   overflow: hidden;
 }
 
-/* 위쪽 네온 라인 */
-footer.site-footer::before{
-  content:"";
-  position:absolute;
-  left:0; right:0; top:0;
-  height: 2px;
-  background: linear-gradient(90deg, rgba(56,189,248,0.0), rgba(56,189,248,0.55), rgba(96,165,250,0.0));
-}
 
 /* 은은한 빛(배경) */
 footer.site-footer::after{
@@ -256,20 +248,7 @@ footer.site-footer::after{
   line-height: 1.55;
 }
 
-.footer-bottom{
-  position: relative;
-  max-width: 1200px;
-  margin: 18px auto 0;
-  padding-top: 14px;
-  border-top: 1px solid rgba(255,255,255,0.08);
-  display:flex;
-  justify-content: space-between;
-  align-items:center;
-  gap: 12px;
-  flex-wrap: wrap;
-  font-size: 12px;
-  color: rgba(226,232,240,0.65);
-}
+
 
 /* 링크(있으면) */
 footer.site-footer a{
@@ -645,6 +624,7 @@ footer.site-footer a:hover{
   
 
 /* =========================================== 모바일 전용 CSS ==================================== */
+
 
 
 
