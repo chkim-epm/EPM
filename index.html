@@ -974,29 +974,31 @@
     timer = setTimeout(()=> moveTo(idx + 1), duration);
   }
 
-  function moveTo(nextIdx){
-    if (isAnimating) return;
-    isAnimating = true;
+function moveTo(nextIdx){
+  if (isAnimating) return;
+  isAnimating = true;
 
-    idx = nextIdx;
+  // ✅ transitionend가 안 올 때도 잠금이 풀리도록 안전장치
+  clearTimeout(animFallback);
+  animFallback = setTimeout(()=>{ isAnimating = false; }, speed + 80);
 
-    setTransition(true);
-    setX(idx);
+  idx = nextIdx;
 
-    // ✅✅✅ (B) 여기! setX(idx) "바로 다음 줄"에 setActiveSlide() 추가
-    setActiveSlide();
+  setTransition(true);
+  setX(idx);
 
-    let activeOriginal = idx - 1;
-    if (idx === 0) activeOriginal = n - 1;
-    if (idx === n + 1) activeOriginal = 0;
-    setDots(activeOriginal);
+  let activeOriginal = idx - 1;
+  if (idx === 0) activeOriginal = n - 1;
+  if (idx === n + 1) activeOriginal = 0;
+  setDots(activeOriginal);
 
-    resetRevealAll();
-    revealCurrent();
+  resetRevealAll();
+  revealCurrent();
 
-    restartProgress();
-    scheduleNext();
-  }
+  restartProgress();
+  scheduleNext();
+}
+
 
   wrap.addEventListener("transitionend", (e)=>{
     if (e.propertyName !== "transform") return;
