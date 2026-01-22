@@ -65,10 +65,11 @@
 <!-- Supabase JS SDK v2: 클라이언트에서 DB 접근용 -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+	
 <style>
-/* ===========================================
-   PC 기본 스타일
-=========================================== */
+/* ====================================================================================
+                                           PC 기본 스타일
+=================================================================================== */
 
 /* -------------------------------------------
    섹션(영상/이미지) 공통
@@ -82,8 +83,6 @@
   text-align:center;
 }
 
-/* ⚠️ 현재 동영상으로 대체라면 이 img 규칙은 사실상 미사용
-   (삭제해도 되지만 혹시 이미지 섹션을 다시 쓸 수 있으니 유지) */
 .section img{
   width:100%;
   height:100%;
@@ -231,7 +230,6 @@
   cursor:pointer;
   padding:6px 4px;
 }
-
 .hero-dot.is-active{ color:#fff; }
 
 /* 텍스트 등장 애니메이션 */
@@ -331,11 +329,6 @@
   overflow:hidden;
 }
 
-/* ✅ 중복 정리:
-   기존에 있던 .ps-row:hover { translateY(-1px) } 는
-   아래 hover(비활성/활성)에서 더 강하게 덮어써서 "중복"이었음 → 삭제하고 아래로 통일 */
-
-/* 비활성 버튼 Hover */
 .ps-row:not(.is-active):hover{
   background:#f4f8ff;
   box-shadow:0 14px 28px rgba(11,78,162,.18);
@@ -343,20 +336,17 @@
   outline:2px solid rgba(11,78,162,.22);
 }
 
-/* 활성 버튼 */
 .ps-row.is-active{
   background:#0b4ea2;
   color:#fff;
   box-shadow:0 16px 32px rgba(0,0,0,.12);
 }
 
-/* 활성 버튼 Hover */
 .ps-row.is-active:hover{
   box-shadow:0 18px 40px rgba(11,78,162,.28);
   transform:translateY(-2px);
 }
 
-/* 빛이 스윽 지나가는 효과 */
 .ps-row::before{
   content:"";
   position:absolute;
@@ -370,11 +360,7 @@
   transition:left .45s ease, opacity .25s ease;
   pointer-events:none;
 }
-
-.ps-row:hover::before{
-  left:130%;
-  opacity:1;
-}
+.ps-row:hover::before{ left:130%; opacity:1; }
 
 .ps-row.ps-row-link{ text-decoration:none; }
 
@@ -385,75 +371,93 @@
 }
 
 .ps-right{ margin-top:34px; }
-
-/* 큰 이미지 영역은 숨김 유지 */
 .ps-media{ display:none; }
 
-/* 카드 그리드 */
+/* -------------------------------------------
+   ✅ 카드 그리드 = product-grid 느낌 적용
+   (ID/CLASS 변경 없음: #psCards/.card 그대로)
+------------------------------------------- */
 #psCards{
   display:grid;
-  grid-template-columns:repeat(3, minmax(0, 1fr));
-  gap:26px;
-  max-width:1160px;
-  margin:0 auto;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  padding: 0 0;              /* 섹션 padding은 ps-inner가 이미 담당 */
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* 탭 전환 시 카드 전환(전환 중 클릭 방지) */
 #psCards.is-switching{ pointer-events:none; }
 
-/* ✅ 중복 정리:
-   #psCards .card 가 아래에 2번 정의돼 있었음(transition / base style)
-   → 한 군데로 합쳐서 관리 */
+/* 카드 = product-card 느낌 */
 #psCards .card{
   background:#fff;
   border-radius:12px;
   overflow:hidden;
-  box-shadow:0 16px 40px rgba(0,0,0,.10);
-  will-change:opacity, transform;
-
-  /* 탭 전환 모션(원래 있던 transition 유지) */
-  transition:
-    opacity 1.2s ease,
-    transform 1.2s ease,
-    box-shadow .18s ease;
+  box-shadow:0 2px 10px rgba(0,0,0,0.10);
+  text-align:center;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  border:1px solid rgba(15,23,42,0.06);
 }
 
-/* 새 카드 등장 */
-#psCards .card.enter{
-  opacity:0;
-  transform:translateY(6px);
-}
+/* 기존 enter 모션 유지 */
+#psCards .card.enter{ opacity:0; transform:translateY(6px); }
+#psCards .card.enter.is-in{ opacity:1; transform:translateY(0); }
 
-#psCards .card.enter.is-in{
-  opacity:1;
-  transform:translateY(0);
-}
-
-/* hover 강조 */
+/* Hover */
 #psCards .card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 22px 56px rgba(0,0,0,.14);
+  transform: translateY(-5px);
+  box-shadow:0 8px 22px rgba(0,0,0,0.16);
+  border-color: rgba(11,78,162,.18);
 }
 
-/* ✅ 이미지 영역
-   (기존 height:500px 고정은 모바일에서 특히 과하게 커 보여서 제거)
-   → PC에서도 보기 좋게 "aspect-ratio" 기반으로 안정화 */
+/* 카드 링크(전체 클릭) */
+#psCards .card a{
+  display:flex;
+  flex-direction:column;
+  text-decoration:none;
+  color:inherit;
+  height:100%;
+}
+
+/* 이미지 */
 #psCards .card img{
   width:100%;
-  aspect-ratio: 4 / 3;     /* ✅ PC/모바일 모두 안정적 */
-  height:500px;             /* ✅ 기존 500px 고정 제거 */
+  height:280px;            /* ✅ 네 참고 CSS와 동일한 느낌 */
   object-fit:cover;
   display:block;
   background:#f3f4f6;
 }
 
-/* 캡션 */
+/* 캡션 영역 = product-info 느낌 */
 #psCards .card .cap{
-  padding:14px 14px 16px;
-  font-weight:800;
+  padding: 14px 16px 16px;
+  font-weight:900;
+  font-size: 1.15rem;
+  margin: 0;
   color:#111;
-  font-size:15px;
+  text-align:center;
+  letter-spacing:-.02em;
+
+  /* 언더바/긴 텍스트 깨짐 처리 */
+  word-break: keep-all;
+  overflow-wrap: anywhere;
 }
+
+/* ✅ “설명 문구” (HTML에 없어도 CSS로 추가) */
+#psCards .card .cap::after{
+  content:"배선 연결·분기를 깔끔하고 안전하게 처리해 분전반/제어반 내부 정리성과 신뢰성을 높여줍니다.";
+  display:block;
+  margin-top:10px;
+  font-size:.9rem;
+  font-weight:600;
+  color:#555;
+  line-height:1.55;
+  white-space: pre-line;
+}
+
 
 /* -------------------------------------------
    2번 섹션 스크롤 등장(Scroll Reveal)
@@ -463,13 +467,10 @@
   transform:translateY(60px);
   transition:opacity .9s ease, transform .9s ease;
 }
-
-/* ✅ 메뉴 클릭 수동 트리거용 리셋(스크롤 로직과 분리) */
 .reveal-on-scroll.force-reset{
   opacity:0 !important;
   transform:translateY(60px) !important;
 }
-
 .reveal-on-scroll.is-visible{
   opacity:1;
   transform:translateY(0);
@@ -477,15 +478,9 @@
 
 /* ===========================================
    모바일 전용 CSS
-   (PC 스타일이 모바일에서도 자연스럽게 유지되도록 보정)
 =========================================== */
 @media screen and (max-width: 768px){
-
-  /* 섹션(영상) */
-  .section{
-    height:auto;
-    padding:3rem 1rem;
-  }
+  .section{ height:auto; padding:3rem 1rem; }
 
   .text-area{
     font-size:1rem;
@@ -493,78 +488,54 @@
     max-width:95%;
     text-align:center;
   }
+  .text-area h1{ font-size:1.5rem; line-height:1.3; }
+  .text-area h5{ font-size:1rem; line-height:1.3; }
 
-  .text-area h1{
-    font-size:1.5rem;
-    line-height:1.3;
-  }
-
-  .text-area h5{
-    font-size:1rem;
-    line-height:1.3;
-  }
-
-  /* HERO 높이/컨트롤 축소 */
   .hero{ height:80vh; }
-
   .hero-controls{
     left:16px;
     right:16px;
     bottom:16px;
     gap:12px;
   }
-
   .hero-progress{ height:4px; }
   .hero-dot{ font-size:14px; }
 
-  /* ✅ 제품소개 타이틀/설명 조금 컴팩트하게 */
   .ps-kicker{ font-size:18px; }
   .ps-title{ font-size:34px; }
   .ps-desc{ font-size:14px; padding:0 6px; }
 
-  /* ✅ 탭 버튼 줄바꿈 + 터치 영역 유지 */
-  .ps-row{
-    height:54px;
-    font-size:14px;
-  }
+  .ps-row{ height:54px; font-size:14px; }
 
-  /* ✅ 카드: 모바일에선 이미지가 너무 커 보이지 않게 */
   #psCards{
-    gap:14px;          /* ✅ 모바일 간격 좁힘 */
-    padding:0 6px;
-  }
-
-  #psCards .card{
-    border-radius:14px;
+    gap: 14px;
+    max-width: 560px;
+    padding: 0 6px;
   }
 
   #psCards .card img{
-    aspect-ratio: 16 / 10;  /* ✅ 모바일에서 더 “배너형”으로 예쁘게 */
+    height: 230px;
   }
 
   #psCards .card .cap{
-    padding:12px 12px 14px;
-    font-size:14px;
+    font-size: 1.05rem;
+    padding: 12px 12px 14px;
+  }
+
+  #psCards .card .cap::after{
+    font-size: .88rem;
   }
 }
 
-/* -------------------------------------------
-   반응형 그리드(기존 유지)
-------------------------------------------- */
+/* 반응형 그리드(기존 유지) */
 @media (max-width: 1024px){
-  #psCards{ grid-template-columns:repeat(2, minmax(0, 1fr)); }
   .ps-row{ width:220px; }
 }
-
 @media (max-width: 640px){
-  #psCards{ grid-template-columns:1fr; }
   .ps-row{ width:100%; max-width:360px; }
 }
 
-/* -------------------------------------------
-   (기존) busbar_section 모바일 스트립 오버라이드
-   ✅ 다른 섹션이라 그대로 유지
-------------------------------------------- */
+/* (기존) busbar_section 모바일 스트립 오버라이드 */
 @media screen and (max-width: 768px){
   #busbar_section h2{ font-size:1.6rem !important; margin:0 0 8px !important; }
   #busbar_section h5{ font-size:1.1rem !important; margin:0 0 16px !important; }
@@ -584,7 +555,17 @@
     display:block !important;
   }
 }
+
+/* 모션 최소화 환경 */
+@media (prefers-reduced-motion: reduce){
+  #psCards .card,
+  #psCards .card img,
+  #psCards .card a::before{
+    transition:none !important;
+  }
+}
 </style>
+
 
 </head>
 
@@ -881,14 +862,57 @@ async function loadCategoryCards(categoryId){
   }
 
   // ✅ 3) 새 카드 렌더 (enter 클래스 포함)
-  cardsWrap.innerHTML = items.map(p=>`
+ cardsWrap.innerHTML = items.map(p=>{
+  const title = (p.title || "-");
+  const displayTitle = title.replace(/_/g, " "); // ✅ 언더바 제거
+
+  // 아래 값들은 네 product 테이블 컬럼에 맞춰 바꿔야 함(없으면 빈값 처리)
+  const desc = (p.description || "배선 연결·분기를 깔끔하고 안전하게 처리하는 필수 부품입니다.");
+  const material = (p.material || "-");
+  const usage = (p.usage || "-");
+  const type = (p.spec || "-");
+  const price = (p.price ? Number(p.price).toLocaleString() + "원" : "-");
+
+  return `
     <div class="card enter">
-      <a href="productDetail.html?id=${p.id}" style="display:block">
-        <img src="${p.image_url || ''}" alt="${(p.title||'').replace(/"/g,'&quot;')}" loading="lazy">
+      <a href="productDetail.html?id=${p.id}">
+        <img src="${p.image_url || ''}" alt="${displayTitle.replace(/"/g,'&quot;')}" loading="lazy">
+
+        <div class="cap">
+          ${displayTitle}
+          <span style="display:block; margin-top:10px; font-size:.9rem; font-weight:600; color:#555; line-height:1.55; white-space:pre-line;">
+            ${desc}
+          </span>
+
+          <div style="margin-top:14px; text-align:left;">
+            <table style="width:100%; border-collapse:collapse; font-size:.92rem;">
+              <tr>
+                <th style="padding:.45rem .6rem; border-bottom:1px solid #ddd; background:#f9f9f9; font-weight:900; width:28%;">재질</th>
+                <td style="padding:.45rem .6rem; border-bottom:1px solid #ddd; color:#555;">${material}</td>
+              </tr>
+              <tr>
+                <th style="padding:.45rem .6rem; border-bottom:1px solid #ddd; background:#f9f9f9; font-weight:900;">용도</th>
+                <td style="padding:.45rem .6rem; border-bottom:1px solid #ddd; color:#555;">${usage}</td>
+              </tr>
+              <tr>
+                <th style="padding:.45rem .6rem; border-bottom:1px solid #ddd; background:#f9f9f9; font-weight:900;">종류</th>
+                <td style="padding:.45rem .6rem; border-bottom:1px solid #ddd; color:#555;">${type}</td>
+              </tr>
+              <tr>
+                <th style="padding:.45rem .6rem; border-bottom:1px solid #ddd; background:#f9f9f9; font-weight:900;">가격</th>
+                <td style="padding:.45rem .6rem; border-bottom:1px solid #ddd; color:#555;">${price}</td>
+              </tr>
+            </table>
+          </div>
+
+          <span style="display:inline-block; margin-top:14px; padding:.5rem 1rem; background:#0b4ea2; color:#fff; border-radius:6px; font-weight:900;">
+            자세히 보기
+          </span>
+        </div>
       </a>
-      <div class="cap">${p.title || '-'}</div>
     </div>
-  `).join("");
+  `;
+}).join("");
 
   // ✅ 4) 새 카드 등장
 const cards = Array.from(cardsWrap.querySelectorAll(".card.enter"));
