@@ -617,6 +617,43 @@
 .product-showcase.reveal-on-scroll.is-visible #psCards .card:nth-child(2){ transition-delay: .14s; }
 .product-showcase.reveal-on-scroll.is-visible #psCards .card:nth-child(3){ transition-delay: .22s; }
 
+
+		/* =========================================================
+   카드 3개 교체 모션 (psCards 기준)
+   - 기존 카드: is-switching 붙으면 살짝 사라짐
+   - 새 카드: .card.enter 상태에서 is-in 붙으며 부드럽게 등장
+========================================================= */
+
+/* 1) 교체 중: 기존 카드 살짝 사라짐 */
+#psCards.is-switching .card {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .22s ease, transform .22s ease;
+}
+
+/* 2) 새 카드 기본 트랜지션 세팅 */
+#psCards .card {
+  transition: opacity .32s ease, transform .45s ease;
+  will-change: opacity, transform;
+}
+
+/* 3) enter(등장 전) 초기 상태 */
+#psCards .card.enter {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+/* 4) is-in(등장 완료) 최종 상태 */
+#psCards .card.enter.is-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 5) (옵션) 3장 순차 등장 느낌(고급) */
+#psCards .card.enter:nth-child(1) { transition-delay: 0ms; }
+#psCards .card.enter:nth-child(2) { transition-delay: 70ms; }
+#psCards .card.enter:nth-child(3) { transition-delay: 140ms; }
+
 /* ===========================================
    모바일 전용 CSS
 =========================================== */
@@ -1172,12 +1209,6 @@ setTimeout(()=>{
   cardsWrap.querySelectorAll(".card.enter").forEach(c=>c.classList.remove("enter"));
 }, 700);
 
-
-  // 전환 상태 해제(약간 여유)
-  setTimeout(()=>{
-    cardsWrap.classList.remove("is-switching");
-    cardsWrap.querySelectorAll(".card.enter").forEach(c=>c.classList.remove("enter"));
-  }, 450);
 }
 
 
