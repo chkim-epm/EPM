@@ -618,7 +618,7 @@
 .product-showcase.reveal-on-scroll.is-visible #psCards .card:nth-child(3){ transition-delay: .22s; }
 
 
-		/* ===============================
+/* ===============================
    SECTION 3 : OUR STRENGTH - Premium Style
 ================================ */
 
@@ -745,7 +745,42 @@
   line-height: 1.75;
   color: rgba(255,255,255,.90);
 }
+/* ===== Section3 Scroll Motion ===== */
 
+.s3-head{
+  opacity: 0;
+  transform: translateY(30px);
+  transition: 
+    opacity .9s ease,
+    transform .9s ease;
+}
+
+/* 화면 진입 시 */
+.s3-head.is-visible{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+.s3-card{
+  opacity: 0;
+  transform: translateY(40px) rotateX(8deg);
+  transition:
+    opacity .8s ease,
+    transform .8s ease;
+  will-change: transform, opacity;
+}
+
+/* 화면에 들어왔을 때 */
+.s3-card.is-visible{
+  opacity: 1;
+  transform: translateY(0) rotateX(0deg);
+}
+
+
+/* ===============================
+   SECTION 3 끝
+================================ */
 		
 /* ===========================================
    모바일 전용 CSS
@@ -1471,7 +1506,40 @@ initProductTabs();
   targets.forEach(el=>io.observe(el));
 })();
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", ()=>{
 
+  const header = document.querySelector(".s3-head");
+  const cards = document.querySelectorAll(".s3-card");
+
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+
+        // 헤더는 즉시 등장
+        if(entry.target.classList.contains("s3-head")){
+          entry.target.classList.add("is-visible");
+        }
+
+        // 카드들은 순차 등장
+        if(entry.target.classList.contains("s3-card")){
+          const index = [...cards].indexOf(entry.target);
+          setTimeout(()=>{
+            entry.target.classList.add("is-visible");
+          }, index * 150); // 0.15초 간격
+        }
+
+        observer.unobserve(entry.target);
+      }
+    });
+  },{
+    threshold: 0.2
+  });
+
+  observer.observe(header);
+  cards.forEach(card=>observer.observe(card));
+});
+</script>
 
 
 	
