@@ -49,6 +49,84 @@
 
 <style>
 /* ===========================================PC 기본 스타일====================================================*/
+	
+/* =============================  ✅ 상단 이미지 =============================== */
+.product-hero{
+  width: min(1200px, calc(100% - 40px));
+  margin: 16px auto 14px;
+  border-radius: 18px;
+  overflow: hidden;
+  position: relative;
+  height: 320px;
+
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.18);
+}
+
+/* 이미지 3장 겹쳐두고 페이드로 넘김 */
+.product-hero .hero-slide{
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.02);
+  animation: heroFade 12s infinite;
+}
+
+.product-hero .hero-slide:nth-child(1){ animation-delay: 0s; }
+.product-hero .hero-slide:nth-child(2){ animation-delay: 4s; }
+.product-hero .hero-slide:nth-child(3){ animation-delay: 8s; }
+
+.product-hero img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 위에 어두운 오버레이(글씨 올리기 좋아짐) */
+.product-hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.20) 0%, rgba(0,0,0,0.55) 100%);
+  pointer-events:none;
+}
+
+/* 히어로 안 텍스트(원하면) */
+.product-hero .hero-text{
+  position: absolute;
+  left: 18px;
+  bottom: 16px;
+  z-index: 2;
+  color: #fff;
+  text-shadow: 0 10px 24px rgba(0,0,0,0.45);
+}
+
+.product-hero .hero-text .kicker{
+  font-weight: 800;
+  letter-spacing: .18em;
+  font-size: 12px;
+  opacity: .9;
+  margin-bottom: 6px;
+}
+
+.product-hero .hero-text .title{
+  font-weight: 900;
+  font-size: 24px;
+  margin: 0;
+}
+
+/* 페이드 애니메이션 */
+@keyframes heroFade{
+  0%   { opacity: 0; transform: scale(1.02); }
+  8%   { opacity: 1; transform: scale(1); }
+  33%  { opacity: 1; transform: scale(1); }
+  41%  { opacity: 0; transform: scale(1.02); }
+  100% { opacity: 0; transform: scale(1.02); }
+}
+
+/* =============================  ✅ 상단 이미지 끝 =============================== */
 
 /* 페이지 대표 제목 스타일 */
 h1 {
@@ -181,9 +259,16 @@ h1 {
 }
 /* ================= 페이지네이션 끝================= */
 
-/* ========================================== 모바일 전용 CSS ================================================= */
 
-/* (모바일 전용 룰을 추가하려면 이 아래에 작성) */
+
+	
+/* ========================================== 모바일 전용 CSS ================================================= */
+	
+/*=================== 상단이미지 =============*/
+@media (max-width: 760px){
+  .product-hero{ height: 220px; border-radius: 16px; }
+  .product-hero .hero-text .title{ font-size: 18px; }
+}
 
 /* =========================================== 모바일 전용 CSS ================================================= */
  
@@ -198,6 +283,27 @@ h1 {
 <div id="nav"></div>
 <script src="/commonNav.js" defer></script>
 <!-- 네비게이션 바 끝 nav.html그리드, commonNav로 끌어오기, common로 CSS-->	
+<!-- 네비게이션 바 -->
+<div id="nav"></div>
+<script src="/commonNav.js" defer></script>
+<!-- 네비게이션 바 끝 nav.html그리드, commonNav로 끌어오기, common로 CSS-->	
+
+<!-- ✅ [추가] 제품목록 상단 히어로(인덱스 1/2/3 이미지) -->
+<section class="product-hero" aria-label="제품 목록 상단 이미지">
+  <!-- ⚠️ 아래 3개 경로만 index에서 쓰는 이미지 경로로 맞춰주면 됩니다 -->
+  <div class="hero-slide"><img src="image/1번배경.png" alt="제품 상단 배경 1" loading="lazy"></div>
+  <div class="hero-slide"><img src="image/2번배경.png" alt="제품 상단 배경 2" loading="lazy"></div>
+  <div class="hero-slide"><img src="image/3번배경.png" alt="제품 상단 배경 3" loading="lazy"></div>
+
+  <!-- (선택) 텍스트 - 싫으면 이 div 자체를 삭제해도 됨 -->
+  <div class="hero-text">
+    <div class="kicker">E·P·M</div>
+    <h2 class="title">제품 목록</h2>
+  </div>
+</section>
+<!-- ✅ [추가 끝] -->
+
+<h1>제품 목록</h1>
 
 
 	
@@ -422,6 +528,7 @@ h1 {
 
 </body>
 </html>
+
 
 
 
