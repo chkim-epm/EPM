@@ -49,7 +49,112 @@
 
 <style>
 /* ===========================================PC 기본 스타일====================================================*/
+	
+/* ========================== 상단이미지 ========================== */
+.sub-visual{
+  position: relative;
+  width: 100%;
+  height: 360px;
+  overflow: hidden;
+  margin: 0;
+}
 
+.sub-visual-bg{
+  position:absolute;
+  inset:0;
+}
+.sub-visual-bg span{
+  position:absolute;
+  inset:0;
+
+  /* ✅ 기본 배경 */
+  background: url("image/1번배경.png") no-repeat 85% center / cover;
+
+  transform: scale(1.08);
+  animation: subVisualZoom 8s linear both;
+}
+
+/* ✅ 2번 배경 스타일 */
+.sub-visual.nth-2 .sub-visual-bg span{
+  background-image: url("image/2번배경.png");
+}
+
+/* 어두운 오버레이 */
+.sub-visual::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.60) 0%, rgba(0,0,0,.15) 60%, rgba(0,0,0,0) 100%),
+    linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.55));
+  pointer-events:none;
+}
+
+/* 서브비주얼 텍스트 */
+.sub-visual-text{
+  position:absolute;
+  left: 28px;
+  bottom: 30px;
+  z-index: 2;
+  color:#fff;
+  text-shadow: 0 12px 28px rgba(0,0,0,.55);
+}
+
+.sub-visual-kicker{
+  margin:0 0 10px;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing:.22em;
+  opacity:.9;
+}
+
+.sub-visual-title{
+  margin:0 0 12px;
+  font-size: clamp(32px, 3.2vw, 50px);
+  font-weight: 900;
+  line-height: 1.05;
+}
+
+.sub-visual-desc{
+  margin:0;
+  font-size: 15px;
+  color: rgba(255,255,255,.88);
+}
+
+/* 기존 search-bar 스타일 덮어쓰기 (inline 제거 대응) */
+.search-bar{
+  max-width:1200px;
+  margin: 14px auto 0;
+  padding: 12px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+  box-shadow:0 8px 26px rgba(0,0,0,.08);
+}
+
+.search-bar input{
+  flex:1;
+  padding:12px 14px;
+  border:1px solid #d0d7de;
+  border-radius:10px;
+  font-size:14px;
+}
+
+.search-bar button{
+  padding:12px 16px;
+  border:0;
+  border-radius:10px;
+  background:#23585C;
+  color:#fff;
+  font-weight:800;
+  cursor:pointer;
+}
+/* ========================== 상단이미지 끝 ========================== */
+
+	
 /* 페이지 대표 제목 스타일 */
 h1 {
   text-align: center;       /* 가운데 정렬 */
@@ -183,14 +288,26 @@ h1 {
 
 /* ========================================== 모바일 전용 CSS ================================================= */
 
-/* (모바일 전용 룰을 추가하려면 이 아래에 작성) */
+/* ========================== 상단이미지========================== */
+@keyframes subVisualZoom{
+  from { transform: scale(1.12); }
+  to   { transform: scale(1.04); }
+}
+
+/* 모바일 */
+@media (max-width:760px){
+  .sub-visual{ height:240px; }
+  .sub-visual-text{ left:16px; bottom:18px; }
+  .sub-visual-title{ font-size:28px; }
+}
+
+/* ========================== 상단이미지 끝 ========================== */
 
 /* =========================================== 모바일 전용 CSS ================================================= */
  
-
-  
-</style>
+</style>	
 </head>
+	
 <body>
 
 	
@@ -201,15 +318,33 @@ h1 {
 
 
 	
-<h1>제품 목록</h1>
+<!-- ✅ 상단 서브비주얼 (기존 클래스/ID 영향 없음) -->
+<section class="sub-visual nth-2">
+  <div class="sub-visual-bg">
+    <span></span>
+  </div>
+
+  <div class="sub-visual-text">
+    <p class="sub-visual-kicker">PRODUCT LIST</p>
+    <h1 class="sub-visual-title">제품 목록</h1>
+    <p class="sub-visual-desc">
+      원하시는 제품을 검색하고 상세 정보를 확인해보세요.
+    </p>
+  </div>
+</section>
+<!-- ✅ 서브비주얼 끝 -->
+
+<!-- (기존 숨김 메뉴 유지) -->
 <div class="nav-item" style="display:none;">
-	<a href="/admin/productCategory.html">카테고리 테스트2</a>
+  <a href="/admin/productCategory.html">카테고리 테스트2</a>
 </div>
-<!-- 검색바: 제품명/설명/재질/용도/종류를 통합 검색 -->
-<div class="search-bar" style="max-width:1200px;margin:0 auto;padding:0 2rem 0;display:flex;gap:8px;align-items:center;">
-  <input id="q" type="search" placeholder="제품명, 설명, 재질, 용도, 종류 검색" style="flex:1;padding:10px 12px;border:1px solid #d0d7de;border-radius:8px;font-size:14px;">
-  <button id="clearBtn" type="button" style="padding:10px 12px;border:0;border-radius:8px;cursor:pointer;background:#23585C;color:#fff;">초기화</button>
+
+<!-- ✅ 기존 search-bar 그대로 유지 (JS 그대로 작동) -->
+<div class="search-bar">
+  <input id="q" type="search" placeholder="제품명, 설명, 재질, 용도, 종류 검색">
+  <button id="clearBtn" type="button">초기화</button>
 </div>
+
 <!-- 검색 UI 끝 -->
 
 
@@ -422,3 +557,4 @@ h1 {
 
 </body>
 </html>
+
