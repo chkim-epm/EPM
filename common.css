@@ -622,7 +622,144 @@ footer.site-footer a:hover{
   }
 
 
+/* =========================================================
+   ✅ [추가] 모바일 보완 CSS (기존 수정 X / 덮어쓰기 최소)
+   - 네비게이션 겹침(로고/햄버거/메뉴) 방지
+   - Drawer/Backdrop 터치 안전
+   - 드롭다운 모바일에서 "호버"로 열리는 동작 무력화 (모바일 충돌 방지)
+   - ToTop 버튼 모바일 사이즈/가림 최소화
+   ========================================================= */
 
+/* 1) 모바일에서 고정 nav(#nav) 안의 nav 레이아웃 안정화 */
+@media screen and (max-width: 1024px){
+
+  /* #nav가 fixed라서 컨텐츠와 겹치기 쉬움 → nav 높이/정렬 안정 */
+  #nav nav{
+    padding: 14px 12px !important;
+    gap: 10px;
+  }
+
+  /* 로고는 모바일에서 좌측 상단에 깔끔하게 */
+  #nav .nav-logo{
+    display:flex;
+    align-items:center;
+    gap: 6px;
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  /* 햄버거 버튼 터치영역 확보 + 너무 위/아래 튀는 것 방지 */
+  .nav-burger{
+    top: 10px;
+    right: 10px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    touch-action: manipulation;
+  }
+
+  /* 메뉴가 가로스크롤일 때 탭하기 편하게 높이 확보 */
+  .nav-menu{
+    padding-right: 52px; /* ✅ 햄버거 영역과 겹침 방지 */
+    gap: 6px;
+  }
+
+  /* nav-item 클릭 영역 확대(손가락 UX) */
+  nav .nav-item{
+    padding: 10px 6px;
+  }
+  nav .nav-item a{
+    display:inline-block;
+    padding: 8px 6px;
+  }
+
+  /* iOS/모바일 가로 스크롤바 숨김(선택) */
+  .nav-menu::-webkit-scrollbar{
+    height: 0;
+  }
+
+  /* 2) 모바일에서 기존 hover 기반 드롭다운 열림 방지 (충돌 예방)
+     - JS로 열어줄 거면 JS 토글 클래스 기반으로만 열리게 하는 게 안전
+     - 지금은 "추가만"이라 hover만 무력화(모바일에서만) */
+  .nav-item.has-sub:hover .nav-sub{
+    display: none !important;
+    opacity: 0 !important;
+    transform: none !important;
+    pointer-events: none !important;
+  }
+
+  /* 3) 드롭다운이 열릴 때(네 JS에서 display:block 줄 경우) 자연스럽게 보이도록 */
+  .nav-item.has-sub .nav-sub{
+    opacity: 1 !important;          /* 모바일에선 fade 애니메이션보다 즉시가 안정적 */
+    transform: none !important;
+    pointer-events: auto !important;
+  }
+
+  /* 4) Drawer 패널: 모바일에서 스크롤 튐/배경 스크롤 방지 보완 */
+  .nav-drawer-panel{
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .nav-drawer-backdrop{
+    touch-action: manipulation;
+  }
+
+  /* 5) TOP 버튼: 모바일에서 너무 커서 가리면 → 살짝 축소 */
+  .to-top{
+    width: 54px;
+    height: 54px;
+    right: 14px;
+    bottom: 14px;
+    border-radius: 14px;
+  }
+  .to-top .top-arrow{
+    font-size: 22px;
+    line-height: 20px;
+  }
+  .to-top .top-text{
+    font-size: 12px;
+    margin-top: 2px;
+  }
+}
+
+
+/* 6) 더 작은 폰(480px 이하)에서 로고/메뉴 더 타이트하게 */
+@media screen and (max-width: 480px){
+
+  #nav nav{
+    padding: 12px 10px !important;
+  }
+
+  #nav .nav-logo{
+    font-size: .95rem;
+  }
+
+  nav .nav-item{
+    font-size: .95rem;
+    margin: 0 0.2rem;
+    padding: 8px 4px;
+  }
+
+  .nav-burger{
+    font-size: 26px;
+    top: 8px;
+    right: 8px;
+  }
+
+  /* Drawer 내부 텍스트도 너무 커 보이면 살짝 줄임 */
+  .drawer-link,
+  .drawer-acc-head{
+    font-size: 15px;
+    padding: 14px 10px;
+  }
+  .drawer-sub-link{
+    font-size: 13.5px;
+    padding: 11px 12px;
+  }
+}
+
+
+	
  
 /*footer(모바일) 크기 */    
     footer p {
@@ -634,17 +771,8 @@ footer.site-footer a:hover{
 		
 
   }
-  
+
+
 
 /* =========================================== 모바일 전용 CSS ==================================== */
-
-
-
-
-
-
-
-
-
-
 
