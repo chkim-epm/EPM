@@ -830,7 +830,29 @@
     font-size:1.05rem;
     padding:12px 12px 14px;
   }
+	
+/* 모바일 이미지1,2,3 재생바 */
+@media screen and (max-width: 768px){
+  .hero-progress{
+    height: 3px;              /* 트랙 두께(원하면 2px까지 가능) */
+  }
+  .hero-progress-bar{
+    width: 110px;             /* ✅ 움직이는 사각형 길이(줄이기) */
+    height: 100%;             /* 트랙에 맞춤 */
+    border-radius: 999px;
+  }
+}
 
+@media screen and (max-width: 480px){
+  .hero-progress{
+    height: 3px;
+  }
+  .hero-progress-bar{
+    width: 30px;             /* ✅ 움직이는 사각형 길이(줄이기) */
+    height: 100%;             /* 트랙에 맞춤 */
+    border-radius: 999px;
+  }
+}
   /* ✅ 모바일에서도 '자세히 보기' 버튼 크기 원래대로 */
   #psCards .card .cap > span:last-child{
     height:auto;
