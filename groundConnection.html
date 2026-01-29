@@ -201,14 +201,23 @@ h1 {
 <!-- 네비게이션 바 끝 nav.html그리드, commonNav로 끌어오기, common로 CSS-->	
 
 
-<h1>접지</h1>
-<!-- 검색바: 제품명/설명/재질/용도/종류를 통합 검색 -->
-<div class="search-bar" style="max-width:1200px;margin:0 auto;padding:0 2rem 0;display:flex;gap:8px;align-items:center;">
-  <input id="q" type="search" placeholder="제품명, 설명, 재질, 용도, 종류 검색" style="flex:1;padding:10px 12px;border:1px solid #d0d7de;border-radius:8px;font-size:14px;">
-  <button id="clearBtn" type="button" style="padding:10px 12px;border:0;border-radius:8px;cursor:pointer;background:#23585C;color:#fff;">초기화</button>
+<!-- 상단이미지 -->	
+<div id="subVisual"
+     data-bg="image/2번배경.png"
+     data-kicker="Grounding LIST"
+     data-title="접지"
+     data-desc="원하시는 제품을 검색하고 상세 정보를 확인해보세요.">
 </div>
-<!-- 검색 UI 끝 -->
+<script src="/common/commonSubVisual.js" defer></script>
 
+	
+<!-- ✅ 검색창 -->
+<div class="search-bar">
+  <input id="q" type="search" placeholder="제품명, 설명, 재질, 용도, 종류 검색">
+  <button id="clearBtn" type="button">초기화</button>
+</div>
+
+<!-- 검색 UI 끝 -->
 
 
 <!-- 🔄 제품 카드 목록이 동적으로 렌더될 컨테이너 -->
@@ -413,6 +422,7 @@ h1 {
 
 </body>
 </html>
+
 
 
 
