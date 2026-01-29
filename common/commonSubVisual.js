@@ -14,7 +14,7 @@
     const title   = mount.querySelector(".sub-visual-title");
     const desc    = mount.querySelector(".sub-visual-desc");
 
-    const bg    = mount.dataset.bg || "image/1번배경.png";
+    const bg    = mount.dataset.bg || "image/2번배경.png";
     const kTxt  = mount.dataset.kicker || "";
     const tTxt  = mount.dataset.title || "";
     const dTxt  = mount.dataset.desc || "";
@@ -29,3 +29,4 @@
     mount.innerHTML = "";
   }
 })();
+
