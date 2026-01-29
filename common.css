@@ -623,6 +623,46 @@ footer.site-footer a:hover{
 
 /* ========================== 상단이미지 끝 ========================== */
 
+/* ========================== 검색창 공통 ========================== */
+.search-bar{
+  max-width:1200px;
+  margin: 14px auto 0;
+  padding: 12px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+  box-shadow:0 8px 26px rgba(0,0,0,.08);
+}
+
+.search-bar input{
+  flex:1;
+  padding:12px 14px;
+  border:1px solid #d0d7de;
+  border-radius:10px;
+  font-size:14px;
+}
+
+.search-bar button{
+  padding:12px 16px;
+  border:0;
+  border-radius:10px;
+  background:#23585C;
+  color:#fff;
+  font-weight:800;
+  cursor:pointer;
+}
+
+/* 모바일 보정 */
+@media (max-width:760px){
+  .search-bar{
+    margin: 10px 12px 0;
+  }
+}
+/* ========================== 검색창 끝 ========================== */
+
 
 
 /* ===========================================PC 기본 스타일 끝.================================================*/
@@ -863,5 +903,6 @@ footer.site-footer a:hover{
 
 
 /* =========================================== 모바일 전용 CSS ==================================== */
+
 
 
