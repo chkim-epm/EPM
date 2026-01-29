@@ -900,6 +900,112 @@
   .s3-card-desc{ font-size: 14px; }
 }
 /*======================================== 섹션 3 끝 ======================================================*/
+
+/* 1) 480px 이하(핸드폰)에서 HERO 텍스트가 nowrap 때문에 안 보이거나 잘리는 문제 방지 */
+@media screen and (max-width: 480px){
+  /* HERO 높이 조금 더 확보 */
+  .hero{ height: 86vh; }
+
+  /* 텍스트가 한 줄 고정(white-space:nowrap)이라 모바일에서 잘릴 수 있어 모바일에서는 줄바꿈 허용 */
+  .hero-content{ padding: 0 14px; }
+
+  .hero-content h1,
+  .hero-content p{
+    white-space: normal;      /* ✅ 줄바꿈 허용 */
+    word-break: keep-all;     /* 한글 단어 단위 유지 */
+    overflow-wrap: anywhere;  /* 긴 영문/기호도 줄바꿈 */
+  }
+
+  .hero-content h1{
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+
+  .hero-content p{
+    line-height: 1.45;
+  }
+
+  /* 컨트롤 터치 영역/정렬 */
+  .hero-controls{
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    gap: 10px;
+    padding: 8px 10px;
+  }
+
+  /* 숫자 버튼(01/02/03) 너무 작으면 터치가 어려워서 최소 클릭 영역 확보 */
+  .hero-dot{
+    font-size: 14px;     /* 기존 768에서 14px이지만 480에서도 확실히 적용 */
+    padding: 10px 8px;   /* ✅ 터치 영역 확대 */
+    line-height: 1;
+  }
+
+  .hero-pager{ gap: 16px; }
+
+  /* 진행바 너비가 좁을 때도 막대가 과하게 커 보이지 않게 */
+  .hero-progress{ height: 4px; }
+  .hero-progress-bar{
+    width: 140px; /* ✅ 모바일에서 너무 긴 바 느낌 완화(트랙이 좁을 때) */
+  }
+}
+
+
+/* 2) 제품소개 섹션: 모바일에서 카드 내부 표/텍스트가 답답해 보이는 부분만 가볍게 보완 */
+@media screen and (max-width: 480px){
+  .product-showcase.premium{ padding: 56px 0; }
+
+  .ps-title{ font-size: 30px; }
+  .ps-desc{ font-size: 13.5px; line-height: 1.6; }
+
+  /* 카드 이미지 높이 조금 더 안정적으로 */
+  #psCards .card img{ height: 210px; }
+
+  /* 카드 캡션 패딩/텍스트 */
+  #psCards .card .cap{
+    padding: 12px 12px 14px;
+  }
+
+  /* 테이블 글씨/셀 패딩을 모바일에서 살짝 줄여서 한 줄에 더 잘 들어가게 */
+  #psCards .card .cap table{
+    font-size: .86rem !important;
+  }
+  #psCards .card .cap th,
+  #psCards .card .cap td{
+    padding: .40rem .52rem !important;
+  }
+
+  /* '자세히 보기' 버튼 터치 영역 확보 */
+  #psCards .card .cap > span:last-child{
+    padding: .55rem 1.05rem;
+    border-radius: 10px;
+  }
+}
+
+
+/* 3) 초소형(360px 이하) 대응: 메뉴 버튼/카드가 더 빡빡해지는 구간만 최소 보완 */
+@media screen and (max-width: 360px){
+  .ps-row{
+    height: 52px;
+    font-size: 13px;
+    border-radius: 12px;
+  }
+
+  #psCards{
+    gap: 12px;
+  }
+
+  #psCards .card img{ height: 195px; }
+
+  .hero-controls{
+    padding: 7px 9px;
+  }
+  .hero-pager{ gap: 12px; }
+  .hero-dot{ padding: 10px 6px; }
+}
+
+
+		
 </style>
 
 
