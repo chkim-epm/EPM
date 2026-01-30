@@ -88,4 +88,51 @@
     });
   });
 
+  /* =====================================================
+     모바일 상단 네비 드롭다운 (회사소개/제품소개)
+     - 모바일(<=1024)에서: 첫 탭 = 서브메뉴 열기, 두번째 탭 = 링크 이동
+  ===================================================== */
+  const mqTopDrop = window.matchMedia("(max-width: 1024px)");
+
+  document.querySelectorAll("nav .nav-item.has-sub").forEach((item)=>{
+    const link = item.querySelector(":scope > a");
+    const sub  = item.querySelector(":scope > .nav-sub");
+    if(!link || !sub) return;
+
+    // 중복 바인딩 방지(네비를 다른 페이지에서 여러번 로딩할 수도 있으니)
+    if (link.dataset.boundTopDrop === "1") return;
+    link.dataset.boundTopDrop = "1";
+
+    link.addEventListener("click", (e)=>{
+      if (!mqTopDrop.matches) return; // PC는 기존 hover 동작 유지
+
+      const isOpen = (sub.style.display === "block");
+
+      // 닫혀있으면: 이동 막고 열기
+      if (!isOpen){
+        e.preventDefault();
+
+        // 다른 메뉴 열려있으면 닫기(선택)
+        document.querySelectorAll("nav .nav-item.has-sub .nav-sub").forEach((s)=>{
+          if (s !== sub) s.style.display = "none";
+        });
+
+        sub.style.display = "block";
+      }
+      // 열려있으면: 이동 허용 (preventDefault 안함)
+    });
+  });
+
+  // 바깥 클릭하면 닫기(선택)
+  document.addEventListener("click", (e)=>{
+    if (!mqTopDrop.matches) return;
+    if (e.target.closest("nav .nav-item.has-sub")) return;
+
+    document.querySelectorAll("nav .nav-item.has-sub .nav-sub").forEach((s)=>{
+      s.style.display = "none";
+    });
+  });
+
+  
 })();
+
