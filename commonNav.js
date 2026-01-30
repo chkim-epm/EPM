@@ -133,10 +133,20 @@
     });
 
     // 바깥 클릭 시 닫기 (모바일에서만)
-    document.addEventListener("click", ()=>{
-      if (!mqTop.matches) return;
-      closeAllTop();
-    });
+// 바깥 클릭 시 닫기 (모바일에서만) - ✅ 중복 등록 방지
+if (!document.documentElement.dataset.boundTopOutsideClose){
+  document.documentElement.dataset.boundTopOutsideClose = "1";
+
+  document.addEventListener("click", ()=>{
+    const mq = window.matchMedia("(max-width: 1024px)");
+    if (!mq.matches) return;
+
+    document.querySelectorAll("nav .nav-item.has-sub.is-open")
+      .forEach(it => it.classList.remove("is-open"));
+  });
+}
+
+    
 
     // 화면 크기 바뀔 때 상태 정리
     if (mqTop.addEventListener){
@@ -148,3 +158,4 @@
   }
 
 })();
+
