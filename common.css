@@ -674,37 +674,16 @@ footer.site-footer a:hover{
 
 /* ================= 모바일 드롭다운 정리 ================ */
 
-/* 드롭다운 메뉴 영역 기본 숨김 (모바일 기준) */
-.nav-item.has-sub {
-  position: relative;           /* ✅ 기준점 추가 */
-}
-
-.nav-item.has-sub .nav-sub {
-  display: none;
-  position: absolute;           /* ✅ static → absolute */
-  top: 100%;
-  left: 0;
-
-  min-width: 170px;             /* PC 드롭다운과 통일 */
-  width: max-content;
-
-  background: #1E293B;
-  padding: 0.4rem 0;
-  box-shadow: none;
-  border-radius: 0;
-  z-index: 20000;               /* 겹침 방지 */
-}
-
-/* ✅ 모바일에서 JS로 열렸을 때 실제로 보이게 (PC 글래스 기본값 무력화) */
-.nav-item.has-sub.is-open .nav-sub{
-  display: block !important;
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-  pointer-events: auto !important;
-}
-
-
-
+  /* 드롭다운 메뉴 영역 기본 숨김 (모바일 기준) */
+  .nav-item.has-sub .nav-sub {
+    display: none;                  /* 기본 숨김 (JS가 block으로 변경) */
+    position: static;               /* 모바일에서는 일반 흐름으로 배치 */
+    background: #1E293B;            /* 네비게이션 바와 같은 색 */
+    padding: 0.3rem 0 0.3rem 1rem;  /* 살짝 들여쓰기 */
+    width: 100%;                    /* 메뉴 폭과 동일 */
+    box-shadow: none;               /* 그림자 제거 */
+    border-radius: 0;               /* 각진 모양 */
+  }
 
   /* 모바일 드롭다운 메뉴 항목 스타일 */
   .nav-item.has-sub .nav-sub a {
@@ -789,13 +768,12 @@ footer.site-footer a:hover{
   /* 2) 모바일에서 기존 hover 기반 드롭다운 열림 방지 (충돌 예방)
      - JS로 열어줄 거면 JS 토글 클래스 기반으로만 열리게 하는 게 안전
      - 지금은 "추가만"이라 hover만 무력화(모바일에서만) */
-.nav-item.has-sub:not(.is-open):hover .nav-sub{
-  display: none !important;
-  opacity: 0 !important;
-  transform: none !important;
-  pointer-events: none !important;
-}
-
+  .nav-item.has-sub:hover .nav-sub{
+    display: none !important;
+    opacity: 0 !important;
+    transform: none !important;
+    pointer-events: none !important;
+  }
 
   /* 3) 드롭다운이 열릴 때(네 JS에서 display:block 줄 경우) 자연스럽게 보이도록 */
   .nav-item.has-sub .nav-sub{
@@ -948,29 +926,4 @@ footer.site-footer a:hover{
   }
 }
 
-@media (max-width: 1024px){
-  nav{ overflow-x: visible; } /* nav 스크롤/클리핑 끄기 */
-}
-
-@media (max-width: 1024px){
-  .nav-drawer{
-    left: 0;
-    right: 0;
-    width: 100vw;
-  }
-  .nav-drawer-panel{
-    left: 0;              /* ★ 핵심 */
-    right: 0;
-    width: 100vw;
-    max-width: 100vw;
-    margin: 0;
-    box-sizing: border-box;
-  }
-}
-
-
 /* =========================================== 모바일 전용 CSS ==================================== */
-
-
-
-
