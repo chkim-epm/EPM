@@ -926,4 +926,26 @@ footer.site-footer a:hover{
   }
 }
 
+@media (max-width: 1024px){
+  nav{ overflow-x: visible; } /* nav 스크롤/클리핑 끄기 */
+}
+
+@media (max-width: 1024px){
+  .nav-drawer{
+    left: 0;
+    right: 0;
+    width: 100vw;
+  }
+  .nav-drawer-panel{
+    left: 0;              /* ★ 핵심 */
+    right: 0;
+    width: 100vw;
+    max-width: 100vw;
+    margin: 0;
+    box-sizing: border-box;
+  }
+}
+
+
 /* =========================================== 모바일 전용 CSS ==================================== */
+
