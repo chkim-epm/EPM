@@ -674,7 +674,7 @@ footer.site-footer a:hover{
 
 /* ================= 모바일 드롭다운 정리 ================ */
 
-  /* 드롭다운 메뉴 영역 기본 숨김 (모바일 기준) */
+/* 드롭다운 메뉴 영역 기본 숨김 (모바일 기준) */
 .nav-item.has-sub {
   position: relative;           /* ✅ 기준점 추가 */
 }
@@ -694,6 +694,15 @@ footer.site-footer a:hover{
   border-radius: 0;
   z-index: 20000;               /* 겹침 방지 */
 }
+
+/* ✅ 모바일에서 JS로 열렸을 때 실제로 보이게 (PC 글래스 기본값 무력화) */
+.nav-item.has-sub.is-open .nav-sub{
+  display: block;
+  opacity: 1;                   /* PC 기본 opacity:0 무력화 */
+  transform: translateY(0);     /* PC 기본 translateY(-6px) 무력화 */
+  pointer-events: auto;         /* PC 기본 pointer-events:none 무력화 */
+}
+
 
 
   /* 모바일 드롭다운 메뉴 항목 스타일 */
@@ -959,5 +968,6 @@ footer.site-footer a:hover{
 
 
 /* =========================================== 모바일 전용 CSS ==================================== */
+
 
 
