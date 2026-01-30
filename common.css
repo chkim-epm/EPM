@@ -1,45 +1,41 @@
 /* ===========================================PC 기본 스타일====================================================*/
+
 /* [BASE] 큰 테두리 둥글게 */
-body, html {
-  margin:0;
-  padding:0;
-  font-family:'NanumGothic', sans-serif;
-}
-
+  body, html { margin:0; padding:0; font-family:'NanumGothic', sans-serif; }
+   
 /* [NAV] 네비게이션 바(네모) */
-nav {
-  background:#1E293B;
-  /* background:#212529; 검정색*/
-  color:#fff;
-  padding:2rem;
-  display:flex;
-  flex-wrap: wrap; /* 모바일에서 메뉴 줄바꿈 */
-  justify-content:center;
-}
+	nav {	background:#1E293B; 
+			/* background:#212529; 검정색*/
+			color:#fff; 
+			padding:2rem; 
+			display:flex; 
+			flex-wrap: wrap; /* 모바일에서 메뉴 줄바꿈 */
+			justify-content:center; 
+		}
+		
+/* [NAV] 네비게이션 바 메뉴 가로로(HOME, 부스바..) */	
+	.nav-menu {
+				display: flex;           		/* 가로 배열 */
+				flex-wrap: nowrap;       		/* 한 줄 고정 */
+				justify-content: flex-start; 	/* 왼쪽 정렬 */
+				width: auto;             		/* 메뉴 폭에 맞춤 */
+				}
 
-/* [NAV] 네비게이션 바 메뉴 가로로(HOME, 부스바..) */
-.nav-menu {
-  display: flex; /* 가로 배열 */
-  flex-wrap: nowrap; /* 한 줄 고정 */
-  justify-content: flex-start; /* 왼쪽 정렬 */
-  width: auto; /* 메뉴 폭에 맞춤 */
-}
-
-/* [NAV] 네비게이션 메뉴 가로로(HOME, 부스바..) */
-nav .nav-item {
-  margin:0 1.6rem;
-  font-size: 1.4rem;
-  font-weight: bold;
-}
-
-/* [NAV] 네비게이션 메뉴 글씨 크기 간격(HOME, 부스바..) */
-nav .nav-item a {
-  color: #F1F5F9; /* 글자 색상 흰색 유지 */
-  text-decoration: none; /* 밑줄 제거 */
-  font-weight: bold; /* 원하면 글자 굵게 */
-}
-
-/* [NAV] 네비게이션 메뉴 마우스호버(HOME, 부스바..) */
+/* [NAV] 네비게이션 메뉴 가로로(HOME, 부스바..) */	
+	nav .nav-item { 
+					margin:0 1.6rem; 
+					font-size: 1.4rem;
+					font-weight: bold;
+					}
+					
+/* [NAV] 네비게이션 메뉴 글씨 크기 간격(HOME, 부스바..) */		
+	nav .nav-item a {
+					color: #F1F5F9;            /* 글자 색상 흰색 유지 */
+					text-decoration: none;   /* 밑줄 제거 */
+					font-weight: bold;       /* 원하면 글자 굵게 */
+					}		
+					
+/* [NAV] 네비게이션 메뉴 마우스호버(HOME, 부스바..) */			
 nav .nav-item a {
   position: relative;
   transition: color 0.25s ease;
@@ -70,20 +66,26 @@ nav .nav-item a:hover::after {
 
 /* [NAV] 네비게이션 회사명 CSS */
 .nav-logo {
-  position: absolute;
-  left: 2rem;
-  top : 1.6rem; /* 살짝 아래로 균형 */
-  display: flex;
-  align-items: center;
-  font-size: 1.5rem; /* 🔹 로고 크기 축소 */
-  font-weight: bold;
-}
-
+			  position: absolute;
+			  left: 2rem;
+			  top : 1.6rem;        /* 살짝 아래로 균형 */
+			  display: flex;
+			  align-items: center;
+			  font-size: 1.5rem;   /* 🔹 로고 크기 축소 */
+			  font-weight: bold;
+			}
+			  
 /*==========================드롭다운=====================*/
 /* [NAV] 네비게이션 EPM CSS */
-.logo-e { color: green; }
-.logo-p { color: red; }
-.logo-m { color: blue; }
+	.logo-e {
+			color: green;
+			}
+	.logo-p {
+			color: red;
+			}
+	.logo-m {
+			color: blue;
+			}
 
 /* [DROPDOWN] nav-item 을 드롭다운 기준점으로 */
 .nav-menu .nav-item {
@@ -154,18 +156,19 @@ nav .nav-item a:hover::after {
 }*/
 /*==========================드롭다운 끝=====================*/
 
+
 /* [FOOTER] footer 기본 줄간격 */
-footer p {
-  line-height: 1.1; /* 줄간격 줄이기 */
-}
-footer p span {
-  line-height: 1.1;
-}
+	footer p {
+				line-height: 1.1;            /* 줄간격 줄이기 */
+				}
+    footer p span {
+					line-height: 1.1;
+					}
 
 /* [FOOTER] FOOTER (테크/글래스 톤) */
 footer.site-footer{
   position: relative;
-  background: #081a2b; /* ✅ 단색으로 통일 */
+  background: #081a2b;  /* ✅ 단색으로 통일 */
   color: rgba(226,232,240,0.92);
   padding: 42px 18px 18px;
   overflow: hidden;
@@ -174,9 +177,7 @@ footer.site-footer{
 footer.site-footer::before{
   content:"";
   position:absolute;
-  left:0;
-  right:0;
-  top:0;
+  left:0; right:0; top:0;
   height: 2px;
   background: linear-gradient(90deg, rgba(56,189,248,0.0), rgba(56,189,248,0.55), rgba(96,165,250,0.0));
 }
@@ -186,7 +187,7 @@ footer.site-footer::before{
   max-width: 1200px;
   margin: 18px auto 0;
   padding-top: 14px;
-  border-top: 1px solid rgba(255,255,255,0.08); /* ← 이 줄 포함 */
+  border-top: 1px solid rgba(255,255,255,0.08);  /* ← 이 줄 포함 */
   display:flex;
   justify-content: space-between;
   align-items:center;
@@ -260,22 +261,24 @@ footer.site-footer a:hover{
   position: fixed;
   right: 18px;
   bottom: 18px;
-  width: 64px; /* 버튼 크기 키움 */
+  width: 64px;              /* 버튼 크기 키움 */
   height: 64px;
-  border-radius: 16px; /* 모서리 조금 더 부드럽게 */
+  border-radius: 16px;      /* 모서리 조금 더 부드럽게 */
   border: 1px solid rgba(255,255,255,0.12);
   background: rgba(15, 23, 42, 0.75);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   color: #E2E8F0;
   font-size: 18px;
-  font-weight: 600; /* 전체 기본 굵기 중간 */
+  font-weight: 600;         /* 전체 기본 굵기 중간 */
   box-shadow: 0 16px 40px rgba(0,0,0,0.35);
   cursor: pointer;
   opacity: 0;
   transform: translateY(8px);
   pointer-events: none;
-  transition: opacity .2s ease, transform .2s ease, background .2s ease;
+  transition: opacity .2s ease,
+              transform .2s ease,
+              background .2s ease;
   z-index: 99999;
 
   /* 내부 정렬 */
@@ -314,9 +317,7 @@ footer.site-footer a:hover{
 /* [NAV] Transparent Navbar Overlay (HERO용) */
 #nav{
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: 0; left: 0; right: 0;
   z-index: 9999;
 }
 
@@ -341,6 +342,7 @@ footer.site-footer a:hover{
   cursor: pointer;
   padding: 8px 10px;
   z-index: 10001;
+  
 }
 
 /* [DRAWER] 오른쪽 Drawer 메뉴 */
@@ -368,7 +370,7 @@ footer.site-footer a:hover{
   top:0;
   right:0;
   height:100%;
-  width: 380px; /* PC 오른쪽 폭 */
+  width: 380px;          /* PC 오른쪽 폭 */
   max-width: 92vw;
   background: rgba(15, 23, 42, 0.95); /* ✅ 네 기존 다크톤 유지 */
   backdrop-filter: blur(12px);
@@ -462,7 +464,7 @@ footer.site-footer a:hover{
 .drawer-acc-body{
   display:none;
   padding: 10px 10px 14px;
-  background: rgba(255,255,255,0.04); /* ✅ 기존 톤 유지 */
+  background: rgba(255,255,255,0.04);  /* ✅ 기존 톤 유지 */
 }
 .drawer-acc.is-open .drawer-acc-body{
   display:block;
@@ -498,8 +500,10 @@ footer.site-footer a:hover{
 .sub-visual-bg span{
   position:absolute;
   inset:0;
+
   /* ✅ 기본 배경 */
   background: url("/image/1번배경.png") no-repeat 85% center / cover;
+
   transform: scale(1.08);
   animation: subVisualZoom 8s linear both;
 }
@@ -514,7 +518,9 @@ footer.site-footer a:hover{
   content:"";
   position:absolute;
   inset:0;
-  background: linear-gradient(90deg, rgba(0,0,0,.60) 0%, rgba(0,0,0,.15) 60%, rgba(0,0,0,0) 100%), linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.55));
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.60) 0%, rgba(0,0,0,.15) 60%, rgba(0,0,0,0) 100%),
+    linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.55));
   pointer-events:none;
 }
 
@@ -552,7 +558,7 @@ footer.site-footer a:hover{
 /* [VISUAL] 줌 애니메이션 */
 @keyframes subVisualZoom{
   from { transform: scale(1.12); }
-  to { transform: scale(1.04); }
+  to   { transform: scale(1.04); }
 }
 
 /* [SEARCH] 검색창 공통 */
@@ -588,12 +594,20 @@ footer.site-footer a:hover{
 }
 
 /* ===========================================PC 기본 스타일 끝.================================================*/
+
+
+
 /* ========================================== 모바일 전용 CSS ================================================= */
 
 /* [MOBILE] footer 레이아웃 (원래 PC 중간에 섞여있던 블록을 모바일 섹션으로 이동) */
 @media (max-width: 900px){
-  .footer-inner{ grid-template-columns: 1fr; }
-  .footer-bottom{ justify-content: center; text-align:center; }
+  .footer-inner{
+    grid-template-columns: 1fr;
+  }
+  .footer-bottom{
+    justify-content: center;
+    text-align:center;
+  }
 }
 
 /* [MOBILE] Drawer 패널 풀스크린 */
@@ -607,83 +621,90 @@ footer.site-footer a:hover{
 
 /* [MOBILE] 검색창 모바일 보정 */
 @media (max-width:760px){
-  .search-bar{ margin: 10px 12px 0; }
+  .search-bar{
+    margin: 10px 12px 0;
+  }
 }
 
 /* [MOBILE] 네비게이션/드롭다운 모바일 전용 */
 @media screen and (max-width: 1024px) {
 
-  /*네비게이션 바 위치 글자 */
-  nav {
-    flex-direction: row;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 1rem;
-    width: 100%;
-  }
+/*네비게이션 바 위치 글자 */
+	nav {
+        flex-direction: row;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 1rem;
+        width: 100%;
+		}
 
-  /*네비게이션 메뉴 가로로(HOME, 부스바..)*/
-  nav .nav-item {
-    flex: 0 0 auto; /* 한 줄 고정 */
-    font-size: 1rem;
-    margin: 0 0.3rem;
-    white-space: nowrap; /* 아이템 내부 줄바꿈 방지 */
-  }
+/*네비게이션 메뉴 가로로(HOME, 부스바..)*/
+    nav .nav-item { 
+					flex: 0 0 auto;  /* 한 줄 고정 */
+					font-size: 1rem; 
+					margin: 0 0.3rem; 
+					white-space: nowrap;    /* 아이템 내부 줄바꿈 방지 */
+		
+					}
 
-  /*네비게이션 메뉴 길면 가로 스크롤 생기게(현재 글자크기 맞춰놔서 필요없음)*/
-  .nav-menu {
-    display: flex;
-    flex-wrap: nowrap; /* 한 줄 고정 */
-    justify-content: center; /* 가운데 정렬 */
-    overflow-x: auto; /* 화면 좁으면 가로 스크롤 */
-  }
+/*네비게이션 메뉴 길면 가로 스크롤 생기게(현재 글자크기 맞춰놔서 필요없음)*/
+	.nav-menu {
+				display: flex;
+				flex-wrap: nowrap;       /* 한 줄 고정 */
+				justify-content: center; /* 가운데 정렬 */
+				overflow-x: auto;        /* 화면 좁으면 가로 스크롤 */
+				}			
 
-  /*네비게이션 회사명 CSS*/
-  .nav-logo {
-    position: relative;
-    font-size: 1rem; /* 로고 전체 크기 축소 */
-    left: 0;
-    top: 0;
-    margin-bottom: 0.5rem;
-  }
+/*네비게이션 회사명 CSS*/
+    .nav-logo {
+				position: relative;
+				font-size: 1rem; /* 로고 전체 크기 축소 */
+				left: 0;
+				top: 0;
+				margin-bottom: 0.5rem;
+				}
 
-  /*네비게이션 로고(E,P,M)글자 크기 */
-  .nav-logo span {
-    font-size: 1rem; /* E,P,M 개별 글자 크기 */
-  }
+/*네비게이션 로고(E,P,M)글자 크기 */
+    .nav-logo span {
+					font-size: 1rem; /* E,P,M 개별 글자 크기 */
+					}
 
-  /* ================= 모바일 드롭다운 정리 ================ */
 
-  /* 드롭다운 메뉴 영역 기본 숨김 (모바일 기준) */
-  .nav-item.has-sub {
-    position: relative; /* ✅ 기준점 추가 */
-  }
+/* ================= 모바일 드롭다운 정리 ================ */
 
-  .nav-item.has-sub .nav-sub {
-    display: none;
-    position: absolute; /* ✅ static → absolute */
-    top: 100%;
-    left: 0;
+/* 드롭다운 메뉴 영역 기본 숨김 (모바일 기준) */
+.nav-item.has-sub {
+  position: relative;           /* ✅ 기준점 추가 */
+}
 
-    min-width: 170px; /* PC 드롭다운과 통일 */
-    width: max-content;
+.nav-item.has-sub .nav-sub {
+  display: none;
+  position: absolute;           /* ✅ static → absolute */
+  top: 100%;
+  left: 0;
 
-    background: #1E293B;
-    padding: 0.4rem 0;
-    box-shadow: none;
-    border-radius: 0;
-    z-index: 20000; /* 겹침 방지 */
-  }
+  min-width: 170px;             /* PC 드롭다운과 통일 */
+  width: max-content;
 
-  /* ✅ 모바일에서 JS로 열렸을 때 실제로 보이게 (PC 글래스 기본값 무력화) */
-  .nav-item.has-sub.is-open .nav-sub{
-    display: block;
-    opacity: 1; /* PC 기본 opacity:0 무력화 */
-    transform: translateY(0); /* PC 기본 translateY(-6px) 무력화 */
-    pointer-events: auto; /* PC 기본 pointer-events:none 무력화 */
-  }
+  background: #1E293B;
+  padding: 0.4rem 0;
+  box-shadow: none;
+  border-radius: 0;
+  z-index: 20000;               /* 겹침 방지 */
+}
+
+/* ✅ 모바일에서 JS로 열렸을 때 실제로 보이게 (PC 글래스 기본값 무력화) */
+.nav-item.has-sub.is-open .nav-sub{
+  display: block !important;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  pointer-events: auto !important;
+}
+
+
+
 
   /* 모바일 드롭다운 메뉴 항목 스타일 */
   .nav-item.has-sub .nav-sub a {
@@ -699,23 +720,26 @@ footer.site-footer a:hover{
     transform: none !important;
   }
 
-  /*footer(모바일) 크기 */
-  footer p {
-    margin: 0.1rem 0; /* 문단 간격 줄이기 */
-    padding: 0; /* 불필요한 패딩 제거 */
-    font-size: 0.7rem; /* 글자 크기 축소 */
-    line-height: 1.1; /* 줄간격 줄이기 */
+
+/*footer(모바일) 크기 */    
+    footer p {
+				margin: 0.1rem 0;           /* 문단 간격 줄이기 */
+				padding: 0;                  /* 불필요한 패딩 제거 */
+				font-size: 0.7rem;          /* 글자 크기 축소 */
+				line-height: 1.1;            /* 줄간격 줄이기 */
+				}
+		
+
   }
-}
 
 /* [MOBILE] (원래 중첩돼 있던 @media들을 밖으로 빼서 정리) */
 /* =========================================================
-✅ [추가] 모바일 보완 CSS (기존 수정 X / 덮어쓰기 최소)
-- 네비게이션 겹침(로고/햄버거/메뉴) 방지
-- Drawer/Backdrop 터치 안전
-- 드롭다운 모바일에서 "호버"로 열리는 동작 무력화 (모바일 충돌 방지)
-- ToTop 버튼 모바일 사이즈/가림 최소화
-========================================================= */
+   ✅ [추가] 모바일 보완 CSS (기존 수정 X / 덮어쓰기 최소)
+   - 네비게이션 겹침(로고/햄버거/메뉴) 방지
+   - Drawer/Backdrop 터치 안전
+   - 드롭다운 모바일에서 "호버"로 열리는 동작 무력화 (모바일 충돌 방지)
+   - ToTop 버튼 모바일 사이즈/가림 최소화
+   ========================================================= */
 @media screen and (max-width: 1024px){
 
   /* #nav가 fixed라서 컨텐츠와 겹치기 쉬움 → nav 높이/정렬 안정 */
@@ -746,7 +770,7 @@ footer.site-footer a:hover{
   .nav-menu{
     padding-right: 52px; /* ✅ 햄버거 영역과 겹침 방지 */
     gap: 6px;
-	overflow: visible !important; /* ✅ 드롭다운 무조건 보이게 */
+    overflow: visible !important; /* ✅ 드롭다운 무조건 보이게 */
   }
 
   /* nav-item 클릭 영역 확대(손가락 UX) */
@@ -766,16 +790,17 @@ footer.site-footer a:hover{
   /* 2) 모바일에서 기존 hover 기반 드롭다운 열림 방지 (충돌 예방)
      - JS로 열어줄 거면 JS 토글 클래스 기반으로만 열리게 하는 게 안전
      - 지금은 "추가만"이라 hover만 무력화(모바일에서만) */
-  .nav-item.has-sub:hover .nav-sub{
-    display: none !important;
-    opacity: 0 !important;
-    transform: none !important;
-    pointer-events: none !important;
-  }
+.nav-item.has-sub:not(.is-open):hover .nav-sub{
+  display: none !important;
+  opacity: 0 !important;
+  transform: none !important;
+  pointer-events: none !important;
+}
+
 
   /* 3) 드롭다운이 열릴 때(네 JS에서 display:block 줄 경우) 자연스럽게 보이도록 */
   .nav-item.has-sub .nav-sub{
-    opacity: 1 !important; /* 모바일에선 fade 애니메이션보다 즉시가 안정적 */
+    opacity: 1 !important;          /* 모바일에선 fade 애니메이션보다 즉시가 안정적 */
     transform: none !important;
     pointer-events: auto !important;
   }
@@ -854,7 +879,7 @@ footer.site-footer a:hover{
 @media screen and (max-width: 768px){
 
   footer.site-footer{
-    padding: 28px 14px 14px; /* 전체 높이 축소 */
+    padding: 28px 14px 14px;     /* 전체 높이 축소 */
   }
 
   /* 상단 브랜드 영역 */
@@ -863,7 +888,7 @@ footer.site-footer a:hover{
   }
 
   .footer-brand{
-    font-size: 26px; /* 로고 크기 축소 */
+    font-size: 26px;             /* 로고 크기 축소 */
     margin-bottom: 6px;
   }
 
@@ -935,7 +960,7 @@ footer.site-footer a:hover{
     width: 100vw;
   }
   .nav-drawer-panel{
-    left: 0; /* ★ 핵심 */
+    left: 0;              /* ★ 핵심 */
     right: 0;
     width: 100vw;
     max-width: 100vw;
@@ -944,4 +969,8 @@ footer.site-footer a:hover{
   }
 }
 
+
 /* =========================================== 모바일 전용 CSS ==================================== */
+
+
+
