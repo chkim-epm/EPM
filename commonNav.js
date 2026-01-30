@@ -111,6 +111,7 @@
       // 닫혀있으면: 이동 막고 열기
       if (!isOpen){
         e.preventDefault();
+        e.stopPropagation(); // ← 이거 한 줄
 
         // 다른 메뉴 열려있으면 닫기(선택)
         document.querySelectorAll("nav .nav-item.has-sub .nav-sub").forEach((s)=>{
@@ -135,4 +136,5 @@
 
   
 })();
+
 
