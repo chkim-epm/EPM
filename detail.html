@@ -16,19 +16,19 @@
   <meta name="robots" content="index, follow">
 
   <!-- ✅ Open Graph (SNS 공유용 미리보기 메타) -->
-  <meta property="og:title" content="이스트파워메탈:부스바, 동버스바, 분전반, 배전반, 임가공, 김포, 화성">
+  <meta property="og:title" content="(주) 이스트파워메탈 : 부스바, 동버스바, 분전반, 배전반, 임가공, 김포, 화성">
   <meta property="og:image" content="https://chkim-epm.github.io/EPM/factory.png">
   <meta property="og:url" content="https://www.eastpowermetal.com/">
   <meta property="og:type" content="website">
 
   <!-- ✅ 트위터 카드: 트위터 공유 시 미리보기 확장 -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="이스트파워메탈:부스바, 동버스바, 분전반, 배전반, 임가공, 김포, 화성">
+  <meta name="twitter:title" content="(주) 이스트파워메탈 : 부스바, 동버스바, 분전반, 배전반, 임가공, 김포, 화성">
   <meta name="twitter:description" content="이스트파워메탈은 부스바, 버스바, 동버스바, 분전반, 수배전반, 임가공 김포, 화성 다양한 품종과 맞춤 절단 서비스를 제공합니다.">
   <meta name="twitter:image" content="https://chkim-epm.github.io/EPM/factory.png">
 
   <!-- ✅ 네이버/OG 재정의: 일부 크롤러 호환성 목적 -->
-  <meta property="og:title" content="이스트파워메탈:부스바, 동버스바, 분전반, 배전반, 임가공, 김포, 화성">
+  <meta property="og:title" content="(주) 이스트파워메탈 : 부스바, 동버스바, 분전반, 배전반, 임가공, 김포, 화성">
   <meta property="og:description" content="이스트파워메탈은 부스바, 버스바, 동버스바, 분전반, 수배전반, 임가공 김포, 화성 다양한 품종과 맞춤 절단 서비스를 제공합니다.">
   <meta property="og:image" content="https://www.eastpowermetal.com/logo.png">
   <meta property="og:url" content="https://www.eastpowermetal.com/">
@@ -93,10 +93,14 @@
 
     /* 버튼 영역 */
     .actions{margin-top:14px;display:flex;gap:10px}
-    .btn{padding:10px 14px;border:0;border-radius:10px;background:var(--accent);color:#fff;cursor:pointer}
+    .btn{padding:10px 14px;border:0;border-radius:10px;background:#0B4EA2;color:#fff;cursor:pointer}
     .ghost{background:#e9ecef;color:#111}
     .muted{color:var(--muted)}
-
+	    
+	/* 이전으로 버튼 밑줄 제거 밑줄a태그라 자동생성됨*/
+	.actions .btn{
+	  text-decoration: none;   /* ✅ 밑줄 제거 */
+	}
     /* 반응형: 900px 이하에서 1열 레이아웃 */
     @media (max-width:900px){.layout{grid-template-columns:1fr}}
   </style>
