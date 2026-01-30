@@ -969,8 +969,123 @@ footer.site-footer a:hover{
   }
 }
 
+/* =========================
+   ✅ [추가] 모바일 카드 UI 보정
+   - 그리드 1열/여백 최적화
+   - 이미지 비율/높이 조정
+   - 제목/설명/표/버튼 가독성 개선
+   ========================= */
+@media (max-width: 768px){
+
+  /* 그리드: 모바일은 1열 + 패딩 축소 */
+  .product-grid{
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    padding: 14px 12px !important;
+    max-width: 100% !important;
+  }
+
+  /* 카드: 둥글게/그림자 조금 정리 */
+  .product-card{
+    border-radius: 16px !important;
+    box-shadow: 0 8px 26px rgba(0,0,0,0.08) !important;
+  }
+
+  /* 이미지: 너무 길쭉하면 답답해서 높이 조절 + 살짝 여유 */
+  .product-card img{
+    height: 220px !important;
+    object-fit: cover !important;
+  }
+
+  /* 본문 영역: 패딩 조금 키워서 “고급스럽게” */
+  .product-info{
+    padding: 14px 14px 16px !important;
+    text-align: center;
+  }
+
+  /* 제목: 모바일에서 크기/줄바꿈 정리 */
+  .product-info h2{
+    font-size: 1.1rem !important;
+    line-height: 1.25 !important;
+    margin: 8px 0 10px !important;
+    font-weight: 800;
+  }
+
+  /* 설명: 길면 3줄까지만(너무 길면 카드가 지저분해짐) */
+  .product-info p{
+    font-size: 0.92rem !important;
+    line-height: 1.55 !important;
+    color: #475569 !important;
+    margin: 0 0 12px !important;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* 표: 모바일에서 글자/패딩 줄이고 정돈 */
+  .product-table{
+    margin-top: 10px !important;
+    text-align: left !important;
+  }
+
+  .product-table th,
+  .product-table td{
+    font-size: 0.9rem !important;
+    padding: 10px 10px !important;
+    border-bottom: 1px solid rgba(148,163,184,0.35) !important;
+    vertical-align: top;
+  }
+
+  .product-table th{
+    width: 72px;                 /* 모바일에서 th 폭 고정 */
+    background: #f8fafc !important;
+    color: #0f172a !important;
+    font-weight: 800 !important;
+  }
+
+  .product-table td{
+    color: #334155 !important;
+    word-break: break-word;
+  }
+
+  /* 버튼: 모바일에서 더 크게(터치 편하게) + 둥글게 */
+  .product-info a{
+    width: 100%;
+    max-width: 240px;
+    margin: 12px auto 0 !important;
+    padding: 12px 14px !important;
+    border-radius: 12px !important;
+    font-size: 0.95rem !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.2px;
+  }
+}
+
+/* 더 작은 폰(≤420px)에서 추가 최적화 */
+@media (max-width: 420px){
+  .product-card img{ height: 200px !important; }
+
+  .product-info{ padding: 12px 12px 14px !important; }
+
+  .product-info h2{ font-size: 1.05rem !important; }
+
+  .product-info p{
+    font-size: 0.9rem !important;
+    -webkit-line-clamp: 2; /* 초소형은 2줄 */
+  }
+
+  .product-table th,
+  .product-table td{
+    font-size: 0.88rem !important;
+    padding: 9px 9px !important;
+  }
+}
+
 
 /* =========================================== 모바일 전용 CSS ==================================== */
+
 
 
 
