@@ -675,15 +675,26 @@ footer.site-footer a:hover{
 /* ================= 모바일 드롭다운 정리 ================ */
 
   /* 드롭다운 메뉴 영역 기본 숨김 (모바일 기준) */
-  .nav-item.has-sub .nav-sub {
-    display: none;                  /* 기본 숨김 (JS가 block으로 변경) */
-    position: static;               /* 모바일에서는 일반 흐름으로 배치 */
-    background: #1E293B;            /* 네비게이션 바와 같은 색 */
-    padding: 0.3rem 0 0.3rem 1rem;  /* 살짝 들여쓰기 */
-    width: 100%;                    /* 메뉴 폭과 동일 */
-    box-shadow: none;               /* 그림자 제거 */
-    border-radius: 0;               /* 각진 모양 */
-  }
+.nav-item.has-sub {
+  position: relative;           /* ✅ 기준점 추가 */
+}
+
+.nav-item.has-sub .nav-sub {
+  display: none;
+  position: absolute;           /* ✅ static → absolute */
+  top: 100%;
+  left: 0;
+
+  min-width: 170px;             /* PC 드롭다운과 통일 */
+  width: max-content;
+
+  background: #1E293B;
+  padding: 0.4rem 0;
+  box-shadow: none;
+  border-radius: 0;
+  z-index: 20000;               /* 겹침 방지 */
+}
+
 
   /* 모바일 드롭다운 메뉴 항목 스타일 */
   .nav-item.has-sub .nav-sub a {
@@ -948,4 +959,5 @@ footer.site-footer a:hover{
 
 
 /* =========================================== 모바일 전용 CSS ==================================== */
+
 
