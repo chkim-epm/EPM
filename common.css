@@ -697,11 +697,12 @@ footer.site-footer a:hover{
 
 /* ✅ 모바일에서 JS로 열렸을 때 실제로 보이게 (PC 글래스 기본값 무력화) */
 .nav-item.has-sub.is-open .nav-sub{
-  display: block;
-  opacity: 1;                   /* PC 기본 opacity:0 무력화 */
-  transform: translateY(0);     /* PC 기본 translateY(-6px) 무력화 */
-  pointer-events: auto;         /* PC 기본 pointer-events:none 무력화 */
+  display: block !important;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  pointer-events: auto !important;
 }
+
 
 
 
@@ -788,12 +789,13 @@ footer.site-footer a:hover{
   /* 2) 모바일에서 기존 hover 기반 드롭다운 열림 방지 (충돌 예방)
      - JS로 열어줄 거면 JS 토글 클래스 기반으로만 열리게 하는 게 안전
      - 지금은 "추가만"이라 hover만 무력화(모바일에서만) */
-  .nav-item.has-sub:hover .nav-sub{
-    display: none !important;
-    opacity: 0 !important;
-    transform: none !important;
-    pointer-events: none !important;
-  }
+.nav-item.has-sub:not(.is-open):hover .nav-sub{
+  display: none !important;
+  opacity: 0 !important;
+  transform: none !important;
+  pointer-events: none !important;
+}
+
 
   /* 3) 드롭다운이 열릴 때(네 JS에서 display:block 줄 경우) 자연스럽게 보이도록 */
   .nav-item.has-sub .nav-sub{
@@ -968,6 +970,7 @@ footer.site-footer a:hover{
 
 
 /* =========================================== 모바일 전용 CSS ==================================== */
+
 
 
 
