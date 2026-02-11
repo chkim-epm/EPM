@@ -3,8 +3,9 @@ Allow: /
 
 Sitemap: https://www.eastpowermetal.com/sitemap.xml
 
-Daum-Search-Verification: 80e913d7f9a5587ccb6f8e736f8926350a0eda364a221eb96243c30bc3bc9048
 
 
+
+#DaumWebMasterTool:80e913d7f9a5587cc6bf8e736f8926350a0eda364a221eb96243c30bc3bc9048:yoPeIV5QL7Z1hL4c3KNBAg==
 
 
