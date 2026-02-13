@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko" class="protecting">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -12,6 +12,9 @@
      테이블, 버튼, 모달 UI 디자인
 ========================= -->
 <style>
+  /* 🔒 인증 통과 전 화면 보호 */
+  html.protecting body{ visibility:hidden; }
+
   :root { --bd:#e5e7eb; --txt:#111827; --mut:#6b7280; }
   body { font-family: Arial,"Malgun Gothic",sans-serif; margin:24px; color:var(--txt);}
   .wrap { max-width:1100px; margin:0 auto; }
@@ -36,6 +39,158 @@
   .modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
     background:#fff;border:1px solid var(--bd);border-radius:14px;padding:14px;display:none;width:min(720px,92vw);}
 </style>
+
+<!-- ✅ 관리자 가드용 Supabase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- =========================
+     관리자 접근 가드 (product 관리자 페이지와 동일)
+========================= -->
+<script>
+/* ===== 관리자 공통 가드 ===== */
+
+const ADMIN_EMAILS = ["chkim.epm@gmail.com"];
+const ADMIN_USERNAMES = ["chkim-epm"];
+
+const LOGIN_URL  = "/admin/index.html";
+const DENIED_URL = "/admin/denied.html";
+
+/* ⚠️ anon key 는 여기만 교체 */
+const GUARD_SUPABASE_URL = "https://cwwnarmrvpvjptytepdo.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3d25hcm1ydnB2anB0eXRlcGRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NzU4NTUsImV4cCI6MjA3NzQ1MTg1NX0.5mvgA_gKdlRaebVRSFIUJRKgp51zke_nffQ2jc8Ad1g";
+
+/* cookie storage (관리자 페이지와 동일) */
+const cookieStorage = (() => {
+  const CHUNK_SIZE = 3000;
+  const OPTS = "path=/; SameSite=Lax; Domain=.eastpowermetal.com";
+
+  const getCookie = (name) => {
+    const m = document.cookie.match(
+      new RegExp("(^| )" + name.replace(/[.*+?^${}()|[\]\\]/g,"\\$&") + "=([^;]+)")
+    );
+    return m ? decodeURIComponent(m[2]) : null;
+  };
+
+  const setCookie = (name, value) => {
+    document.cookie = `${name}=${encodeURIComponent(value)}; ${OPTS}`;
+  };
+
+  const delCookie = (name) => {
+    document.cookie = `${name}=; Max-Age=0; path=/; Domain=.eastpowermetal.com`;
+  };
+
+  return {
+    getItem: (key) => {
+      const meta = getCookie(`${key}.__chunks`);
+      if (!meta) return getCookie(key);
+      const n = Number(meta);
+      if (!Number.isFinite(n) || n <= 0) return null;
+      let out = "";
+      for (let i = 0; i < n; i++) {
+        const part = getCookie(`${key}.${i}`);
+        if (part == null) return null;
+        out += part;
+      }
+      return out;
+    },
+    setItem: (key, value) => {
+      const old = getCookie(`${key}.__chunks`);
+      if (old) {
+        const nOld = Number(old);
+        if (Number.isFinite(nOld)) {
+          for (let i=0;i<nOld;i++) delCookie(`${key}.${i}`);
+        }
+        delCookie(`${key}.__chunks`);
+      }
+      delCookie(key);
+
+      const str = String(value ?? "");
+      const chunks = [];
+      for (let i=0;i<str.length;i+=CHUNK_SIZE){
+        chunks.push(str.slice(i,i+CHUNK_SIZE));
+      }
+      setCookie(`${key}.__chunks`, String(chunks.length));
+      chunks.forEach((c,i)=>setCookie(`${key}.${i}`,c));
+    },
+    removeItem: (key) => {
+      const meta = getCookie(`${key}.__chunks`);
+      if (meta) {
+        const n = Number(meta);
+        if (Number.isFinite(n)) {
+          for (let i=0;i<n;i++) delCookie(`${key}.${i}`);
+        }
+        delCookie(`${key}.__chunks`);
+      }
+      delCookie(key);
+    }
+  };
+})();
+
+const guardSb = supabase.createClient(
+  GUARD_SUPABASE_URL,
+  GUARD_SUPABASE_ANON_KEY,
+  {
+    auth:{
+      flowType:"pkce",
+      persistSession:true,
+      autoRefreshToken:true,
+      detectSessionInUrl:true,
+      storage:cookieStorage,
+      storageKey:"epm-admin-auth"
+    }
+  }
+);
+
+async function ensureSessionFromURL(){
+  if(location.search.includes("code=") || location.hash.includes("access_token")){
+    history.replaceState({},document.title,location.pathname);
+  }
+}
+
+function kickLogin(){
+  const next = encodeURIComponent(location.pathname + location.search + location.hash);
+  location.replace(`${LOGIN_URL}?next=${next}`);
+}
+
+function kickDenied(){
+  location.replace(DENIED_URL);
+}
+
+async function guardAdmin(){
+  let session;
+
+  try{
+    const { data, error } = await guardSb.auth.getSession();
+    if(error) throw error;
+    session = data?.session;
+  }catch(e){
+    console.error("[guard]", e);
+    document.documentElement.classList.remove("protecting");
+    return;
+  }
+
+  const user = session?.user;
+
+  if(!user){
+    return kickLogin();
+  }
+
+  const email  = user.email;
+  const ghUser = user.user_metadata?.user_name;
+
+  const ok =
+    (email  && ADMIN_EMAILS.includes(email)) ||
+    (ghUser && ADMIN_USERNAMES.includes(ghUser));
+
+  if(!ok){
+    return kickDenied();
+  }
+
+  document.documentElement.classList.remove("protecting");
+}
+
+guardSb.auth.onAuthStateChange(()=>guardAdmin());
+</script>
 </head>
 
 <body>
@@ -117,7 +272,7 @@
 </div>
 
 <!-- =========================
-     JavaScript 로직
+     JavaScript 로직 (기존 코드 그대로)
 ========================= -->
 <script>
 
@@ -172,27 +327,17 @@ function render(){
   const tbody = $("tbody");
   tbody.innerHTML = "";
 
-  // 🔹 검색어 소문자 변환
   const q = $("q").value.trim().toLowerCase();
-
-  // 🔹 사용여부 필터 값
   const useFilter = $("useFilter").value;
 
-  // 🔹 rows → 필터링된 목록 생성
   const filtered = rows.filter(r => {
     const key = (r.categoryKey || "").toLowerCase();
     const name = (r.categoryName || "").toLowerCase();
-
-    // 검색어 조건
     const matchQ = !q || key.includes(q) || name.includes(q);
-
-    // 사용여부 조건
     const matchUse = !useFilter || r.useYn === useFilter;
-
     return matchQ && matchUse;
   });
 
-  // 🔹 필터링된 결과를 테이블에 출력
   filtered.forEach(r=>{
     const tr = document.createElement("tr");
     tr.innerHTML = `
@@ -207,19 +352,12 @@ function render(){
     tbody.appendChild(tr);
   });
 
-  // 🔹 건수 표시 (필터된 건 / 전체 건)
   $("countTxt").textContent = `${filtered.length}건 / 전체 ${rows.length}건`;
 }
-     
-// 🔹 검색어 입력 시 즉시 테이블 다시 렌더링
+
 $("q").addEventListener("input", render);
-// 🔹 사용여부 선택 변경 시 즉시 테이블 다시 렌더링
 $("useFilter").addEventListener("change", render);
 
-
-/* =========================
-   모달 열기 / 닫기
-========================= */
 function openModal(){
   $("modalTitle").innerText = editingId ? "카테고리 수정" : "카테고리 추가";
   $("backdrop").style.display="block";
@@ -233,10 +371,8 @@ function closeModal(){
   $("form").reset();
 }
 
-/* 신규 추가 버튼 */
 $("addBtn").onclick = ()=>{ editingId=null; openModal(); };
 
-/* 수정 버튼 클릭 */
 window.editRow = (id)=>{
   const r = rows.find(x=>x.id==id);
   editingId = id;
@@ -249,18 +385,12 @@ window.editRow = (id)=>{
   openModal();
 };
 
-/* 삭제 처리 (DELETE) */
 window.deleteRow = async(id)=>{
   if(!confirm("삭제할까요?")) return;
   await fetch(`${API_BASE}?id=eq.${id}`, { method:"DELETE", headers });
   load();
 };
 
-/* =========================
-   저장 처리
-   - editingId 존재 → 수정(PATCH)
-   - editingId 없음 → 신규추가(POST)
-========================= */
 $("form").onsubmit = async(e)=>{
   e.preventDefault();
 
@@ -286,14 +416,20 @@ $("form").onsubmit = async(e)=>{
   load();
 };
 
-/* 취소 버튼 */
 $("cancelBtn").onclick = closeModal;
 
 /* 최초 페이지 진입 시 데이터 로드 */
 load();
 
 </script>
+
+<!-- ✅ 관리자 가드 실행 -->
+<script>
+(async ()=>{
+  await ensureSessionFromURL();
+  await guardAdmin();
+})();
+</script>
+
 </body>
 </html>
-
-
