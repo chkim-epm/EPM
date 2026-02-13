@@ -90,6 +90,9 @@
     <h1>관리자 · 제품 목록</h1>
     <span class="who" id="who">검증 중…</span>
     <span style="flex:1"></span>
+    <!-- (카테고리 등록) -->
+  <button class="btn" id="addBtn" onclick="location.href='/admin/productCategory.html'">카테고리 등록</button>
+  </div>
     <!-- 신규 등록: 관리자 상품 작성 페이지로 이동 -->
     <button class="btn" id="addBtn" onclick="location.href='/admin/addProduct.html'">신규 등록</button>
     <!-- 로그아웃 버튼 -->
@@ -550,6 +553,7 @@ $("logoutBtn").addEventListener("click", async ()=>{ await sb.auth.signOut(); lo
 </script>
 </body>
 </html>
+
 
 
 
