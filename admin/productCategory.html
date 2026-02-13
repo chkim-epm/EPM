@@ -78,6 +78,8 @@ html.protecting body { visibility: hidden; }
 <h1>상품 카테고리 관리</h1>
 <div class="muted">Supabase 연결 버전</div>
 </div>
+  <!-- 상품페이지로 이동-->
+  <button class="ghost" id="toListBtn" type="button" onclick="location.href='/admin/product.html'">상품 목록</button>
     <!-- 신규 등록: 관리자 상품 작성 페이지로 이동 -->
     <button class="btn" id="goAddProductBtn" onclick="location.href='/admin/addProduct.html'">신규 등록</button>
     <!-- 로그아웃 버튼 -->
@@ -535,6 +537,7 @@ $("logoutBtn").addEventListener("click", async ()=>{ await sb.auth.signOut(); lo
 </script>
 </body>
 </html>
+
 
 
 
