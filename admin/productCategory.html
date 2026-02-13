@@ -1,53 +1,213 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko" class="protecting">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex,nofollow" />
 
-<!-- 페이지 제목 -->
 <title>상품 카테고리 관리</title>
 
-<!-- =========================
-     전체 화면 스타일 정의
-     테이블, 버튼, 모달 UI 디자인
-========================= -->
+<script>
+/* =========================================================================
+   www 정규화 (admin/product 와 동일)
+   ========================================================================= */
+(function enforceWWW() {
+  const CANON = "www.eastpowermetal.com";
+  const allowed = [CANON, "eastpowermetal.com"];
+  if (allowed.includes(location.hostname) && location.hostname !== CANON) {
+    location.replace(`https://${CANON}${location.pathname}${location.search}${location.hash}`);
+  }
+})();
+</script>
+
 <style>
-  :root { --bd:#e5e7eb; --txt:#111827; --mut:#6b7280; }
-  body { font-family: Arial,"Malgun Gothic",sans-serif; margin:24px; color:var(--txt);}
-  .wrap { max-width:1100px; margin:0 auto; }
-  h1 { margin:0 0 10px; }
-  .muted { color:var(--mut); font-size:12px; }
-  .row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
-  .box { border:1px solid var(--bd); border-radius:12px; padding:14px; margin-top:12px; }
-  label{ display:block; font-size:13px; margin:10px 0 6px;}
-  input,select,textarea{ width:100%; padding:10px; border:1px solid #d1d5db; border-radius:10px;}
-  textarea{min-height:90px;}
-  .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
-  @media(max-width:900px){.grid{grid-template-columns:1fr;}}
-  .btn{padding:10px 14px;border-radius:10px;border:1px solid #111;background:#111;color:#fff;cursor:pointer;}
-  .btn.secondary{background:#fff;color:#111;}
-  .btn.danger{background:#b91c1c;border-color:#b91c1c;}
-  table{width:100%;border-collapse:collapse;margin-top:10px;}
-  th,td{border-bottom:1px solid var(--bd);padding:10px;font-size:13px;}
-  th{background:#fafafa;}
-  .pill{padding:2px 10px;border-radius:999px;background:#f3f4f6;font-size:12px;}
-  .mono{font-family:monospace;}
-  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;}
-  .modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
-    background:#fff;border:1px solid var(--bd);border-radius:14px;padding:14px;display:none;width:min(720px,92vw);}
+/* ✅ 인증 전 화면 숨김 */
+html.protecting body { visibility:hidden; }
+
+:root { --bd:#e5e7eb; --txt:#111827; --mut:#6b7280; }
+body { font-family: Arial,"Malgun Gothic",sans-serif; margin:24px; color:var(--txt);}
+.wrap { max-width:1100px; margin:0 auto; }
+h1 { margin:0 0 10px; }
+.muted { color:var(--mut); font-size:12px; }
+.row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+.box { border:1px solid var(--bd); border-radius:12px; padding:14px; margin-top:12px; }
+label{ display:block; font-size:13px; margin:10px 0 6px;}
+input,select,textarea{ width:100%; padding:10px; border:1px solid #d1d5db; border-radius:10px;}
+textarea{min-height:90px;}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+@media(max-width:900px){.grid{grid-template-columns:1fr;}}
+.btn{padding:10px 14px;border-radius:10px;border:1px solid #111;background:#111;color:#fff;cursor:pointer;}
+.btn.secondary{background:#fff;color:#111;}
+.btn.danger{background:#b91c1c;border-color:#b91c1c;}
+table{width:100%;border-collapse:collapse;margin-top:10px;}
+th,td{border-bottom:1px solid var(--bd);padding:10px;font-size:13px;}
+th{background:#fafafa;}
+.pill{padding:2px 10px;border-radius:999px;background:#f3f4f6;font-size:12px;}
+.mono{font-family:monospace;}
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.35);display:none;}
+.modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+background:#fff;border:1px solid var(--bd);border-radius:14px;padding:14px;display:none;width:min(720px,92vw);}
 </style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+/* ===================== 관리자 접근 가드 (product 페이지와 동일 구조) ===================== */
+
+const ADMIN_EMAILS = ["chkim.epm@gmail.com"];
+const ADMIN_USERNAMES = ["chkim-epm"];
+
+const LOGIN_URL  = "/admin/index.html";
+const DENIED_URL = "/admin/denied.html";
+
+const GUARD_SUPABASE_URL = "https://cwwnarmrvpvjptytepdo.supabase.co";
+
+/* ⚠️ product 관리자 페이지와 같은 anon key */
+const GUARD_SUPABASE_ANON_KEY ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3d25hcm1ydnB2anB0eXRlcGRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NzU4NTUsImV4cCI6MjA3NzQ1MTg1NX0.5mvgA_gKdlRaebVRSFIUJRKgp51zke_nffQ2jc8Ad1g";
+
+/* cookie storage (product 관리자와 동일) */
+const cookieStorage = (() => {
+  const CHUNK_SIZE = 3000;
+  const OPTS = "path=/; SameSite=Lax; Domain=.eastpowermetal.com";
+
+  const getCookie = (name) => {
+    const m = document.cookie.match(
+      new RegExp("(^| )" + name.replace(/[.*+?^${}()|[\]\\]/g,"\\$&") + "=([^;]+)")
+    );
+    return m ? decodeURIComponent(m[2]) : null;
+  };
+
+  const setCookie = (name, value) => {
+    document.cookie = `${name}=${encodeURIComponent(value)}; ${OPTS}`;
+  };
+
+  const delCookie = (name) => {
+    document.cookie = `${name}=; Max-Age=0; path=/; Domain=.eastpowermetal.com`;
+  };
+
+  return {
+    getItem: (key) => {
+      const meta = getCookie(`${key}.__chunks`);
+      if (!meta) return getCookie(key);
+      const n = Number(meta);
+      if (!Number.isFinite(n) || n <= 0) return null;
+      let out = "";
+      for (let i = 0; i < n; i++) {
+        const part = getCookie(`${key}.${i}`);
+        if (part == null) return null;
+        out += part;
+      }
+      return out;
+    },
+
+    setItem: (key, value) => {
+      const old = getCookie(`${key}.__chunks`);
+      if (old) {
+        const nOld = Number(old);
+        if (Number.isFinite(nOld)) {
+          for (let i=0;i<nOld;i++) delCookie(`${key}.${i}`);
+        }
+        delCookie(`${key}.__chunks`);
+      }
+      delCookie(key);
+
+      const str = String(value ?? "");
+      const chunks = [];
+      for (let i=0;i<str.length;i+=CHUNK_SIZE){
+        chunks.push(str.slice(i,i+CHUNK_SIZE));
+      }
+
+      setCookie(`${key}.__chunks`, String(chunks.length));
+      chunks.forEach((c,i)=>setCookie(`${key}.${i}`,c));
+    },
+
+    removeItem: (key) => {
+      const meta = getCookie(`${key}.__chunks`);
+      if (meta) {
+        const n = Number(meta);
+        if (Number.isFinite(n)) {
+          for (let i=0;i<n;i++) delCookie(`${key}.${i}`);
+        }
+        delCookie(`${key}.__chunks`);
+      }
+      delCookie(key);
+    }
+  };
+})();
+
+const guardSb = supabase.createClient(
+  GUARD_SUPABASE_URL,
+  GUARD_SUPABASE_ANON_KEY,
+  {
+    auth:{
+      flowType:"pkce",
+      persistSession:true,
+      autoRefreshToken:true,
+      detectSessionInUrl:true,
+      storage:cookieStorage,
+      storageKey:"epm-admin-auth"
+    }
+  }
+);
+
+async function ensureSessionFromURL(){
+  if(location.search.includes("code=") || location.hash.includes("access_token")){
+    history.replaceState({}, document.title, location.pathname);
+  }
+}
+
+function kickLogin(){
+  const next = encodeURIComponent(location.pathname + location.search + location.hash);
+  location.replace(`${LOGIN_URL}?next=${next}`);
+}
+
+function kickDenied(){
+  location.replace(DENIED_URL);
+}
+
+async function guardAdmin(){
+
+  let session;
+
+  try{
+    const { data, error } = await guardSb.auth.getSession();
+    if(error) throw error;
+    session = data?.session;
+  }catch(e){
+    console.error("[guard]", e);
+    return kickLogin();
+  }
+
+  const user = session?.user;
+
+  if(!user){
+    return kickLogin();
+  }
+
+  const email  = user.email;
+  const ghUser = user.user_metadata?.user_name;
+
+  const ok =
+    (email  && ADMIN_EMAILS.includes(email)) ||
+    (ghUser && ADMIN_USERNAMES.includes(ghUser));
+
+  if(!ok){
+    return kickDenied();
+  }
+
+  document.documentElement.classList.remove("protecting");
+}
+
+guardSb.auth.onAuthStateChange(() => guardAdmin());
+</script>
 </head>
 
 <body>
 
-<!-- =========================
-     메인 화면 레이아웃
-========================= -->
 <div class="wrap">
 <h1>상품 카테고리 관리</h1>
 <div class="muted">Supabase 연결 버전</div>
 
-<!-- 검색 / 필터 / 버튼 영역 -->
 <div class="box">
   <div class="row">
     <input id="q" placeholder="검색">
@@ -61,7 +221,6 @@
     <span id="countTxt" class="muted"></span>
   </div>
 
-  <!-- 카테고리 목록 테이블 -->
   <table>
     <thead>
       <tr>
@@ -77,9 +236,6 @@
 </div>
 </div>
 
-<!-- =========================
-     카테고리 추가/수정 모달창
-========================= -->
 <div class="modal-backdrop" id="backdrop"></div>
 <div class="modal" id="modal">
 <h3 id="modalTitle"></h3>
@@ -116,22 +272,14 @@
 </form>
 </div>
 
-<!-- =========================
-     JavaScript 로직
-========================= -->
 <script>
+/* ===== 기존 카테고리 관리 로직 (그대로) ===== */
 
-/* =========================
-   Supabase 프로젝트 접속 정보
-========================= */
 const SUPABASE_URL = "https://cwwnarmrvpvjptytepdo.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3d25hcm1ydnB2anB0eXRlcGRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NzU4NTUsImV4cCI6MjA3NzQ1MTg1NX0.5mvgA_gKdlRaebVRSFIUJRKgp51zke_nffQ2jc8Ad1g";
+const SUPABASE_ANON_KEY ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3d25hcm1ydnB2anB0eXRlcGRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NzU4NTUsImV4cCI6MjA3NzQ1MTg1NX0.5mvgA_gKdlRaebVRSFIUJRKgp51zke_nffQ2jc8Ad1g";
 
-/* Supabase REST API 엔드포인트
-   - 연결 테이블명 : productCategory */
 const API_BASE = `${SUPABASE_URL}/rest/v1/productCategory`;
 
-/* Supabase 인증 헤더 */
 const headers = {
   "apikey": SUPABASE_ANON_KEY,
   "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
@@ -139,14 +287,10 @@ const headers = {
   "Accept": "application/json"
 };
 
-/* 전역 상태값 */
 let rows = [];
 let editingId = null;
 const $ = id => document.getElementById(id);
 
-/* =========================
-   카테고리 목록 불러오기 (SELECT)
-========================= */
 async function load(){
   $("reloadBtn").disabled = true;
   const res = await fetch(`${API_BASE}?select=*&order=sort_order.asc`, { headers });
@@ -165,34 +309,21 @@ async function load(){
   $("reloadBtn").disabled = false;
 }
 
-/* =========================
-   테이블 화면 출력
-========================= */
 function render(){
   const tbody = $("tbody");
   tbody.innerHTML = "";
 
-  // 🔹 검색어 소문자 변환
   const q = $("q").value.trim().toLowerCase();
-
-  // 🔹 사용여부 필터 값
   const useFilter = $("useFilter").value;
 
-  // 🔹 rows → 필터링된 목록 생성
   const filtered = rows.filter(r => {
     const key = (r.categoryKey || "").toLowerCase();
     const name = (r.categoryName || "").toLowerCase();
-
-    // 검색어 조건
     const matchQ = !q || key.includes(q) || name.includes(q);
-
-    // 사용여부 조건
     const matchUse = !useFilter || r.useYn === useFilter;
-
     return matchQ && matchUse;
   });
 
-  // 🔹 필터링된 결과를 테이블에 출력
   filtered.forEach(r=>{
     const tr = document.createElement("tr");
     tr.innerHTML = `
@@ -207,19 +338,12 @@ function render(){
     tbody.appendChild(tr);
   });
 
-  // 🔹 건수 표시 (필터된 건 / 전체 건)
   $("countTxt").textContent = `${filtered.length}건 / 전체 ${rows.length}건`;
 }
-     
-// 🔹 검색어 입력 시 즉시 테이블 다시 렌더링
+
 $("q").addEventListener("input", render);
-// 🔹 사용여부 선택 변경 시 즉시 테이블 다시 렌더링
 $("useFilter").addEventListener("change", render);
 
-
-/* =========================
-   모달 열기 / 닫기
-========================= */
 function openModal(){
   $("modalTitle").innerText = editingId ? "카테고리 수정" : "카테고리 추가";
   $("backdrop").style.display="block";
@@ -233,10 +357,8 @@ function closeModal(){
   $("form").reset();
 }
 
-/* 신규 추가 버튼 */
 $("addBtn").onclick = ()=>{ editingId=null; openModal(); };
 
-/* 수정 버튼 클릭 */
 window.editRow = (id)=>{
   const r = rows.find(x=>x.id==id);
   editingId = id;
@@ -249,18 +371,12 @@ window.editRow = (id)=>{
   openModal();
 };
 
-/* 삭제 처리 (DELETE) */
 window.deleteRow = async(id)=>{
   if(!confirm("삭제할까요?")) return;
   await fetch(`${API_BASE}?id=eq.${id}`, { method:"DELETE", headers });
   load();
 };
 
-/* =========================
-   저장 처리
-   - editingId 존재 → 수정(PATCH)
-   - editingId 없음 → 신규추가(POST)
-========================= */
 $("form").onsubmit = async(e)=>{
   e.preventDefault();
 
@@ -286,13 +402,18 @@ $("form").onsubmit = async(e)=>{
   load();
 };
 
-/* 취소 버튼 */
 $("cancelBtn").onclick = closeModal;
 
-/* 최초 페이지 진입 시 데이터 로드 */
+/* 초기 로드 */
 load();
-
 </script>
+
+<script>
+(async ()=>{
+  await ensureSessionFromURL();
+  await guardAdmin();
+})();
+</script>
+
 </body>
 </html>
-
