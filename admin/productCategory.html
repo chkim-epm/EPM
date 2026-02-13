@@ -21,7 +21,7 @@
 </script>
 
 <style>
-/* ✅ 인증 전 화면 숨김 */
+/* ✅ 인증 전 화면 숨김 (admin/product 와 동일) */
 html.protecting body { visibility:hidden; }
 
 :root { --bd:#e5e7eb; --txt:#111827; --mut:#6b7280; }
@@ -52,20 +52,23 @@ background:#fff;border:1px solid var(--bd);border-radius:14px;padding:14px;displ
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-/* ===================== 관리자 접근 가드 (product 페이지와 동일 구조) ===================== */
+/* =========================================================================
+   관리자 접근 가드 (admin/product 와 100% 동일 패턴)
+   ========================================================================= */
 
-const ADMIN_EMAILS = ["chkim.epm@gmail.com"];
+const ADMIN_EMAILS   = ["chkim.epm@gmail.com"];
 const ADMIN_USERNAMES = ["chkim-epm"];
 
 const LOGIN_URL  = "/admin/index.html";
 const DENIED_URL = "/admin/denied.html";
 
-const GUARD_SUPABASE_URL = "https://cwwnarmrvpvjptytepdo.supabase.co";
+const SUPABASE_URL = "https://cwwnarmrvpvjptytepdo.supabase.co";
 
-/* ⚠️ product 관리자 페이지와 같은 anon key */
-const GUARD_SUPABASE_ANON_KEY ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3d25hcm1ydnB2anB0eXRlcGRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NzU4NTUsImV4cCI6MjA3NzQ1MTg1NX0.5mvgA_gKdlRaebVRSFIUJRKgp51zke_nffQ2jc8Ad1g";
+/* ⚠️ admin/product 와 같은 anon key */
+const SUPABASE_ANON_KEY =
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3d25hcm1ydnB2anB0eXRlcGRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NzU4NTUsImV4cCI6MjA3NzQ1MTg1NX0.5mvgA_gKdlRaebVRSFIUJRKgp51zke_nffQ2jc8Ad1g";
 
-/* cookie storage (product 관리자와 동일) */
+/* cookie storage (admin/product 그대로) */
 const cookieStorage = (() => {
   const CHUNK_SIZE = 3000;
   const OPTS = "path=/; SameSite=Lax; Domain=.eastpowermetal.com";
@@ -104,7 +107,7 @@ const cookieStorage = (() => {
       const old = getCookie(`${key}.__chunks`);
       if (old) {
         const nOld = Number(old);
-        if (Number.isFinite(nOld)) {
+        if (Number.isFinite(nOld) && nOld > 0) {
           for (let i=0;i<nOld;i++) delCookie(`${key}.${i}`);
         }
         delCookie(`${key}.__chunks`);
@@ -125,7 +128,7 @@ const cookieStorage = (() => {
       const meta = getCookie(`${key}.__chunks`);
       if (meta) {
         const n = Number(meta);
-        if (Number.isFinite(n)) {
+        if (Number.isFinite(n) && n > 0) {
           for (let i=0;i<n;i++) delCookie(`${key}.${i}`);
         }
         delCookie(`${key}.__chunks`);
@@ -135,20 +138,17 @@ const cookieStorage = (() => {
   };
 })();
 
-const guardSb = supabase.createClient(
-  GUARD_SUPABASE_URL,
-  GUARD_SUPABASE_ANON_KEY,
-  {
-    auth:{
-      flowType:"pkce",
-      persistSession:true,
-      autoRefreshToken:true,
-      detectSessionInUrl:true,
-      storage:cookieStorage,
-      storageKey:"epm-admin-auth"
-    }
+/* supabase client */
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  auth:{
+    flowType:"pkce",
+    persistSession:true,
+    autoRefreshToken:true,
+    detectSessionInUrl:true,
+    storage:cookieStorage,
+    storageKey:"epm-admin-auth"
   }
-);
+});
 
 async function ensureSessionFromURL(){
   if(location.search.includes("code=") || location.hash.includes("access_token")){
@@ -165,33 +165,32 @@ function kickDenied(){
   location.replace(DENIED_URL);
 }
 
+/* ⭐ 핵심 가드 (timeout 포함, admin/product와 동일 구조) */
 async function guardAdmin(){
 
   let session;
 
-try{
+  try{
 
-  const timeout = (ms) =>
-    new Promise((_, reject) =>
-      setTimeout(() => reject(new Error("getSession timeout")), ms)
-    );
+    const timeout = (ms) =>
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("getSession timeout")), ms)
+      );
 
-  const { data, error } = await Promise.race([
-    guardSb.auth.getSession(),
-    timeout(2000)
-  ]);
+    const { data, error } = await Promise.race([
+      sb.auth.getSession(),
+      timeout(2000)
+    ]);
 
-  if(error) throw error;
-  session = data?.session;
+    if(error) throw error;
+    session = data?.session;
 
-}catch(e){
-  console.error("[guard] getSession error:", e);
-  return kickLogin();
-}
-
+  }catch(e){
+    console.error("[guard] getSession error:", e);
+    return kickLogin();
+  }
 
   const user = session?.user;
-
   if(!user){
     return kickLogin();
   }
@@ -210,7 +209,8 @@ try{
   document.documentElement.classList.remove("protecting");
 }
 
-guardSb.auth.onAuthStateChange(() => guardAdmin());
+/* 다른 탭 로그인/로그아웃 대응 */
+sb.auth.onAuthStateChange(() => guardAdmin());
 </script>
 </head>
 
@@ -286,9 +286,6 @@ guardSb.auth.onAuthStateChange(() => guardAdmin());
 
 <script>
 /* ===== 기존 카테고리 관리 로직 (그대로) ===== */
-
-const SUPABASE_URL = "https://cwwnarmrvpvjptytepdo.supabase.co";
-const SUPABASE_ANON_KEY ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3d25hcm1ydnB2anB0eXRlcGRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NzU4NTUsImV4cCI6MjA3NzQ1MTg1NX0.5mvgA_gKdlRaebVRSFIUJRKgp51zke_nffQ2jc8Ad1g";
 
 const API_BASE = `${SUPABASE_URL}/rest/v1/productCategory`;
 
@@ -417,16 +414,15 @@ $("form").onsubmit = async(e)=>{
 $("cancelBtn").onclick = closeModal;
 
 /* 초기 로드 */
-load();
-</script>
-
-<script>
-(async ()=>{
+async function initPage(){
   await ensureSessionFromURL();
   await guardAdmin();
-})();
+  await load();
+}
+
+initPage();
+
 </script>
 
 </body>
 </html>
-
