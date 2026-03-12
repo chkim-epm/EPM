@@ -147,11 +147,13 @@ sb.auth.onAuthStateChange((event, session) => {
     // 4) 로그아웃
     // - 현재 탭의 세션을 해제하고 화면의 세션 표시를 갱신
     // ───────────────────────────────────────────────────────────────────────────
-    document.getElementById('logout').onclick = async () => {
-      await sb.auth.signOut();
-      await renderSession();
-      alert('로그아웃 완료');
-    };
+      document.getElementById('logout').onclick = async () => {
+        await sb.auth.signOut();
+        sessionStorage.removeItem('epm-admin-auth');
+        await renderSession();
+        alert('로그아웃 완료');
+        location.replace('/admin/index.html');
+      };
 
     // ───────────────────────────────────────────────────────────────────────────
     // 초기 진입 시 세션 표시
