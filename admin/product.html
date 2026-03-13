@@ -223,6 +223,20 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
     storageKey: 'epm-admin-auth'
   }
 });
+
+  async function logoutAll() {
+  try {
+    await sb.auth.signOut({ scope: 'local' });
+  } catch(e){
+    console.error(e);
+  }
+  try {
+    cookieStorage.removeItem('epm-admin-auth');
+  } catch(e){}
+  clearLegacyAuthCookies();
+  // GitHub 로그아웃
+  location.href = "https://github.com/logout?return_to=https://www.eastpowermetal.com/admin/index.html";
+}
                                                                     
 
 /* ============================================================================
@@ -523,7 +537,7 @@ if (clearBtn) clearBtn.addEventListener("click", ()=>{ if(!qInput) return; qInpu
    로그아웃
    - Supabase 세션 해제 후 로그인 페이지로 이동(복귀 경로는 index에서 처리)
    ============================================================================ */
-$("logoutBtn").addEventListener("click", async ()=>{ await sb.auth.signOut(); location.replace(LOGIN_URL); });
+$("logoutBtn").addEventListener("click", logoutAll);
 
 /* ============================================================================
    초기 구동 시퀀스
@@ -554,3 +568,4 @@ $("logoutBtn").addEventListener("click", async ()=>{ await sb.auth.signOut(); lo
 </script>
 </body>
 </html>
+
