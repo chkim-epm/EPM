@@ -147,39 +147,6 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
   }
 });
 
-    // ================= 로그아웃 세션 정리 함수 =================
-
-function clearLegacyAuthCookies() {
-  const names = ['epm-admin-auth', 'epm-admin-auth.__chunks'];
-
-  for (let i = 0; i < 20; i++) {
-    names.push(`epm-admin-auth.${i}`);
-  }
-
-  for (const name of names) {
-    document.cookie = `${name}=; Max-Age=0; path=/`;
-    document.cookie = `${name}=; Max-Age=0; path=/; Domain=.eastpowermetal.com`;
-    document.cookie = `${name}=; Max-Age=0; path=/; Domain=www.eastpowermetal.com`;
-    document.cookie = `${name}=; Max-Age=0; path=/; Domain=eastpowermetal.com`;
-  }
-}
-
-async function doLogout(redirectUrl = '/admin/index.html') {
-  try {
-    await sb.auth.signOut({ scope: 'local' });
-  } catch (e) {
-    console.error('signOut error:', e);
-  }
-
-  try {
-    cookieStorage.removeItem('epm-admin-auth');
-  } catch (e) {
-    console.error('cookieStorage remove error:', e);
-  }
-
-  clearLegacyAuthCookies();
-  location.replace(redirectUrl);
-}
 
 
     // ───────────────────────────────────────────────────────────────────────────
@@ -220,17 +187,11 @@ async function doLogout(redirectUrl = '/admin/index.html') {
     // ───────────────────────────────────────────────────────────────────────────
     // 이미 로그인 상태면 nextPath로 자동 이동
     // ───────────────────────────────────────────────────────────────────────────
-    sb.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_OUT' || !session) {
-        try { cookieStorage.removeItem('epm-admin-auth'); } catch {}
-        clearLegacyAuthCookies();
-        return;
-      }
-    
-      if (event === 'SIGNED_IN' && session) {
-        location.replace(nextPath);
-      }
-    });
+sb.auth.onAuthStateChange((event, session) => {
+  if (event === 'SIGNED_IN' && session) {
+    location.replace(nextPath);
+  }
+});
 
 
     // ───────────────────────────────────────────────────────────────────────────
@@ -253,9 +214,11 @@ async function doLogout(redirectUrl = '/admin/index.html') {
     // 4) 로그아웃
     // - 현재 탭의 세션을 해제하고 화면의 세션 표시를 갱신
     // ───────────────────────────────────────────────────────────────────────────
-      document.getElementById('logout').onclick = async () => {
-        await doLogout('/admin/index.html');
-      };
+    document.getElementById('logout').onclick = async () => {
+      await sb.auth.signOut();
+      await renderSession();
+      alert('로그아웃 완료');
+    };
 
     // ───────────────────────────────────────────────────────────────────────────
     // 초기 진입 시 세션 표시
