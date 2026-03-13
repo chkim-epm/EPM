@@ -109,7 +109,7 @@
     <span style="flex:1"></span>
     <!-- 관리자 목록으로 이동 -->
     <button class="ghost" id="toListBtn" type="button" onclick="location.href='/admin/product.html'">제품 목록 보기</button>
-    <button id="logoutBtn">로그아웃</button>
+    <button id="logoutBtn">로그아웃 git hub도 꼭 같이 로그아웃하기!!</button>
   </div>
 
   <!-- 좌: 입력 폼 / 우: 미리보기 -->
@@ -604,10 +604,10 @@ wrap.onclick = (e) => {
        3) 로그아웃
        - Supabase 세션 종료 후 로그인 페이지로 이동(복귀 경로는 index에서 처리)
        ------------------------------------------------------------------------- */
-    document.getElementById("logoutBtn").addEventListener("click", async () => {
-      await sb.auth.signOut();
-      kickLogin();
-    });
+      document.getElementById("logoutBtn").addEventListener("click", async () => {
+        await sb.auth.signOut({ scope: "local" });
+        location.href = "https://github.com/logout";
+      });
 
     /* -------------------------------------------------------------------------
        4) 제품 등록 플로우
