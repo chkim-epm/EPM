@@ -223,38 +223,6 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
     storageKey: 'epm-admin-auth'
   }
 });
-
-  function clearLegacyAuthCookies() {
-  const names = ['epm-admin-auth', 'epm-admin-auth.__chunks'];
-
-  for (let i = 0; i < 20; i++) {
-    names.push(`epm-admin-auth.${i}`);
-  }
-
-  for (const name of names) {
-    document.cookie = `${name}=; Max-Age=0; path=/`;
-    document.cookie = `${name}=; Max-Age=0; path=/; Domain=.eastpowermetal.com`;
-    document.cookie = `${name}=; Max-Age=0; path=/; Domain=www.eastpowermetal.com`;
-    document.cookie = `${name}=; Max-Age=0; path=/; Domain=eastpowermetal.com`;
-  }
-}
-
-async function doLogout(redirectUrl = '/admin/index.html') {
-  try {
-    await sb.auth.signOut({ scope: 'local' });
-  } catch (e) {
-    console.error('signOut error:', e);
-  }
-
-  try {
-    cookieStorage.removeItem('epm-admin-auth');
-  } catch (e) {
-    console.error('cookieStorage remove error:', e);
-  }
-
-  clearLegacyAuthCookies();
-  location.replace(redirectUrl);
-}
                                                                     
 
 /* ============================================================================
@@ -350,14 +318,7 @@ function kickDenied(){
    세션 상태 변화 대응
    - 다른 탭/창에서 로그인/로그아웃 시에도 현재 페이지 가드 재평가
    ============================================================================ */
-sb.auth.onAuthStateChange((event, session) => {
-  if (event === 'SIGNED_OUT' || !session) {
-    try { cookieStorage.removeItem('epm-admin-auth'); } catch {}
-    clearLegacyAuthCookies();
-    return kickLogin();
-  }
-  guardAdmin();
-});
+sb.auth.onAuthStateChange(() => guardAdmin());
 
 /* ============================================================================
    목록/검색/페이지네이션 로직
@@ -562,9 +523,7 @@ if (clearBtn) clearBtn.addEventListener("click", ()=>{ if(!qInput) return; qInpu
    로그아웃
    - Supabase 세션 해제 후 로그인 페이지로 이동(복귀 경로는 index에서 처리)
    ============================================================================ */
-$("logoutBtn").addEventListener("click", async () => {
-  await doLogout(LOGIN_URL);
-});
+$("logoutBtn").addEventListener("click", async ()=>{ await sb.auth.signOut(); location.replace(LOGIN_URL); });
 
 /* ============================================================================
    초기 구동 시퀀스
@@ -595,4 +554,3 @@ $("logoutBtn").addEventListener("click", async () => {
 </script>
 </body>
 </html>
-
