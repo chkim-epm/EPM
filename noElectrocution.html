@@ -64,9 +64,6 @@
 html{scroll-behavior:smooth;}
 body{
   margin:0;
-  font-family:'Nanum Gothic', sans-serif;
-  background:linear-gradient(180deg,#f8fafc 0%,#eef4ff 100%);
-  color:var(--epm-ink);
 }
 
 .epm-wrap{
@@ -362,13 +359,7 @@ body{
 .epm-btn.secondary{background:rgba(255,255,255,.14); color:#fff; border:1px solid rgba(255,255,255,.24);}
 .epm-btn:hover{transform:translateY(-2px);}
 
-footer{
-  padding:24px 16px 34px;
-  text-align:center;
-  color:#475569;
-  font-size:.95rem;
-  line-height:1.8;
-}
+
 
 @media (max-width:1024px){
   .epm-hero-grid,
@@ -400,8 +391,19 @@ footer{
 </head>
 <body>
 
+<!-- 네비게이션 바 -->
 <div id="nav"></div>
 <script src="/commonNav.js" defer></script>
+<!-- 네비게이션 바 끝 nav.html그리드, commonNav로 끌어오기, common로 CSS-->
+
+<!-- 상단이미지 -->
+<div id="subVisual"
+     data-bg="image/2번배경.png"
+     data-kicker="(주)이스트파워메탈"
+     data-title="무감전"
+     data-desc="경기남부 총판">
+</div>
+<script src="/common/commonSubVisual.js" defer></script>
 
 <main class="epm-wrap">
 
@@ -589,15 +591,9 @@ footer{
 
 </main>
 
-<footer>
-  <p>
-    <span class="logo-e" style="color:green;">E</span>
-    <span class="logo-p" style="color:red;">P</span>
-    <span class="logo-m" style="color:blue;">M</span>
-    (주)이스트파워메탈 | 주소: 경기도 김포시 통진읍 율마로 223번길 42 | 전화: 031-985-6037 | 이메일: chkim.epm@gmail.com
-  </p>
-  <p>© 2026 EAST POWER METAL. All Rights Reserved.</p>
-</footer>
+<!-- 푸터 (회사 정보) -->
+<div id="footer"></div>
+<script src="/common/commonFooter.js" defer></script>
 
 </body>
 </html>
