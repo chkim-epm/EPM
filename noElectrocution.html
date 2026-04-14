@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>무감전 경기 남부 총판 : 이스트파워메탈:무감전, 무감전 분전반, 무감전 배전반, 김포, 화성</title>
+<title>아이티이 무감전 경기 남부 총판 : 이스트파워메탈:무감전, 무감전 분전반, 무감전 배전반, 김포, 화성</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- 파비콘 -->
@@ -16,7 +16,7 @@
 <meta name="robots" content="index, follow">
 
 <!-- ✅ Open Graph (SNS 공유용) -->
-<meta property="og:title" content="무감전 전기안전 | 이스트파워메탈">
+<meta property="og:title" content="아이티이 무감전 전기안전 | 이스트파워메탈">
 <meta property="og:description" content="감전·화재 위험은 낮추고, 설비는 멈추지 않는 무감전 전기안전 솔루션">
 <meta property="og:image" content="https://chkim-epm.github.io/EPM/factory.png">
 <meta property="og:url" content="https://www.eastpowermetal.com/">
@@ -24,7 +24,7 @@
 
 <!-- ✅ 트위터 카드 -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="무감전 전기안전 | 이스트파워메탈">
+<meta name="twitter:title" content="아이티이 무감전 전기안전 | 이스트파워메탈">
 <meta name="twitter:description" content="감전·화재 위험은 낮추고, 설비는 멈추지 않는 무감전 전기안전 솔루션">
 <meta name="twitter:image" content="https://chkim-epm.github.io/EPM/factory.png">
 
@@ -387,6 +387,54 @@ body{
   .epm-contact-actions{width:100%;}
   .epm-btn{flex:1;}
 }
+
+
+/* ===== 스크롤 모션 추가 ===== */
+.reveal,
+.reveal-left,
+.reveal-right,
+.reveal-soft{
+  opacity:0;
+  transition-property:opacity, transform;
+  transition-duration:1.2s;
+  transition-timing-function:cubic-bezier(0.22,1,0.36,1);
+  will-change:opacity, transform;
+}
+
+.reveal{ transform:translateY(56px); }
+.reveal-left{ transform:translateX(-42px) translateY(18px); }
+.reveal-right{ transform:translateX(42px) translateY(18px); }
+.reveal-soft{ transform:translateY(28px) scale(0.985); }
+
+.reveal.show,
+.reveal-left.show,
+.reveal-right.show,
+.reveal-soft.show{
+  opacity:1;
+  transform:translate(0,0) scale(1);
+}
+
+.reveal-delay-1{ transition-delay:0.12s; }
+.reveal-delay-2{ transition-delay:0.24s; }
+.reveal-delay-3{ transition-delay:0.36s; }
+.reveal-delay-4{ transition-delay:0.48s; }
+
+@media (prefers-reduced-motion: reduce){
+  .reveal,
+  .reveal-left,
+  .reveal-right,
+  .reveal-soft,
+  .reveal.show,
+  .reveal-left.show,
+  .reveal-right.show,
+  .reveal-soft.show{
+    opacity:1;
+    transform:none;
+    transition:none;
+  }
+}
+}
+
 </style>
 </head>
 <body>
@@ -407,7 +455,7 @@ body{
 
 <main class="epm-wrap">
 
-  <section class="epm-section epm-hero">
+  <section class="epm-section epm-hero reveal-soft">
     <div class="epm-hero-grid">
       <div>
         <div class="epm-kicker">무감전 전기안전 솔루션</div>
@@ -440,7 +488,7 @@ body{
     </div>
   </section>
 
-  <section class="epm-section epm-card">
+  <section class="epm-section epm-card reveal">
     <div class="epm-section-head">
       <span class="eyebrow">CORE FUNCTION</span>
       <h2>무감전의 핵심 기능 4가지</h2>
@@ -448,25 +496,25 @@ body{
     </div>
 
     <div class="epm-feature-grid">
-      <article class="epm-feature">
+      <article class="epm-feature reveal-left reveal-delay-1">
         <div class="num">01</div>
         <h3>누설전류 제한</h3>
         <p>누설전류를 <strong>5mA 이하</strong>로 제어하여, 인체 감전 위험을 낮추고 전기안전을 구조적으로 확보합니다.</p>
       </article>
 
-      <article class="epm-feature">
+      <article class="epm-feature reveal-right reveal-delay-2">
         <div class="num">02</div>
         <h3>감전·화재 방지</h3>
         <p>절연 이상을 즉시 감지하고 사고를 사전에 억제하여, 감전 및 화재로 이어질 수 있는 위험을 줄입니다.</p>
       </article>
 
-      <article class="epm-feature">
+      <article class="epm-feature reveal-left reveal-delay-3">
         <div class="num">03</div>
         <h3>전원 지속 공급</h3>
         <p>누전·지락이 발생해도 설비를 즉시 정지시키지 않아, 생산 장비와 주요 시스템의 연속 운전을 지원합니다.</p>
       </article>
 
-      <article class="epm-feature">
+      <article class="epm-feature reveal-right reveal-delay-4">
         <div class="num">04</div>
         <h3>실시간 모니터링</h3>
         <p>AI 및 센서 기반으로 고장 징후를 사전에 진단하고, 경보를 통해 이상 상태를 빠르게 확인할 수 있습니다.</p>
@@ -474,7 +522,7 @@ body{
     </div>
   </section>
 
-  <section class="epm-section epm-card">
+  <section class="epm-section epm-card reveal">
     <div class="epm-section-head">
       <span class="eyebrow">DIFFERENCE</span>
       <h2>기존 방식과 무감전 신기술의 차이</h2>
@@ -482,7 +530,7 @@ body{
     </div>
 
     <div class="epm-compare">
-      <div class="epm-compare-card old">
+      <div class="epm-compare-card old reveal-left">
         <h3>기존 방식</h3>
         <div class="epm-flow">
           <div class="epm-step">① 피해 발생 “후”<small>사고가 먼저 발생한 뒤 대응</small></div>
@@ -494,7 +542,7 @@ body{
 
       <div class="epm-arrow">→</div>
 
-      <div class="epm-compare-card new">
+      <div class="epm-compare-card new reveal-right reveal-delay-1">
         <h3>아이티이 신기술</h3>
         <div class="epm-flow">
           <div class="epm-step">① 피해 발생 “전”<small>사고 징후 단계에서 선제 대응</small></div>
@@ -506,7 +554,7 @@ body{
     </div>
   </section>
 
-  <section class="epm-section epm-card">
+  <section class="epm-section epm-card reveal">
     <div class="epm-section-head">
       <span class="eyebrow">PRINCIPLE</span>
       <h2>무감전 원리 3가지</h2>
@@ -514,7 +562,7 @@ body{
     </div>
 
     <div class="epm-principle-grid">
-      <article class="epm-principle">
+      <article class="epm-principle reveal-soft reveal-delay-1">
         <span class="badge">원리 01</span>
         <h3>고정 임피던스 적용 IT계통</h3>
         <p>
@@ -523,7 +571,7 @@ body{
         </p>
       </article>
 
-      <article class="epm-principle">
+      <article class="epm-principle reveal-soft reveal-delay-2">
         <span class="badge">원리 02</span>
         <h3>전압 ÷ 임피던스 = 전류</h3>
         <p>
@@ -532,7 +580,7 @@ body{
         </p>
       </article>
 
-      <article class="epm-principle">
+      <article class="epm-principle reveal-soft reveal-delay-3">
         <span class="badge">원리 03</span>
         <h3>차단 없이 안전과 운전 유지</h3>
         <p>
@@ -553,21 +601,21 @@ body{
     </p>
   </section>
 
-  <section class="epm-section epm-card">
+  <section class="epm-section epm-card reveal">
     <div class="epm-section-head">
       <span class="eyebrow">PARTNERSHIP</span>
       <h2>기술과 공급 체계</h2>
     </div>
 
     <div class="epm-partner">
-      <div class="epm-partner-box">
+      <div class="epm-partner-box reveal-left">
         <h3>아이티이</h3>
         <p>
           무감전 전기안전 솔루션의 핵심 기술을 제공하며,
           누설전류 제어 및 실시간 감시 기술 기반의 안전 시스템을 구현합니다.
         </p>
       </div>
-      <div class="epm-partner-box">
+      <div class="epm-partner-box reveal-right reveal-delay-1">
         <h3>(주)이스트파워메탈</h3>
         <p>
           경기남부총판으로서 생산, 공급, 현장 적용을 담당하며,
@@ -577,7 +625,7 @@ body{
     </div>
   </section>
 
-  <section class="epm-section epm-contact">
+  <section class="epm-section epm-contact reveal">
     <div>
       <h3>무감전 솔루션 상담 및 납품 문의</h3>
       <p>산업 현장, 분전반, 배전반, 특수 전원 환경에 맞춘 적용 상담이 가능합니다.</p>
@@ -594,6 +642,23 @@ body{
 <!-- 푸터 (회사 정보) -->
 <div id="footer"></div>
 <script src="/common/commonFooter.js" defer></script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const els = document.querySelectorAll(".reveal, .reveal-left, .reveal-right, .reveal-soft");
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.classList.add("show");
+      }
+    });
+    }, { threshold: 0.12, rootMargin: "0px 0px -60px 0px" });
+
+  els.forEach(el => io.observe(el));
+});
+</script>
 
 </body>
 </html>
