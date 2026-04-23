@@ -648,13 +648,13 @@ body{margin:0;background:var(--epm-bg);}
    팝업 영역
 ========================= */
 .popup {
-  position: absolute;
-  top: 180px;
+  /* absolute를 fixed로 변경하면 스크롤을 따라 계산할 필요 없이 화면에 고정됩니다. */
+  position: absolute; 
+  top: 180px;      /* 화면 상단에서 180px 떨어진 위치에 계속 고정 */
   right: 30px;
 
   display: none;
   z-index: 9999;
-
   opacity: 0;
   transform: translateY(-20px);
   transition: all 0.3s ease;
@@ -668,20 +668,15 @@ body{margin:0;background:var(--epm-bg);}
 
 /* 팝업 본문 박스 */
 .popup-content {
-  position: relative;
-  width: 600px;          /* 👉 여기 키움 (핵심) */
-  max-width: 90vw;       /* 👉 화면 작을때 대응 */
-  background: #fff;
-  border-radius: 12px;
-  overflow: hidden;
-
-  box-shadow: 0 15px 40px rgba(0,0,0,0.35);
+  width: 500px;
+  max-width: 90vw;
+  max-height: 80vh;
+  overflow-y: auto;
 }
-
-/* 팝업 이미지 */
 .popup-content img {
   width: 100%;
   display: block;
+  object-fit: contain;
 }
 
 /* 팝업 닫기 버튼 */
@@ -1097,7 +1092,22 @@ function closePopup() {
     popup.style.display = "none";
   }, 300);
 }
+
+window.addEventListener("scroll", function () {
+  const popup = document.getElementById("popup");
+  if (!popup) return;
+
+  const scrollY = window.scrollY;
+  
+  /* 0.3을 곱하는 대신 스크롤 양과 동일하게 더해줘야 속도가 맞습니다. */
+  /* 다만, 이 방식은 fixed보다 끊김 현상이 발생할 수 있습니다. */
+  const targetTop = 180 + scrollY; 
+
+  popup.style.top = targetTop + "px";
+});
 </script>
+
+
 
 </body>
 </html>
