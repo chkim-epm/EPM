@@ -46,6 +46,9 @@
 <link rel="stylesheet" href="common.css">
 
 <style>
+/* =========================
+   공통 컬러 변수
+========================= */
 :root{
   --epm-ink:#0f172a;
   --epm-sub:#475569;
@@ -62,18 +65,28 @@
   --epm-shadow:0 14px 34px rgba(15,23,42,.08);
 }
 
+/* =========================
+   기본 초기화
+========================= */
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{margin:0;background:var(--epm-bg);}
 
+/* =========================
+   전체 래퍼
+========================= */
 .epm-wrap{
   max-width:1200px;
   margin:0 auto;
   padding:28px 16px 70px;
 }
 
+/* 섹션 간격 */
 .epm-section{margin-bottom:24px;}
 
+/* =========================
+   상단 히어로 영역
+========================= */
 .epm-hero{
   position:relative;
   overflow:hidden;
@@ -87,6 +100,7 @@ body{margin:0;background:var(--epm-bg);}
   box-shadow:var(--epm-shadow);
 }
 
+/* 히어로 배경 장식 원 */
 .epm-hero::before{
   content:"";
   position:absolute;
@@ -98,6 +112,7 @@ body{margin:0;background:var(--epm-bg);}
   background:rgba(255,255,255,.05);
 }
 
+/* 히어로 내부 2열 그리드 */
 .epm-hero-grid{
   position:relative;
   z-index:1;
@@ -107,6 +122,7 @@ body{margin:0;background:var(--epm-bg);}
   align-items:end;
 }
 
+/* 히어로 상단 키커 */
 .epm-kicker{
   display:inline-flex;
   align-items:center;
@@ -120,6 +136,7 @@ body{margin:0;background:var(--epm-bg);}
   margin-bottom:18px;
 }
 
+/* 히어로 제목 */
 .epm-hero h1{
   margin:0 0 16px;
   font-size:clamp(2rem, 4vw, 3.3rem);
@@ -127,6 +144,7 @@ body{margin:0;background:var(--epm-bg);}
   letter-spacing:-0.03em;
 }
 
+/* 히어로 설명문 */
 .epm-hero p{
   margin:0;
   max-width:760px;
@@ -135,12 +153,14 @@ body{margin:0;background:var(--epm-bg);}
   line-height:1.85;
 }
 
+/* 히어로 우측 통계 그리드 */
 .epm-hero-stats{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:14px;
 }
 
+/* 통계 카드 */
 .epm-stat{
   padding:18px;
   border-radius:18px;
@@ -149,12 +169,14 @@ body{margin:0;background:var(--epm-bg);}
   backdrop-filter:blur(8px);
 }
 
+/* 통계 카드 숫자/강조 */
 .epm-stat strong{
   display:block;
   font-size:1.5rem;
   margin-bottom:6px;
 }
 
+/* 통계 카드 설명 */
 .epm-stat span{
   display:block;
   color:#dbeafe;
@@ -162,6 +184,9 @@ body{margin:0;background:var(--epm-bg);}
   line-height:1.6;
 }
 
+/* =========================
+   공통 패널 박스
+========================= */
 .epm-panel{
   background:var(--epm-card);
   border:1px solid var(--epm-line);
@@ -170,10 +195,14 @@ body{margin:0;background:var(--epm-bg);}
   box-shadow:var(--epm-shadow);
 }
 
+/* =========================
+   섹션 헤더
+========================= */
 .epm-section-head{
   margin-bottom:18px;
 }
 
+/* 섹션 소제목 라벨 */
 .epm-section-head .eyebrow{
   display:inline-block;
   font-size:.86rem;
@@ -182,24 +211,30 @@ body{margin:0;background:var(--epm-bg);}
   margin-bottom:8px;
 }
 
+/* 섹션 제목 */
 .epm-section-head h2{
   margin:0;
   font-size:1.88rem;
   letter-spacing:-0.02em;
 }
 
+/* 섹션 설명 */
 .epm-section-head p{
   margin:10px 0 0;
   color:var(--epm-sub);
   line-height:1.8;
 }
 
+/* =========================
+   개요 영역 2열
+========================= */
 .epm-overview{
   display:grid;
   grid-template-columns:1.1fr .9fr;
   gap:18px;
 }
 
+/* 개요 카드 공통 */
 .epm-overview-main,
 .epm-overview-side{
   border:1px solid var(--epm-line);
@@ -208,12 +243,14 @@ body{margin:0;background:var(--epm-bg);}
   background:linear-gradient(180deg,#ffffff 0%,#f9fbff 100%);
 }
 
+/* 개요 카드 제목 */
 .epm-overview-main h3,
 .epm-overview-side h3{
   margin:0 0 12px;
   font-size:1.18rem;
 }
 
+/* 개요 카드 본문 */
 .epm-overview-main p,
 .epm-overview-side p{
   margin:0;
@@ -221,23 +258,29 @@ body{margin:0;background:var(--epm-bg);}
   line-height:1.85;
 }
 
+/* 불릿 리스트 */
 .epm-bullets{
   margin:14px 0 0;
   padding-left:18px;
   color:var(--epm-sub);
 }
 
+/* 불릿 항목 */
 .epm-bullets li{
   margin:8px 0;
   line-height:1.7;
 }
 
+/* =========================
+   특징 카드 그리드
+========================= */
 .epm-feature-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:16px;
 }
 
+/* 특징 카드 */
 .epm-feature{
   border:1px solid var(--epm-line);
   border-radius:20px;
@@ -245,6 +288,7 @@ body{margin:0;background:var(--epm-bg);}
   background:#fff;
 }
 
+/* 특징 아이콘 영역 */
 .epm-icon{
   width:54px;
   height:54px;
@@ -257,11 +301,13 @@ body{margin:0;background:var(--epm-bg);}
   background:linear-gradient(135deg,#dbeafe 0%,#ecfeff 100%);
 }
 
+/* 특징 제목 */
 .epm-feature h3{
   margin:0 0 10px;
   font-size:1.08rem;
 }
 
+/* 특징 설명 */
 .epm-feature p{
   margin:0;
   color:var(--epm-sub);
@@ -269,28 +315,38 @@ body{margin:0;background:var(--epm-bg);}
   font-size:.96rem;
 }
 
+/* =========================
+   비교 카드 영역
+========================= */
 .epm-compare{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:18px;
 }
 
+/* 비교 카드 공통 */
 .epm-compare-card{
   border-radius:22px;
   padding:24px 20px;
   border:1px solid var(--epm-line);
 }
 
+/* 기존 방식 카드 */
 .epm-compare-card.old{background:linear-gradient(180deg,#fff7ed 0%,#fff 100%);}
+
+/* 신규 방식 카드 */
 .epm-compare-card.new{background:linear-gradient(180deg,#eff6ff 0%,#fff 100%);border-color:#bfdbfe;}
 
+/* 비교 카드 제목 */
 .epm-compare-card h3{
   margin:0 0 16px;
   font-size:1.3rem;
 }
 
+/* 흐름 박스 */
 .epm-flow{display:flex;flex-direction:column;gap:12px;}
 
+/* 단계 박스 */
 .epm-step{
   border-radius:14px;
   padding:14px 16px;
@@ -300,6 +356,7 @@ body{margin:0;background:var(--epm-bg);}
   font-weight:700;
 }
 
+/* 단계 보조 텍스트 */
 .epm-step small{
   display:block;
   margin-top:4px;
@@ -308,6 +365,7 @@ body{margin:0;background:var(--epm-bg);}
   color:var(--epm-muted);
 }
 
+/* 결과 박스 공통 */
 .epm-result{
   margin-top:16px;
   padding:15px 16px;
@@ -315,15 +373,22 @@ body{margin:0;background:var(--epm-bg);}
   font-weight:800;
 }
 
+/* 기존 결과 */
 .epm-result.old{background:#fff1f2;color:#9f1239;}
+
+/* 신규 결과 */
 .epm-result.new{background:#ecfdf5;color:#166534;}
 
+/* =========================
+   원리 카드 그리드
+========================= */
 .epm-principle-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:18px;
 }
 
+/* 원리 카드 */
 .epm-principle{
   border-radius:20px;
   border:1px solid var(--epm-line);
@@ -331,6 +396,7 @@ body{margin:0;background:var(--epm-bg);}
   padding:24px 18px 20px;
 }
 
+/* 배지 */
 .epm-badge{
   display:inline-block;
   padding:6px 10px;
@@ -342,23 +408,29 @@ body{margin:0;background:var(--epm-bg);}
   margin-bottom:12px;
 }
 
+/* 원리 제목 */
 .epm-principle h3{
   margin:0 0 10px;
   font-size:1.08rem;
 }
 
+/* 원리 설명 */
 .epm-principle p{
   margin:0;
   color:var(--epm-sub);
   line-height:1.8;
 }
 
+/* =========================
+   적용 분야 카드 그리드
+========================= */
 .epm-app-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:16px;
 }
 
+/* 적용 분야 카드 */
 .epm-app{
   background:#fff;
   border:1px solid var(--epm-line);
@@ -366,24 +438,30 @@ body{margin:0;background:var(--epm-bg);}
   padding:20px 16px;
 }
 
+/* 적용 분야 제목 */
 .epm-app strong{
   display:block;
   margin-bottom:8px;
   font-size:1.02rem;
 }
 
+/* 적용 분야 설명 */
 .epm-app span{
   color:var(--epm-sub);
   line-height:1.7;
   font-size:.95rem;
 }
 
+/* =========================
+   스펙 영역
+========================= */
 .epm-specs{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:18px;
 }
 
+/* 스펙 박스 */
 .epm-spec-box{
   border:1px solid var(--epm-line);
   background:#fff;
@@ -391,16 +469,19 @@ body{margin:0;background:var(--epm-bg);}
   padding:22px 20px;
 }
 
+/* 스펙 제목 */
 .epm-spec-box h3{
   margin:0 0 14px;
   font-size:1.14rem;
 }
 
+/* 스펙 리스트 */
 .epm-spec-list{
   display:grid;
   gap:10px;
 }
 
+/* 스펙 항목 */
 .epm-spec-item{
   display:grid;
   grid-template-columns:130px 1fr;
@@ -409,16 +490,22 @@ body{margin:0;background:var(--epm-bg);}
   border-bottom:1px dashed #d7dee8;
 }
 
+/* 마지막 스펙 항목 */
 .epm-spec-item:last-child{border-bottom:0;padding-bottom:0;}
 
+/* 스펙 라벨 */
 .epm-spec-item b{
   color:var(--epm-ink);
 }
 
+/* 스펙 값 */
 .epm-spec-item span{
   color:var(--epm-sub);
 }
 
+/* =========================
+   강조 박스
+========================= */
 .epm-highlight{
   border-radius:20px;
   padding:22px 20px;
@@ -429,12 +516,16 @@ body{margin:0;background:var(--epm-bg);}
   line-height:1.8;
 }
 
+/* =========================
+   파트너 영역
+========================= */
 .epm-partner{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:18px;
 }
 
+/* 파트너 박스 */
 .epm-partner-box{
   border-radius:20px;
   padding:22px 20px;
@@ -442,17 +533,22 @@ body{margin:0;background:var(--epm-bg);}
   border:1px solid var(--epm-line);
 }
 
+/* 파트너 제목 */
 .epm-partner-box h3{
   margin:0 0 10px;
   font-size:1.08rem;
 }
 
+/* 파트너 설명 */
 .epm-partner-box p{
   margin:0;
   color:var(--epm-sub);
   line-height:1.8;
 }
 
+/* =========================
+   연락처/CTA 영역
+========================= */
 .epm-contact{
   display:flex;
   align-items:center;
@@ -465,23 +561,27 @@ body{margin:0;background:var(--epm-bg);}
   box-shadow:var(--epm-shadow);
 }
 
+/* 연락처 제목 */
 .epm-contact h3{
   margin:0 0 8px;
   font-size:1.45rem;
 }
 
+/* 연락처 설명 */
 .epm-contact p{
   margin:0;
   color:#dbeafe;
   line-height:1.8;
 }
 
+/* 버튼 묶음 */
 .epm-contact-actions{
   display:flex;
   flex-wrap:wrap;
   gap:10px;
 }
 
+/* 공통 버튼 */
 .epm-btn{
   display:inline-flex;
   align-items:center;
@@ -494,10 +594,124 @@ body{margin:0;background:var(--epm-bg);}
   transition:.2s ease;
 }
 
+/* 기본 버튼 */
 .epm-btn.primary{background:#fff;color:#0f172a;}
+
+/* 보조 버튼 */
 .epm-btn.secondary{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.22);}
+
+/* 버튼 호버 */
 .epm-btn:hover{transform:translateY(-2px);}
 
+/* =========================
+   스크롤 등장 모션
+========================= */
+.reveal,
+.reveal-soft,
+.reveal-left,
+.reveal-right{
+  opacity:0;
+  transition-property:opacity, transform;
+  transition-duration:1.15s;
+  transition-timing-function:cubic-bezier(0.22, 1, 0.36, 1);
+  will-change:opacity, transform;
+}
+
+/* 아래에서 등장 */
+.reveal{ transform:translateY(54px); }
+
+/* 부드럽게 아래에서 등장 */
+.reveal-soft{ transform:translateY(30px) scale(0.985); }
+
+/* 왼쪽에서 등장 */
+.reveal-left{ transform:translateX(-42px) translateY(14px); }
+
+/* 오른쪽에서 등장 */
+.reveal-right{ transform:translateX(42px) translateY(14px); }
+
+/* 등장 완료 상태 */
+.reveal.show,
+.reveal-soft.show,
+.reveal-left.show,
+.reveal-right.show{
+  opacity:1;
+  transform:translate(0, 0) scale(1);
+}
+
+/* 지연 시간 */
+.reveal-delay-1{ transition-delay:0.12s; }
+.reveal-delay-2{ transition-delay:0.24s; }
+.reveal-delay-3{ transition-delay:0.36s; }
+.reveal-delay-4{ transition-delay:0.48s; }
+
+/* =========================
+   팝업 영역
+========================= */
+.popup {
+  position: absolute;
+  top: 180px;
+  right: 30px;
+
+  display: none;
+  z-index: 9999;
+
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.3s ease;
+}
+
+/* 팝업 표시 상태 */
+.popup.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 팝업 본문 박스 */
+.popup-content {
+  position: relative;
+  width: 600px;          /* 👉 여기 키움 (핵심) */
+  max-width: 90vw;       /* 👉 화면 작을때 대응 */
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+
+  box-shadow: 0 15px 40px rgba(0,0,0,0.35);
+}
+
+/* 팝업 이미지 */
+.popup-content img {
+  width: 100%;
+  display: block;
+}
+
+/* 팝업 닫기 버튼 */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: #0f3d7a;
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* 팝업 하단 영역 */
+.popup-footer {
+  padding: 12px;
+  text-align: right;
+  font-size: 14px;
+  background: #fff;
+  border-top: 1px solid #eee;
+}
+
+
+/* ===========================================
+                     태블릿 이하 반응형
+========================================== */
 @media (max-width:1024px){
   .epm-hero-grid,
   .epm-overview,
@@ -511,6 +725,9 @@ body{margin:0;background:var(--epm-bg);}
   }
 }
 
+/* =========================
+   모바일 이하 반응형
+========================= */
 @media (max-width:768px){
   .epm-wrap{padding:18px 12px 50px;}
   .epm-hero{padding:42px 18px 22px;border-radius:22px;}
@@ -532,37 +749,9 @@ body{margin:0;background:var(--epm-bg);}
   .epm-spec-item{grid-template-columns:1fr;gap:4px;}
 }
 
-
-/* ===== 스크롤 등장 모션 ===== */
-.reveal,
-.reveal-soft,
-.reveal-left,
-.reveal-right{
-  opacity:0;
-  transition-property:opacity, transform;
-  transition-duration:1.15s;
-  transition-timing-function:cubic-bezier(0.22, 1, 0.36, 1);
-  will-change:opacity, transform;
-}
-
-.reveal{ transform:translateY(54px); }
-.reveal-soft{ transform:translateY(30px) scale(0.985); }
-.reveal-left{ transform:translateX(-42px) translateY(14px); }
-.reveal-right{ transform:translateX(42px) translateY(14px); }
-
-.reveal.show,
-.reveal-soft.show,
-.reveal-left.show,
-.reveal-right.show{
-  opacity:1;
-  transform:translate(0, 0) scale(1);
-}
-
-.reveal-delay-1{ transition-delay:0.12s; }
-.reveal-delay-2{ transition-delay:0.24s; }
-.reveal-delay-3{ transition-delay:0.36s; }
-.reveal-delay-4{ transition-delay:0.48s; }
-
+/* =========================
+   사용자 환경설정 - 모션 최소화
+========================= */
 @media (prefers-reduced-motion: reduce){
   .reveal,
   .reveal-soft,
@@ -577,6 +766,7 @@ body{margin:0;background:var(--epm-bg);}
     transition:none;
   }
 }
+
 </style>
 </head>
 <body>
@@ -594,6 +784,22 @@ body{margin:0;background:var(--epm-bg);}
      data-desc="감전·화재 예방 / 전원 연속운전">
 </div>
 <script src="/common/commonSubVisual.js" defer></script>
+
+<div id="popup" class="popup">
+  <div class="popup-content">
+    <button class="close-btn" onclick="closePopup()">×</button>
+
+    <img src="총판_대리점.png" alt="무감전 안내" />
+
+    <div class="popup-footer">
+      <label>
+        <input type="checkbox" id="hideToday">
+        오늘 하루 보지 않기
+      </label>
+	   <button class="close-btn-bottom" onclick="closePopup()">닫기</button>
+    </div>
+  </div>
+</div>
 
 <main class="epm-wrap">
 
@@ -798,23 +1004,99 @@ body{margin:0;background:var(--epm-bg);}
 
 
 <script>
+/* =========================
+   스크롤 등장 애니메이션 (IntersectionObserver)
+   → 화면에 요소가 보일 때 .show 클래스 추가
+========================= */
 document.addEventListener("DOMContentLoaded", function () {
+
+  /* 애니메이션 대상 요소 선택 */
   const els = document.querySelectorAll(".reveal, .reveal-soft, .reveal-left, .reveal-right");
 
+  /* 화면 진입 감지 Observer 생성 */
   const observer = new IntersectionObserver((entries) => {
+
     entries.forEach((entry) => {
+
+      /* 요소가 화면에 보이면 */
       if (entry.isIntersecting) {
+
+        /* show 클래스 추가 (CSS 애니메이션 실행) */
         entry.target.classList.add("show");
+
+        /* 한 번만 실행하고 관찰 해제 */
         observer.unobserve(entry.target);
       }
     });
+
   }, {
-    threshold: 0.12,
-    rootMargin: "0px 0px -60px 0px"
+    threshold: 0.12,                 /* 요소가 12% 보이면 실행 */
+    rootMargin: "0px 0px -60px 0px" /* 약간 위쪽에서 미리 실행 */
   });
 
+  /* 모든 대상 요소 관찰 시작 */
   els.forEach((el) => observer.observe(el));
 });
+</script>
+
+
+<script>
+/* =========================
+   페이지 로드 시 팝업 표시 + 하루 숨김 기능
+========================= */
+window.addEventListener("load", function () {
+
+  /* localStorage에 저장된 팝업 숨김 시간 가져오기 */
+  const hideUntil = localStorage.getItem("popupHideUntil");
+
+  /* 현재 시간 */
+  const now = new Date().getTime();
+
+  /* 숨김 설정이 없거나, 시간이 지났으면 팝업 표시 */
+  if (!hideUntil || now > Number(hideUntil)) {
+
+    const popup = document.getElementById("popup");
+
+    /* 팝업 보이기 */
+    popup.style.display = "block";
+
+    /* 약간 딜레이 후 show 클래스 추가 (애니메이션 효과) */
+    setTimeout(() => {
+      popup.classList.add("show");
+    }, 10);
+  }
+});
+
+
+/* =========================
+   팝업 닫기 함수
+========================= */
+function closePopup() {
+
+  const popup = document.getElementById("popup");
+
+  /* "오늘 하루 보지 않기" 체크 여부 */
+  const hideToday = document.getElementById("hideToday").checked;
+
+  /* 체크했을 경우 */
+  if (hideToday) {
+
+    /* 내일 00:00 기준 시간 생성 */
+    const tomorrow = new Date();
+    tomorrow.setHours(24, 0, 0, 0);
+
+    /* localStorage에 숨김 시간 저장 */
+    localStorage.setItem("popupHideUntil", String(tomorrow.getTime()));
+  }
+
+  /* show 클래스 제거 (애니메이션 종료) */
+  popup.classList.remove("show");
+
+  /* 0.3초 후 완전히 숨김 */
+  setTimeout(() => {
+    popup.style.display = "none";
+  }, 300);
+}
 </script>
 
 </body>
