@@ -185,7 +185,7 @@ footer.site-footer::before{
 .footer-bottom{
   position: relative;
   max-width: 1200px;
-  margin: 18px 10px 10px;     /* ← 왼쪽 기준 정렬 */	
+  margin: 18px auto 0;
   padding-top: 14px;
   border-top: 1px solid rgba(255,255,255,0.08);  /* ← 이 줄 포함 */
   display:flex;
