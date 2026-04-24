@@ -197,6 +197,15 @@ footer.site-footer::before{
   color: rgba(226,232,240,0.65);
 }
 
+.privacy-link {
+  color: rgba(226,232,240,0.65);
+  text-decoration: none;
+}
+
+.privacy-link:hover {
+  color: #fff;
+}
+
 .footer-inner{
   position: relative;
   max-width: 1200px;
@@ -1082,7 +1091,13 @@ footer.site-footer a:hover{
     padding: 9px 9px !important;
   }
 }
-
+@media (max-width: 768px) {
+  .privacy-link {
+    font-size: 13px;              /* 👉 글자 약간 키움 */
+    padding: 6px 4px;             /* 👉 터치 영역 확보 */
+    display: inline-block;        /* 👉 클릭 범위 넓힘 */
+  }
+}
 
 /* =========================================== 모바일 전용 CSS ==================================== */
 
