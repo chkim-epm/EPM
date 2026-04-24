@@ -189,7 +189,8 @@ footer.site-footer::before{
   padding-top: 14px;
   border-top: 1px solid rgba(255,255,255,0.08);  /* ← 이 줄 포함 */
   display:flex;
-  justify-content: space-between;
+  /*justify-content: space-between;*/
+  justify-content: flex-start;
   align-items:center;
   gap: 12px;
   flex-wrap: wrap;
