@@ -203,7 +203,7 @@ footer.site-footer::before{
 	text-decoration: none;
 }
 .footer-bottom span {
-  margin-right: 80px;
+  margin-right: 160px;
 }
 .privacy-link:hover {
   color: #fff;
