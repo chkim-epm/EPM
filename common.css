@@ -197,9 +197,9 @@ footer.site-footer::before{
   color: rgba(226,232,240,0.65);
 }
 
-.privacy-link {
+.footer-bottom .privacy-link {
   color: rgba(226,232,240,0.65);
-  text-decoration: none;
+	text-decoration: none;
 }
 
 .privacy-link:hover {
