@@ -32,18 +32,24 @@
 
   <div class="footer-bottom">
     <span>© 2025 EAST POWER METAL. All Rights Reserved.</span>
-    <a href="/privacy.html" class="privacy-link">개인정보처리방침</a>
+    <a href="javascript:void(0);" class="privacy-link" onclick="openPrivacyModal()">개인정보처리방침</a>
     <a href="javascript:void(0);" class="privacy-link" onclick="openEmailModal()">이메일무단수집거부</a>
   </div>
   
 </footer>
 
-      <div id="emailModal" class="email-modal">
-    <div class="email-modal-content">
-    <button class="email-modal-close" onclick="closeEmailModal()">×</button>
-      
-    <!-- 👉 여기 핵심 -->
-    <iframe src="/emailPolicy.html" class="email-iframe"></iframe>
-
+<!-- 개인정보처리방침 모달 -->
+<div id="privacyModal" class="policy-modal">
+  <div class="policy-modal-content">
+    <button class="policy-modal-close" onclick="closePrivacyModal()">×</button>
+    <iframe src="/privacy.html" class="policy-iframe"></iframe>
   </div>
+</div>
+
+<!-- 이메일무단수집거부 모달 -->
+  <div id="emailModal" class="email-modal">
+    <div class="email-modal-content">
+      <button class="email-modal-close" onclick="closeEmailModal()">×</button>
+      <iframe src="/emailPolicy.html" class="email-iframe"></iframe>
+    </div>
   </div>
