@@ -9,16 +9,16 @@
     mount.innerHTML = await res.text();
 
     /* =========================
-       이메일 모달 스크립트
+       푸터 모달 스크립트
     ========================= */
 
-    if (!window.__emailModalInit) {
+    if (!window.__footerModalInit) {
 
       window.openEmailModal = function () {
         const modal = document.getElementById("emailModal");
         if (modal) {
-                    modal.style.display = "flex";
-                    window.focus();
+          modal.style.display = "flex";
+          window.focus();
         }
       };
 
@@ -27,21 +27,43 @@
         if (modal) modal.style.display = "none";
       };
 
+      window.openPrivacyModal = function () {
+        const modal = document.getElementById("privacyModal");
+        if (modal) {
+          modal.style.display = "flex";
+          window.focus();
+        }
+      };
+
+      window.closePrivacyModal = function () {
+        const modal = document.getElementById("privacyModal");
+        if (modal) modal.style.display = "none";
+      };
+
       window.addEventListener("click", function (e) {
-        const modal = document.getElementById("emailModal");
-        if (modal && e.target === modal) {
-          modal.style.display = "none";
+        const emailModal = document.getElementById("emailModal");
+        const privacyModal = document.getElementById("privacyModal");
+
+        if (emailModal && e.target === emailModal) {
+          emailModal.style.display = "none";
+        }
+
+        if (privacyModal && e.target === privacyModal) {
+          privacyModal.style.display = "none";
         }
       });
 
       window.addEventListener("keydown", function (e) {
         if (e.key === "Escape") {
-          const modal = document.getElementById("emailModal");
-          if (modal) modal.style.display = "none";
+          const emailModal = document.getElementById("emailModal");
+          const privacyModal = document.getElementById("privacyModal");
+
+          if (emailModal) emailModal.style.display = "none";
+          if (privacyModal) privacyModal.style.display = "none";
         }
       });
 
-      window.__emailModalInit = true;
+      window.__footerModalInit = true;
     }
 
   } catch (e) {
