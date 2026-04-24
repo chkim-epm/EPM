@@ -564,73 +564,6 @@ footer.site-footer a:hover{
   color: rgba(255,255,255,.88);
 }
 
-/* =========================
-   모달 배경
-========================= */
-.email-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-
-  display: none;
-  justify-content: center;
-  align-items: center;
-
-  z-index: 9999;
-}
-
-/* =========================
-   모달 박스
-========================= */
-.email-modal-content {
-  width: 90%;
-  max-width: 500px;
-  max-height: 85vh;          /* 👉 추가 (안 잘리게) */
-  overflow-y: auto;          /* 👉 추가 (스크롤 가능) */
-
-  background: #fff;
-  border-radius: 16px;
-  padding: 26px 22px;
-  position: relative;
-}
-
-/* =========================
-   닫기 버튼
-========================= */
-.email-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 38px;
-  height: 38px;
-  border: none;
-  border-radius: 50%;
-  background: #0f3d7a;
-  color: #fff;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-/* =========================
-   제목
-========================= */
-.email-modal-content h2 {
-  margin-top: 0;
-  color: #12378f;
-}
-
-/* =========================
-   강조 박스
-========================= */
-.email-highlight {
-  margin-top: 16px;
-  padding: 14px;
-  background: #fff1f2;
-  border-radius: 10px;
-  color: #9f1239;
-  font-weight: 600;
-}
-
 
 /* [VISUAL] 줌 애니메이션 */
 @keyframes subVisualZoom{
@@ -669,6 +602,53 @@ footer.site-footer a:hover{
   font-weight:800;
   cursor:pointer;
 }
+
+/* =========================
+   이메일무단수집거부 모달 - iframe 방식
+========================= */
+.email-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  padding: 20px;
+}
+
+.email-modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  height: 85vh;
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+}
+
+.email-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: #0f3d7a;
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.email-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
 
 /* ===========================================PC 기본 스타일 끝.================================================*/
 
@@ -1168,33 +1148,23 @@ footer.site-footer a:hover{
 }
 
 /* =========================
-   모바일 대응
+   이메일무단수집거부 모달 - 모바일
 ========================= */
 @media (max-width: 768px) {
-
   .email-modal {
-    padding: 12px;   /* 👉 여백 확보 */
+    padding: 14px;
   }
 
   .email-modal-content {
-    width: 100%;
+    height: 90vh;
     max-width: 100%;
     border-radius: 14px;
-    padding: 22px 16px;
   }
 
-  .email-close {
+  .email-modal-close {
     width: 34px;
     height: 34px;
     font-size: 18px;
-  }
-
-  .email-modal-content h2 {
-    font-size: 18px;
-  }
-
-  .email-highlight {
-    font-size: 14px;
   }
 }
 
