@@ -16,7 +16,10 @@
 
       window.openEmailModal = function () {
         const modal = document.getElementById("emailModal");
-        if (modal) modal.style.display = "flex";
+        if (modal) {
+                    modal.style.display = "flex";
+                    window.focus();
+        }
       };
 
       window.closeEmailModal = function () {
