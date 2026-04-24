@@ -185,7 +185,7 @@ footer.site-footer::before{
 .footer-bottom{
   position: relative;
   max-width: 1200px;
-  margin: 18px auto 0;
+  margin: 18px 0 0;     /* ← 왼쪽 기준 정렬 */	
   padding-top: 14px;
   border-top: 1px solid rgba(255,255,255,0.08);  /* ← 이 줄 포함 */
   display:flex;
@@ -202,9 +202,7 @@ footer.site-footer::before{
   color: rgba(226,232,240,0.65);
 	text-decoration: none;
 }
-.footer-bottom span {
-  margin-right: 160px;
-}
+
 .privacy-link:hover {
   color: #fff;
 }
