@@ -202,7 +202,9 @@ footer.site-footer::before{
   color: rgba(226,232,240,0.65);
 	text-decoration: none;
 }
-
+.footer-bottom span {
+  margin-right: 80px;
+}
 .privacy-link:hover {
   color: #fff;
 }
