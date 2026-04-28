@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>스마트 안전장비 | 지능형 임시동력반</title>
+  <style>
+    * { box-sizing: border-box; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-top: 2px solid #12378f;
+      font-size: 15px;
+    }
+
+    th, td {
+      border: 1px solid #dbe3ee;
+      padding: 10px 8px;
+      text-align: center;
+      height: 48px; /* 행 높이 통일 */
+    }
+
+    table thead th {
+      background: #0f3d7a;
+      color: #fff;
+    }
+
+    .small-table thead th {
+      font-size: 18px;
+    }
+    th.left, td.left {
+      text-align: center;
+    }
+    body {
+      margin: 0;
+      font-family: "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
+      background: #f4f7fb;
+      color: #0f172a;
+      line-height: 1.7;
+      font-size: 15.5px;
+    }
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 48px 16px 80px;
+    }
+    .hero {
+      background: linear-gradient(135deg, #08111f 0%, #0f2143 58%, #17396c 100%);
+      color: #fff;
+      border-radius: 0;
+      padding: 46px 34px;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.14);
+      margin-bottom: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      bottom: -100px;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+    }
+    .hero .kicker {
+      display: inline-block;
+      color: #bfdbfe;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      margin-bottom: 10px;
+    }
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.15;
+      letter-spacing: -0.04em;
+    }
+    .hero p {
+      margin: 16px 0 0;
+      max-width: 780px;
+      color: #dbeafe;
+      font-size: 1.05rem;
+    }
+    .panel {
+      background: #fff;
+      border: 1px solid #dbe3ee;
+      border-radius: 0;
+      padding: 30px 26px;
+      margin-bottom: 24px;
+      box-shadow: 0 14px 34px rgba(15,23,42,.08);
+    }
+    .section-title {
+      margin: 0 0 16px;
+      font-size: 1.75rem;
+      letter-spacing: -0.03em;
+      color: #12378f;
+      text-align: center;
+    }
+    .lead {
+      margin: 0;
+      color: #475569;
+      font-size: 1.04rem;
+      text-align: center;
+    }
+    .note {
+      margin-top: 12px;
+      color: #64748b;
+      font-size: .96rem;
+      text-align: center;
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .feature-card {
+      border: 1px solid #dbe3ee;
+      border-radius: 0;
+      padding: 22px 20px;
+      background: linear-gradient(180deg, #fff 0%, #f9fbff 100%);
+    }
+    .feature-card h3 {
+      margin: 0 0 10px;
+      color: #0f172a;
+      font-size: 1.18rem;
+    }
+    .feature-card p {
+      margin: 0;
+      color: #475569;
+    }
+    .feature-icon {
+      font-size: 28px;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .compare {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      align-items: stretch;
+      border: 1px solid #dbe3ee;
+      background: #fff;
+      overflow: visible;
+    }
+    .compare-card {
+      border-radius: 0;
+      border: 0;
+      padding: 0;
+      display: grid;
+      grid-template-rows: 68px 64px;
+      overflow: hidden;
+    }
+    .compare-card.old { background: #fff; }
+    .compare-card.new { background: #fff; border-color: #bfdbfe; }
+    .compare-card h3 {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.25rem;
+      font-weight: 900;
+    }
+    .compare-card.old h3 { background: #6B7F9D; }
+    .compare-card.new h3 { background: #12378f; }
+    .compare-card p {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #475569;
+      font-weight: 800;
+      background: #eef2f7;
+      padding: 0 24px;
+    }
+    .compare-card.new p { background: #eef2ff; }
+    .status {
+      display: inline;
+      margin-top: 0;
+      padding: 0;
+      border-radius: 0;
+      font-weight: 900;
+      font-size: 1rem;
+      background: transparent !important;
+    }
+    .old .status { color: #e11d48; }
+    .new .status { color: #33249a; }
+    .vs {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      background: #fff;
+      color: #0f3d7a;
+      font-size: 2rem;
+      font-weight: 900;
+      box-shadow: 0 10px 24px rgba(15, 61, 122, .25);
+      z-index: 2;
+    }
+    .highlight {
+      margin-top: 18px;
+      padding: 18px 20px;
+      border-radius: 0;
+      background: #ecfdf5;
+      border: 1px solid #bbf7d0;
+      color: #166534;
+      font-weight: 800;
+      text-align: center;
+    }
+    .tabs {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+      justify-content: center;
+    }
+    .tab {
+      padding: 10px 14px;
+      border-radius: 0;
+      background: #eef2ff;
+      color: #33249a;
+      font-weight: 900;
+      font-size: .94rem;
+      border: 1px solid #dbe3ee;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    /* 탭 호버 효과 */
+    .tab:hover {
+      background: #12378f;
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(18,55,143,0.25);
+    }
+    .tab.active {
+      background: #0f3d7a;
+      color: #fff;
+      border-color: #0f3d7a;
+    }
+    .catalog-content {
+      display: none;
+    }
+    .catalog-content.active {
+      display: block;
+    }
+    .catalog-subtitle {
+      margin-top: 34px;
+    }
+    .spec-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    .spec-box {
+      border: 1px solid #dbe3ee;
+      border-radius: 0;
+      padding: 20px;
+      background: #fff;
+    }
+    .spec-box h3 {
+      margin: 0 0 12px;
+      font-size: 1.12rem;
+      color: #0f172a;
+    }
+    .spec-box p { margin: 0; color: #475569; }
+
+    .image-grid {
+      margin: 24px auto 0;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      justify-content: center;
+    }
+
+    .overview-images {
+      grid-template-columns: repeat(3, 360px);
+    }
+
+    .image-grid img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border: 1px solid #dbe3ee;
+      border-radius: 0;
+      display: block;
+      /* 초기 상태: 아래쪽이 가려진 상태 + 살짝 확대 */
+      clip-path: inset(20% 0 0 0);
+      opacity: 0;
+      transform: translateY(18px) scale(1.04);
+      transition:
+        clip-path 1.1s cubic-bezier(.22,1,.36,1),
+        opacity 1.1s cubic-bezier(.22,1,.36,1),
+        transform 1.1s cubic-bezier(.22,1,.36,1);
+    }
+
+    /* 이미지 고급 리빌(와이프) 모션 */
+    .image-grid img.motion-item {
+      clip-path: inset(20% 0 0 0);
+      opacity: 0;
+      transform: translateY(18px) scale(1.04);
+    }
+
+    .image-grid img.motion-item.motion-visible {
+      /* 위에서 아래로 부드럽게 열리며 선명해짐 */
+      clip-path: inset(0 0 0 0);
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .image-grid img.motion-item.motion-visible {
+      transform: translateY(0) rotate(1080deg);
+      transition-timing-function: cubic-bezier(.22, 1.2, .36, 1);
+    }
+
+    @media (max-width: 768px) {
+      .wrap { padding: 32px 12px 56px; }
+      .hero { padding: 34px 22px; border-radius: 0; }
+      .panel { padding: 24px 16px; border-radius: 0; }
+      .feature-grid, .spec-grid { grid-template-columns: 1fr; }
+      .compare { grid-template-columns: 1fr; }
+      .compare-card { grid-template-rows: 56px auto; }
+      .compare-card p { min-height: 64px; padding: 14px 18px; }
+      .vs { position: relative; left: auto; top: auto; transform: none; margin: -12px auto; width: 62px; height: 62px; font-size: 1.45rem; }
+      table { font-size: 12.5px; }
+      th, td { padding: 8px 7px; }
+    }
+
+    /* 제원 테이블 형식/사양 50:50 비율 통일 */
+.small-table th:first-child,
+.small-table td:first-child {
+  width: 50%;
+}
+.small-table th:last-child,
+.small-table td:last-child {
+  width: 50%;
+}
+    #temp-panel .small-table th:last-child,
+    #temp-panel .small-table td:last-child {
+      width: 60%;
+    }
+
+    /* ============================= */
+    /* 스크롤 등장 모션 */
+    /* ============================= */
+    .motion-item {
+      opacity: 0;
+      transform: translateY(42px);
+      filter: blur(8px);
+      transition:
+        opacity 1.1s cubic-bezier(.22, 1, .36, 1),
+        transform 1.1s cubic-bezier(.22, 1, .36, 1),
+        filter 1.1s cubic-bezier(.22, 1, .36, 1);
+      will-change: opacity, transform, filter;
+    }
+
+    .motion-item.motion-visible {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+
+    .motion-delay-1 { transition-delay: .12s; }
+    .motion-delay-2 { transition-delay: .22s; }
+    .motion-delay-3 { transition-delay: .34s; }
+    .motion-delay-4 { transition-delay: .48s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .motion-item {
+        opacity: 1;
+        transform: none;
+        filter: none;
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 네비게이션 바 -->
+<div id="nav"></div>
+<script src="/commonNav.js" defer></script>
+<!-- 네비게이션 바 끝 nav.html그리드, commonNav로 끌어오기, common로 CSS-->
+
+<!-- 상단이미지 -->
+<div id="subVisual"
+     data-bg="image/2번배경.png"
+     data-kicker="(주)이스트파워메탈"
+     data-title="무감전 전기안전 솔루션"
+     data-desc="감전·화재 예방 / 전원 연속운전">
+</div>
+<script src="/common/commonSubVisual.js" defer></script>
+
+  <main class="wrap">
+    <section class="panel">
+      <h2 class="section-title">개요</h2>
+      <p class="lead">건설현장에서 발생하는 누설전류 5mA 이하로 제한해 감전 및 전기화재 사고를 예방하는 스마트 안전장비 입니다.</p>
+      <p class="note">(KS C IEC TS 60479-1인체와 가축에 대한 전류의 영향)</p>
+      <div class="image-grid overview-images">
+        <img src="overview1.jpg" alt="개요 이미지 1">
+        <img src="overview2.jpg" alt="개요 이미지 2">
+        <img src="overview3.jpg" alt="개요 이미지 3">
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 class="section-title">주요특징</h2>
+      <div class="feature-grid">
+        <article class="feature-card"><span class="feature-icon">⚡</span><h3>부득이한 사고시에도 안전한 전원공급</h3><p>지락·누전·침수 등 전원을 차단할 상황에서도 인체에 감전위험이 없는 안전한 전원을 공급</p></article>
+        <article class="feature-card"><span class="feature-icon">📡</span><h3>실시간 절연상태 감시</h3><p>활선상태에서 실시간으로 절연감소를 자동으로 검출, 통보하여 지락·누전 등 전기사고가 발생하기 전에 방지</p></article>
+        <article class="feature-card"><span class="feature-icon">🏗️</span><h3>건설현장 적용</h3><p>2025년 안전일터 조성지원 사업에서 이동식누설전류 통제장치가 신규 지정, 건설업본사와 현장에 정부지원 및 산업안전보건관리비 계상 가능</p></article>
+        <article class="feature-card"><span class="feature-icon">✔️</span><h3>법적· 기술적 기준 충족</h3><p>KSC IEC 60364-7-704 등 건설현장 전기설비 기준에 부합하며, 감전사고 예방 효과가 검증된 기술</p></article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 class="section-title">기존 장비와 차이점</h2>
+      <div class="compare">
+        <div class="compare-card old"><h3>재래식 임시동력반</h3><p>감전·화재·사망의 우려가 있어 전기설비기술기준에 미충족&nbsp; → &nbsp;<span class="status">불법</span></p></div>
+        <div class="vs">VS</div>
+        <div class="compare-card new"><h3>지능형 임시동력반</h3><p>감전 · 화재 예방 기술 탑재, 정부인증 · 보조금 대상&nbsp; → &nbsp;<span class="status">합법적 권장사용</span></p></div>
+      </div>
+      <div class="highlight">즉, 지능형 임시동력반은 재래식 임시동력반의 불법성을 해소하고, 합법성과 안전성을 동시에 확보한 장비입니다.</div>
+    </section>
+
+    <section class="panel">
+      <h2 class="section-title">건설현장용 전원공급장치</h2>
+      <div class="tabs" role="tablist">
+        <button type="button" class="tab active" data-tab="integrated">일체형배전반</button>
+        <button type="button" class="tab" data-tab="temp-distribution">임시배전반</button>
+        <button type="button" class="tab" data-tab="temp-panel">임시분전반</button>
+      </div>
+
+      <div class="catalog-content active" id="integrated">
+        <div class="spec-grid"><div class="spec-box"><h3>용도</h3><p>대형공사현장용-고압수전</p></div><div class="spec-box"><h3>규격</h3><p>100~950kVA</p></div></div>
+        <div class="image-grid"><img src="image1.jpg" alt="스마트 안전장비 1"><img src="image2.jpg" alt="스마트 안전장비 2"><img src="image3.jpg" alt="스마트 안전장비 3"><img src="image4.jpg" alt="스마트 안전장비 4"></div>
+        <h2 class="section-title catalog-subtitle">제원</h2>
+        <div class="table-wrap"><table class="small-table"><thead><tr><th>형식</th><th>사양</th></tr></thead><tbody><tr><th>정격전압</th><td>22.9kV/380-220V</td></tr><tr><th>정격전류</th><td>200 ~ 1600A</td></tr><tr><th>정격주파수</th><td>50 or 60Hz</td></tr><tr><th>정격단시간 전류</th><td>37 ~ 100kA</td></tr><tr><th>외함 크기</th><td>용량에 따라 적용 (모델참조)</td></tr></tbody></table></div>
+        <h2 class="section-title catalog-subtitle">종류</h2>
+        <p class="caption">스마트안전장비 일체형 배전반 모델 목록</p>
+        <div class="table-wrap"><table><thead><tr><th rowspan="2">순번</th><th rowspan="2" class="left">품명</th><th rowspan="2">모델명</th><th rowspan="2" colspan="2">규격</th><th colspan="3">외함(mm)</th><th rowspan="2">비고</th></tr><tr><th>가로</th><th>높이</th><th>깊이</th></tr></thead><tbody>
+          <tr><td>1</td><td class="left" rowspan="11">스마트안전장비<br>일체형 배전반<br>-몰드변압기</td><td>ITE-SH·LV-MT-100</td><td rowspan="22" style="vertical-align: middle;">22.9kV/380-220V</td><td>100kVA</td><td>2000</td><td>2850</td><td>3000</td><td>도면참조</td></tr>
+          <tr><td>2</td><td>ITE-SH·LV-MT-150</td><td>150kVA</td><td>2000</td><td>2850</td><td>3000</td><td></td></tr>
+          <tr><td>3</td><td>ITE-SH·LV-MT-200</td><td>200kVA</td><td>2000</td><td>2850</td><td>3000</td><td></td></tr>
+          <tr><td>4</td><td>ITE-SH·LV-MT-250</td><td>250kVA</td><td>2000</td><td>2850</td><td>3000</td><td></td></tr>
+          <tr><td>5</td><td>ITE-SH·LV-MT-300</td><td>300kVA</td><td>2000</td><td>2850</td><td>3000</td><td></td></tr>
+          <tr><td>6</td><td>ITE-SH·LV-MT-400</td><td>400kVA</td><td>2200</td><td>2850</td><td>3000</td><td></td></tr>
+          <tr><td>7</td><td>ITE-SH·LV-MT-500</td><td>500kVA</td><td>2200</td><td>2850</td><td>3000</td><td></td></tr>
+          <tr><td>8</td><td>ITE-SH·LV-MT-600</td><td>600kVA</td><td>2200</td><td>2950</td><td>3200</td><td></td></tr>
+          <tr><td>9</td><td>ITE-SH·LV-MT-750</td><td>750kVA</td><td>2200</td><td>2950</td><td>3200</td><td></td></tr>
+          <tr><td>10</td><td>ITE-SH·LV-MT-900</td><td>900kVA</td><td>2400</td><td>3050</td><td>3200</td><td></td></tr>
+          <tr><td>11</td><td>ITE-SH·LV-MT-950</td><td>950kVA</td><td>2400</td><td>3050</td><td>3200</td><td></td></tr>
+          <tr><td>12</td><td class="left" rowspan="11">스마트안전장비<br>일체형 배전반<br>-유압변압기</td><td>ITE-SH·LV-OT-100</td><td>100kVA</td><td>2000</td><td>2850</td><td>3000</td><td></td></tr>
+          <tr><td>13</td><td>ITE-SH·LV-OT-150</td><td>150kVA</td><td>2000</td><td>2850</td><td>3000</td><td></td></tr>
+          <tr><td>14</td><td>ITE-SH·LV-OT-200</td><td>200kVA</td><td>2000</td><td>2850</td><td>3000</td><td></td></tr>
+          <tr><td>15</td><td>ITE-SH·LV-OT-250</td><td>250kVA</td><td>2000</td><td>2850</td><td>3000</td><td></td></tr>
+          <tr><td>16</td><td>ITE-SH·LV-OT-300</td><td>300kVA</td><td>2000</td><td>2850</td><td>3000</td><td></td></tr>
+          <tr><td>17</td><td>ITE-SH·LV-OT-400</td><td>400kVA</td><td>2200</td><td>2850</td><td>3000</td><td></td></tr>
+          <tr><td>18</td><td>ITE-SH·LV-OT-500</td><td>500kVA</td><td>2200</td><td>2850</td><td>3000</td><td></td></tr>
+          <tr><td>19</td><td>ITE-SH·LV-OT-600</td><td>600kVA</td><td>2200</td><td>2950</td><td>3200</td><td></td></tr>
+          <tr><td>20</td><td>ITE-SH·LV-OT-750</td><td>750kVA</td><td>2200</td><td>2950</td><td>3200</td><td></td></tr>
+          <tr><td>21</td><td>ITE-SH·LV-OT-900</td><td>900kVA</td><td>2400</td><td>3050</td><td>3200</td><td></td></tr>
+          <tr><td>22</td><td>ITE-SH·LV-OT-950</td><td>950kVA</td><td>2400</td><td>3050</td><td>3200</td><td></td></tr>
+        </tbody></table></div>
+      </div>
+
+      <div class="catalog-content" id="temp-distribution">
+        <div class="spec-grid"><div class="spec-box"><h3>용도</h3><p>중고형현장 임시전력-저압수전</p></div><div class="spec-box"><h3>규격</h3><p>10~150kVA</p></div></div>
+        <div class="image-grid"><img src="image1.jpg" alt="임시배전반 1"><img src="image2.jpg" alt="임시배전반 2"><img src="image3.jpg" alt="임시배전반 3"><img src="image4.jpg" alt="임시배전반 4"></div>
+        <h2 class="section-title catalog-subtitle">제원</h2>
+        <div class="table-wrap"><table class="small-table"><thead><tr><th>형식</th><th>사양</th></tr></thead><tbody><tr><th>정격전압</th><td>380/380-220V</td></tr><tr><th>정격전류</th><td>20 ~ 300A</td></tr><tr><th>정격주파수</th><td>50 or 60Hz</td></tr><tr><th>정격단시간 전류</th><td>5 ~ 50kA</td></tr><tr><th>외함 크기</th><td>용량에 따라 적용 (모델참조)</td></tr></tbody></table></div>
+        <h2 class="section-title catalog-subtitle">종류</h2>
+        <div class="table-wrap"><table><thead><tr><th rowspan="2">순번</th><th rowspan="2" class="left">품명</th><th rowspan="2">모델명</th><th rowspan="2" colspan="2">규격</th><th colspan="3">외함(mm)</th><th rowspan="2">비고</th></tr><tr><th>가로</th><th>높이</th><th>깊이</th></tr></thead><tbody>
+          <tr>
+<td>1</td>
+<td class="left" rowspan="9">스마트안전장비<br>임시 배전반</td>
+<td>ITE-SLV- D-10</td>
+<td rowspan="9" style="vertical-align: middle;">380V/380-220V</td>
+<td>10kVA</td>
+<td>600</td><td>850</td><td>350</td><td></td>
+</tr>
+<tr><td>2</td><td>ITE-SLV- D-15</td><td>15kVA</td><td>600</td><td>850</td><td>350</td><td></td></tr>
+<tr><td>3</td><td>ITE-SLV- D-20</td><td>20kVA</td><td>600</td><td>900</td><td>350</td><td></td></tr>
+<tr><td>4</td><td>ITE-SLV- D-30</td><td>30kVA</td><td>700</td><td>1000</td><td>500</td><td></td></tr>
+<tr><td>5</td><td>ITE-SLV- D-40</td><td>40kVA</td><td>700</td><td>1200</td><td>600</td><td></td></tr>
+<tr><td>6</td><td>ITE-SLV- D-50</td><td>50kVA</td><td>800</td><td>1250</td><td>600</td><td></td></tr>
+<tr><td>7</td><td>ITE-SLV- D-75</td><td>75kVA</td><td>800</td><td>1250</td><td>600</td><td></td></tr>
+<tr><td>8</td><td>ITE-SLV- D-100</td><td>100kVA</td><td>900</td><td>1350</td><td>600</td><td></td></tr>
+<tr><td>9</td><td>ITE-SLV- D-150</td><td>150kVA</td><td>1000</td><td>1550</td><td>600</td><td>메인250AF</td></tr>
+</tbody></table></div>
+      </div>
+
+      <div class="catalog-content" id="temp-panel">
+        <div class="spec-grid"><div class="spec-box"><h3>용도</h3><p>작업자 개별 전원연결</p></div><div class="spec-box"><h3>규격</h3><p>10kVA~이하</p></div></div>
+        <div class="image-grid"><img src="image1.jpg" alt="임시분전반 1"><img src="image2.jpg" alt="임시분전반 2"><img src="image3.jpg" alt="임시분전반 3"><img src="image4.jpg" alt="임시분전반 4"></div>
+        <h2 class="section-title catalog-subtitle">제원</h2>
+        <div class="table-wrap"><table class="small-table"><thead><tr><th>형식</th><th>사양</th></tr></thead><tbody><tr><th>정격전압</th><td>220V/220V<br>380V/380-220V</td></tr><tr><th>정격전류</th><td>단상 40A 이하 / 삼상 15A 이하</td></tr><tr><th>정격주파수</th><td>50 or 60Hz</td></tr><tr><th>정격단시간 전류</th><td>2.5 ~ 10kA</td></tr><tr><th>외함 크기</th><td>모델참조</td></tr></tbody></table></div>
+        <h2 class="section-title catalog-subtitle">종류</h2>
+        <div class="notice-box"><strong>삼상 10kVA초과제품은 스마트안전장비 저압수전 전원공급장치로 공급되며, 이동이 용이하도록 바퀴부착됩니다.<br><span style="color:#12378f;">※ 규격외 정격전압제품은 주문품으로 제작가능합니다.</span></strong></div>
+        <div class="table-wrap"><table><thead><tr><th rowspan="2">순번</th><th rowspan="2" class="left">품명</th><th rowspan="2">모델명</th><th rowspan="2">규격</th><th colspan="3">외함(mm)</th><th rowspan="2">무게 (kg)</th><th rowspan="2">비고 (콘센트부착)</th></tr><tr><th>가로</th><th>높이</th><th>깊이</th></tr></thead><tbody><tr><td>1</td><td class="left" rowspan="3">스마트안전장비<br>임시 배전반</td><td>ITE-SP-P-M-5(S)</td><td>220V<br>5kVA</td><td>400</td><td>500</td><td>200</td><td>36.32kg</td><td>2개(16A X 2)</td></tr><tr><td>2</td><td>ITE-SP-P-M-7.5(S)</td><td>7.5kVA</td><td>400</td><td>600</td><td>200</td><td>47.88kg</td><td>2개(16A X 2)</td></tr><tr><td>3</td><td>ITE-SP-P-M-10(S)</td><td>10kVA</td><td>500</td><td>600</td><td>200</td><td>55.88kg</td><td>2개(16AX1,,32AX1) 또는 3개(16AX3)</td></tr><tr><td>4</td><td class="left">이동형전원 공급장치-삼상</td><td colspan="7"><span style="color:#12378f;">② 임시 배전반 (중소형현장 임시전력-저압수전) :10~150kVA 모델에 적용→ 이동이 용이하도록 바퀴부착하여 공급됩니다.</span></td></tr></tbody></table></div>
+      </div>
+    </section>
+  </main>
+
+<!-- 푸터 (회사 정보) -->
+<div id="footer"></div>
+<script src="/common/commonFooter.js" defer></script>
+
+
+  <script>
+    const motionTargets = document.querySelectorAll(
+      '.panel, .feature-card, .compare, .highlight, .spec-box, .image-grid img, .table-wrap, .notice-box'
+    );
+
+    motionTargets.forEach((target, index) => {
+      target.classList.add('motion-item');
+      target.classList.add(`motion-delay-${(index % 4) + 1}`);
+    });
+
+    const motionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('motion-visible');
+          motionObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.16,
+      rootMargin: '0px 0px -8% 0px'
+    });
+
+    motionTargets.forEach((target) => motionObserver.observe(target));
+
+    document.querySelectorAll('.tab').forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const targetId = tab.dataset.tab;
+        document.querySelectorAll('.tab').forEach((item) => item.classList.remove('active'));
+        document.querySelectorAll('.catalog-content').forEach((content) => content.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(targetId).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
