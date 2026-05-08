@@ -185,9 +185,171 @@ h1 {
 }
 /* ================= 페이지네이션 끝================= */
 
+
+/* =========================================== 전체 개요 섹션 ========================================= */
+.product-overview{
+  width:100%;                                      /* 전체 가로 사용 */
+  background:linear-gradient(
+    to bottom,
+    #f8fbff 0%,
+    #edf4fb 100%
+  );                                               /* 밝은 배경 그라데이션 */
+
+  /* 세로 여백 축소 */
+  padding:60px 24px;
+}
+
+/* ===== 내부 정렬 영역 ===== */
+.overview-inner{
+  max-width:1400px;                                /* 최대 너비 제한 */
+  margin:0 auto;                                   /* 가운데 정렬 */
+}
+
+/* ===== 제목 ===== */
+.overview-inner h2{
+  text-align:center;                               /* 가운데 정렬 */
+  font-size:54px;                                  /* 제목 크기 */
+  font-weight:900;                                 /* 제목 굵기 */
+  color:#0f172a;                                   /* 진한 남색 */
+  margin-bottom:45px;                              /* 제목 아래 여백 */
+  letter-spacing:-2px;                             /* 글자 간격 */
+}
+
+/* ===== 메인 배너 ===== */
+.overview-banner{
+  position:relative;
+  overflow:hidden;
+
+  width:100%;
+
+  /* 배너 높이 축소 */
+  min-height:220px;
+
+  border-radius:30px;
+
+  /* 배경 이미지 + 블루 계열 그라데이션 */
+  background:
+    linear-gradient(
+      135deg,
+      rgba(8,47,73,.92) 0%,
+      rgba(14,116,144,.88) 40%,
+      rgba(37,99,235,.82) 100%
+    ),
+    url('/images/busbar-bg.jpg') center center / cover no-repeat;
+
+  /* 그림자 */
+  box-shadow:
+    0 25px 60px rgba(15,23,42,.14),
+    0 10px 30px rgba(37,99,235,.10);
+
+  border:1px solid rgba(255,255,255,.12);
+
+  backdrop-filter:blur(6px);
+
+  /* 스크롤 등장 모션 */
+  opacity:0;
+  transform:translateY(50px);
+
+  transition:
+    opacity 1s ease,
+    transform 1s ease;
+}
+
+/* ===== 화면에 보일 때 적용 ===== */
+.overview-banner.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* ===== 텍스트 영역 ===== */
+.overview-text{
+  position:relative;
+  z-index:2;
+
+  min-height:220px;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  text-align:center;
+
+  /* 내부 여백 축소 */
+  padding:30px;
+}
+
+/* ===== 메인 설명 ===== */
+.overview-text p{
+  margin:0;
+
+  font-size:1.9rem;
+  font-weight:800;
+  line-height:1.75;
+  letter-spacing:-0.5px;
+
+  color:#ffffff;
+
+  text-shadow:0 3px 18px rgba(0,0,0,.18);
+
+  word-break:keep-all;
+}
+
+/* ===== 하단 영문 설명 ===== */
+.overview-text span{
+  margin-top:16px;
+
+  font-size:.92rem;
+  font-weight:600;
+  letter-spacing:3px;
+
+  color:#dbeafe;
+  opacity:.92;
+}
+/* =========================================== 전체 개요 섹션 ========================================= */
+	
 /* ========================================== 모바일 전용 CSS ================================================= */
 
-/* (모바일 전용 룰을 추가하려면 이 아래에 작성) */
+/* =========== 상단 개요부분 ===== ===== */
+@media (max-width:768px){
+
+  .product-overview{
+    padding:45px 14px;
+  }
+
+  .overview-inner h2{
+    font-size:38px;
+    margin-bottom:30px;
+  }
+
+  .overview-banner{
+    min-height:180px;
+    border-radius:22px;
+
+    transform:translateY(35px);
+
+    transition:
+      opacity .9s ease,
+      transform .9s ease;
+  }
+
+  .overview-text{
+    min-height:180px;
+    padding:24px 18px;
+  }
+
+  .overview-text p{
+    font-size:1.08rem;
+    line-height:1.7;
+  }
+
+  .overview-text span{
+    font-size:.7rem;
+    letter-spacing:2px;
+  }
+
+}
+/* =========== 상단 개요부분 ===== ===== */
 
 /* =========================================== 모바일 전용 CSS ================================================= */
  
@@ -213,13 +375,26 @@ h1 {
 <script src="/common/commonSubVisual.js" defer></script>
 
 	
-<!-- ✅ 검색창 -->
-<div class="search-bar">
-  <input id="q" type="search" placeholder="제품명, 설명, 재질, 용도, 종류 검색">
-  <button id="clearBtn" type="button">초기화</button>
-</div>
-
-<!-- 검색 UI 끝 -->
+<!-- ===== 상품 상단 개요 배너 ===== -->
+<section class="product-overview">
+  <div class="overview-inner">
+    <!-- 제목 -->
+    <h2>개요</h2>
+    <!-- 메인 배너 -->
+    <div class="overview-banner">
+      <!-- 텍스트 영역 -->
+      <div class="overview-text">
+        <p>
+          맞춤 절단·절곡·가공이 가능한 고품질 부스바 제품으로<br>
+          니켈 · 주석 · 은 도금 처리 및 원줄 납품이 가능한 전력 배선 솔루션입니다.
+        </p>
+        <span>
+          BUSBAR SOLUTION FOR POWER DISTRIBUTION SYSTEM
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
 
 
 <!-- 🔄 제품 카드 목록이 동적으로 렌더될 컨테이너 -->
@@ -227,6 +402,13 @@ h1 {
 <!-- 페이지네이션 컨테이너 -->
 <div id="pager" class="pager"></div>
 
+<!-- ✅ 검색창 -->
+<div class="search-bar">
+  <input id="q" type="search" placeholder="제품명, 설명, 재질, 용도, 종류 검색">
+  <button id="clearBtn" type="button">초기화</button>
+</div>
+
+<!-- 검색 UI 끝 -->
 
 	
 <!-- 푸터: 사업자/연락처 정보 고정 표기 -->
@@ -419,16 +601,31 @@ h1 {
         "시간 초과: 네트워크/권한 문제일 수 있습니다. 브라우저 콘솔(F12) → Console/Network 로그 확인해 주세요.";
     }
   }, 8000);
+
+
+
+
+/* =========================상단 개요 배너 스크롤 모션 ======================== */
+const overviewBanner = document.querySelector(".overview-banner");
+
+if(overviewBanner){
+	const overviewObserver = new IntersectionObserver((entries)=>{
+    entries.forEach((entry)=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add("show");
+      }
+
+    });
+
+  },{
+    threshold:0.2
+  });
+
+  overviewObserver.observe(overviewBanner);
+}
 </script>
 
 </script> <!-- (원본 유지) 중복 </script> 태그가 있어도 기능엔 영향 없음 -->
 
 </body>
 </html>
-
-
-
-
-
-
-
