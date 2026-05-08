@@ -1482,7 +1482,7 @@ cardsWrap.innerHTML = items.map(p=>{
               </tr>
               <tr>
                 <th style="padding:.45rem .6rem; border-bottom:1px solid #ddd; background:#f9f9f9; font-weight:900;">가격</th>
-                <td style="padding:.45rem .6rem; border-bottom:1px solid #ddd; color:#555;">${price}</td>
+                <td style="padding:.45rem .6rem; border-bottom:1px solid #ddd; color:#555;">${p.price ? Number(p.price).toLocaleString() + '원' : '견적문의'}</td>
               </tr>
             </table>
           </div>
