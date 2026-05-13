@@ -1,0 +1,1597 @@
+<!DOCTYPE html> 
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>견적문의:(주) 이스트파워메탈 부스바, 동버스바, 분전반, 배전반, 임가공, 김포, 화성, 경기, 인천, 서울</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- 파비콘: 브라우저 탭/바 아이콘 지정 -->
+<link rel="icon" type="image/png" sizes="32x32" href="/epmFavicon.png">
+<link rel="shortcut icon" href="/favicon.ico">
+	
+<!-- ✅ SEO 기본 메타태그: 검색엔진 색인 및 클릭 유도문구 설정 -->
+<meta name="keywords" content="이스트파워메탈, 동버스바, 부스바, 분전반, 배전반, 수배전반, 무감전 분전반, 무감전 배전반, 무감전 변압기, 임가공, 절곡, 가공, 비철금속, 금속, 절단, 화성공장, 김포공장, 김포, 화성, 경기, 인천, 서울, 동부스바, 무감전, 누설전류 통제장치, 누설전류">
+<meta name="description" content="이스트파워메탈은 부스바, 버스바, 동버스바, 분전반, 수배전반, 임가공 김포, 화성, 경기, 인천, 서울 다양한 품종과 맞춤 절단 서비스를 제공합니다.">
+<meta name="author" content="이스트파워메탈">
+<meta name="robots" content="index, follow">
+
+<!-- ✅ Open Graph (SNS 공유 미리보기 카드 설정) -->
+<meta property="og:title" content="이스트파워메탈:부스바, 동버스바, 분전반, 배전반, 임가공, 김포, 화성, 경기, 인천, 서울">
+<meta property="og:image" content="https://cwwnarmrvpvjptytepdo.supabase.co/storage/v1/object/public/product-image/product/1762495343476_40x80x224_1-Photoroom.png">
+<meta property="og:url" content="https://www.eastpowermetal.com/busbar.html">
+<meta property="og:type" content="website">
+
+<!-- ✅ 트위터 카드 메타 -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="이스트파워메탈:부스바, 동버스바, 분전반, 배전반, 임가공, 김포, 화성, 경기, 인천, 서울">
+<meta name="twitter:description" content="이스트파워메탈은 부스바, 버스바, 동버스바, 분전반, 수배전반, 임가공 김포, 화성, 경기, 인천, 서울 다양한 품종과 맞춤 절단 서비스를 제공합니다.">
+<meta name="twitter:image" content="https://cwwnarmrvpvjptytepdo.supabase.co/storage/v1/object/public/product-image/product/1762495343476_40x80x224_1-Photoroom.png">
+
+<!-- ✅ 네이버/일부 크롤러 호환 목적의 OG 메타 반복 선언 -->
+<meta property="og:title" content="이스트파워메탈:부스바, 동버스바, 분전반, 배전반, 임가공, 김포, 화성, 경기, 인천, 서울">
+<meta property="og:description" content="이스트파워메탈은 부스바, 버스바, 동버스바, 분전반, 수배전반, 임가공 김포, 화성, 경기, 인천, 서울 다양한 품종과 맞춤 절단 서비스를 제공합니다.">
+<meta property="og:image" content="https://cwwnarmrvpvjptytepdo.supabase.co/storage/v1/object/public/product-image/product/1762495343476_40x80x224_1-Photoroom.png">
+<meta property="og:url" content="https://www.eastpowermetal.com/busbar.html">
+<meta property="og:type" content="website">
+	
+<!-- ✅ 사이트 소유권 검증(검색 콘솔/네이버 서치어드바이저) -->
+<meta name="google-site-verification" content="google444cc8347990b8a8"/>
+<meta name="naver-site-verification" content="c2165f2b265182c8668d9374095a8bdcd78bf2c1" />
+
+<!-- 웹폰트: 나눔명조/나눔고딕 로딩 -->
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700&family=Nanum+Gothic&display=swap" rel="stylesheet">
+
+<!-- 공통 네비/푸터 스타일 -->
+<link rel="stylesheet" href="common.css">
+
+<!-- Supabase JS SDK v2: 클라이언트에서 DB 접근용 -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+body{
+  background:#f8fafc;
+}
+
+.inquiry-wrap{
+  max-width:900px;
+  margin:80px auto;
+  background:#fff;
+  padding:40px;
+  border-radius:8px;
+  box-shadow:0 8px 24px rgba(0,0,0,0.08);
+}
+
+.inquiry-wrap h2{
+  text-align:center;
+  margin-bottom:30px;
+  font-size:26px;
+}
+
+.form-row{
+  margin-bottom:18px;
+}
+
+.form-row label{
+  display:block;
+  margin-bottom:6px;
+  font-weight:600;
+}
+
+.required::after{
+  content:" ●";
+  color:#00a0a0;
+  font-size:12px;
+}
+
+input, select, textarea{
+  width:100%;
+  padding:10px;
+  border:1px solid #ddd;
+  border-radius:4px;
+  font-size:14px;
+  box-sizing:border-box;
+}
+
+.phone-group{
+  display:flex;
+  gap:10px;
+}
+
+.email-group{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.email-group input{
+  flex:2.5;
+}
+
+.email-group input:last-of-type{
+  flex:2;
+}
+
+.email-group select{
+  flex:1.2;
+  max-width:140px;
+}
+
+textarea{
+  min-height:330px;
+  resize:vertical;
+}
+
+/* 내용 에디터 */
+.husky-editor-wrap{
+  border:1px solid #bcbcbc;
+  background:#fff;
+}
+
+.husky-toolbar{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:63px;
+  min-height:36px;
+  padding:4px 6px;
+  background:linear-gradient(#fafafa, #e9e9e9);
+  border-bottom:1px solid #bcbcbc;
+}
+
+.husky-toolbar ul{
+  display:flex;
+  align-items:center;
+  margin:0 4px 0 0;
+  padding:0;
+  list-style:none;
+}
+
+.husky-toolbar li{
+  position:relative;
+  margin:0;
+  padding:0;
+}
+
+.husky-toolbar select,
+.husky-toolbar button,
+.husky-toolbar label{
+  height:28px;
+  min-width:28px;
+  margin:0 1px;
+  padding:3px 7px;
+  border:1px solid #b7b7b7;
+  border-radius:2px;
+  background:linear-gradient(#fff, #e6e6e6);
+  color:#222;
+  font-size:13px;
+  line-height:1;
+  cursor:pointer;
+  box-sizing:border-box;
+}
+
+.husky-toolbar button:hover,
+.husky-toolbar select:hover,
+.husky-toolbar label:hover{
+  background:#eef3fb;
+  border-color:#9aacbf;
+}
+
+.husky-toolbar li.active button,
+.husky-toolbar li.active label{
+  background:linear-gradient(#cfdced, #b8cbe3);
+  border-color:#6f8fb5;
+  box-shadow:inset 1px 1px 3px rgba(0,0,0,0.25);
+  color:#111;
+}
+
+.husky-toolbar li:not(.active) button,
+.husky-toolbar li:not(.active) label{
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.9), 0 1px 1px rgba(0,0,0,0.08);
+}
+
+.husky-toolbar select{
+  min-width:72px;
+}
+
+.husky-toolbar .font-size{
+  min-width:56px;
+}
+
+.husky-toolbar .btn-bold{font-weight:800; font-size:17px;}
+.husky-toolbar .btn-underline{text-decoration:underline; font-size:17px;}
+.husky-toolbar .btn-italic{font-style:italic; font-size:17px;}
+.husky-toolbar .btn-strike{text-decoration:line-through; font-size:17px;}
+.husky-toolbar .btn-color{font-weight:800; border-bottom:3px solid #111;}
+.husky-toolbar .btn-bg{font-weight:800; background:linear-gradient(#fff7d6, #ead47b);}
+
+.husky-toolbar input[type="color"]{
+  position:absolute;
+  left:0;
+  top:0;
+  width:28px;
+  height:28px;
+  opacity:0;
+  cursor:pointer;
+}
+
+.husky-color-panel{
+  display:none;
+  position:absolute;
+  top:34px;
+  left:0;
+  z-index:50;
+  width:278px;
+  padding:0;
+  border:1px solid #b8b8b8;
+  background:#fff;
+  box-shadow:0 4px 12px rgba(0,0,0,0.18);
+  font-size:12px;
+}
+
+.husky-color-panel.active{
+  display:block;
+}
+
+.color-basic-panel{
+  padding:8px 0 0;
+}
+
+.color-panel-row{
+  padding:7px 10px;
+  border-bottom:1px solid #ddd;
+}
+
+.color-panel-title{
+  margin-bottom:6px;
+  font-weight:700;
+  color:#333;
+}
+
+.color-auto-row{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 10px;
+  border-bottom:1px solid #ddd;
+}
+
+.color-auto-box{
+  width:14px;
+  height:14px;
+  border:1px solid #ddd;
+  background:#fff;
+}
+
+.color-theme-grid,
+.color-standard-grid,
+.color-recent-grid{
+  display:grid;
+  gap:4px;
+}
+
+.color-theme-grid{
+  grid-template-columns:repeat(10, 20px);
+}
+
+.color-standard-grid{
+  grid-template-columns:repeat(10, 20px);
+}
+
+.color-recent-grid{
+  grid-template-columns:repeat(8, 20px);
+}
+
+.color-cell{
+  width:20px;
+  height:20px;
+  border:1px solid #ddd;
+  cursor:pointer;
+  box-sizing:border-box;
+}
+
+.color-cell:hover{
+  border:2px solid #111;
+}
+
+.color-more-btn,
+.color-spoid-btn{
+  width:100%;
+  height:28px;
+  border:0;
+  border-bottom:1px solid #ddd;
+  background:#fff;
+  text-align:left;
+  padding:0 10px;
+  font-size:12px;
+  cursor:pointer;
+}
+
+.color-more-btn:hover,
+.color-spoid-btn:hover{
+  background:#eef3fb;
+}
+
+.custom-color-panel{
+  width:330px;
+  padding:0;
+  background:#f4f4f4;
+}
+
+.custom-color-head{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  padding:8px 8px 0;
+  border-bottom:1px solid #c8c8c8;
+}
+
+.custom-tab{
+  padding:5px 12px;
+  border:1px solid transparent;
+  background:transparent;
+  font-size:12px;
+}
+
+.custom-tab.active{
+  border-color:#bcbcbc;
+  border-bottom-color:#f4f4f4;
+  background:#f4f4f4;
+  font-weight:700;
+}
+
+.custom-color-close{
+  margin-left:auto;
+  width:24px;
+  height:24px;
+  border:0;
+  background:transparent;
+  font-size:18px;
+  cursor:pointer;
+}
+
+.custom-color-body{
+  display:grid;
+  grid-template-columns:230px 82px;
+  gap:10px;
+  padding:10px;
+}
+
+.custom-color-left{
+  display:grid;
+  grid-template-columns:180px 16px;
+  gap:8px;
+}
+
+.custom-color-map{
+  position:relative;
+  width:180px;
+  height:138px;
+  background:linear-gradient(to right, red, yellow, lime, cyan, blue, magenta, red);
+  cursor:crosshair;
+}
+
+.custom-color-map:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.75));
+}
+
+.custom-color-map:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,0.35));
+}
+
+.custom-hue-slider{
+  width:12px;
+  height:138px;
+  background:linear-gradient(to bottom, #eef3ff, #9fb7ef, #3255bd, #001338, #000000);
+  position:relative;
+  cursor:pointer;
+}
+
+.custom-hue-arrow{
+  position:absolute;
+  right:-8px;
+  top:73%;
+  width:0;
+  height:0;
+  border-top:5px solid transparent;
+  border-bottom:5px solid transparent;
+  border-right:7px solid #111;
+  pointer-events:none;
+}
+
+.custom-color-cross{
+  position:absolute;
+  width:12px;
+  height:12px;
+  transform:translate(-6px, -6px);
+  pointer-events:none;
+  z-index:2;
+}
+
+.custom-color-cross:before,
+.custom-color-cross:after{
+  content:"";
+  position:absolute;
+  background:#fff;
+  box-shadow:0 0 1px #000;
+}
+
+.custom-color-cross:before{
+  left:5px;
+  top:0;
+  width:2px;
+  height:12px;
+}
+
+.custom-color-cross:after{
+  left:0;
+  top:5px;
+  width:12px;
+  height:2px;
+}
+
+.custom-option-area{
+  grid-column:1 / 2;
+  margin-top:8px;
+}
+
+.custom-option-area label{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  height:27px;
+  font-weight:400;
+  font-size:12px;
+}
+
+.custom-option-area select{
+  width:80px;
+  height:24px;
+  padding:2px;
+  font-size:12px;
+}
+
+.custom-option-area input{
+  width:64px;
+  height:22px;
+  padding:2px 4px;
+  border:1px solid #aaa;
+  font-size:12px;
+}
+
+.custom-color-side{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+}
+
+.custom-color-buttons{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  width:82px;
+}
+
+.custom-color-buttons button{
+  height:28px;
+  border:1px solid #aaa;
+  border-radius:3px;
+  background:#fff;
+  cursor:pointer;
+}
+
+.custom-color-buttons button:first-child{
+  background:#eaf3ff;
+  border-color:#4b8bd8;
+}
+
+.custom-preview-label{
+  margin-top:92px;
+  font-size:12px;
+}
+
+.custom-preview-label,
+.custom-current-label{
+  width:78px;
+  text-align:center;
+}
+
+.custom-preview,
+.custom-current-preview{
+  width:78px;
+  height:58px;
+  border:1px solid #aaa;
+  background:#000;
+}
+
+.custom-current-preview{
+  height:58px;
+}
+
+.custom-current-label{
+  font-size:12px;
+}
+
+.custom-opacity{
+  grid-column:1 / 3;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding-top:8px;
+  font-size:12px;
+}
+
+.custom-opacity-line{
+  width:140px;
+  height:1px;
+  background:#ccc;
+}
+
+.custom-opacity input{
+  width:64px;
+  height:22px;
+  padding:2px 4px;
+  border:1px solid #aaa;
+  font-size:12px;
+}
+
+.husky-edit-area{
+  height:330px;                 /* 고정 높이 */
+  max-height:330px;             /* 최대 높이 고정 */
+
+  padding:12px;
+  outline:none;
+
+  font-size:14px;
+  line-height:1.6;
+
+  overflow-y:auto;              /* 세로 스크롤 생성 */
+  overflow-x:hidden;
+
+  box-sizing:border-box;
+}
+
+.husky-edit-area:empty:before{
+  content:"내용을 입력해주세요.";
+  color:#aaa;
+}
+
+.content-hidden{
+  display:none;
+}
+
+.file-box{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.submit-btn{
+  width:100%;
+  margin-top:30px;
+  padding:14px;
+  background:#12378f;
+  color:#fff;
+  border:none;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+  border-radius:4px;
+}
+
+.submit-btn:hover{
+  background:#0f2f75;
+}
+
+@media(max-width:700px){
+  .inquiry-wrap{
+    margin:40px 16px;
+    padding:24px;
+  }
+
+  .phone-group,
+  .email-group{
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .email-group select{
+    max-width:none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div id="nav"></div>
+<script src="/commonNav.js" defer></script>
+
+<div class="inquiry-wrap">
+  <h2>견적문의</h2>
+
+  <form novalidate>
+
+    <div class="form-row">
+      <label>단체/회사명</label>
+      <input type="text">
+    </div>
+
+    <div class="form-row">
+      <label class="required">이름</label>
+      <input type="text" required>
+    </div>
+
+    <div class="form-row">
+      <label class="required">전화번호</label>
+	<div class="phone-group">
+	  <input type="text" maxlength="3" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+	  <input type="text" maxlength="4" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+	  <input type="text" maxlength="4" inputmode="numeric" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+	</div>
+    </div>
+
+    <div class="form-row">
+      <label class="required">이메일</label>
+      <div class="email-group">
+        <input type="text">
+        <span>@</span>
+        <input type="text" id="emailDomainInput">
+		<select onchange="setEmailDomain(this)">
+			<option value="">직접입력</option>
+			<option value="naver.com">naver.com</option>
+			<option value="daum.net">daum.net</option>
+			<option value="gmail.com">gmail.com</option>
+			<option value="nate.com">nate.com</option>
+			<option value="hanmail.net">hanmail.net</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label class="required">제목</label>
+      <input type="text" required>
+    </div>
+
+    <div class="form-row">
+      <label class="required">내용</label>
+
+      <div class="husky-editor-wrap">
+        <div class="husky-toolbar">
+          <ul class="se2_font_type">
+            <li class="husky_seditor_ui_fontName">
+              <select onchange="runEditor('fontName', this.value)">
+                <option value="돋움">돋움</option>
+                <option value="굴림">굴림</option>
+                <option value="맑은 고딕">맑은 고딕</option>
+                <option value="나눔고딕">나눔고딕</option>
+                <option value="Noto Sans KR">Noto Sans KR</option>
+                <option value="바탕">바탕</option>
+                <option value="궁서">궁서</option>
+                <option value="Arial">Arial</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Tahoma">Tahoma</option>
+                <option value="Times New Roman">Times New Roman</option>
+              </select>
+            </li>
+            <li class="husky_seditor_ui_fontSize">
+              <select class="font-size" onchange="runEditor('fontSize', this.value)">
+                <option value="1">8pt</option>
+                <option value="2">9pt</option>
+                <option value="3" selected>10pt</option>
+                <option value="4">12pt</option>
+                <option value="5">14pt</option>
+                <option value="6">18pt</option>
+                <option value="7">24pt</option>
+              </select>
+            </li>
+          </ul>
+
+          <ul>
+            <li class="husky_seditor_ui_bold" data-state="bold"><button type="button" class="btn-bold" title="굵게" onclick="runEditor('bold')">가</button></li>
+            <li class="husky_seditor_ui_underline" data-state="underline"><button type="button" class="btn-underline" title="밑줄" onclick="runEditor('underline')">가</button></li>
+            <li class="husky_seditor_ui_italic" data-state="italic"><button type="button" class="btn-italic" title="기울임" onclick="runEditor('italic')">가</button></li>
+            <li class="husky_seditor_ui_lineThrough" data-state="strikeThrough"><button type="button" class="btn-strike" title="취소선" onclick="runEditor('strikeThrough')">가</button></li>
+            <li class="husky_seditor_ui_fontColor">
+              <button type="button" class="btn-color" title="글자색" onmousedown="keepEditorSelection(event)" onclick="toggleColorPanel(event, 'fontColorPanel')">가</button>
+              <div id="fontColorPanel" class="husky-color-panel color-basic-panel" data-command="foreColor" data-input="fontColorCode">
+                
+
+                <div class="color-panel-row">
+                  <div class="color-panel-title">테마 색</div>
+                  <div class="color-theme-grid" data-palette="fontColorPanel"></div>
+                </div>
+
+                <div class="color-panel-row">
+                  <div class="color-panel-title">표준 색</div>
+                  <div class="color-standard-grid" data-standard="fontColorPanel"></div>
+                </div>
+
+                <div class="color-panel-row">
+                  <div class="color-panel-title">최근에 사용한 색</div>
+                  <div class="color-recent-grid" data-recent="fontColorPanel"></div>
+                </div>
+
+                <button type="button" class="color-more-btn" onmousedown="keepEditorSelection(event)" onclick="openCustomColor(event, 'fontCustomPanel')">🎨 다른 색(M)...</button>
+                
+              </div>
+
+              <div id="fontCustomPanel" class="husky-color-panel custom-color-panel" data-command="foreColor" data-input="fontColorCode">
+                <div class="custom-color-head">
+                  <span class="custom-tab">기본</span>
+                  <span class="custom-tab active">사용자 지정</span>
+                  <button type="button" class="custom-color-close" onclick="closeColorPanel('fontCustomPanel')">×</button>
+                </div>
+                <div class="custom-color-body">
+                  <div class="custom-color-left">
+                    <div class="custom-color-map" onmousedown="startColorDrag(event, 'fontColorCode', 'fontCustomPreview')">
+                      <span class="custom-color-cross" id="fontCustomCross" style="left:58%; top:35%;"></span>
+                    </div>
+                    <div class="custom-hue-slider" onmousedown="startShadeDrag(event)"><span class="custom-hue-arrow"></span></div>
+
+                    <div class="custom-option-area">
+                      <label>색 모델(D): <select><option>RGB</option></select></label>
+                      <label>빨강(R): <input type="number" id="fontR" value="0" min="0" max="255" oninput="rgbToHexInput('font')"></label>
+                      <label>녹색(G): <input type="number" id="fontG" value="0" min="0" max="255" oninput="rgbToHexInput('font')"></label>
+                      <label>파랑(B): <input type="number" id="fontB" value="0" min="0" max="255" oninput="rgbToHexInput('font')"></label>
+                      <label>16진수(H): <input type="text" id="fontColorCode" value="#000000" maxlength="7" onkeydown="handleColorEnter(event,'foreColor','fontColorCode','fontCustomPanel')" oninput="hexToRgbInput('font')"></label>
+                    </div>
+                  </div>
+
+                  <div class="custom-color-side">
+                    <div class="custom-color-buttons">
+                      <button type="button" onmousedown="keepEditorSelection(event)" onclick="applyColorCode('foreColor','fontColorCode','fontCustomPanel')">확인</button>
+                      <button type="button" onmousedown="keepEditorSelection(event)" onclick="closeColorPanel('fontCustomPanel')">취소</button>
+                    </div>
+                    <div class="custom-preview-label">새 색</div>
+                    <div class="custom-preview" id="fontCustomPreview"></div>
+                    <div class="custom-current-label">현재 색</div>
+                    <div class="custom-current-preview" id="fontCurrentPreview"></div>
+                    <div class="custom-opacity">
+                    <span>투명도(T):</span>
+                    <div class="custom-opacity-line"></div>
+                    <input type="number" value="0"> %
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="husky_seditor_ui_BGColor">
+              <button type="button" class="btn-bg" title="배경색" onmousedown="keepEditorSelection(event)" onclick="toggleColorPanel(event, 'bgColorPanel')">▣</button>
+              <div id="bgColorPanel" class="husky-color-panel color-basic-panel" data-command="hiliteColor" data-input="bgColorCode">
+                
+
+                <div class="color-panel-row">
+                  <div class="color-panel-title">테마 색</div>
+                  <div class="color-theme-grid" data-palette="bgColorPanel"></div>
+                </div>
+
+                <div class="color-panel-row">
+                  <div class="color-panel-title">표준 색</div>
+                  <div class="color-standard-grid" data-standard="bgColorPanel"></div>
+                </div>
+
+                <div class="color-panel-row">
+                  <div class="color-panel-title">최근에 사용한 색</div>
+                  <div class="color-recent-grid" data-recent="bgColorPanel"></div>
+                </div>
+
+                <button type="button" class="color-more-btn" onmousedown="keepEditorSelection(event)" onclick="openCustomColor(event, 'bgCustomPanel')">🎨 다른 색(M)...</button>
+                
+              </div>
+
+              <div id="bgCustomPanel" class="husky-color-panel custom-color-panel" data-command="hiliteColor" data-input="bgColorCode">
+                <div class="custom-color-head">
+                  <span class="custom-tab">기본</span>
+                  <span class="custom-tab active">사용자 지정</span>
+                  <button type="button" class="custom-color-close" onclick="closeColorPanel('bgCustomPanel')">×</button>
+                </div>
+                <div class="custom-color-body">
+                  <div class="custom-color-left">
+                    <div class="custom-color-map" onmousedown="startColorDrag(event, 'bgColorCode', 'bgCustomPreview')">
+                      <span class="custom-color-cross" id="bgCustomCross" style="left:58%; top:35%;"></span>
+                    </div>
+                    <div class="custom-hue-slider" onmousedown="startShadeDrag(event)"><span class="custom-hue-arrow"></span></div>
+
+                    <div class="custom-option-area">
+                      <label>색 모델(D): <select><option>RGB</option></select></label>
+                      <label>빨강(R): <input type="number" id="bgR" value="255" min="0" max="255" oninput="rgbToHexInput('bg')"></label>
+                      <label>녹색(G): <input type="number" id="bgG" value="255" min="0" max="255" oninput="rgbToHexInput('bg')"></label>
+                      <label>파랑(B): <input type="number" id="bgB" value="255" min="0" max="255" oninput="rgbToHexInput('bg')"></label>
+                      <label>16진수(H): <input type="text" id="bgColorCode" value="#ffffff" maxlength="7" onkeydown="handleColorEnter(event,'hiliteColor','bgColorCode','bgCustomPanel')" oninput="hexToRgbInput('bg')"></label>
+                    </div>
+                  </div>
+
+                  <div class="custom-color-side">
+                    <div class="custom-color-buttons">
+                      <button type="button" onmousedown="keepEditorSelection(event)" onclick="applyColorCode('hiliteColor','bgColorCode','bgCustomPanel')">확인</button>
+                      <button type="button" onmousedown="keepEditorSelection(event)" onclick="closeColorPanel('bgCustomPanel')">취소</button>
+                    </div>
+                    <div class="custom-preview-label">새 색</div>
+                    <div class="custom-preview" id="bgCustomPreview" style="background:#ffffff;"></div>
+                    <div class="custom-current-label">현재 색</div>
+                    <div class="custom-current-preview" id="bgCurrentPreview" style="background:#ffffff;"></div>
+                    <div class="custom-opacity">
+                    <span>투명도(T):</span>
+                    <div class="custom-opacity-line"></div>
+                    <input type="number" value="0"> %
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+
+          <ul>
+            <li class="husky_seditor_ui_justifyleft first_child" data-state="justifyLeft"><button type="button" title="왼쪽정렬" onclick="runEditor('justifyLeft')">☰</button></li>
+            <li class="husky_seditor_ui_justifycenter" data-state="justifyCenter"><button type="button" title="가운데정렬" onclick="runEditor('justifyCenter')">☷</button></li>
+            <li class="husky_seditor_ui_justifyright" data-state="justifyRight"><button type="button" title="오른쪽정렬" onclick="runEditor('justifyRight')">☰</button></li>
+            <li class="husky_seditor_ui_justifyfull" data-state="justifyFull"><button type="button" title="양쪽정렬" onclick="runEditor('justifyFull')">▤</button></li>
+            <li class="husky_seditor_ui_orderedlist"><button type="button" title="번호목록" onclick="runEditor('insertOrderedList')">1.</button></li>
+            <li class="husky_seditor_ui_unorderedlist"><button type="button" title="글머리목록" onclick="runEditor('insertUnorderedList')">•</button></li>
+            <li class="husky_seditor_ui_outdent"><button type="button" title="내어쓰기" onclick="runEditor('outdent')">⇤</button></li>
+            <li class="husky_seditor_ui_indent"><button type="button" title="들여쓰기" onclick="runEditor('indent')">⇥</button></li>
+          </ul>
+
+          <ul>
+            <li class="husky_seditor_ui_quote single_child"><button type="button" title="인용구" onclick="runEditor('formatBlock', 'blockquote')">❝</button></li>
+          </ul>
+
+        </div>
+
+        <div class="husky-edit-area" contenteditable="true"></div>
+
+        <textarea class="content-hidden" name="content" required></textarea>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label>첨부파일</label>
+      <div class="file-box">
+        <input type="file"  multiple accept="*">
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn">문의하기</button>
+
+  </form>
+</div>
+
+<div id="footer"></div>
+<script src="/common/commonFooter.js" defer></script>
+
+<script>
+
+// Supabase 프로젝트 URL/anon 키 (퍼블릭 클라이언트에서 제한 권한으로 사용)
+  const SUPABASE_URL = "https://cwwnarmrvpvjptytepdo.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3d25hcm1ydnB2anB0eXRlcGRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NzU4NTUsImV4cCI6MjA3NzQ1MTg1NX0.5mvgA_gKdlRaebVRSFIUJRKgp51zke_nffQ2jc8Ad1g";
+  
+  // Supabase 클라이언트 인스턴스 생성
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  
+const editArea = document.querySelector('.husky-edit-area');
+const hiddenContent = document.querySelector('.content-hidden');
+let savedEditorRange = null;
+let isDraggingColor = false;
+let dragColorContext = null;
+
+function saveEditorSelection(){
+  const selection = window.getSelection();
+  if(selection.rangeCount > 0 && editArea.contains(selection.anchorNode)){
+    savedEditorRange = selection.getRangeAt(0).cloneRange();
+  }
+}
+
+function keepEditorSelection(event){
+  event.preventDefault();
+  event.stopPropagation();
+  saveEditorSelection();
+}
+
+function restoreEditorSelection(){
+  if(!savedEditorRange) return;
+  const selection = window.getSelection();
+  selection.removeAllRanges();
+  selection.addRange(savedEditorRange);
+}
+
+function runEditor(command, value = null){
+  editArea.focus();
+  restoreEditorSelection();
+  document.execCommand(command, false, value);
+  saveEditorSelection();
+  updateToolbarState();
+}
+
+function toggleColorPanel(event, panelId){
+  event.stopPropagation();
+  restoreEditorSelection();
+
+  document.querySelectorAll('.husky-color-panel').forEach(function(panel){
+    if(panel.id !== panelId){
+      panel.classList.remove('active');
+    }
+  });
+
+  const panel = document.querySelector('#' + panelId);
+  if(panel){
+    panel.classList.toggle('active');
+  }
+}
+
+function closeColorPanel(panelId){
+  if(!panelId) return;
+  const panel = document.querySelector('#' + panelId);
+  if(panel){
+    panel.classList.remove('active');
+  }
+}
+
+function normalizeColorCodeSilent(colorCode){
+  let value = String(colorCode || '').trim();
+  if(value === '') return null;
+  if(value.charAt(0) !== '#') value = '#' + value;
+  const colorReg = new RegExp('^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$');
+  return colorReg.test(value) ? value : null;
+}
+
+function normalizeColorCode(colorCode){
+  const value = normalizeColorCodeSilent(colorCode);
+  if(value) return value;
+  alert('색상코드는 #000000 형식으로 입력해주세요.');
+  return null;
+}
+
+function applyColorCode(command, inputId, panelId = null){
+  const input = document.querySelector('#' + inputId);
+  if(!input) return;
+
+  const colorValue = normalizeColorCode(input.value);
+  if(!colorValue){
+    input.focus();
+    return;
+  }
+
+  input.value = colorValue;
+  addRecentColor(panelId, colorValue);
+  runEditor(command, colorValue);
+  closeColorPanel(panelId);
+}
+
+function handleColorEnter(event, command, inputId, panelId = null){
+  saveEditorSelection();
+  if(event.key === 'Enter'){
+    event.preventDefault();
+    applyColorCode(command, inputId, panelId);
+  }
+}
+
+document.addEventListener('click', function(event){
+  if(!event.target.closest('.husky_seditor_ui_fontColor') && !event.target.closest('.husky_seditor_ui_BGColor')){
+    document.querySelectorAll('.husky-color-panel').forEach(function(panel){
+      panel.classList.remove('active');
+    });
+  }
+});
+
+function quickColor(command, color, panelId){
+  addRecentColor(panelId, color);
+  runEditor(command, color);
+  closeColorPanel(panelId);
+}
+
+const themeColors = [
+  '#ffffff','#000000','#e7e6e6','#44546a','#4472c4','#ed7d31','#a5a5a5','#ffc000','#5b9bd5','#70ad47',
+  '#f2f2f2','#7f7f7f','#d9d9d9','#d6dce4','#d9e2f3','#fce4d6','#ededed','#fff2cc','#ddebf7','#e2f0d9',
+  '#d9d9d9','#595959','#bfbfbf','#adb9ca','#b4c6e7','#f8cbad','#dbdbdb','#ffe699','#bdd7ee','#c6e0b4',
+  '#bfbfbf','#404040','#a6a6a6','#8497b0','#8eaadb','#f4b183','#c9c9c9','#ffd966','#9dc3e6','#a9d18e',
+  '#a6a6a6','#262626','#7f7f7f','#323e4f','#2f5597','#c55a11','#7b7b7b','#bf9000','#2e75b6','#548235',
+  '#808080','#0d0d0d','#595959','#222a35','#1f3864','#833c0c','#525252','#7f6000','#1f4e79','#375623'
+];
+
+const standardColors = ['#c00000','#ff0000','#ffc000','#ffff00','#92d050','#00b050','#00b0f0','#0070c0','#002060','#7030a0'];
+const recentColors = [];
+
+function colorCellHtml(command, color, panelId){
+  return '<span class="color-cell" style="background:' + color + '" onmousedown="keepEditorSelection(event)" onclick="quickColor(' + "'" + command + "','" + color + "','" + panelId + "'" + ')"></span>';
+}
+
+function renderColorPalettes(){
+  document.querySelectorAll('[data-palette]').forEach(function(grid){
+    const panelId = grid.dataset.palette;
+    const panel = document.querySelector('#' + panelId);
+    if(!panel) return;
+    const command = panel.dataset.command;
+    grid.innerHTML = themeColors.map(function(color){
+      return colorCellHtml(command, color, panelId);
+    }).join('');
+  });
+
+  document.querySelectorAll('[data-standard]').forEach(function(grid){
+    const panelId = grid.dataset.standard;
+    const panel = document.querySelector('#' + panelId);
+    if(!panel) return;
+    const command = panel.dataset.command;
+    grid.innerHTML = standardColors.map(function(color){
+      return colorCellHtml(command, color, panelId);
+    }).join('');
+  });
+
+  renderRecentColors();
+}
+
+function renderRecentColors(){
+  document.querySelectorAll('[data-recent]').forEach(function(grid){
+    const panelId = grid.dataset.recent;
+    const panel = document.querySelector('#' + panelId);
+    if(!panel) return;
+    const command = panel.dataset.command;
+    const colors = recentColors.length ? recentColors : ['#0d1b3e'];
+    grid.innerHTML = colors.map(function(color){
+      return colorCellHtml(command, color, panelId);
+    }).join('');
+  });
+}
+
+function addRecentColor(panelId, color){
+  const hex = normalizeColorCodeSilent(color);
+  if(!hex) return;
+
+  const index = recentColors.indexOf(hex);
+  if(index > -1){
+    recentColors.splice(index, 1);
+  }
+
+  recentColors.unshift(hex);
+  if(recentColors.length > 8){
+    recentColors.pop();
+  }
+
+  renderRecentColors();
+}
+
+function openCustomColor(event, panelId){
+  event.stopPropagation();
+  restoreEditorSelection();
+
+  document.querySelectorAll('.husky-color-panel').forEach(function(panel){
+    panel.classList.remove('active');
+  });
+
+  const panel = document.querySelector('#' + panelId);
+  if(!panel) return;
+  panel.classList.add('active');
+
+  const command = panel.dataset.command;
+  let current = command === 'hiliteColor' ? '#ffffff' : '#000000';
+
+  try{
+    const queryValue = document.queryCommandValue(command);
+    const normalized = normalizeBrowserColor(queryValue);
+    if(normalized){
+      current = normalized;
+    }
+  }catch(e){}
+
+  const prefix = panelId.indexOf('font') === 0 ? 'font' : 'bg';
+  const currentPreview = document.querySelector('#' + prefix + 'CurrentPreview');
+  const newPreview = document.querySelector('#' + prefix + 'CustomPreview');
+  const codeInput = document.querySelector('#' + prefix + 'ColorCode');
+
+  if(currentPreview){
+    currentPreview.style.background = current;
+  }
+  if(newPreview){
+    newPreview.style.background = current;
+  }
+  if(codeInput){
+    codeInput.value = current;
+    hexToRgbInput(prefix);
+  }
+}
+
+let selectedHue = 180;
+let selectedShade = 0.5;
+
+function pickCustomColor(event, inputId, previewId){
+  const rect = event.currentTarget.getBoundingClientRect();
+  const x = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+  const y = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height));
+
+  selectedHue = x * 360;
+  selectedShade = y;
+  updateCustomColor(inputId, previewId, selectedHue, selectedShade, x, y);
+}
+
+function updateCustomColor(inputId, previewId, hue, shade, xPos = null, yPos = null){
+  const light = 100 - (shade * 85);
+  const rgb = hslToRgb(hue, 85, light);
+  const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
+  const prefix = inputId === 'fontColorCode' ? 'font' : 'bg';
+
+  const input = document.querySelector('#' + inputId);
+  const preview = document.querySelector('#' + previewId);
+  const rInput = document.querySelector('#' + prefix + 'R');
+  const gInput = document.querySelector('#' + prefix + 'G');
+  const bInput = document.querySelector('#' + prefix + 'B');
+
+  if(input) input.value = hex;
+  if(preview) preview.style.background = hex;
+  if(rInput) rInput.value = rgb.r;
+  if(gInput) gInput.value = rgb.g;
+  if(bInput) bInput.value = rgb.b;
+
+  const cross = document.querySelector('#' + prefix + 'CustomCross');
+  if(cross && xPos !== null && yPos !== null){
+    cross.style.left = (xPos * 100) + '%';
+    cross.style.top = (yPos * 100) + '%';
+  }
+
+  updateShadeBar(hue, shade);
+}
+
+function startColorDrag(event, inputId, previewId){
+  keepEditorSelection(event);
+  isDraggingColor = true;
+  dragColorContext = {
+    type: 'map',
+    inputId: inputId,
+    previewId: previewId,
+    target: event.currentTarget
+  };
+  pickCustomColor(event, inputId, previewId);
+  document.addEventListener('mousemove', onColorDrag);
+  document.addEventListener('mouseup', stopColorDrag);
+}
+
+function startShadeDrag(event){
+  keepEditorSelection(event);
+  const panel = event.currentTarget.closest('.custom-color-panel');
+  if(!panel) return;
+
+  const inputId = panel.dataset.input;
+  const prefix = inputId === 'fontColorCode' ? 'font' : 'bg';
+  const previewId = prefix + 'CustomPreview';
+
+  isDraggingColor = true;
+  dragColorContext = {
+    type: 'shade',
+    inputId: inputId,
+    previewId: previewId,
+    target: event.currentTarget
+  };
+  pickShadeColor(event, inputId, previewId);
+  document.addEventListener('mousemove', onColorDrag);
+  document.addEventListener('mouseup', stopColorDrag);
+}
+
+function pickShadeColor(event, inputId, previewId){
+  const rect = event.currentTarget.getBoundingClientRect();
+  const y = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height));
+  selectedShade = y;
+  updateCustomColor(inputId, previewId, selectedHue, selectedShade);
+  updateShadeBar(selectedHue, selectedShade);
+}
+
+function updateShadeBar(hue, shade){
+  document.querySelectorAll('.custom-hue-slider').forEach(function(slider){
+    slider.style.background = 'linear-gradient(to bottom, hsl(' + hue + ', 85%, 95%), hsl(' + hue + ', 85%, 55%), hsl(' + hue + ', 85%, 25%), #000000)';
+    const arrow = slider.querySelector('.custom-hue-arrow');
+    if(arrow){
+      arrow.style.top = (shade * 100) + '%';
+    }
+  });
+}
+
+function onColorDrag(event){
+  if(!isDraggingColor || !dragColorContext) return;
+
+  const dragEvent = {
+    clientX: event.clientX,
+    clientY: event.clientY,
+    currentTarget: dragColorContext.target
+  };
+
+  if(dragColorContext.type === 'shade'){
+    pickShadeColor(dragEvent, dragColorContext.inputId, dragColorContext.previewId);
+    return;
+  }
+
+  pickCustomColor(dragEvent, dragColorContext.inputId, dragColorContext.previewId);
+}
+
+function stopColorDrag(){
+  isDraggingColor = false;
+  dragColorContext = null;
+  document.removeEventListener('mousemove', onColorDrag);
+  document.removeEventListener('mouseup', stopColorDrag);
+}
+
+function rgbToHexInput(prefix){
+  const rInput = document.querySelector('#' + prefix + 'R');
+  const gInput = document.querySelector('#' + prefix + 'G');
+  const bInput = document.querySelector('#' + prefix + 'B');
+  const codeInput = document.querySelector('#' + prefix + 'ColorCode');
+  const preview = document.querySelector('#' + prefix + 'CustomPreview');
+
+  const r = clampColor(rInput ? rInput.value : 0);
+  const g = clampColor(gInput ? gInput.value : 0);
+  const b = clampColor(bInput ? bInput.value : 0);
+  const hex = rgbToHex(r, g, b);
+
+  if(codeInput) codeInput.value = hex;
+  if(preview) preview.style.background = hex;
+}
+
+function hexToRgbInput(prefix){
+  const input = document.querySelector('#' + prefix + 'ColorCode');
+  if(!input) return;
+
+  const hex = normalizeColorCodeSilent(input.value);
+  if(!hex) return;
+
+  const rgb = hexToRgb(hex);
+  const rInput = document.querySelector('#' + prefix + 'R');
+  const gInput = document.querySelector('#' + prefix + 'G');
+  const bInput = document.querySelector('#' + prefix + 'B');
+  const preview = document.querySelector('#' + prefix + 'CustomPreview');
+
+  if(rInput) rInput.value = rgb.r;
+  if(gInput) gInput.value = rgb.g;
+  if(bInput) bInput.value = rgb.b;
+  if(preview) preview.style.background = hex;
+
+  const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+  selectedHue = hsl.h;
+  selectedShade = 1 - (hsl.l / 100);
+  updateShadeBar(selectedHue, selectedShade);
+}
+
+function clampColor(value){
+  return Math.max(0, Math.min(255, Number(value) || 0));
+}
+
+function rgbToHex(r, g, b){
+  return '#' + [r,g,b].map(function(v){
+    return clampColor(v).toString(16).padStart(2, '0');
+  }).join('');
+}
+
+function hexToRgb(hex){
+  const clean = hex.replace('#', '');
+  const full = clean.length === 3 ? clean.split('').map(function(c){ return c + c; }).join('') : clean;
+  return {
+    r: parseInt(full.substring(0,2), 16),
+    g: parseInt(full.substring(2,4), 16),
+    b: parseInt(full.substring(4,6), 16)
+  };
+}
+
+function normalizeBrowserColor(value){
+  if(!value) return null;
+  if(value.indexOf('#') === 0){
+    return normalizeColorCodeSilent(value);
+  }
+
+  if(value.indexOf('rgb') === 0){
+    const nums = value.replace(/[rgba() ]/g, '').split(',');
+    if(nums.length >= 3){
+      return rgbToHex(nums[0], nums[1], nums[2]);
+    }
+  }
+
+  return null;
+}
+
+function hslToRgb(h, s, l){
+  s /= 100;
+  l /= 100;
+  const c = (1 - Math.abs(2 * l - 1)) * s;
+  const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+  const m = l - c / 2;
+  let r = 0, g = 0, b = 0;
+
+  if(h < 60){ r = c; g = x; }
+  else if(h < 120){ r = x; g = c; }
+  else if(h < 180){ g = c; b = x; }
+  else if(h < 240){ g = x; b = c; }
+  else if(h < 300){ r = x; b = c; }
+  else{ r = c; b = x; }
+
+  return {
+    r: Math.round((r + m) * 255),
+    g: Math.round((g + m) * 255),
+    b: Math.round((b + m) * 255)
+  };
+}
+
+function rgbToHsl(r, g, b){
+  r = clampColor(r) / 255;
+  g = clampColor(g) / 255;
+  b = clampColor(b) / 255;
+
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  let h = 0;
+  let s = 0;
+  const l = (max + min) / 2;
+
+  if(max !== min){
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+    if(max === r){
+      h = (g - b) / d + (g < b ? 6 : 0);
+    }else if(max === g){
+      h = (b - r) / d + 2;
+    }else{
+      h = (r - g) / d + 4;
+    }
+
+    h *= 60;
+  }
+
+  return {
+    h: h,
+    s: s * 100,
+    l: l * 100
+  };
+}
+
+function updateToolbarState(){
+  document.querySelectorAll('.husky-toolbar [data-state]').forEach(function(item){
+    const command = item.dataset.state;
+    let isActive = false;
+
+    try{
+      isActive = document.queryCommandState(command);
+    }catch(e){
+      isActive = false;
+    }
+
+    item.classList.toggle('active', isActive);
+  });
+}
+
+['keyup', 'mouseup', 'focus', 'input'].forEach(function(eventName){
+  editArea.addEventListener(eventName, function(){
+    saveEditorSelection();
+    updateToolbarState();
+  });
+});
+
+
+function setEmailDomain(select){
+  const domainInput = document.querySelector('#emailDomainInput');
+
+  if(select.value === ''){
+    domainInput.value = '';
+    domainInput.readOnly = false;
+    domainInput.focus();
+    return;
+  }
+
+  domainInput.value = select.value;
+  domainInput.readOnly = true;
+}
+
+
+async function uploadEditorPasteImage(file){
+  const ext = file.type.split('/')[1] || 'png';
+  const fileName = `paste_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+  const filePath = `inquiry/editor/${fileName}`;
+
+  const { error: uploadError } = await sb.storage
+    .from('inquiry-file')
+    .upload(filePath, file, {
+      upsert:false,
+      cacheControl:'3600',
+      contentType:file.type || 'image/png'
+    });
+
+  if(uploadError) throw uploadError;
+
+  return {
+    bucket:'inquiry-file',
+    path:filePath,
+    name:fileName,
+    type:file.type,
+    size:file.size
+  };
+}
+
+function insertEditorImagePreview(fileInfo, file){
+  const blobUrl = URL.createObjectURL(file);
+
+  const img = document.createElement('img');
+  img.src = blobUrl;
+  img.setAttribute('data-bucket', fileInfo.bucket);
+  img.setAttribute('data-path', fileInfo.path);
+  img.setAttribute('data-name', fileInfo.name);
+  img.style.maxWidth = '100%';
+  img.style.height = 'auto';
+
+  editArea.focus();
+  restoreEditorSelection();
+
+  const selection = window.getSelection();
+
+  if(selection.rangeCount > 0){
+    const range = selection.getRangeAt(0);
+    range.deleteContents();
+    range.insertNode(img);
+    range.setStartAfter(img);
+    range.setEndAfter(img);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }else{
+    editArea.appendChild(img);
+  }
+
+  saveEditorSelection();
+}
+
+editArea.addEventListener('paste', async function(e){
+  const items = e.clipboardData && e.clipboardData.items;
+  if(!items) return;
+
+  const imageItems = Array.from(items).filter(function(item){
+    return item.type.indexOf('image') === 0;
+  });
+
+  if(imageItems.length === 0) return;
+
+  e.preventDefault();
+
+  for(const item of imageItems){
+    const file = item.getAsFile();
+    if(!file) continue;
+
+    try{
+      const fileInfo = await uploadEditorPasteImage(file);
+      insertEditorImagePreview(fileInfo, file);
+    }catch(error){
+      console.error(error);
+      alert('붙여넣은 이미지 업로드 중 오류가 발생했습니다.');
+    }
+  }
+});
+
+function getEditorContentForSave(){
+  const clone = editArea.cloneNode(true);
+
+  clone.querySelectorAll('img[data-path]').forEach(function(img){
+    const bucket = img.getAttribute('data-bucket');
+    const path = img.getAttribute('data-path');
+
+    img.setAttribute('src', `storage://${bucket}/${path}`);
+  });
+
+  return clone.innerHTML;
+}
+
+
+
+document.querySelector('form').addEventListener('submit', async function(e){
+  e.preventDefault();
+
+  hiddenContent.value = getEditorContentForSave();
+
+  const companyInput = document.querySelector('.form-row:nth-of-type(1) input');
+  const nameInput = document.querySelector('.form-row:nth-of-type(2) input');
+  const phoneInputs = document.querySelectorAll('.phone-group input');
+  const emailInputs = document.querySelectorAll('.email-group input');
+  const titleInput = document.querySelector('.form-row:nth-of-type(5) input');
+  const fileInput = document.querySelector('.file-box input[type="file"]');
+  const submitBtn = document.querySelector('.submit-btn');
+
+  if(nameInput.value.trim() === ''){
+    alert('이름을 입력해주세요.');
+    nameInput.focus();
+    return;
+  }
+
+  if(
+    phoneInputs[0].value.trim() === '' ||
+    phoneInputs[1].value.trim() === '' ||
+    phoneInputs[2].value.trim() === ''
+  ){
+    alert('전화번호를 입력해주세요.');
+    phoneInputs[0].focus();
+    return;
+  }
+
+  if(
+    emailInputs[0].value.trim() === '' ||
+    emailInputs[1].value.trim() === ''
+  ){
+    alert('이메일을 입력해주세요.');
+    emailInputs[0].focus();
+    return;
+  }
+
+  if(titleInput.value.trim() === ''){
+    alert('제목을 입력해주세요.');
+    titleInput.focus();
+    return;
+  }
+
+  if(editArea.innerText.trim() === ''){
+    alert('내용을 입력해주세요.');
+    editArea.focus();
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = '저장 중...';
+
+  try{
+    const fileUrls = [];
+    const files = fileInput.files ? Array.from(fileInput.files) : [];
+
+    for(const file of files){
+	  const safeName = file.name
+		.normalize('NFKD')
+		.replace(/[^\w.\-]+/g, '_')
+		.replace(/^_+|_+$/g, '');
+
+	  const filePath = `inquiry/${Date.now()}_${safeName}`;
+
+	  const { error: uploadError } = await sb.storage
+		.from('inquiry-file')
+		.upload(filePath, file, {
+		  upsert:false,
+		  cacheControl:'3600',
+		  contentType:file.type || 'application/octet-stream'
+		});
+
+	  if(uploadError) throw uploadError;
+
+	  fileUrls.push({
+		bucket: 'inquiry-file',
+		path: filePath,
+		name: file.name,
+		type: file.type,
+		size: file.size
+	  });
+	}
+    const phone = `${phoneInputs[0].value.trim()}-${phoneInputs[1].value.trim()}-${phoneInputs[2].value.trim()}`;
+    const email = `${emailInputs[0].value.trim()}@${emailInputs[1].value.trim()}`;
+
+    const { error } = await sb
+      .from('inquiry')
+      .insert({
+        company: companyInput.value.trim() || null,
+        name: nameInput.value.trim(),
+        phone: phone,
+        email: email,
+        title: titleInput.value.trim(),
+        content: hiddenContent.value,
+        file_urls: fileUrls
+      });
+
+    if(error) throw error;
+
+    alert('문의가 정상적으로 접수되었습니다.');
+    e.target.reset();
+    editArea.innerHTML = '';
+    hiddenContent.value = '';
+
+  }catch(error){
+    console.error(error);
+    alert('문의 저장 중 오류가 발생했습니다.');
+  }finally{
+    submitBtn.disabled = false;
+    submitBtn.textContent = '문의하기';
+  }
+});
+
+renderColorPalettes();
+</script>
+
+</body>
+</html>
