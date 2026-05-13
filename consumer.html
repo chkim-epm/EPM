@@ -1586,6 +1586,16 @@ document.querySelector('form').addEventListener('submit', async function(e){
       });
 
     if(error) throw error;
+	
+	await sb.functions.invoke('send-inquiry-mail', {
+	body: {
+		name: nameInput.value.trim(),
+		phone: phone,
+		email: email,
+		title: titleInput.value.trim(),
+		content: hiddenContent.value
+	}
+	});
 
     alert('문의가 정상적으로 접수되었습니다.');
     e.target.reset();
