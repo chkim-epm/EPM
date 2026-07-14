@@ -127,12 +127,10 @@ const BUCKET = "product-image";
 
 /* ============================================================================
    관리자 화이트리스트 & 경로
-   - GitHub OAuth 후 user.email 또는 user_metadata.user_name를 기준으로 허용
-   - LOGIN_URL: 미로그인 시 보낼 로그인 페이지
-   - DENIED_URL: 로그인은 했으나 권한 없는 계정에 대한 차단 페이지
+   
+   - 관리자 여부는 Supabase public.is_admin() 함수로 확인
+   - 소스코드에서 이메일이나 GitHub 아이디를 직접 비교하지 않음
    ============================================================================ */
-const ADMIN_EMAILS = ["chkim.epm@gmail.com"];
-const ADMIN_USERNAMES = ["chkim-epm"];
 const LOGIN_URL  = "/admin/index.html";   // 미로그인 시
 const DENIED_URL = "/admin/denied.html";  // 권한 없음 시
 
@@ -239,62 +237,83 @@ async function ensureSessionFromURL() {
 }
 
 /* ============================================================================
-   화면 보호 가드 (인증 + 화이트리스트 확인)
-   1) 세션 조회 → user 없으면 로그인 페이지로 보냄
-   2) 이메일/깃허브 사용자명 화이트리스트 검사
-   3) 통과 시 protecting 해제 → 본문 표시
+   관리자 화면 보호
+   1) Supabase 로그인 세션 확인
+   2) public.is_admin() 함수로 관리자 여부 확인
+   3) 관리자만 본문 표시
    ============================================================================ */
 async function guardAdmin() {
-  console.log("[guard] entered");
-  
-  let session;
-try {
-  console.log("[guard] before getSession");
+  console.log("[guard] 관리자 권한 확인 시작");
 
-  const timeout = (ms) =>
-    new Promise((_, reject) =>
-      setTimeout(() => reject(new Error("getSession timeout")), ms)
+  try {
+    const timeout = (ms) =>
+      new Promise((_, reject) =>
+        setTimeout(
+          () => reject(new Error("세션 확인 시간 초과")),
+          ms
+        )
+      );
+
+    const { data, error } = await Promise.race([
+      sb.auth.getSession(),
+      timeout(5000)
+    ]);
+
+    if (error) throw error;
+
+    const session = data?.session;
+
+    // 로그인하지 않은 경우
+    if (!session?.user) {
+      kickLogin();
+      return false;
+    }
+
+    // Supabase DB 함수에서 관리자 여부 확인
+    const {
+      data: isAdmin,
+      error: adminError
+    } = await sb.rpc("is_admin");
+
+    if (adminError) {
+      console.error(
+        "[guard] 관리자 권한 확인 오류:",
+        adminError
+      );
+
+      kickDenied();
+      return false;
+    }
+
+    // 관리자가 아닌 계정
+    if (isAdmin !== true) {
+      console.warn("[guard] 관리자 권한 없음");
+
+      kickDenied();
+      return false;
+    }
+
+    // 이메일이나 GitHub 아이디를 화면에 표시하지 않음
+    const who = document.getElementById("who");
+
+    if (who) {
+      who.textContent = "관리자 인증 완료";
+    }
+
+    // 관리자 확인 후 화면 표시
+    document.documentElement.classList.remove("protecting");
+
+    return true;
+
+  } catch (error) {
+    console.error(
+      "[guard] 인증 처리 오류:",
+      error
     );
 
-  const { data, error } = await Promise.race([
-    sb.auth.getSession(),
-    timeout(2000) // ✅ 2초 안에 응답 없으면 타임아웃
-  ]);
-
-  console.log("[guard] after getSession", { data, error });
-  if (error) throw error;
-  session = data?.session;
-} catch (e) {
-  console.error("[guard] getSession error:", e);
-  // ✅ 흰 화면 방지: 일단 화면은 열어두고 상태 표시
-  document.documentElement.classList.remove("protecting");
-  setStatus("getSession 오류: " + (e?.message || e));
-  return;
-}
-
-
-  const user = session?.user;
-  if (!user) {
-    console.log("[guard] no user -> kickLogin");
-    return kickLogin();
+    kickLogin();
+    return false;
   }
-
-  const email = user.email;
-  const ghUser = user.user_metadata?.user_name;
-
-  console.log("[guard] email:", email, "ghUser:", ghUser);
-
-  const ok =
-    (email && ADMIN_EMAILS.includes(email)) ||
-    (ghUser && ADMIN_USERNAMES.includes(ghUser));
-
-  if (!ok) {
-    console.log("[guard] not allowed -> kickDenied");
-    return kickDenied();
-  }
-
-  document.getElementById("who").textContent = `관리자: ${email || ghUser}`;
-  document.documentElement.classList.remove("protecting");
 }
   
 /* ============================================================================
@@ -318,7 +337,14 @@ function kickDenied(){
    세션 상태 변화 대응
    - 다른 탭/창에서 로그인/로그아웃 시에도 현재 페이지 가드 재평가
    ============================================================================ */
-sb.auth.onAuthStateChange(() => guardAdmin());
+sb.auth.onAuthStateChange(async (event, session) => {
+  if (event === "SIGNED_OUT" || !session) {
+    kickLogin();
+    return;
+  }
+
+  await guardAdmin();
+});
 
 /* ============================================================================
    목록/검색/페이지네이션 로직
@@ -536,22 +562,37 @@ $("logoutBtn").addEventListener("click", async ()=>{
    ③ loadProducts: 첫 페이지 로드
    ④ 타임아웃 가드: 8초 내 그리드 텍스트가 비어 있으면 안내 메시지 표기
    ============================================================================ */
-(async function init(){
-  try { // ✅ 디버그용(흰 화면 방지)
-    console.log("[init] start"); // ✅ 디버그: init 실행 확인
+(async function init() {
+  try {
+    console.log("[init] start");
+
     await ensureSessionFromURL();
-    await guardAdmin();
+
+    const allowed = await guardAdmin();
+
+    // 관리자 인증 실패 시 제품 데이터를 불러오지 않음
+    if (!allowed) return;
+
     await loadProducts(1, "");
+
     setTimeout(() => {
       const grid = $("grid");
-      if (grid && grid.innerText.trim() === "") {
-        setStatus("시간 초과: 네트워크/권한 문제일 수 있습니다. 콘솔/네트워크 로그 확인 바랍니다.");
+
+      if (
+        grid &&
+        grid.innerText.trim() === ""
+      ) {
+        setStatus(
+          "시간 초과: 네트워크 또는 권한 상태를 확인해 주세요."
+        );
       }
     }, 8000);
-  } catch (e) { // ✅ 디버그용
-    console.error(e);
-    document.documentElement.classList.remove("protecting"); // ✅ 화면 열기
-    setStatus("스크립트 오류: " + (e?.message || e));
+
+  } catch (error) {
+    console.error("[init] 오류:", error);
+
+    // 오류가 나더라도 관리자 화면을 노출하지 않음
+    kickLogin();
   }
 })();
 
