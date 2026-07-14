@@ -238,9 +238,6 @@
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3d25hcm1ydnB2anB0eXRlcGRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4NzU4NTUsImV4cCI6MjA3NzQ1MTg1NX0.5mvgA_gKdlRaebVRSFIUJRKgp51zke_nffQ2jc8Ad1g";
     const BUCKET = "product-image";              // 스토리지 버킷명(대표/추가 이미지 저장 위치)
 
-    const ADMIN_EMAILS = ["chkim.epm@gmail.com"]; // 허용 이메일 화이트리스트
-    const ADMIN_USERNAMES = ["chkim-epm"];        // 허용 GitHub username 화이트리스트
-
     const LOGIN_URL  = "/admin/index.html";       // 미로그인 시 이동
     const DENIED_URL = "/admin/denied.html";      // 권한 없음 시 이동
 
@@ -380,45 +377,60 @@ async function loadCategoryOptions(selectedKey = "") {
        - ③ 통과 시 protecting 해제 + 사용자 표기
        ------------------------------------------------------------------------- */
 async function guardAdmin() {
-  let session;
-
   try {
     const timeout = (ms) =>
       new Promise((_, reject) =>
-        setTimeout(() => reject(new Error("getSession timeout")), ms)
+        setTimeout(
+          () => reject(new Error("세션 확인 시간 초과")),
+          ms
+        )
       );
 
     const { data, error } = await Promise.race([
       sb.auth.getSession(),
-      timeout(2000) // ✅ 2초 타임아웃
+      timeout(5000)
     ]);
 
     if (error) throw error;
-    session = data?.session;
-  } catch (e) {
-    console.error("[guard] getSession error:", e);
 
-    // ✅ 흰 화면 방지: 일단 화면 열고 안내/로그 확인 가능하게
+    const session = data?.session;
+
+    if (!session?.user) {
+      kickLogin();
+      return false;
+    }
+
+    const {
+      data: isAdmin,
+      error: adminError
+    } = await sb.rpc("is_admin");
+
+    if (adminError) {
+      console.error("관리자 권한 확인 오류:", adminError);
+      kickDenied();
+      return false;
+    }
+
+    if (isAdmin !== true) {
+      kickDenied();
+      return false;
+    }
+
+    const who = document.getElementById("who");
+
+    if (who) {
+      who.textContent = "(관리자 인증 완료)";
+    }
+
     document.documentElement.classList.remove("protecting");
 
-    // 원하면 여기서 로그인으로 보내도 됨:
-    // kickLogin();
-    return;
+    return true;
+
+  } catch (error) {
+    console.error("관리자 인증 오류:", error);
+    kickLogin();
+    return false;
   }
-
-  const user = session?.user;
-  if (!user) return kickLogin();
-
-  const email = user.email;
-  const ghUser = user.user_metadata?.user_name;
-  const ok =
-    (email && ADMIN_EMAILS.includes(email)) ||
-    (ghUser && ADMIN_USERNAMES.includes(ghUser));
-
-  if (!ok) return kickDenied();
-
-  document.getElementById("who").textContent = `(${email || ghUser})`;
-  document.documentElement.classList.remove("protecting");
 }
 
 
@@ -456,17 +468,27 @@ async function guardAdmin() {
     //   }
     // }, 5000);
 
-    setTimeout(async () => {
-      if (!document.documentElement.classList.contains('protecting')) return;
-      const { data: { session } } = await sb.auth.getSession();
-      if (!session) kickLogin();
-      else document.documentElement.classList.remove("protecting");
-    }, 5000);
+   setTimeout(async () => {
+  if (!document.documentElement.classList.contains("protecting")) return;
+
+  const allowed = await guardAdmin();
+
+  if (!allowed) {
+    kickLogin();
+  }
+}, 5000);
     /* ===================== [추가/수정된 부분 끝] ===================== */
 
     
  // 탭/창 간 인증 상태 변화에도 가드를 재평가
-sb.auth.onAuthStateChange(() => guardAdmin());
+sb.auth.onAuthStateChange(async (event, session) => {
+  if (event === "SIGNED_OUT" || !session) {
+    kickLogin();
+    return;
+  }
+
+  await guardAdmin();
+});
 
 
 // ✅ [추가] 수정 모드일 때 기존 제품 정보 로드해서 폼 채우기
@@ -560,17 +582,20 @@ wrap.onclick = (e) => {
 (async () => {
   try {
     await ensureSessionFromURL();
-    await guardAdmin();
 
-    // ✅ 수정 모드일 경우 기존 데이터 불러오기
+    const allowed = await guardAdmin();
+
+    if (!allowed) return;
+
     if (IS_EDIT) {
       await loadForEdit(EDIT_ID);
     } else {
-      await loadCategoryOptions(""); // ✅ 신규 등록 시
+      await loadCategoryOptions("");
     }
-  } catch (e) {
-    console.error(e);
-    document.documentElement.classList.remove("protecting");
+
+  } catch (error) {
+    console.error(error);
+    kickLogin();
   }
 })();
 
@@ -648,13 +673,25 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
   if (!IS_EDIT && !file) { status.className="status err"; status.textContent="대표 이미지를 선택하세요."; submitBtn.disabled=false; return; }
 
   try {
-    // 권한 재검증
-    const { data: { session } } = await sb.auth.getSession();
-    const user = session?.user;
-    const email = user?.email;
-    const ghUser = user?.user_metadata?.user_name;
-    const ok = user && ((email && ADMIN_EMAILS.includes(email)) || (ghUser && ADMIN_USERNAMES.includes(ghUser)));
-    if (!ok) { kickLogin(); return; }
+        // 권한 재검증
+        const { data: { session }, error: sessionError } =
+      await sb.auth.getSession();
+    
+    if (sessionError || !session?.user) {
+      kickLogin();
+      return;
+    }
+    
+    const {
+      data: isAdmin,
+      error: adminError
+    } = await sb.rpc("is_admin");
+    
+    if (adminError || isAdmin !== true) {
+      console.error("관리자 권한 확인 실패:", adminError);
+      kickDenied();
+      return;
+    }
 
 
     // ✅ 공통 payload (image_url은 아래에서 조건적으로 추가)
