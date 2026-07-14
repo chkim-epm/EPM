@@ -142,7 +142,7 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
     persistSession: true,
     autoRefreshToken: true,
     detectSessionInUrl: true,
-    storage: window.sessionStorage,
+    storage: cookieStorage,   // ✅ 여기만 변경
     storageKey: 'epm-admin-auth'
   }
 });
